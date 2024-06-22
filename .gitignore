@@ -35,3 +35,12 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### gradle
+.gradle
+
+### node modules
+node_modules
+
+### vue node modules
+vue-cli/node_modules
