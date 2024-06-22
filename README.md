@@ -36,6 +36,9 @@
 
 ## ERD 구성
 
+![다운로드](https://github.com/hamlsy/Moon-Spoon/assets/70877744/f3a1d8df-c1c4-4be4-9274-e06d7d48bc36)
+
+
 ## 주요 기능
 
 ## 
