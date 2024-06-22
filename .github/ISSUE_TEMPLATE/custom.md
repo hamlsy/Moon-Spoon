@@ -7,4 +7,14 @@ assignees: ''
 
 ---
 
+## Issue
+이슈 개요
+
+## ToDoList
+
+- [ ]
+- [ ]
+- [ ]
+
+## Detail
 
