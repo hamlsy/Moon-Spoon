@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "vue": "^3.4.30"
+    "vue": "^3.4.30",
+    "vue-router": "^3.6.5"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
