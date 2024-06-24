@@ -105,7 +105,7 @@ body, html {
   color: #FFD700;
 }
 
-.navbar-brand::before {
+.navbar-brand::after {
   content: "🥄";
   margin-right: 5px;
 }

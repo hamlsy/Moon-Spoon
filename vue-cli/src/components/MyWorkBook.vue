@@ -10,21 +10,23 @@
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
     </nav>
+    <div class="title">
+      <h1 style="height: 50px">내 문제집</h1>
+    </div>
 
-    <main class="content">
-      <h1>내 문제집</h1>
-
-      <div class="search-sort-container">
-        <input v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks"/>
-        <div class="sort-dropdown">
-          <button @click="toggleSortDropdown">정렬 <i class="fas fa-caret-down"></i></button>
-          <div v-if="showSortDropdown" class="dropdown-content">
-            <a href="#" @click="sortWorkbooks('newest')">최신순</a>
-            <a href="#" @click="sortWorkbooks('oldest')">오래된순</a>
-            <a href="#" @click="sortWorkbooks('alphabetical')">가나다순</a>
-          </div>
+    <div class="search-sort-container">
+      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>
+      <div class="sort-dropdown">
+        <button @click="toggleSortDropdown">정렬 <i class="fas fa-caret-down"></i></button>
+        <div v-if="showSortDropdown" class="dropdown-content">
+          <a href="#" @click="sortWorkbooks('newest')">최신순</a>
+          <a href="#" @click="sortWorkbooks('oldest')">오래된순</a>
+          <a href="#" @click="sortWorkbooks('alphabetical')">가나다순</a>
         </div>
       </div>
+
+    </div>
+    <main class="content">
 
       <div class="workbook-container">
         <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card">
@@ -238,12 +240,19 @@ body, html {
 
 .content {
   max-width: 1200px;
-  margin: 80px auto 60px;
-  padding: 2rem;
+  margin: 0px auto 100px;
   flex: 1;
   overflow-y: auto;
-}
 
+}
+.title {
+  max-width: 1200px;
+  margin: 80px auto 0px;
+  padding: 10px;
+
+  display: flex;
+
+}
 .workbook-container {
   display: flex;
   flex-wrap: wrap;
@@ -315,7 +324,7 @@ h1::after, h2::after, h3::after {
 
 .search-sort-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 1rem;
   gap: 20px;
 }
@@ -323,14 +332,18 @@ h1::after, h2::after, h3::after {
 .search-sort-container input {
   flex-grow: 1;
   min-width: 200px;
+  max-width: 500px; /* 최대 너비를 고정 */
+  box-sizing: border-box;
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
+
 }
 
 .sort-dropdown {
   position: relative;
   flex-shrink: 0;
+
 }
 
 .sort-dropdown button {
@@ -422,4 +435,6 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
+
 </style>
