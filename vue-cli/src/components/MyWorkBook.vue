@@ -58,8 +58,8 @@
         <input v-model="newWorkbook.name" placeholder="문제집 이름" />
         <textarea v-model="newWorkbook.description" placeholder="설명"></textarea>
         <div class="popup-buttons">
-          <button @click="addWorkbook">추가</button>
           <button @click="cancelAddWorkbook">취소</button>
+          <button @click="addWorkbook">추가</button>
         </div>
       </div>
     </div>
@@ -70,8 +70,8 @@
         <h2>문제집 삭제</h2>
         <p>정말로 이 문제집을 삭제하시겠습니까?</p>
         <div class="popup-buttons">
-          <button @click="deleteWorkbook">삭제</button>
           <button @click="cancelDelete">취소</button>
+          <button @click="deleteWorkbook">삭제</button>
         </div>
       </div>
     </div>
