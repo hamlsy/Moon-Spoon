@@ -52,7 +52,7 @@
     </footer>
 
     <!-- 새 문제집 추가 팝업 -->
-    <div v-if="showAddPopup" class="popup-overlay">
+    <div v-if="showAddPopup" class="popup-overlay" @click.self="cancelAddWorkbook">
       <div class="popup">
         <h2>새 문제집 추가</h2>
         <input v-model="newWorkbook.name" placeholder="문제집 이름" />
@@ -65,7 +65,7 @@
     </div>
 
     <!-- 삭제 확인 팝업 -->
-    <div v-if="showDeletePopup" class="popup-overlay">
+    <div v-if="showDeletePopup" class="popup-overlay" @click.self="cancelDelete">
       <div class="popup">
         <h2>문제집 삭제</h2>
         <p>정말로 이 문제집을 삭제하시겠습니까?</p>
