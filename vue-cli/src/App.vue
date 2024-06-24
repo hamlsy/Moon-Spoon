@@ -31,4 +31,8 @@ body{
   --text-light: #FFFFFF;
   --hover-yellow: #FFC000; /* 더 진한 노란색 */
 }
+a{
+  text-decoration: none;
+  color: inherit;
+}
 </style>
