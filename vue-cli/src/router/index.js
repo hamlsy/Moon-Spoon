@@ -2,13 +2,14 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LoginForm from "@/components/LoginForm.vue";
 import SignUpForm from "@/components/SignUpForm.vue";
+import MainPage from "@/components/MainPage.vue";
 
 Vue.use(VueRouter);
 
 const routes = [
     {
         path:'/',
-        redirect: "/user/login",
+        redirect: "/mainPage",
     },
     {
         path: '/user/login',
@@ -19,6 +20,11 @@ const routes = [
         path: '/user/signUp',
         name: 'SignUp',
         component: SignUpForm
+    },
+    {
+        path: '/mainPage',
+        name: "MainPage",
+        component: MainPage
     }
 ];
 

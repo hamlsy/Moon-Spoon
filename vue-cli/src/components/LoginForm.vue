@@ -1,7 +1,7 @@
 <template>
   <body>
   <div class="container">
-    <h1 class="logo">Moon-Spoon</h1>
+    <h1 class="logo"><router-link to="/mainPage">Moon-Spoon</router-link></h1>
     <form @submit.prevent="login">
       <div class="input-group">
         <label for="userId">ID</label>
@@ -40,17 +40,17 @@ export default {
 /* CSS 스타일은 아래에 추가됩니다 */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f5e6d3;
+  background-color: #FFFAF0; /* 플로랄 화이트 */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0px;
-  color: #333;
+  color: white;
 }
 
 .container {
-  background-color: #fff;
+  background-color: #1B2A49;
   padding: 3rem 2.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -82,7 +82,7 @@ label {
   display: block;
   margin-bottom: 0.7rem;
   font-weight: bold;
-  color: #555;
+  color: white;
   font-size: 1.1rem;
 }
 
@@ -134,6 +134,6 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  //text-decoration: underline;
 }
 </style>
