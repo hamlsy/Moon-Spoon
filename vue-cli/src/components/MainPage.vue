@@ -4,8 +4,8 @@
       <div class="navbar-brand">Moon-Spoon</div>
       <ul class="navbar-menu">
         <li><a href="#" @click="navigateTo('home')">홈</a></li>
-        <li><a href="#" @click="navigateTo('shared')">로그인</a></li>
-        <li><a href="#" @click="navigateTo('my')">회원가입</a></li>
+        <li><router-link to="/user/login">로그인</router-link></li>
+        <li><router-link to="/user/signup">회원가입</router-link></li>
         <li><a href="#" @click="navigateTo('create')">로그아웃</a></li>
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
@@ -29,7 +29,7 @@
         <h3>추가(예정) 기능</h3>
         <ul>
           <li>
-            <a href="#" @click="navigateTo('stats')">학습 통계</a>
+            <a href="#" @click="navigateTo('notation')">공지사항</a>
             - 나의 학습 진행 상황을 한눈에 확인하세요.
           </li>
           <li>
@@ -37,8 +37,8 @@
             - 다른 학습자들과 정보를 공유하고 소통하세요.
           </li>
           <li>
-            <a href="#" @click="navigateTo('challenge')">일일 도전 과제</a>
-            - 매일 새로운 문제로 실력을 향상시켜보세요.
+            <a href="#" @click="navigateTo('nan')">...</a>
+            - ...추가 될 내용 ...
           </li>
         </ul>
       </div>
@@ -53,6 +53,10 @@
 <script>
 export default {
   name: 'MainPage',
+  data(){
+    return {
+    }
+  },
   methods: {
     navigateTo(page) {
       console.log('Navigating to:', page);
@@ -60,8 +64,9 @@ export default {
   }
 }
 </script>
-
 <style scoped>
+
+
 body, html {
   margin: 0;
   padding: 0;
@@ -71,16 +76,16 @@ body, html {
 .main-page {
   font-family: 'Arial', sans-serif;
   line-height: 1.6;
-  color: #333;
-  background-color: #F0F8FF; /* 매우 연한 하늘색 배경 */
+  color: var(--text-dark);
+  background-color: #FFFAF0; /* 플로랄 화이트 */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .navbar {
-  background-color: #B0C4DE; /* 연한 파란색 */
-  color: #333;
+  background-color: #1B2A49;
+  color: var(--text-light);
   padding: 1rem;
   display: flex;
   justify-content: space-between;
@@ -95,7 +100,12 @@ body, html {
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #4A4A4A;
+  color: #FFD700;
+}
+
+.navbar-brand::before {
+  content: "🥄";
+  margin-right: 5px;
 }
 
 .navbar-menu {
@@ -108,18 +118,18 @@ body, html {
 }
 
 .navbar-menu a {
-  color: #4A4A4A;
+  color: var(--text-light);
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .navbar-menu a:hover {
-  color: #1E90FF; /* 밝은 파란색 */
+  color: #FFD700;
 }
 
 .content {
   max-width: 1200px;
-  margin: 80px auto 0; /* 상단 여백 추가 */
+  margin: 80px auto 0;
   padding: 2rem;
   flex: 1;
 }
@@ -131,17 +141,19 @@ body, html {
 }
 
 .card {
-  background-color: #FFF5EE; /* 연한 베이지색 */
+  background-color: var(--text-light);
   border-radius: 8px;
   padding: 1.5rem;
   width: 45%;
   cursor: pointer;
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition: all 0.3s;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-left: 4px solid #FFD700;
 }
 
 .card:hover {
-  background-color: #FFE4B5; /* 약간 더 진한 베이지색 */
+  background-color: #FFD700;
+  color: var(--text-dark);
   box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
@@ -159,18 +171,18 @@ body, html {
 }
 
 .additional-features a {
-  color: #4682B4; /* 스틸블루 */
+  color: #1B2A49;
   text-decoration: none;
   transition: color 0.3s;
 }
 
 .additional-features a:hover {
-  color: #1E90FF; /* 밝은 파란색 */
+  color: #FFD700;
 }
 
 .footer {
-  background-color: #B0C4DE; /* 연한 파란색 */
-  color: #4A4A4A;
+  background-color: #1B2A49;
+  color: var(--text-light);
   text-align: center;
   padding: 1rem;
   position: fixed;
@@ -180,7 +192,16 @@ body, html {
 }
 
 h1, h2, h3 {
-  color: #4A4A4A;
+  color: #1B2A49;
+}
+
+h1::after, h2::after, h3::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background-color: #FFD700;
+  margin-top: 10px;
 }
 
 </style>
