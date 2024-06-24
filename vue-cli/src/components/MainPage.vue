@@ -1,7 +1,7 @@
 <template>
   <div class="main-page">
     <nav class="navbar">
-      <div class="navbar-brand">Moon-Spoon</div>
+      <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
         <li><a href="#" @click="navigateTo('home')">홈</a></li>
         <li><router-link to="/user/login">로그인</router-link></li>
@@ -20,8 +20,10 @@
           <p>다른 사용자들이 만든 문제지를 열람하고 학습해보세요.</p>
         </div>
         <div class="card" @click="navigateTo('my')">
-          <h2>내 문제지</h2>
-          <p>직접 만든 문제지로 학습하고 테스트해보세요.</p>
+          <router-link to="/myWorkBook">
+            <h2>내 문제지</h2>
+            <p>직접 만든 문제지로 학습하고 테스트해보세요.</p>
+          </router-link>
         </div>
       </div>
 

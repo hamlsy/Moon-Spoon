@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import LoginForm from "@/components/LoginForm.vue";
 import SignUpForm from "@/components/SignUpForm.vue";
 import MainPage from "@/components/MainPage.vue";
+import MyWorkBook from "@/components/MyWorkBook.vue";
 
 Vue.use(VueRouter);
 
@@ -25,6 +26,11 @@ const routes = [
         path: '/mainPage',
         name: "MainPage",
         component: MainPage
+    },
+    {
+        path: '/myWorkBook',
+        name: "MyWorkBook",
+        component: MyWorkBook
     }
 ];
 
