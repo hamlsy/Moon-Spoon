@@ -88,7 +88,7 @@ body, html {
 .navbar {
   background-color: #1B2A49;
   color: var(--text-light);
-  padding: 1rem;
+  padding: 0.1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -186,7 +186,7 @@ body, html {
   background-color: #1B2A49;
   color: var(--text-light);
   text-align: center;
-  padding: 1rem;
+  padding: 0.1rem;
   position: fixed;
   bottom: 0;
   left: 0;
