@@ -34,9 +34,19 @@
 
 ## 화면 구성
 
+- 로그인
+- 로그아웃
+- 메인화면
+- 내 문제집
+- 문제집 상세
+- 테스트
+- 채점
+
+
 ## ERD 구성
 
-![image](https://github.com/hamlsy/Moon-Spoon/assets/70877744/e8f9f0e3-61c2-412c-ac4d-ccb613e14716)
+![image](https://github.com/hamlsy/Moon-Spoon/assets/70877744/f24e18f2-879d-4f3c-8d2d-245a07bed6da)
+
 
 
 
