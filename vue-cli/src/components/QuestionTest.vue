@@ -140,7 +140,7 @@ export default {
     },
     exitTest() {
       // 테스트 종료 로직
-      this.$router.push('/workbook-detail'); // 적절한 라우트로 변경
+      this.$router.push('/workBookDetail'); // 적절한 라우트로 변경
     },
     submitTest() {
       // 테스트 제출 로직
