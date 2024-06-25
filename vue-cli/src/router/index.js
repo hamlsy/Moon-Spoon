@@ -3,8 +3,9 @@ import VueRouter from 'vue-router';
 import LoginForm from "@/components/LoginForm.vue";
 import SignUpForm from "@/components/SignUpForm.vue";
 import MainPage from "@/components/MainPage.vue";
-import MyWorkBook from "@/components/MyWorkBook.vue";
-import WorkBookDetail from "@/components/WorkBookDetail.vue";
+import QuestionTest from "@/components/QuestionTest.vue";
+import MyWorkbook from "@/components/MyWorkbook.vue";
+import WorkbookDetail from "@/components/WorkbookDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -29,14 +30,19 @@ const routes = [
         component: MainPage
     },
     {
-        path: '/myWorkBook',
-        name: "MyWorkBook",
-        component: MyWorkBook
+        path: '/myWorkbook',
+        name: "MyWorkbook",
+        component: MyWorkbook
     },
     {
-        path: '/workBookDetail',
-        name: 'WorkBookDetail',
-        component: WorkBookDetail
+        path: '/workbookDetail',
+        name: 'WorkbookDetail',
+        component: WorkbookDetail
+    },
+    {
+        path: '/questionTest',
+        name: 'QuestionTest',
+        component: QuestionTest
     }
 ];
 
