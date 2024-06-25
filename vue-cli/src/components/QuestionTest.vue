@@ -456,7 +456,7 @@ textarea {
 
 .submit-btn {
   background-color: #FFD700;
-  color: white;
+  color: black;
 }
 .submit-btn:hover {
   background-color: rgba(188,154,0,0.9);
