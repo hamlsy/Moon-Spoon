@@ -24,7 +24,7 @@
       <div class="search-sort-container">
         <input v-model="searchQuery" placeholder="문제 검색" @input="filterQuestions" />
         <div class="sort-dropdown">
-          <button @click="toggleSortDropdown">정렬 <i class="fas fa-caret-down"></i></button>
+          <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
           <div v-if="showSortDropdown" class="dropdown-content">
             <a href="#" @click="sortQuestions('newest')">최신순</a>
             <a href="#" @click="sortQuestions('oldest')">오래된순</a>
@@ -153,7 +153,8 @@ export default {
       searchQuery: '',
       filteredQuestions: [],
       showSortDropdown: false,
-      sortOrder: 'newest'
+      sortOrder: 'newest',
+      sortValue: '최신순'
     }
   },
   methods: {
@@ -224,15 +225,19 @@ export default {
       this.sortOrder = order;
       switch(order) {
         case 'newest':
+          this.sortValue = "최신순";
           this.filteredQuestions.sort((a, b) => b.id - a.id);
           break;
         case 'oldest':
+          this.sortValue = "오래된순";
           this.filteredQuestions.sort((a, b) => a.id - b.id);
           break;
         case 'correctRateAsc':
+          this.sortValue = "정답률 낮은 순";
           this.filteredQuestions.sort((a, b) => a.correctRate - b.correctRate);
           break;
         case 'correctRateDesc':
+          this.sortValue = "정답률 높은 순";
           this.filteredQuestions.sort((a, b) => b.correctRate - a.correctRate);
           break;
       }
