@@ -27,10 +27,13 @@
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
-      <div class="question-content">
+      <div class="question-header">
         <h2>문제 {{ currentQuestionIndex + 1 }}</h2>
-        <p>{{ currentQuestion.question }}</p>
+        <span class="correct-rate" v-if="currentQuestion.correctRate !== undefined">
+          정답률: {{ currentQuestion.correctRate }}%
+        </span>
       </div>
+      <p>{{ currentQuestion.question }}</p>
       <div class="answer-section">
         <p><strong>정답:</strong> {{ currentQuestion.correctAnswer }}</p>
         <p><strong>작성한 답안:</strong> {{ userAnswers[currentQuestionIndex] }}</p>
@@ -104,9 +107,9 @@ export default {
   data() {
     return {
       questions: [
-        { question: "1 + 1 = ?", correctAnswer: "2" },
-        { question: "2 * 3 = ?", correctAnswer: "6" },
-        { question: "10 / 2 = ?", correctAnswer: "5" },
+        { question: "1 + 1 = ?", correctAnswer: "2", correctRate: 80 },
+        { question: "2 * 3 = ?", correctAnswer: "6", correctRate: null },
+        { question: "10 / 2 = ?", correctAnswer: "5", correctRate: null },
         // 더 많은 문제 추가...
       ],
       userAnswers: ["2", "6", "4"], // 사용자가 제출한 답안
@@ -162,14 +165,27 @@ export default {
       // const response = await axios.get('/api/results');
       // this.results = response.data.results;
 
-      // 임시로 랜덤하게 결과 생성
-      this.results = this.questions.map(() => Math.random() > 0.5 ? 'correct' : 'incorrect');
-    }
+      try {
+        // 실제 구현에서는 이 부분을 서버 API 호출로 대체해야 합니다.
+        // const response = await axios.get('/api/results');
+        // this.results = response.data.results;
+        // this.questions.forEach((q, index) => {
+        //   q.correctRate = response.data.correctRates[index];
+        // });
+
+        // 임시로 랜덤하게 결과와 정답률 생성
+        this.results = this.questions.map(() => Math.random() > 0.5 ? 'correct' : 'incorrect');
+        this.questions.forEach(q => {
+          q.correctRate = Math.floor(Math.random() * 100);
+        });
+      } catch (error) {
+        console.error("Error fetching results:", error);
+      }
     },
     created() {
       this.fetchResults(); // 컴포넌트 생성 시 결과 가져오기
     }
-
+  }
 }
 </script>
 
@@ -614,4 +630,18 @@ textarea:focus {
   color: red;
 }
 
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.correct-rate {
+  font-size: 0.9em;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
 </style>
