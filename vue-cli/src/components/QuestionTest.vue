@@ -157,6 +157,9 @@ body, html {
   padding: 0;
   height: 100%;
 }
+.test-page{
+  background-color: #FFFAF0;
+}
 
 .navbar-menu li {
   margin-left: 1rem;
