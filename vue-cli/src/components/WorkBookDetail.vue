@@ -45,7 +45,7 @@
           <div v-if="editingIndex !== index" class="question-content">
             <div class="question-actions">
               <button @click="startEditing(index)" class="edit-btn">수정</button>
-              <button @click="deleteQuestion(index)" class="delete-btn">삭제</button>
+              <button @click="confirmDelete(question.id)" class="delete-btn">삭제</button>
             </div>
             <h3>문제 {{ question.id }}</h3>
             <p>{{ question.question }}</p>
@@ -111,7 +111,20 @@
         </div>
       </div>
     </div>
+    <!-- 삭제 확인 팝업 -->
+    <div v-if="showDeletePopup" class="popup-overlay" @click.self="cancelDelete">
+      <div class="popup">
+        <h2>문제집 삭제</h2>
+        <p>정말로 이 문제를 삭제하시겠습니까?</p>
+        <div class="popup-buttons">
+          <button @click="cancelDelete">취소</button>
+          <button @click="deleteQuestion">삭제</button>
+        </div>
+      </div>
+    </div>
   </div>
+
+
 </template>
 
 <script>
@@ -133,6 +146,8 @@ export default {
         isRandom: false,
         sortOrder: 'asc'
       },
+      showDeletePopup: false,
+      questionToDelete: null,
       editingIndex: null,
       editingQuestion: { question: '', answer: '' },
       searchQuery: '',
@@ -142,6 +157,10 @@ export default {
     }
   },
   methods: {
+    cancelDelete(){
+      this.showDeletePopup = false;
+      this.questionToDelete = null;
+    },
     addQuestion() {
       if (this.newQuestion.question && this.newQuestion.answer) {
         const newId = Math.max(...this.questions.map(q => q.id)) + 1;
@@ -166,13 +185,20 @@ export default {
         this.filterQuestions();
       }
     },
+    confirmDelete(questionId) {
+      this.questionToDelete = questionId;
+      this.showDeletePopup = true;
+    },
     cancelEdit(){
       this.editingIndex = null;
     },
-    deleteQuestion(index) {
-      const questionId = this.filteredQuestions[index].id;
-      this.questions = this.questions.filter(q => q.id !== questionId);
-      this.filterQuestions();
+    deleteQuestion() {
+      if (this.questionToDelete) {
+        this.questions = this.questions.filter(q => q.id !== this.questionToDelete);
+        this.filterQuestions();
+        this.showDeletePopup = false;
+        this.questionToDelete = null;
+      }
     },
     showTestPopup() {
       this.showPopup = true;
@@ -389,6 +415,8 @@ h1::after, h2::after, h3::after {
   padding: 2rem;
   border-radius: 8px;
   width: 300px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 .popup input, .popup textarea {
@@ -399,7 +427,8 @@ h1::after, h2::after, h3::after {
 
 .popup-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  margin-top: 1rem;
 }
 
 .popup button {
@@ -410,10 +439,30 @@ h1::after, h2::after, h3::after {
   cursor: pointer;
 }
 
+.popup-buttons button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
 .popup button:hover {
   background-color: #FFC000;
 }
+.popup-buttons button:first-child {
+  background-color: #4CAF50;
+  color: white;
+}
 
+.popup-buttons button:last-child {
+  background-color: #f44336;
+  color: white;
+}
+
+.popup-buttons button:hover {
+  opacity: 0.8;
+}
 a {
   text-decoration: none;
   color: inherit;
