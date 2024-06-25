@@ -6,6 +6,7 @@ import MainPage from "@/components/MainPage.vue";
 import QuestionTest from "@/components/QuestionTest.vue";
 import MyWorkbook from "@/components/MyWorkbook.vue";
 import WorkbookDetail from "@/components/WorkbookDetail.vue";
+import ScoringTest from "@/components/ScoringTest.vue";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,11 @@ const routes = [
         path: '/questionTest',
         name: 'QuestionTest',
         component: QuestionTest
+    },
+    {
+        path: '/scoringTest',
+        name: 'ScoringTest',
+        component: ScoringTest
     }
 ];
 
