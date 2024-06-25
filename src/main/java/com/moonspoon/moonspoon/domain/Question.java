@@ -15,25 +15,29 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Workbook {
+public class Question {
     @Id
     @GeneratedValue
-    @Column(name="workbook_id")
+    @Column(name = "question_id")
     private Long id;
 
-    private String title;
+    private String solution;
     private String content;
-    private String author;
-
+    private Double accuracy;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
+    private int correctCount;
+    private int incorrectCount;
+
     @Builder
-    public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate) {
-        this.title = title;
+    public Question(String solution, String content, Double accuracy, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
+        this.solution = solution;
         this.content = content;
-        this.author = author;
+        this.accuracy = accuracy;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.correctCount = correctCount;
+        this.incorrectCount = incorrectCount;
     }
 }
