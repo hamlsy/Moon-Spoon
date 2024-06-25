@@ -5,6 +5,7 @@ import SignUpForm from "@/components/SignUpForm.vue";
 import MainPage from "@/components/MainPage.vue";
 import MyWorkBook from "@/components/MyWorkBook.vue";
 import WorkBookDetail from "@/components/WorkBookDetail.vue";
+import QuestionTest from "@/components/QuestionTest.vue";
 
 Vue.use(VueRouter);
 
@@ -37,6 +38,11 @@ const routes = [
         path: '/workBookDetail',
         name: 'WorkBookDetail',
         component: WorkBookDetail
+    },
+    {
+        path: '/questionTest',
+        name: 'QuestionTest',
+        component: QuestionTest
     }
 ];
 
