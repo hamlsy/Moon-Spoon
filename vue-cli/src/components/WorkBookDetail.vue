@@ -55,6 +55,7 @@
           <div v-else class="question-edit-form">
             <input v-model="editingQuestion.question" placeholder="문제" />
             <textarea v-model="editingQuestion.answer" placeholder="답"></textarea>
+            <button @click="cancelEdit" class="cancel-btn">취소</button>
             <button @click="saveEdit" class="save-btn">저장</button>
           </div>
         </div>
@@ -164,6 +165,9 @@ export default {
         this.editingIndex = null;
         this.filterQuestions();
       }
+    },
+    cancelEdit(){
+      this.editingIndex = null;
     },
     deleteQuestion(index) {
       const questionId = this.filteredQuestions[index].id;
@@ -495,14 +499,14 @@ a {
   border-radius: 4px;
 }
 
-.edit-btn, .save-btn, .delete-btn {
+.edit-btn, .save-btn, .delete-btn, .cancel-btn {
   padding: 5px 10px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-.edit-btn, .save-btn {
+.edit-btn, .save-btn, .cancel-btn {
   background-color: #4CAF50;
   color: white;
 }
