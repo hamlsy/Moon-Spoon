@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import LoginForm from "@/components/LoginForm.vue";
 import SignUpForm from "@/components/SignUpForm.vue";
 import MainPage from "@/components/MainPage.vue";
-import QuestionTest from "@/components/QuestionTest.vue";
+import problemTest from "@/components/ProblemTest.vue";
 import MyWorkbook from "@/components/MyWorkbook.vue";
 import WorkbookDetail from "@/components/WorkbookDetail.vue";
 import ScoringTest from "@/components/ScoringTest.vue";
@@ -41,9 +41,9 @@ const routes = [
         component: WorkbookDetail
     },
     {
-        path: '/questionTest',
-        name: 'QuestionTest',
-        component: QuestionTest
+        path: '/problemTest',
+        name: 'problemTest',
+        component: problemTest
     },
     {
         path: '/scoringTest',

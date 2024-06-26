@@ -36,7 +36,7 @@
           <h3>{{ workbook.name }}</h3>
           <p>{{ workbook.description }}</p>
           <p>생성일: {{ workbook.createdAt }}</p>
-          <p>문제 수: {{ workbook.questionCount }}</p>
+          <p>문제 수: {{ workbook.problemCount }}</p>
           <p>수정일: {{ workbook.updatedAt }}</p>
         </div>
 
@@ -108,7 +108,7 @@ export default {
         name: this.newWorkbook.name,
         description: this.newWorkbook.description,
         createdAt: new Date().toISOString().split('T')[0],
-        questionCount: 0,
+        problemCount: 0,
         updatedAt: new Date().toISOString().split('T')[0]
       };
       this.workbooks.push(newWorkbook);
@@ -161,13 +161,13 @@ export default {
   },
   mounted() {
     this.workbooks = [
-      { id: 1, name: "수학 문제집", description: "기초 수학 문제", createdAt: "2024-01-01", questionCount: 20, updatedAt: "2024-01-05" },
-      { id: 2, name: "영어 문제집", description: "중급 영어 문제", createdAt: "2024-01-02", questionCount: 30, updatedAt: "2024-01-06" },
-      { id: 3, name: "과학 문제집", description: "고급 과학 문제", createdAt: "2024-01-03", questionCount: 25, updatedAt: "2024-01-07" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", questionCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", questionCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", questionCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", questionCount: 35, updatedAt: "2024-01-08" },
+      { id: 1, name: "수학 문제집", description: "기초 수학 문제", createdAt: "2024-01-01", problemCount: 20, updatedAt: "2024-01-05" },
+      { id: 2, name: "영어 문제집", description: "중급 영어 문제", createdAt: "2024-01-02", problemCount: 30, updatedAt: "2024-01-06" },
+      { id: 3, name: "과학 문제집", description: "고급 과학 문제", createdAt: "2024-01-03", problemCount: 25, updatedAt: "2024-01-07" },
+      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
+      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
+      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
+      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
 
     ];
     this.filterWorkbooks();

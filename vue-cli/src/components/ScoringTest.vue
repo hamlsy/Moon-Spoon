@@ -3,20 +3,20 @@
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
-      <div class="question-list">
+      <div class="problem-list">
         <div
-            v-for="(question, index) in questions"
+            v-for="(problem, index) in problems"
             :key="index"
-            :class="['question-item', {
+            :class="['problem-item', {
             'correct': results[index] === 'correct',
             'incorrect': results[index] === 'incorrect',
             'unanswered': !results[index]
           }]"
-            @click="goToQuestion(index)"
+            @click="goToproblem(index)"
         >
-          <span class="question-number">{{ index + 1 }}</span>
+          <span class="problem-number">{{ index + 1 }}</span>
           <span class="answer-preview">
-            {{ getQuestionPreview(index) }}
+            {{ getproblemPreview(index) }}
           </span>
           <span class="result-preview" :class="results[index]">
             {{ results[index] === 'correct' ? '정답' : results[index] === 'incorrect' ? '오답' : '' }}
@@ -27,17 +27,20 @@
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
-      <div class="question-content">
-        <h2>문제 {{ currentQuestionIndex + 1 }}</h2>
-        <p>{{ currentQuestion.question }}</p>
+      <div class="problem-header">
+        <h2>문제 {{ currentproblemIndex + 1 }}</h2>
+        <span class="correct-rate" v-if="currentproblem.correctRate !== undefined">
+          정답률: {{ currentproblem.correctRate }}%
+        </span>
       </div>
+      <p>{{ currentproblem.problem }}</p>
       <div class="answer-section">
-        <p><strong>정답:</strong> {{ currentQuestion.correctAnswer }}</p>
-        <p><strong>작성한 답안:</strong> {{ userAnswers[currentQuestionIndex] }}</p>
+        <p><strong>정답:</strong> {{ currentproblem.correctAnswer }}</p>
+        <p><strong>작성한 답안:</strong> {{ userAnswers[currentproblemIndex] }}</p>
         <div class="grading-cards">
           <div
-              @click="gradeQuestion('correct')"
-              :class="['grade-card', 'correct-card', { 'selected': results[currentQuestionIndex] === 'correct' }]"
+              @click="gradeproblem('correct')"
+              :class="['grade-card', 'correct-card', { 'selected': results[currentproblemIndex] === 'correct' }]"
           >
             <div class="card-content">
               <span class="card-icon">✓</span>
@@ -45,8 +48,8 @@
             </div>
           </div>
           <div
-              @click="gradeQuestion('incorrect')"
-              :class="['grade-card', 'incorrect-card', { 'selected': results[currentQuestionIndex] === 'incorrect' }]"
+              @click="gradeproblem('incorrect')"
+              :class="['grade-card', 'incorrect-card', { 'selected': results[currentproblemIndex] === 'incorrect' }]"
           >
             <div class="card-content">
               <span class="card-icon">✗</span>
@@ -57,14 +60,14 @@
       </div>
       <div class="navigation-buttons">
         <button
-            v-if="currentQuestionIndex > 0"
-            @click="goToPreviousQuestion"
+            v-if="currentproblemIndex > 0"
+            @click="goToPreviousproblem"
         >
           이전
         </button>
         <button
-            v-if="currentQuestionIndex < questions.length - 1"
-            @click="goToNextQuestion"
+            v-if="currentproblemIndex < problems.length - 1"
+            @click="goToNextproblem"
         >
           다음
         </button>
@@ -103,48 +106,48 @@
 export default {
   data() {
     return {
-      questions: [
-        { question: "1 + 1 = ?", correctAnswer: "2" },
-        { question: "2 * 3 = ?", correctAnswer: "6" },
-        { question: "10 / 2 = ?", correctAnswer: "5" },
+      problems: [
+        { question: "1 + 1 = ?", solution: "2", correctRate: 80 },
+        { question: "2 * 3 = ?", solution: "6", correctRate: null },
+        { question: "10 / 2 = ?", solution: "5", correctRate: null },
         // 더 많은 문제 추가...
       ],
       userAnswers: ["2", "6", "4"], // 사용자가 제출한 답안
       results: [], // 채점 결과 ('correct', 'incorrect', or '')
-      currentQuestionIndex: 0,
+      currentproblemIndex: 0,
       showExitPopup: false,
       showSubmitPopup: false
     }
   },
   computed: {
-    currentQuestion() {
-      return this.questions[this.currentQuestionIndex];
+    currentproblem() {
+      return this.problems[this.currentproblemIndex];
     },
     correctAnswerRate() {
       const correctCount = this.results.filter(result => result === 'correct').length;
-      return (correctCount / this.questions.length * 100).toFixed(2) + '%';
+      return (correctCount / this.problems.length * 100).toFixed(2) + '%';
     }
   },
   methods: {
-    getQuestionPreview(index) {
-      const question = this.questions[index].question;
-      return question.length > 13 ? question.substring(0, 13) + '...' : question;
+    getproblemPreview(index) {
+      const problem = this.problems[index].problem;
+      return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
-    goToQuestion(index) {
-      this.currentQuestionIndex = index;
+    goToproblem(index) {
+      this.currentproblemIndex = index;
     },
-    goToPreviousQuestion() {
-      if (this.currentQuestionIndex > 0) {
-        this.currentQuestionIndex--;
+    goToPreviousproblem() {
+      if (this.currentproblemIndex > 0) {
+        this.currentproblemIndex--;
       }
     },
-    goToNextQuestion() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
+    goToNextproblem() {
+      if (this.currentproblemIndex < this.problems.length - 1) {
+        this.currentproblemIndex++;
       }
     },
-    gradeQuestion(result) {
-      this.$set(this.results, this.currentQuestionIndex, result);
+    gradeproblem(result) {
+      this.$set(this.results, this.currentproblemIndex, result);
     },
     exitGrading() {
       // 채점 종료 로직
@@ -162,29 +165,42 @@ export default {
       // const response = await axios.get('/api/results');
       // this.results = response.data.results;
 
-      // 임시로 랜덤하게 결과 생성
-      this.results = this.questions.map(() => Math.random() > 0.5 ? 'correct' : 'incorrect');
-    }
+      try {
+        // 실제 구현에서는 이 부분을 서버 API 호출로 대체해야 합니다.
+        // const response = await axios.get('/api/results');
+        // this.results = response.data.results;
+        // this.problems.forEach((q, index) => {
+        //   q.correctRate = response.data.correctRates[index];
+        // });
+
+        // 임시로 랜덤하게 결과와 정답률 생성
+        this.results = this.problems.map(() => Math.random() > 0.5 ? 'correct' : 'incorrect');
+        this.problems.forEach(q => {
+          q.correctRate = Math.floor(Math.random() * 100);
+        });
+      } catch (error) {
+        console.error("Error fetching results:", error);
+      }
     },
     created() {
       this.fetchResults(); // 컴포넌트 생성 시 결과 가져오기
     }
-
+  }
 }
 </script>
 
 <style scoped>
 /* 기존 스타일을 유지하고 새로운 스타일 추가 */
 
-.question-item.correct {
+.problem-item.correct {
   border-left: 3px solid green;
 }
 
-.question-item.incorrect {
+.problem-item.incorrect {
   border-left: 3px solid red;
 }
 
-.question-item.unanswered {
+.problem-item.unanswered {
   border-left: 3px solid rgb(128, 128, 128);
 }
 
@@ -369,21 +385,21 @@ a {
   margin-right: 0.5rem;
 }
 
-.add-question-form input,
-.add-question-form textarea {
+.add-problem-form input,
+.add-problem-form textarea {
   flex-grow: 1;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.question-list {
+.problem-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.question-item {
+.problem-item {
   background-color: #FFFFFF;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -397,13 +413,13 @@ a {
 }
 
 
-.question-item:hover {
+.problem-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.question-edit-form input,
-.question-edit-form textarea {
+.problem-edit-form input,
+.problem-edit-form textarea {
   width: 100%;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
@@ -457,12 +473,12 @@ a {
   margin-bottom: 20px;
 }
 
-.question-list {
+.problem-list {
   display: flex;
   flex-direction: column;
 }
 
-.question-item {
+.problem-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -470,16 +486,16 @@ a {
   cursor: pointer;
 }
 
-.question-item.unanswered {
+.problem-item.unanswered {
   border-left: 3px solid red;
 }
 
-.question-item.answered {
+.problem-item.answered {
   border-left: 3px solid green;
 }
 
 
-.question-number {
+.problem-number {
   font-weight: bold;
   margin-right: 10px;
 }
@@ -491,7 +507,7 @@ a {
   flex-direction: column;
 }
 
-.question-content {
+.problem-content {
   margin-bottom: 20px;
 }
 
@@ -598,7 +614,7 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
 }
-.question-item:hover {
+.problem-item:hover {
   background-color: #e0e0e0;
 }
 
@@ -614,4 +630,18 @@ textarea:focus {
   color: red;
 }
 
+.problem-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.correct-rate {
+  font-size: 0.9em;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
 </style>
