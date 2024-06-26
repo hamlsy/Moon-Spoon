@@ -47,9 +47,10 @@ public class Problem {
     }
 
     //update
-    public void update(String question, String solution){
+    public void update(String question, String solution, LocalDateTime updateDate){
         this.question = question;
         this.solution = solution;
+        this.updateDate = updateDate;
     }
 
 }
