@@ -13,22 +13,23 @@ import java.util.List;
 public class WorkbookService {
     private final WorkbookRepository workbookRepository;
 
-    public void createWorkbook(Workbook workbook){
-        workbookRepository.save(workbook);
+    public Workbook createWorkbook(Workbook workbook){
+        return workbookRepository.save(workbook);
     }
 
     public Workbook findOneById(Long id){
         return workbookRepository.findById(id).orElseThrow();
     }
 
-    public List<Workbook> findAllBy(){
+    public List<Workbook> findAll(){
         return workbookRepository.findAll();
     }
 
-    public void updateWorkbook(Long id, Workbook updateWorkbook){
+    public Workbook updateWorkbook(Long id, Workbook updateWorkbook){
         Workbook workbook = workbookRepository.findById(id).orElseThrow();
         LocalDateTime currentTime = LocalDateTime.now();
         workbook.update(updateWorkbook.getTitle(), updateWorkbook.getContent(), currentTime);
+        return workbook;
     }
     public void deleteWorkbook(Long id){
         workbookRepository.deleteById(id);
