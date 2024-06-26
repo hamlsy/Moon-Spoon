@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue
     @Column(name = "user_id")
     private Long id;
-    private String userId;
+    private String username;
     private String name;
     private String password;
 
@@ -27,8 +27,8 @@ public class User {
     private List<Workbook> workbooks;
 
     @Builder
-    public User(String userId, String name, String password, UserRole role){
-        this.userId = userId;
+    public User(String username, String name, String password, UserRole role){
+        this.username = username;
         this.name = name;
         this.password = password;
         this.role = role;
