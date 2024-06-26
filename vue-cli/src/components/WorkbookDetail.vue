@@ -22,39 +22,39 @@
 
 
       <div class="search-sort-container">
-        <input v-model="searchQuery" placeholder="문제 검색" @input="filterQuestions" />
+        <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />
         <div class="sort-dropdown">
           <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
           <div v-if="showSortDropdown" class="dropdown-content">
-            <a href="#" @click="sortQuestions('newest')">최신순</a>
-            <a href="#" @click="sortQuestions('oldest')">오래된순</a>
-            <a href="#" @click="sortQuestions('correctRateAsc')">정답률 낮은순</a>
-            <a href="#" @click="sortQuestions('correctRateDesc')">정답률 높은순</a>
+            <a href="#" @click="sortproblems('newest')">최신순</a>
+            <a href="#" @click="sortproblems('oldest')">오래된순</a>
+            <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>
+            <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>
           </div>
         </div>
       </div>
 
-      <div class="add-question-form">
-        <input v-model="newQuestion.question" placeholder="문제를 입력하세요" />
-        <textarea v-model="newQuestion.answer" placeholder="답을 입력하세요"></textarea>
-        <button @click="addQuestion" class="add-btn">+</button>
+      <div class="add-problem-form">
+        <input v-model="newproblem.problem" placeholder="문제를 입력하세요" />
+        <textarea v-model="newproblem.answer" placeholder="답을 입력하세요"></textarea>
+        <button @click="addproblem" class="add-btn">+</button>
       </div>
 
-      <div class="question-list">
-        <div v-for="(question, index) in filteredQuestions" :key="question.id" class="question-item">
-          <div v-if="editingIndex !== index" class="question-content">
-            <div class="question-actions">
+      <div class="problem-list">
+        <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
+          <div v-if="editingIndex !== index" class="problem-content">
+            <div class="problem-actions">
               <button @click="startEditing(index)" class="edit-btn">수정</button>
-              <button @click="confirmDelete(question.id)" class="delete-btn">삭제</button>
+              <button @click="confirmDelete(problem.id)" class="delete-btn">삭제</button>
             </div>
-            <h3>문제 {{ question.id }}</h3>
-            <p>{{ question.question }}</p>
-            <p><strong>답:</strong> {{ question.answer }}</p>
-            <p><strong>정답률:</strong> {{ question.correctRate }}%</p>
+            <h3>문제 {{ problem.id }}</h3>
+            <p>{{ problem.problem }}</p>
+            <p><strong>답:</strong> {{ problem.answer }}</p>
+            <p><strong>정답률:</strong> {{ problem.correctRate }}%</p>
           </div>
-          <div v-else class="question-edit-form">
-            <input v-model="editingQuestion.question" placeholder="문제" />
-            <textarea v-model="editingQuestion.answer" placeholder="답"></textarea>
+          <div v-else class="problem-edit-form">
+            <input v-model="editingproblem.problem" placeholder="문제" />
+            <textarea v-model="editingproblem.answer" placeholder="답"></textarea>
             <button @click="cancelEdit" class="cancel-btn">취소</button>
             <button @click="saveEdit" class="save-btn">저장</button>
           </div>
@@ -72,11 +72,11 @@
       <div class="popup">
         <h2>테스트 설정</h2>
         <div class="form-group">
-          <label for="questionCount">
+          <label for="problemCount">
             문제 수:
-            <button @click="setMaxQuestionCount" class="max-count-btn">최대</button>
+            <button @click="setMaxproblemCount" class="max-count-btn">최대</button>
           </label>
-          <input id="questionCount" v-model.number="testSettings.questionCount" type="number" min="1" :max="questions.length" />
+          <input id="problemCount" v-model.number="testSettings.problemCount" type="number" min="1" :max="problems.length" />
         </div>
         <div class="form-group checkbox-group">
           <label>
@@ -118,7 +118,7 @@
         <p>정말로 이 문제를 삭제하시겠습니까?</p>
         <div class="popup-buttons">
           <button @click="cancelDelete">취소</button>
-          <button @click="deleteQuestion">삭제</button>
+          <button @click="deleteproblem">삭제</button>
         </div>
       </div>
     </div>
@@ -133,25 +133,25 @@ export default {
   data() {
     return {
       workbook: { name: '수학 문제집' },
-      questions: [
-        { id: 1, question: '1 + 1은?', answer: '2', correctRate: 95 },
-        { id: 2, question: '2 * 3은?', answer: '6', correctRate: 88 },
-        { id: 3, question: '5 - 2는?', answer: '3', correctRate: 92 },
-        { id: 4, question: '10 / 2는?', answer: '5', correctRate: 85 },
+      problems: [
+        { id: 1, problem: '1 + 1은?', answer: '2', correctRate: 95 },
+        { id: 2, problem: '2 * 3은?', answer: '6', correctRate: 88 },
+        { id: 3, problem: '5 - 2는?', answer: '3', correctRate: 92 },
+        { id: 4, problem: '10 / 2는?', answer: '5', correctRate: 85 },
       ],
-      newQuestion: { question: '', answer: '' },
+      newproblem: { problem: '', answer: '' },
       showPopup: false,
       testSettings: {
-        questionCount: 1,
+        problemCount: 1,
         isRandom: false,
         sortOrder: 'asc'
       },
       showDeletePopup: false,
-      questionToDelete: null,
+      problemToDelete: null,
       editingIndex: null,
-      editingQuestion: { question: '', answer: '' },
+      editingproblem: { problem: '', answer: '' },
       searchQuery: '',
-      filteredQuestions: [],
+      filteredproblems: [],
       showSortDropdown: false,
       sortOrder: 'newest',
       sortValue: '최신순'
@@ -160,45 +160,45 @@ export default {
   methods: {
     cancelDelete(){
       this.showDeletePopup = false;
-      this.questionToDelete = null;
+      this.problemToDelete = null;
     },
-    addQuestion() {
-      if (this.newQuestion.question && this.newQuestion.answer) {
-        const newId = Math.max(...this.questions.map(q => q.id)) + 1;
-        this.questions.push({
+    addproblem() {
+      if (this.newproblem.problem && this.newproblem.answer) {
+        const newId = Math.max(...this.problems.map(q => q.id)) + 1;
+        this.problems.push({
           id: newId,
-          ...this.newQuestion,
+          ...this.newproblem,
           correctRate: 0
         });
-        this.newQuestion = { question: '', answer: '' };
-        this.filterQuestions();
+        this.newproblem = { problem: '', answer: '' };
+        this.filterproblems();
       }
     },
     startEditing(index) {
       this.editingIndex = index;
-      this.editingQuestion = { ...this.filteredQuestions[index] };
+      this.editingproblem = { ...this.filteredproblems[index] };
     },
     saveEdit() {
-      if (this.editingQuestion.question && this.editingQuestion.answer) {
-        const index = this.questions.findIndex(q => q.id === this.editingQuestion.id);
-        this.questions[index] = { ...this.editingQuestion };
+      if (this.editingproblem.problem && this.editingproblem.answer) {
+        const index = this.problems.findIndex(q => q.id === this.editingproblem.id);
+        this.problems[index] = { ...this.editingproblem };
         this.editingIndex = null;
-        this.filterQuestions();
+        this.filterproblems();
       }
     },
-    confirmDelete(questionId) {
-      this.questionToDelete = questionId;
+    confirmDelete(problemId) {
+      this.problemToDelete = problemId;
       this.showDeletePopup = true;
     },
     cancelEdit(){
       this.editingIndex = null;
     },
-    deleteQuestion() {
-      if (this.questionToDelete) {
-        this.questions = this.questions.filter(q => q.id !== this.questionToDelete);
-        this.filterQuestions();
+    deleteproblem() {
+      if (this.problemToDelete) {
+        this.problems = this.problems.filter(q => q.id !== this.problemToDelete);
+        this.filterproblems();
         this.showDeletePopup = false;
-        this.questionToDelete = null;
+        this.problemToDelete = null;
       }
     },
     showTestPopup() {
@@ -211,44 +211,44 @@ export default {
       console.log('Start test with settings:', this.testSettings);
       this.showPopup = false;
     },
-    filterQuestions() {
-      this.filteredQuestions = this.questions.filter(q =>
-          q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+    filterproblems() {
+      this.filteredproblems = this.problems.filter(q =>
+          q.problem.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
           q.answer.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
-      this.sortQuestions(this.sortOrder);
+      this.sortproblems(this.sortOrder);
     },
     toggleSortDropdown() {
       this.showSortDropdown = !this.showSortDropdown;
     },
-    sortQuestions(order) {
+    sortproblems(order) {
       this.sortOrder = order;
       switch(order) {
         case 'newest':
           this.sortValue = "최신순";
-          this.filteredQuestions.sort((a, b) => b.id - a.id);
+          this.filteredproblems.sort((a, b) => b.id - a.id);
           break;
         case 'oldest':
           this.sortValue = "오래된순";
-          this.filteredQuestions.sort((a, b) => a.id - b.id);
+          this.filteredproblems.sort((a, b) => a.id - b.id);
           break;
         case 'correctRateAsc':
           this.sortValue = "정답률 낮은 순";
-          this.filteredQuestions.sort((a, b) => a.correctRate - b.correctRate);
+          this.filteredproblems.sort((a, b) => a.correctRate - b.correctRate);
           break;
         case 'correctRateDesc':
           this.sortValue = "정답률 높은 순";
-          this.filteredQuestions.sort((a, b) => b.correctRate - a.correctRate);
+          this.filteredproblems.sort((a, b) => b.correctRate - a.correctRate);
           break;
       }
       this.showSortDropdown = false;
     },
-    setMaxQuestionCount() {
-      this.testSettings.questionCount = this.questions.length;
+    setMaxproblemCount() {
+      this.testSettings.problemCount = this.problems.length;
     }
   },
   mounted() {
-    this.filterQuestions();
+    this.filterproblems();
   }
 }
 </script>
@@ -493,14 +493,14 @@ a {
   margin-right: 0.5rem;
 }
 
-.add-question-form {
+.add-problem-form {
   display: flex;
   margin-bottom: 2rem;
   gap: 10px;
 }
 
-.add-question-form input,
-.add-question-form textarea {
+.add-problem-form input,
+.add-problem-form textarea {
   flex-grow: 1;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -515,13 +515,13 @@ a {
   cursor: pointer;
 }
 
-.question-list {
+.problem-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.question-item {
+.problem-item {
   background-color: #FFFFFF;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -531,7 +531,7 @@ a {
   position: relative;
 }
 
-.question-actions {
+.problem-actions {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -539,13 +539,13 @@ a {
   gap: 5px;
 }
 
-.question-item:hover {
+.problem-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.question-edit-form input,
-.question-edit-form textarea {
+.problem-edit-form input,
+.problem-edit-form textarea {
   width: 100%;
   margin-bottom: 0.5rem;
   padding: 0.5rem;

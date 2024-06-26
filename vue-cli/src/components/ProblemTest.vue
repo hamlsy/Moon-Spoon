@@ -3,19 +3,19 @@
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
-      <div class="question-list">
+      <div class="problem-list">
         <div
-            v-for="(question, index) in questions"
+            v-for="(problem, index) in problems"
             :key="index"
-            :class="['question-item', {
+            :class="['problem-item', {
             'unanswered': !userAnswers[index],
             'answered': userAnswers[index],
           }]"
-            @click="goToQuestion(index)"
+            @click="goToproblem(index)"
         >
-          <span class="question-number">{{ index + 1 }}</span>
+          <span class="problem-number">{{ index + 1 }}</span>
           <span class="answer-preview">
-            {{ getQuestionPreview(index) }}
+            {{ getproblemPreview(index) }}
             <br>
             <span style="font-size: 0.8em; color: darkslategray">
               {{ getAnswerPreview(index) }}
@@ -28,24 +28,24 @@
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
-      <div class="question-content">
-        <h2>문제 {{ currentQuestionIndex + 1 }}</h2>
-        <p>{{ currentQuestion.question }}</p>
+      <div class="problem-content">
+        <h2>문제 {{ currentproblemIndex + 1 }}</h2>
+        <p>{{ currentproblem.problem }}</p>
       </div>
       <textarea
-          v-model="userAnswers[currentQuestionIndex]"
+          v-model="userAnswers[currentproblemIndex]"
           placeholder="답변을 입력하세요"
       ></textarea>
       <div class="navigation-buttons">
         <button
-            v-if="currentQuestionIndex > 0"
-            @click="goToPreviousQuestion"
+            v-if="currentproblemIndex > 0"
+            @click="goToPreviousproblem"
         >
           이전
         </button>
         <button
-            v-if="currentQuestionIndex < questions.length - 1"
-            @click="goToNextQuestion"
+            v-if="currentproblemIndex < problems.length - 1"
+            @click="goToNextproblem"
         >
           다음
         </button>
@@ -85,7 +85,7 @@
 export default {
   data() {
     return {
-      questions: [
+      problems: [
         { question: "1 + 1 = ?" },
         { question: "2 * 3 = ?" },
         { question: "10 / 2 = ?" },
@@ -94,24 +94,18 @@ export default {
         { question: "10 / 2 = ?" },
         { question: "10 / 2 = ?" },
         { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "120391240210412049120421041204921049210490" },
-
 
         // 더 많은 문제 추가...
       ],
       userAnswers: [],
-      currentQuestionIndex: 0,
+      currentproblemIndex: 0,
       showExitPopup: false,
       showSubmitPopup: false
     }
   },
   computed: {
-    currentQuestion() {
-      return this.questions[this.currentQuestionIndex];
+    currentproblem() {
+      return this.problems[this.currentproblemIndex];
     }
   },
   methods: {
@@ -120,22 +114,22 @@ export default {
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
     },
-    getQuestionPreview(index){
-      const question = this.questions[index].question;
-      if (!question) return '';
-      return question.length > 13 ? question.substring(0, 13) + '...' : question;
+    getproblemPreview(index){
+      const problem = this.problems[index].problem;
+      if (!problem) return '';
+      return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
-    goToQuestion(index) {
-      this.currentQuestionIndex = index;
+    goToproblem(index) {
+      this.currentproblemIndex = index;
     },
-    goToPreviousQuestion() {
-      if (this.currentQuestionIndex > 0) {
-        this.currentQuestionIndex--;
+    goToPreviousproblem() {
+      if (this.currentproblemIndex > 0) {
+        this.currentproblemIndex--;
       }
     },
-    goToNextQuestion() {
-      if (this.currentQuestionIndex < this.questions.length - 1) {
-        this.currentQuestionIndex++;
+    goToNextproblem() {
+      if (this.currentproblemIndex < this.problems.length - 1) {
+        this.currentproblemIndex++;
       }
     },
     exitTest() {
@@ -257,21 +251,21 @@ a {
   margin-right: 0.5rem;
 }
 
-.add-question-form input,
-.add-question-form textarea {
+.add-problem-form input,
+.add-problem-form textarea {
   flex-grow: 1;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
-.question-list {
+.problem-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 
-.question-item {
+.problem-item {
   background-color: #FFFFFF;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -282,13 +276,13 @@ a {
 }
 
 
-.question-item:hover {
+.problem-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-.question-edit-form input,
-.question-edit-form textarea {
+.problem-edit-form input,
+.problem-edit-form textarea {
   width: 100%;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
@@ -342,12 +336,12 @@ a {
   margin-bottom: 20px;
 }
 
-.question-list {
+.problem-list {
   display: flex;
   flex-direction: column;
 }
 
-.question-item {
+.problem-item {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -355,16 +349,16 @@ a {
   cursor: pointer;
 }
 
-.question-item.unanswered {
+.problem-item.unanswered {
   border-left: 3px solid red;
 }
 
-.question-item.answered {
+.problem-item.answered {
   border-left: 3px solid green;
 }
 
 
-.question-number {
+.problem-number {
   font-weight: bold;
   margin-right: 10px;
 }
@@ -376,7 +370,7 @@ a {
   flex-direction: column;
 }
 
-.question-content {
+.problem-content {
   margin-bottom: 20px;
 }
 
@@ -483,7 +477,7 @@ textarea:focus {
   display: flex;
   justify-content: space-between;
 }
-.question-item:hover {
+.problem-item:hover {
   background-color: #e0e0e0;
 }
 
