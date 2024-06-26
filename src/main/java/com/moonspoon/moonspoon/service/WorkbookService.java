@@ -23,6 +23,7 @@ public class WorkbookService {
     @Transactional
     public WorkbookResponse createWorkbook(WorkbookCreateRequest dto){
         Workbook workbook = WorkbookCreateRequest.toEntity(dto);
+        workbook.setCreateDate(LocalDateTime.now());
         workbookRepository.save(workbook);
         return WorkbookResponse.fromEntity(workbook);
     }

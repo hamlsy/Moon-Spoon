@@ -28,6 +28,7 @@ public class Workbook {
     private LocalDateTime updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)

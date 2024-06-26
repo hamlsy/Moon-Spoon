@@ -1,6 +1,5 @@
 package com.moonspoon.moonspoon.controller;
 
-import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
@@ -8,12 +7,11 @@ import com.moonspoon.moonspoon.service.WorkbookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/workbook")
 public class WorkbookController {
@@ -31,7 +29,7 @@ public class WorkbookController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<WorkbookResponse>> findAllWorkbook(){
         List<WorkbookResponse> workbooks = workbookService.findAll();
         return new ResponseEntity<>(workbooks, HttpStatus.OK);
