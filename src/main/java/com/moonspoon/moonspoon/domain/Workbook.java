@@ -22,6 +22,7 @@ public class Workbook {
     private String title;
     private String content;
     private String author;
+    private int problemCount;
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
