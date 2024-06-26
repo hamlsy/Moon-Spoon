@@ -45,7 +45,8 @@
 
 ## ERD 구성
 
-![image](https://github.com/hamlsy/Moon-Spoon/assets/70877744/f3043f65-17e3-4881-8a5d-8425f5c9e195)
+![image](https://github.com/hamlsy/Moon-Spoon/assets/70877744/7f577b28-2fa1-4143-a617-e992d9f56694)
+
 
 
 
