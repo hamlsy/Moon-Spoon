@@ -1,6 +1,9 @@
 package com.moonspoon.moonspoon.controller;
 
 import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
+import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
+import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.service.WorkbookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,27 +20,27 @@ public class WorkbookController {
     private final WorkbookService workbookService;
 
     @PostMapping("/create")
-    public ResponseEntity<Workbook> createWorkbook(@RequestBody Workbook workbook){
-        Workbook createdWorkbook = workbookService.createWorkbook(workbook);
-        return new ResponseEntity<>(createdWorkbook, HttpStatus.OK);
+    public ResponseEntity<WorkbookResponse> createWorkbook(@RequestBody WorkbookCreateRequest dto){
+        WorkbookResponse response = workbookService.createWorkbook(dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Workbook> findWorkbook(@PathVariable("id") Long id){
-        Workbook workbook = workbookService.findOneById(id);
-        return new ResponseEntity<>(workbook, HttpStatus.OK);
+    public ResponseEntity<WorkbookResponse> findWorkbook(@PathVariable("id") Long id){
+        WorkbookResponse response = workbookService.findOneById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Workbook>> findAllWorkbook(){
-        List<Workbook> workbooks = workbookService.findAll();
+    public ResponseEntity<List<WorkbookResponse>> findAllWorkbook(){
+        List<WorkbookResponse> workbooks = workbookService.findAll();
         return new ResponseEntity<>(workbooks, HttpStatus.OK);
     }
 
     @PostMapping("/update/{id}")
-    public ResponseEntity<Workbook> updateWorkbook(@RequestBody Workbook workbook,@PathVariable("id") Long id){
-        Workbook updatedWorkbook = workbookService.updateWorkbook(id, workbook);
-        return new ResponseEntity<>(updatedWorkbook, HttpStatus.OK);
+    public ResponseEntity<WorkbookResponse> updateWorkbook(@RequestBody WorkbookUpdateRequest dto, @PathVariable("id") Long id){
+        WorkbookResponse response = workbookService.updateWorkbook(id, dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
