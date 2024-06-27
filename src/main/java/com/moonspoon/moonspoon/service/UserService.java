@@ -5,6 +5,7 @@ import com.moonspoon.moonspoon.dto.response.UserResponse;
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
 import com.moonspoon.moonspoon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -12,9 +13,14 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public UserResponse signup(UserSignupRequest dto){
         isDuplicated(dto.getUsername(), dto.getName());
+        //비밀번호 암호화
+        String encodedPassword = passwordEncoder.encode(dto.getPassword());
+        dto.setPassword(encodedPassword);
+
         User user = UserSignupRequest.toEntity(dto);
         userRepository.save(user);
         return UserResponse.fromEntity(user);
