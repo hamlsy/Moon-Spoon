@@ -28,6 +28,7 @@ public class Problem {
     private int incorrectCount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
     @Builder

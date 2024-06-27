@@ -22,11 +22,13 @@ public class Workbook {
     private String title;
     private String content;
     private String author;
+    private int problemCount;
 
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
