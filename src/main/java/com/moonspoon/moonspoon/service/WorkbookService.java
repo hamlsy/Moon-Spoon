@@ -75,8 +75,12 @@ public class WorkbookService {
                 .collect(Collectors.toList());
     }
 
+    //수정
     @Transactional
     public WorkbookResponse updateWorkbook(Long id, WorkbookUpdateRequest dto){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+
         Workbook workbook = workbookRepository.findById(id).orElseThrow();
         LocalDateTime currentTime = LocalDateTime.now();
         workbook.update(dto.getTitle(), dto.getContent(), currentTime);
@@ -85,6 +89,9 @@ public class WorkbookService {
 
     @Transactional
     public void deleteWorkbook(Long id){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+
         workbookRepository.deleteById(id);
     }
 
