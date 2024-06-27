@@ -28,6 +28,7 @@ public class InitDB {
         public void dbInit1(){
             User user = new User();
             user.setUsername("dd");
+            user.setName("dd");
             user.setPassword(passwordEncoder.encode("dd"));
             user.setRole(UserRole.USER);
             em.persist(user);
