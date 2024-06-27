@@ -1,5 +1,4 @@
 package com.moonspoon.moonspoon.service;
-
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.dto.request.UserSignupRequest;
 import com.moonspoon.moonspoon.dto.response.UserResponse;
