@@ -34,6 +34,7 @@ public class WorkbookService {
         User user = userRepository.findByUsername(username);
 
         Workbook workbook = WorkbookCreateRequest.toEntity(dto);
+        workbook.setAuthor(user.getName());
         workbook.setCreateDate(LocalDateTime.now());
         workbook.setUser(user);
 
