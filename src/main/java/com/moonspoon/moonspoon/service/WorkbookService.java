@@ -65,8 +65,8 @@ public class WorkbookService {
     public List<WorkbookResponse> findAll(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
-
-        List<Workbook> workbooks = workbookRepository.findAll();
+        User user = userRepository.findByUsername(username);
+        List<Workbook> workbooks = user.getWorkbooks();
         if(workbooks.isEmpty()){
             throw new NotFoundException("문제집이 존재하지 않습니다.");
         }
