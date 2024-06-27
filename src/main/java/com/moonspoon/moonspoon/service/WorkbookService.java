@@ -5,6 +5,7 @@ import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
+import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.repository.UserRepository;
 import com.moonspoon.moonspoon.repository.WorkbookRepository;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,8 +48,14 @@ public class WorkbookService {
         }
     }
 
+    //단일 조회
     public WorkbookResponse findOneById(Long id){
-        Workbook workbook = workbookRepository.findById(id).orElseThrow();
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+
+        Workbook workbook = workbookRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("문제집이 존재하지 않습니다.")
+        );
         return WorkbookResponse.fromEntity(workbook);
     }
 
