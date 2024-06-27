@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.init;
 
 import com.moonspoon.moonspoon.domain.User;
+import com.moonspoon.moonspoon.domain.UserRole;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +29,7 @@ public class InitDB {
             User user = new User();
             user.setUsername("dd");
             user.setPassword(passwordEncoder.encode("dd"));
+            user.setRole(UserRole.USER);
             em.persist(user);
 
         }
