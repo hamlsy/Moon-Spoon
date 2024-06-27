@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,9 +35,9 @@ public class WorkbookService {
 
         Workbook workbook = WorkbookCreateRequest.toEntity(dto);
         workbook.setCreateDate(LocalDateTime.now());
+        workbook.setUser(user);
 
         workbookRepository.save(workbook);
-        workbook.setUser(user);
         return WorkbookResponse.fromEntity(workbook);
     }
 
@@ -56,11 +55,21 @@ public class WorkbookService {
         Workbook workbook = workbookRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("문제집이 존재하지 않습니다.")
         );
+        if(workbook.getAuthor() != username){
+            throw new NotUserException("권한이 없습니다.");
+        }
+
         return WorkbookResponse.fromEntity(workbook);
     }
 
     public List<WorkbookResponse> findAll(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+
         List<Workbook> workbooks = workbookRepository.findAll();
+        if(workbooks.isEmpty()){
+            throw new NotFoundException("문제집이 존재하지 않습니다.");
+        }
         return workbooks.stream()
                 .map(w -> WorkbookResponse.fromEntity(w))
                 .collect(Collectors.toList());
