@@ -56,7 +56,7 @@ public class WorkbookService {
         Workbook workbook = workbookRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("문제집이 존재하지 않습니다.")
         );
-        if(workbook.getUser().getUsername() != username){
+        if(!workbook.getUser().getUsername().equals(username)){
             throw new NotUserException("권한이 없습니다.");
         }
 
