@@ -3,6 +3,7 @@ package com.moonspoon.moonspoon.controller;
 import com.moonspoon.moonspoon.dto.request.UserSignupRequest;
 import com.moonspoon.moonspoon.dto.response.UserResponse;
 import com.moonspoon.moonspoon.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponse> signup(@RequestBody UserSignupRequest dto){
+    public ResponseEntity<UserResponse> signup(@Valid @RequestBody UserSignupRequest dto){
         UserResponse response = userService.signup(dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
