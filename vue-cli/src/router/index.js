@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import LoginForm from "@/components/LoginForm.vue";
-import SignUpForm from "@/components/SignUpForm.vue";
 import MainPage from "@/components/MainPage.vue";
 import problemTest from "@/components/ProblemTest.vue";
 import MyWorkbook from "@/components/MyWorkbook.vue";
 import WorkbookDetail from "@/components/WorkbookDetail.vue";
 import ScoringTest from "@/components/ScoringTest.vue";
+import SignupForm from "@/components/SignupForm.vue";
 
 Vue.use(VueRouter);
 
@@ -21,9 +21,9 @@ const routes = [
         component: LoginForm
     },
     {
-        path: '/user/signUp',
-        name: 'SignUp',
-        component: SignUpForm
+        path: '/user/signup',
+        name: 'Signup',
+        component: SignupForm
     },
     {
         path: '/mainPage',
