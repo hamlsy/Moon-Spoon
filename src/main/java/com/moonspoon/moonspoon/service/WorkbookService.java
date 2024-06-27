@@ -87,10 +87,15 @@ public class WorkbookService {
         return WorkbookResponse.fromEntity(workbook);
     }
 
+    //삭제
     @Transactional
     public void deleteWorkbook(Long id){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
+
+        if(!workbookRepository.existsById(id)){
+            new NotFoundException("문제집이 존재하지 않습니다.");
+        }
 
         workbookRepository.deleteById(id);
     }
