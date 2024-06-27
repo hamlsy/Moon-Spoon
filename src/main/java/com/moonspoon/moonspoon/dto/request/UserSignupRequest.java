@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.dto.request;
 
 import com.moonspoon.moonspoon.domain.User;
+import com.moonspoon.moonspoon.domain.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class UserSignupRequest {
         return User.builder()
                 .username(dto.getUsername())
                 .name(dto.getName())
+                .role(UserRole.USER)
                 .password(dto.getPassword())
                 .build();
     }
