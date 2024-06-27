@@ -1,12 +1,16 @@
 package com.moonspoon.moonspoon.service;
 
+import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
+import com.moonspoon.moonspoon.exception.NotUserException;
+import com.moonspoon.moonspoon.repository.UserRepository;
 import com.moonspoon.moonspoon.repository.WorkbookRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +23,27 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class WorkbookService {
     private final WorkbookRepository workbookRepository;
+    private final UserRepository userRepository;
 
     @Transactional
-    public WorkbookResponse createWorkbook(WorkbookCreateRequest dto){
+    public WorkbookResponse createWorkbook(WorkbookCreateRequest dto) {
+
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+        User user = userRepository.findByUsername(username);
+
         Workbook workbook = WorkbookCreateRequest.toEntity(dto);
         workbook.setCreateDate(LocalDateTime.now());
+
         workbookRepository.save(workbook);
+        workbook.setUser(user);
         return WorkbookResponse.fromEntity(workbook);
+    }
+
+    private void validateUser(String username) {
+        if(username == null || username.equals("anonymousUser")){
+            throw new NotUserException("권한이 없습니다.");
+        }
     }
 
     public WorkbookResponse findOneById(Long id){
