@@ -7,8 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserSignupRequest {
+
     private String username;
+
     private String name;
+
     private String password;
 
     public static User toEntity(UserSignupRequest dto){
