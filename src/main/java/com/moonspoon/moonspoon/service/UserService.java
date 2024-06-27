@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserResponse join(UserSignupRequest dto){
+    public UserResponse signup(UserSignupRequest dto){
         User user = UserSignupRequest.toEntity(dto);
         userRepository.save(user);
         return UserResponse.fromEntity(user);
