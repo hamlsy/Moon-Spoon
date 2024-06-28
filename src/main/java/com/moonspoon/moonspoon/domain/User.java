@@ -28,7 +28,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Problem> problems = new ArrayList<>();
 
     @Builder
