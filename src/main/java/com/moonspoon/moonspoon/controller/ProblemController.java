@@ -39,4 +39,11 @@ public class ProblemController {
         ProblemResponse response = problemService.update(workbookId, id, dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteProblem(
+            @PathVariable("workbookId") Long workbookId, @PathVariable("id") Long id){
+        problemService.delete(workbookId, id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }

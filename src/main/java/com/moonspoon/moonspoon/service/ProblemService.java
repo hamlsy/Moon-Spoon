@@ -100,4 +100,26 @@ public class ProblemService {
 
         return ProblemResponse.fromEntity(problem);
     }
+
+    @Transactional
+    public void delete(Long workbookId, Long problemId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        );
+        if(!workbook.getUser().getUsername().equals(username)){
+            throw new NotUserException("권한이 없습니다.");
+        }
+
+        Problem problem = problemRepository.findById(problemId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제입니다.")
+        );
+
+        if(!workbook.getId().equals(problem.getWorkbook().getId())){
+            throw new ProblemNotInWorkbook("문제집에 존재하지 않는 문제입니다.");
+        }
+
+        problemRepository.delete(problem);
+    }
 }
