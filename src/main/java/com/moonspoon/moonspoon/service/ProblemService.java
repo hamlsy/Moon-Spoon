@@ -15,6 +15,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -50,5 +52,21 @@ public class ProblemService {
         if(username == null || username.equals("anonymousUser")){
             throw new NotUserException("권한이 없습니다.");
         }
+    }
+
+    public List<ProblemResponse> findAll(Long workbookId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        );
+        if(!workbook.getUser().getUsername().equals(username)){
+            throw new NotUserException("권한이 없습니다.");
+        }
+        List<Problem> problems = workbook.getProblems();
+
+        return problems.stream()
+                .map(p -> ProblemResponse.fromEntity(p))
+                .collect(Collectors.toList());
     }
 }
