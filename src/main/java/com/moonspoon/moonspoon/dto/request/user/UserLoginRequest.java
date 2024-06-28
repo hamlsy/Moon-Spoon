@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.request;
+package com.moonspoon.moonspoon.dto.request.user;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.request;
+package com.moonspoon.moonspoon.dto.request.problem;
 
 import com.moonspoon.moonspoon.domain.Problem;
 import jakarta.validation.constraints.NotBlank;

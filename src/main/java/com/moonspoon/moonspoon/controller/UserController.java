@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.controller;
 
-import com.moonspoon.moonspoon.dto.request.UserSignupRequest;
+import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
 import com.moonspoon.moonspoon.dto.response.UserResponse;
 import com.moonspoon.moonspoon.service.UserService;
 import jakarta.validation.Valid;

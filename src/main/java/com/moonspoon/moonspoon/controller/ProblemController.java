@@ -1,7 +1,7 @@
 package com.moonspoon.moonspoon.controller;
 
-import com.moonspoon.moonspoon.dto.request.ProblemCreateRequest;
-import com.moonspoon.moonspoon.dto.request.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
+import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
 import com.moonspoon.moonspoon.service.ProblemService;
 import jakarta.validation.Valid;

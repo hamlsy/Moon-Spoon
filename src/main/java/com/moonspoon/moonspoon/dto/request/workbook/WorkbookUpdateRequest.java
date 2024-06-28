@@ -1,8 +1,7 @@
-package com.moonspoon.moonspoon.dto.request;
+package com.moonspoon.moonspoon.dto.request.workbook;
 
 import com.moonspoon.moonspoon.domain.Workbook;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,20 +9,18 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class WorkbookCreateRequest {
+public class WorkbookUpdateRequest {
 
     @NotBlank(message = "문제집 이름은 필수 입력입니다.")
     private String title;
     private String content;
-    private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
-    public static Workbook toEntity(WorkbookCreateRequest dto){
+    public static Workbook toEntity(WorkbookUpdateRequest dto){
         return Workbook.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .createDate(dto.getCreateDate())
+                .updateDate(dto.getUpdateDate())
                 .build();
     }
-
-
 }
