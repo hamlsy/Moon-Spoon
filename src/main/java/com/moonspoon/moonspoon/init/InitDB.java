@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.init;
 
+import com.moonspoon.moonspoon.domain.Problem;
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.UserRole;
 import com.moonspoon.moonspoon.domain.Workbook;
@@ -43,7 +44,14 @@ public class InitDB {
                 w1.setAuthor(user.getName());
                 w1.setCreateDate(LocalDateTime.now());
                 w1.setUser(user);
-
+                for(int j = 1; j <= 3; j++){
+                    Problem p = new Problem();
+                    p.setQuestion("문제" + j);
+                    p.setSolution("정답" + j);
+                    p.setUser(user);
+                    p.setWorkbook(w1);
+                    em.persist(p);
+                }
                 em.persist(w1);
             }
 
