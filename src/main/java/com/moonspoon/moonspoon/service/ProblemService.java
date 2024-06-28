@@ -15,6 +15,7 @@ import com.moonspoon.moonspoon.repository.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,12 +23,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
     private final UserRepository userRepository;
 
-    public ProblemResponse create(ProblemCreateRequest dto, Long workbookId){
+    @Transactional
+    public ProblemResponse create(Long workbookId, ProblemCreateRequest dto){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
 
@@ -54,6 +57,7 @@ public class ProblemService {
         if(username == null || username.equals("anonymousUser")){
             throw new NotUserException("권한이 없습니다.");
         }
+
     }
 
     public List<ProblemResponse> findAll(Long workbookId){
@@ -65,6 +69,7 @@ public class ProblemService {
         if(!workbook.getUser().getUsername().equals(username)){
             throw new NotUserException("권한이 없습니다.");
         }
+
         List<Problem> problems = workbook.getProblems();
 
         return problems.stream()
@@ -72,6 +77,7 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public ProblemResponse update(Long workbookId, Long problemId, ProblemUpdateRequest dto){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
@@ -86,7 +92,7 @@ public class ProblemService {
                 () -> new NotFoundException("존재하지 않는 문제입니다.")
         );
 
-        if(workbook.getId().equals(problem.getWorkbook().getId())){
+        if(!workbook.getId().equals(problem.getWorkbook().getId())){
             throw new ProblemNotInWorkbook("문제집에 존재하지 않는 문제입니다.");
         }
 

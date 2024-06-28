@@ -1,11 +1,11 @@
 package com.moonspoon.moonspoon.controller;
 
 import com.moonspoon.moonspoon.dto.request.ProblemCreateRequest;
+import com.moonspoon.moonspoon.dto.request.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
 import com.moonspoon.moonspoon.service.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class ProblemController {
     public ResponseEntity<ProblemResponse> createProblem(
             @PathVariable("workbookId") Long workbookId,
             @Valid @RequestBody ProblemCreateRequest dto){
-        ProblemResponse response =  problemService.create(dto, workbookId);
+        ProblemResponse response =  problemService.create(workbookId, dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -32,5 +32,11 @@ public class ProblemController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-
+    @PostMapping("/update/{id}")
+    public ResponseEntity<ProblemResponse> updateProblem(
+            @PathVariable("workbookId") Long workbookId, @PathVariable("id") Long id
+            , @RequestBody ProblemUpdateRequest dto) {
+        ProblemResponse response = problemService.update(workbookId, id, dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
