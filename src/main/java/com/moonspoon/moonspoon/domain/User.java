@@ -28,10 +28,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-    private List<Problem> problems = new ArrayList<>();
-
-
     @Builder
     public User(String username, String name, String password, UserRole role){
         this.username = username;

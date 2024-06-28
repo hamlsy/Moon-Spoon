@@ -31,9 +31,6 @@ public class Problem {
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
 
     @Builder
     public Problem(String solution, String question, Double accuracy, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
@@ -51,10 +48,6 @@ public class Problem {
         workbook.getProblems().add(this);
     }
 
-    public void setUser(User user){
-        this.user = user;
-        user.getProblems().add(this);
-    }
 
     //update
     public void update(String question, String solution, LocalDateTime updateDate){

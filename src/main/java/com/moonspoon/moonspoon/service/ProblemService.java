@@ -46,7 +46,6 @@ public class ProblemService {
         Problem problem = ProblemCreateRequest.toEntitu(dto);
         User user = userRepository.findByUsername(username);
 
-        problem.setUser(user);
         problem.setWorkbook(workbook);
         problem.setCreateDate(LocalDateTime.now());
 

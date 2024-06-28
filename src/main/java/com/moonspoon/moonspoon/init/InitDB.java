@@ -49,7 +49,6 @@ public class InitDB {
                     Problem p = new Problem();
                     p.setQuestion("문제" + j);
                     p.setSolution("정답" + j);
-                    p.setUser(user);
                     p.setWorkbook(w1);
                     em.persist(p);
                 }
