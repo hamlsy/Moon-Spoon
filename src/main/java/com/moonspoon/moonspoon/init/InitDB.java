@@ -63,6 +63,22 @@ public class InitDB {
             user.setPassword(passwordEncoder.encode("aa"));
             user.setRole(UserRole.USER);
             em.persist(user);
+
+            Workbook w = new Workbook();
+            w.setTitle("aa workbook");
+            w.setContent("aa content");
+            w.setAuthor(user.getName());
+            w.setCreateDate(LocalDateTime.now());
+            w.setUser(user);
+            em.persist(w);
+
+            Problem p = new Problem();
+            p.setQuestion("a question");
+            p.setSolution("a solution");
+            p.setWorkbook(w);
+            em.persist(p);
+
+
         }
     }
 }
