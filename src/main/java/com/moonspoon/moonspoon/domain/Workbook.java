@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -32,7 +33,7 @@ public class Workbook {
     private User user;
 
     @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
-    private List<Problem> problems;
+    private List<Problem> problems = new ArrayList<>();
 
 
     @Builder
