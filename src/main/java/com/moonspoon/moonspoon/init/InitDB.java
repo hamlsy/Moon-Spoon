@@ -21,6 +21,7 @@ public class InitDB {
     @PostConstruct
     public void init(){
         initService.dbInit1();
+        initService.dbInit2();
     }
 
     @Component
@@ -55,6 +56,14 @@ public class InitDB {
                 em.persist(w1);
             }
 
+        }
+        public void dbInit2(){
+            User user = new User();
+            user.setUsername("aa");
+            user.setName("aa");
+            user.setPassword(passwordEncoder.encode("aa"));
+            user.setRole(UserRole.USER);
+            em.persist(user);
         }
     }
 }
