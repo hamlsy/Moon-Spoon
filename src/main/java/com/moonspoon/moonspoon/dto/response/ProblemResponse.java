@@ -25,6 +25,7 @@ public class ProblemResponse {
         return ProblemResponse.builder()
                 .question(problem.getQuestion())
                 .solution(problem.getSolution())
+                .createDate(problem.getCreateDate())
                 .build();
     }
 }
