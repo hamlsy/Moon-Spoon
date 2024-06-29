@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,17 +128,32 @@ public class ProblemService {
 
     //Test logic
     public List<TestProblemResponse> getTestProblems(Long workbookId , TestRequest dto){
-        List<Problem> problems = workbookRepository.findById(workbookId)
-                .orElseThrow(() -> new NotFoundException("존재하지 않는 문제집입니다."))
-                .getProblems();
-        List<Problem> sortedProblems = setOrderProblemList(dto.getSortOrder(), problems);
-
-        if(dto.isRandom()){
-
-        }else{
-
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        );
+        if(!workbook.getUser().getUsername().equals(username)){
+            throw new NotUserException("권한이 없습니다.");
+        }
+        List<Problem> problems = workbook.getProblems();
+        int selectCount = dto.getProblemCount();
+        if(selectCount > problems.size()){
+            selectCount = problems.size();
         }
 
+        if(dto.isRandom()){
+            //원본 리스트 수정
+            Collections.shuffle(problems);
+        }else{
+            //순서 정렬
+            problems = setOrderProblemList(dto.getSortOrder(), problems);
+        }
+
+        List<Problem> selectedProblems = problems.subList(0, selectCount);
+        return selectedProblems.stream()
+                .map(p -> TestProblemResponse.fromEntity(p))
+                .collect(Collectors.toList());
     }
 
     private List<Problem> setOrderProblemList(String order, List<Problem> problems){
@@ -150,6 +166,8 @@ public class ProblemService {
                 return sortByCorrectRateAsc(problems);
             case "correctRateDesc":
                 return sortByCorrectRateDesc(problems);
+            default:
+                return null;
         }
     }
 
