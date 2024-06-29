@@ -6,8 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TestRequest {
-    private boolean isRandom;
+    private boolean random;
     private int problemCount;
     private String sortOrder;
+
 
 }

@@ -45,10 +45,11 @@ public class InitDB {
                 w1.setAuthor(user.getName());
                 w1.setCreateDate(LocalDateTime.now());
                 w1.setUser(user);
-                for(int j = 1; j <= 3; j++){
+                for(int j = 1; j <= 10; j++){
                     Problem p = new Problem();
                     p.setQuestion("문제" + j);
                     p.setSolution("정답" + j);
+                    p.setCreateDate(LocalDateTime.now());
                     p.setWorkbook(w1);
                     em.persist(p);
                 }
@@ -75,6 +76,7 @@ public class InitDB {
             Problem p = new Problem();
             p.setQuestion("a question");
             p.setSolution("a solution");
+            p.setCreateDate(LocalDateTime.now());
             p.setWorkbook(w);
             em.persist(p);
 
