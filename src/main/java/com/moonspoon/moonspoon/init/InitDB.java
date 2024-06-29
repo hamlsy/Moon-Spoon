@@ -49,6 +49,7 @@ public class InitDB {
                     Problem p = new Problem();
                     p.setQuestion("문제" + j);
                     p.setSolution("정답" + j);
+                    p.setCorrectRate(0.1 * j);
                     p.setCreateDate(LocalDateTime.now().plusMinutes(j*10));
                     p.setWorkbook(w1);
                     em.persist(p);
