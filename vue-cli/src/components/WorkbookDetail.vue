@@ -88,6 +88,10 @@
           <p>출제 순서:</p>
           <div class="radio-group">
             <label>
+              <input type="radio" v-model="testSettings.order" value="none" />
+              <span>기본 값</span>
+            </label>
+            <label>
               <input type="radio" v-model="testSettings.order" value="correctRateAsc" />
               <span>정답률 낮은 순</span>
             </label>

@@ -2,7 +2,9 @@ package com.moonspoon.moonspoon.controller;
 
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
+import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
 import com.moonspoon.moonspoon.service.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +47,12 @@ public class ProblemController {
             @PathVariable("workbookId") Long workbookId, @PathVariable("id") Long id){
         problemService.delete(workbookId, id);
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    @PostMapping("/getTest")
+    public ResponseEntity<List<TestProblemResponse>> getTestProblem(
+            @PathVariable("workbookId") Long workbookId, @RequestBody TestRequest dto){
+        List<TestProblemResponse> response = problemService.getTestProblems(workbookId, dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -5,7 +5,9 @@ import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
+import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
@@ -18,6 +20,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -121,4 +125,78 @@ public class ProblemService {
 
         problemRepository.delete(problem);
     }
+
+    //Test logic
+    public List<TestProblemResponse> getTestProblems(Long workbookId , TestRequest dto){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        validateUser(username);
+        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        );
+        if(!workbook.getUser().getUsername().equals(username)){
+            throw new NotUserException("권한이 없습니다.");
+        }
+        List<Problem> problems = workbook.getProblems();
+
+        int selectCount = Math.min(dto.getProblemCount(), problems.size());
+
+        if(dto.isRandom() && !dto.getSortOrder().equals("none")){
+            //순서 정렬
+            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
+            Collections.shuffle(problems);
+        }else if(dto.isRandom() && dto.getSortOrder().equals("none")){
+            Collections.shuffle(problems);
+            problems = problems.subList(0, selectCount);
+        }else if(!dto.isRandom() && !dto.getSortOrder().equals("none")){
+            //순서 정렬
+            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
+        }else{
+            //순서 정렬
+            problems = setOrderProblemList("asc", problems).subList(0, selectCount);
+        }
+
+        return problems.stream()
+                .map(p -> TestProblemResponse.fromEntity(p))
+                .collect(Collectors.toList());
+    }
+
+    private List<Problem> setOrderProblemList(String order, List<Problem> problems){
+        switch(order){
+            case "asc":
+                return sortByCreateDateAsc(problems);
+            case "desc":
+                return sortByCreateDateDesc(problems);
+            case "correctRateAsc":
+                return sortByCorrectRateAsc(problems);
+            case "correctRateDesc":
+                return sortByCorrectRateDesc(problems);
+            default:
+                return problems;
+        }
+    }
+
+    private List<Problem> sortByCorrectRateAsc(List<Problem> problems){
+        return problems.stream()
+                .sorted(Comparator.comparingDouble(Problem::getCorrectRate))
+                .collect(Collectors.toList());
+    }
+
+    private List<Problem> sortByCorrectRateDesc(List<Problem> problems){
+        return problems.stream()
+                .sorted(Comparator.comparingDouble(Problem::getCorrectRate).reversed())
+                .collect(Collectors.toList());
+    }
+
+    private List<Problem> sortByCreateDateAsc(List<Problem> problems){
+        return problems.stream()
+                .sorted(Comparator.comparing(Problem::getCreateDate))
+                .collect(Collectors.toList());
+    }
+
+    private List<Problem> sortByCreateDateDesc(List<Problem> problems){
+        return problems.stream()
+                .sorted(Comparator.comparing(Problem::getCreateDate).reversed())
+                .collect(Collectors.toList());
+    }
+
 }
