@@ -137,20 +137,31 @@ public class ProblemService {
             throw new NotUserException("권한이 없습니다.");
         }
         List<Problem> problems = workbook.getProblems();
+
         int selectCount = dto.getProblemCount();
         if(selectCount > problems.size()){
             selectCount = problems.size();
         }
 
-        if(dto.isRandom()){
-            //원본 리스트 수정
-            Collections.shuffle(problems);
-        }else{
+        if(dto.isRandom() && !dto.getSortOrder().equals("none")){
             //순서 정렬
             problems = setOrderProblemList(dto.getSortOrder(), problems);
+            List<Problem> selectedProblems = problems.subList(0, selectCount);
+            Collections.shuffle(selectedProblems);
+        }else if(dto.isRandom() && dto.getSortOrder().equals("none")){
+            Collections.shuffle(problems);
+            List<Problem> selectedProblems = problems.subList(0, selectCount);
+        }else if(!dto.isRandom() && !dto.getSortOrder().equals("none")){
+            //순서 정렬
+            problems = setOrderProblemList(dto.getSortOrder(), problems);
+            List<Problem> selectedProblems = problems.subList(0, selectCount);
+        }else{
+            //순서 정렬
+            problems = setOrderProblemList("asc", problems);
+            List<Problem> selectedProblems = problems.subList(0, selectCount);
         }
 
-        List<Problem> selectedProblems = problems.subList(0, selectCount);
+
         return selectedProblems.stream()
                 .map(p -> TestProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
@@ -167,7 +178,7 @@ public class ProblemService {
             case "correctRateDesc":
                 return sortByCorrectRateDesc(problems);
             default:
-                return null;
+                return problems;
         }
     }
 
