@@ -31,6 +31,7 @@ public class Problem {
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
+
     @Builder
     public Problem(String solution, String question, Double accuracy, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
         this.solution = solution;
@@ -46,6 +47,7 @@ public class Problem {
         this.workbook = workbook;
         workbook.getProblems().add(this);
     }
+
 
     //update
     public void update(String question, String solution, LocalDateTime updateDate){

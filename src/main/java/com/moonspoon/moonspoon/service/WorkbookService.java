@@ -2,8 +2,8 @@ package com.moonspoon.moonspoon.service;
 
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.Workbook;
-import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
-import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
+import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;

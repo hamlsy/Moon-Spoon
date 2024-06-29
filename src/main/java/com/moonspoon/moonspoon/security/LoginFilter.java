@@ -1,7 +1,7 @@
 package com.moonspoon.moonspoon.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.moonspoon.moonspoon.dto.request.UserLoginRequest;
+import com.moonspoon.moonspoon.dto.request.user.UserLoginRequest;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

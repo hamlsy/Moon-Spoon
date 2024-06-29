@@ -1,7 +1,7 @@
 package com.moonspoon.moonspoon.controller;
 
-import com.moonspoon.moonspoon.dto.request.WorkbookCreateRequest;
-import com.moonspoon.moonspoon.dto.request.WorkbookUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
+import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.service.WorkbookService;
 import jakarta.validation.Valid;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.AccessDeniedException;
 import java.util.List;
 
 @RestController

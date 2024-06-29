@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.request;
+package com.moonspoon.moonspoon.dto.request.user;
 
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.UserRole;

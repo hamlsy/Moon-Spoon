@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.init;
 
+import com.moonspoon.moonspoon.domain.Problem;
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.UserRole;
 import com.moonspoon.moonspoon.domain.Workbook;
@@ -20,6 +21,7 @@ public class InitDB {
     @PostConstruct
     public void init(){
         initService.dbInit1();
+        initService.dbInit2();
     }
 
     @Component
@@ -43,9 +45,39 @@ public class InitDB {
                 w1.setAuthor(user.getName());
                 w1.setCreateDate(LocalDateTime.now());
                 w1.setUser(user);
-
+                for(int j = 1; j <= 3; j++){
+                    Problem p = new Problem();
+                    p.setQuestion("문제" + j);
+                    p.setSolution("정답" + j);
+                    p.setWorkbook(w1);
+                    em.persist(p);
+                }
                 em.persist(w1);
             }
+
+        }
+        public void dbInit2(){
+            User user = new User();
+            user.setUsername("aa");
+            user.setName("aa");
+            user.setPassword(passwordEncoder.encode("aa"));
+            user.setRole(UserRole.USER);
+            em.persist(user);
+
+            Workbook w = new Workbook();
+            w.setTitle("aa workbook");
+            w.setContent("aa content");
+            w.setAuthor(user.getName());
+            w.setCreateDate(LocalDateTime.now());
+            w.setUser(user);
+            em.persist(w);
+
+            Problem p = new Problem();
+            p.setQuestion("a question");
+            p.setSolution("a solution");
+            p.setWorkbook(w);
+            em.persist(p);
+
 
         }
     }
