@@ -138,31 +138,24 @@ public class ProblemService {
         }
         List<Problem> problems = workbook.getProblems();
 
-        int selectCount = dto.getProblemCount();
-        if(selectCount > problems.size()){
-            selectCount = problems.size();
-        }
+        int selectCount = Math.min(dto.getProblemCount(), problems.size());
 
         if(dto.isRandom() && !dto.getSortOrder().equals("none")){
             //순서 정렬
-            problems = setOrderProblemList(dto.getSortOrder(), problems);
-            List<Problem> selectedProblems = problems.subList(0, selectCount);
-            Collections.shuffle(selectedProblems);
+            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
+            Collections.shuffle(problems);
         }else if(dto.isRandom() && dto.getSortOrder().equals("none")){
             Collections.shuffle(problems);
-            List<Problem> selectedProblems = problems.subList(0, selectCount);
+            problems = problems.subList(0, selectCount);
         }else if(!dto.isRandom() && !dto.getSortOrder().equals("none")){
             //순서 정렬
-            problems = setOrderProblemList(dto.getSortOrder(), problems);
-            List<Problem> selectedProblems = problems.subList(0, selectCount);
+            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
         }else{
             //순서 정렬
-            problems = setOrderProblemList("asc", problems);
-            List<Problem> selectedProblems = problems.subList(0, selectCount);
+            problems = setOrderProblemList("asc", problems).subList(0, selectCount);
         }
 
-
-        return selectedProblems.stream()
+        return problems.stream()
                 .map(p -> TestProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
     }
