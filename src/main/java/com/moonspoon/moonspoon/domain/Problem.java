@@ -20,7 +20,7 @@ public class Problem {
 
     private String solution;
     private String question;
-    private Double accuracy;
+    private double correctRate;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
@@ -33,10 +33,10 @@ public class Problem {
 
 
     @Builder
-    public Problem(String solution, String question, Double accuracy, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
+    public Problem(String solution, String question, Double correctRate, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
         this.solution = solution;
         this.question = question;
-        this.accuracy = accuracy;
+        this.correctRate = correctRate;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.correctCount = correctCount;
