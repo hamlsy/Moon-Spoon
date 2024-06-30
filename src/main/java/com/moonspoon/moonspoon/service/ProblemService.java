@@ -5,8 +5,10 @@ import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
+import com.moonspoon.moonspoon.dto.response.TestResultResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
@@ -171,4 +173,32 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
+    public List<TestResultResponse> getTestResultProblem(Long workbookId, List<TestResultRequest> dto){
+        //검증 로직
+        validateUserAndWorkbook(workbookId);
+        List<TestResultResponse> responses =  dto.stream()
+                .map(d -> {
+                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
+                            () -> new NotFoundException("존재하지 않는 문제입니다.")
+                    );
+                    TestResultResponse res = TestResultResponse.fromEntity(problem);
+                    res.setInput(d.getInput());
+                    res.setResult(compareStrings(d.getInput(), problem.getSolution()));
+                    return res;
+                        })
+                .collect(Collectors.toList());
+
+        return responses;
+
+    }
+
+    private String compareStrings(String input, String sol){
+        String inputData = input.replaceAll("\\s", "").toLowerCase();
+        String solution = sol.replaceAll("\\s", "").toLowerCase();
+        if(inputData.equals(solution)){
+            return "correct";
+        }else{
+            return "incorrect";
+        }
+    }
 }
