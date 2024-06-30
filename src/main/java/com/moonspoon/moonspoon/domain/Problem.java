@@ -56,4 +56,14 @@ public class Problem {
         this.updateDate = updateDate;
     }
 
+    //비즈니스 로직
+    public void addCorrectCount(){
+        this.correctCount++;
+        this.correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+    }
+
+    public void addIncorrectCount(){
+        this.incorrectCount++;
+        this.correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+    }
 }

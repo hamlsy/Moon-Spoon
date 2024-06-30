@@ -6,9 +6,11 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.TestResultResponse;
+import com.moonspoon.moonspoon.dto.response.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
@@ -202,5 +204,29 @@ public class ProblemService {
         }
     }
 
+    public List<TestResultSubmitResponse> testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
+        //검증 로직
+        validateUserAndWorkbook(workbookId);
+        List<TestResultSubmitResponse> responses = dto.stream()
+                .map(d -> {
+                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
+                            () -> new NotFoundException("존재하지 않는 문제입니다.")
+                    );
+                    TestResultSubmitResponse res =  TestResultSubmitResponse.fromEntity(problem);
+                    calculateCorrectRate(problem, d.getResult());
+                    res.setResult(d.getResult());
+                    return res;
+                })
+                .collect(Collectors.toList());
+        return responses;
+    }
+
+    private void calculateCorrectRate(Problem problem, String result){
+        if(result.equals("correct")){
+            problem.addCorrectCount();
+        }else{
+            problem.addIncorrectCount();
+        }
+    }
 
 }
