@@ -4,9 +4,11 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.response.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.TestResultResponse;
+import com.moonspoon.moonspoon.dto.response.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.service.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -63,6 +65,13 @@ public class ProblemController {
             @PathVariable("workbookId") Long workbookId,
             @RequestBody List<TestResultRequest> dto){
         List<TestResultResponse> responses = problemService.getTestResultProblem(workbookId, dto);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @PostMapping("/submitTestResult")
+    public ResponseEntity<List<TestResultSubmitResponse>> submitTestResult(
+            @PathVariable("workbookId") Long workbookId, @RequestBody List<TestResultSubmitRequest> dto){
+        List<TestResultSubmitResponse> responses = problemService.testResultSubmit(workbookId, dto);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 }
