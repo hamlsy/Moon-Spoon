@@ -17,7 +17,7 @@ public class ProblemCreateRequest {
     @NotBlank(message = "정답은 필수 입력 사항입니다.")
     private String solution;
 
-    public static Problem toEntitu(ProblemCreateRequest dto){
+    public static Problem toEntity(ProblemCreateRequest dto){
         return Problem.builder()
                 .question(dto.getQuestion())
                 .solution(dto.getSolution())
