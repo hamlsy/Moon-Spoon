@@ -204,6 +204,7 @@ public class ProblemService {
         }
     }
 
+    @Transactional
     public List<TestResultSubmitResponse> testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
         //검증 로직
         validateUserAndWorkbook(workbookId);
@@ -212,8 +213,8 @@ public class ProblemService {
                     Problem problem = problemRepository.findById(d.getId()).orElseThrow(
                             () -> new NotFoundException("존재하지 않는 문제입니다.")
                     );
-                    TestResultSubmitResponse res =  TestResultSubmitResponse.fromEntity(problem);
                     calculateCorrectRate(problem, d.getResult());
+                    TestResultSubmitResponse res =  TestResultSubmitResponse.fromEntity(problem);
                     res.setResult(d.getResult());
                     return res;
                 })
