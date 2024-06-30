@@ -24,7 +24,6 @@ public class WorkbookResponse {
         this.title = title;
         this.content = content;
         this.problemCount = problemCount;
-
         this.createDate = createDate;
         this.updateDate = updateDate;
     }
