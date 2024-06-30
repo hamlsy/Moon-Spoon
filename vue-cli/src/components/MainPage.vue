@@ -4,9 +4,9 @@
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
         <li><a href="#" @click="navigateTo('home')">홈</a></li>
-        <li><router-link to="/user/login">로그인</router-link></li>
-        <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('create')">로그아웃</a></li>
+        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
+        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
+        <li><router-link to="/user/signup" >회원가입</router-link></li>
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
     </nav>
@@ -57,12 +57,24 @@ export default {
   name: 'MainPage',
   data(){
     return {
+      isLogin: false
     }
   },
   methods: {
+    checkLogin(){
+      this.isLogin = !!localStorage.getItem('token');
+    },
     navigateTo(page) {
       console.log('Navigating to:', page);
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
     }
+  },
+  created() {
+    this.checkLogin()
   }
 }
 </script>
