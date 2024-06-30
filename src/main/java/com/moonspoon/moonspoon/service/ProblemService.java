@@ -1,7 +1,6 @@
 package com.moonspoon.moonspoon.service;
 
 import com.moonspoon.moonspoon.domain.Problem;
-import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
@@ -35,9 +34,21 @@ public class ProblemService {
 
     @Transactional
     public ProblemResponse create(Long workbookId, ProblemCreateRequest dto){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
+        Workbook workbook = validateUserAndWorkbook(workbookId);
 
+        Problem problem = ProblemCreateRequest.toEntity(dto);
+
+        problem.setWorkbook(workbook);
+        problem.setCreateDate(LocalDateTime.now());
+
+        problemRepository.save(problem);
+        return ProblemResponse.fromEntity(problem);
+    }
+    private Workbook validateUserAndWorkbook(Long workbookId) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(username == null || username.equals("anonymousUser")){
+            throw new NotUserException("권한이 없습니다.");
+        }
         //문제집 예외
         Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제집입니다.")
@@ -46,32 +57,11 @@ public class ProblemService {
         if(!workbook.getUser().getUsername().equals(username)){
             throw new NotUserException("권한이 없습니다.");
         }
-
-        Problem problem = ProblemCreateRequest.toEntitu(dto);
-        User user = userRepository.findByUsername(username);
-
-        problem.setWorkbook(workbook);
-        problem.setCreateDate(LocalDateTime.now());
-
-        problemRepository.save(problem);
-        return ProblemResponse.fromEntity(problem);
-    }
-    private void validateUser(String username) {
-        if(username == null || username.equals("anonymousUser")){
-            throw new NotUserException("권한이 없습니다.");
-        }
-
+        return workbook;
     }
 
     public List<ProblemResponse> findAll(Long workbookId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
-        );
-        if(!workbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
+        Workbook workbook = validateUserAndWorkbook(workbookId);
 
         List<Problem> problems = workbook.getProblems();
 
@@ -82,14 +72,8 @@ public class ProblemService {
 
     @Transactional
     public ProblemResponse update(Long workbookId, Long problemId, ProblemUpdateRequest dto){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
-        );
-        if(!workbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
+
+        Workbook workbook = validateUserAndWorkbook(workbookId);
 
         Problem problem = problemRepository.findById(problemId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제입니다.")
@@ -106,14 +90,7 @@ public class ProblemService {
 
     @Transactional
     public void delete(Long workbookId, Long problemId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
-        );
-        if(!workbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
+        Workbook workbook = validateUserAndWorkbook(workbookId);
 
         Problem problem = problemRepository.findById(problemId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제입니다.")
@@ -128,14 +105,9 @@ public class ProblemService {
 
     //Test logic
     public List<TestProblemResponse> getTestProblems(Long workbookId , TestRequest dto){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
-        );
-        if(!workbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
+
+        Workbook workbook = validateUserAndWorkbook(workbookId);
+
         List<Problem> problems = workbook.getProblems();
 
         int selectCount = Math.min(dto.getProblemCount(), problems.size());
