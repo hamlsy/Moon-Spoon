@@ -11,21 +11,27 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class WorkbookResponse {
+    private Long id;
     private String title;
     private String content;
+    private int problemCount;
     private LocalDateTime createDate;
 
     @Builder
-    public WorkbookResponse(String title, String content, LocalDateTime createDate){
+    public WorkbookResponse(Long id, String title, int problemCount, String content, LocalDateTime createDate){
         this.title = title;
         this.content = content;
         this.createDate = createDate;
+        this.problemCount = problemCount;
+        this.id = id;
     }
 
     public static WorkbookResponse fromEntity(Workbook workbook){
         return WorkbookResponse.builder()
+                .id(workbook.getId())
                 .title(workbook.getTitle())
                 .content(workbook.getContent())
+                .problemCount(workbook.getProblems().size())
                 .createDate(workbook.getCreateDate())
                 .build();
     }
