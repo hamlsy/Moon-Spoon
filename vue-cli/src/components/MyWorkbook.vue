@@ -125,8 +125,8 @@ export default {
         title: this.newWorkbook.title,
         content: this.newWorkbook.content,
         createDate: new Date().toISOString().split('T')[0],
-        // problemCount: 0,
-        // updateDate: new Date().toISOString().split('T')[0]
+        problemCount: 0,
+        updateDate: new Date().toISOString().split('T')[0]
       };
       this.workbooks.push(newWorkbook);
       this.showAddPopup = false;

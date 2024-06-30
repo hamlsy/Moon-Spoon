@@ -16,14 +16,17 @@ public class WorkbookResponse {
     private String content;
     private int problemCount;
     private LocalDateTime createDate;
+    private LocalDateTime updateDate;
 
     @Builder
-    public WorkbookResponse(Long id, String title, int problemCount, String content, LocalDateTime createDate){
+    public WorkbookResponse(Long id, String title, int problemCount, String content, LocalDateTime createDate, LocalDateTime updateDate){
+        this.id = id;
         this.title = title;
         this.content = content;
-        this.createDate = createDate;
         this.problemCount = problemCount;
-        this.id = id;
+
+        this.createDate = createDate;
+        this.updateDate = updateDate;
     }
 
     public static WorkbookResponse fromEntity(Workbook workbook){
@@ -32,6 +35,7 @@ public class WorkbookResponse {
                 .title(workbook.getTitle())
                 .content(workbook.getContent())
                 .problemCount(workbook.getProblems().size())
+                .updateDate(workbook.getUpdateDate())
                 .createDate(workbook.getCreateDate())
                 .build();
     }
