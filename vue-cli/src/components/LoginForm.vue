@@ -5,7 +5,7 @@
     <form @submit.prevent="login">
       <div class="input-group">
         <label for="userId">ID</label>
-        <input type="text" id="userId" v-model="userId" required placeholder="아이디를 입력하세요.">
+        <input type="text" id="username" v-model="username" required placeholder="아이디를 입력하세요.">
       </div>
       <div class="input-group">
         <label for="password">Password</label>
@@ -20,17 +20,32 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
-      userId: '',
+      username: '',
       password: ''
     }
   },
   methods: {
     login() {
       // 여기에 로그인 로직을 구현하세요
-      console.log('로그인 시도:', this.userId, this.password)
+      axios.post("/login", {
+        username: this.username,
+        password: this.password
+      })
+          .then((res) =>{
+            alert("로그인 성공!");
+            const token = JSON.stringify(res.headers.get('Authorization')).replaceAll(`"`, "");
+            localStorage.setItem("token", token);
+            this.$router.push("/mainPage");
+            console.log("로그인 성공", res);
+          })
+          .catch((res) => {
+            alert("로그인 실패")
+            console.log("로그인 실패", res);
+          })
     }
   }
 }
