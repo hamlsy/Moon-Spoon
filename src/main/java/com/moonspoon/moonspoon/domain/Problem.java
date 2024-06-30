@@ -59,11 +59,13 @@ public class Problem {
     //비즈니스 로직
     public void addCorrectCount(){
         this.correctCount++;
-        this.correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+        double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+        this.correctRate = Math.round(correctRate*10000)/10000.0;
     }
 
     public void addIncorrectCount(){
         this.incorrectCount++;
-        this.correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+        double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
+        this.correctRate = Math.round(correctRate*10000)/10000.0;
     }
 }
