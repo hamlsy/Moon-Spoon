@@ -9,7 +9,7 @@
       </div>
       <div class="input-group">
         <label for="userId">ID</label>
-        <input type="text" id="userId" v-model="userId" required placeholder="아이디(영문 6~12자)">
+        <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)">
       </div>
       <div class="input-group">
         <label for="password">Password</label>
@@ -24,18 +24,33 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       name: '',
-      userId: '',
+      username: '',
       password: ''
     }
   },
   methods: {
     signup() {
       // 여기에 회원가입 로직을 구현하세요
-      console.log('회원가입 시도:', this.name, this.userId, this.password)
+      axios.post("/user/signup", {
+        name: this.name,
+        username: this.username,
+        password: this.password
+      })
+          .then((res) =>{
+            alert("회원가입 성공!");
+            this.$router.push("/user/login");
+            console.log("회원가입 성공", res);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+            console.log("로그인 실패", error);
+          })
     }
   }
 }
