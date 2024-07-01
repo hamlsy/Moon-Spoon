@@ -17,7 +17,7 @@
       </router-link>
 
       <div class="title">
-        <h1>{{ workbook.name }}</h1>
+        <h1>{{ workbook.title }}</h1>
       </div>
 
 
@@ -42,21 +42,21 @@
 
       <div class="problem-list">
         <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
-          <div v-if="editingIndex !== index" class="problem-content">
+          <div v-if="updateIndex !== index" class="problem-content">
             <div class="problem-actions">
-              <button @click="startEditing(index)" class="edit-btn">수정</button>
+              <button @click="startUpdate(index)" class="edit-btn">수정</button>
               <button @click="confirmDelete(problem.id)" class="delete-btn">삭제</button>
             </div>
-            <h3>문제 {{ index }}</h3>
+            <h3>문제 {{ problem.displayNumber }}</h3>
             <p>{{ problem.question }}</p>
             <p><strong>답:</strong> {{ problem.solution }}</p>
             <p><strong>정답률:</strong> {{ problem.correctRate }}%</p>
           </div>
           <div v-else class="problem-edit-form">
-            <input v-model="editingproblem.question" placeholder="문제" />
-            <textarea v-model="editingproblem.solution" placeholder="답"></textarea>
-            <button @click="cancelEdit" class="cancel-btn">취소</button>
-            <button @click="saveEdit" class="save-btn">저장</button>
+            <input v-model="updateProblem.question" placeholder="문제" />
+            <textarea v-model="updateProblem.solution" placeholder="답"></textarea>
+            <button @click="cancelUpdate" class="cancel-btn">취소</button>
+            <button @click="saveUpdate" class="save-btn">저장</button>
           </div>
         </div>
       </div>
@@ -150,15 +150,16 @@ export default {
       isLogin: false,
       showDeletePopup: false,
       problemToDelete: null,
-      editingIndex: null,
-      editingproblem: { question: '', solution: '' },
+      updateIndex: null,
+      updateProblem: { question: '', solution: '' },
       searchQuery: '',
       filteredproblems: [],
       showSortDropdown: false,
       sortOrder: 'newest',
       sortValue: '최신순',
       token: localStorage.getItem('token'),
-      workbookId: ""
+      workbookId: "",
+
     }
   },
   methods: {
@@ -177,7 +178,9 @@ export default {
       this.workbookId = this.$route.fullPath.split("/").pop();
       axios.get(`/workbook/${this.workbookId}/problem/all`, {headers})
           .then((res) => {
-            this.problems = res.data;
+            this.problems = res.data.map((problem, index) => ({
+              ...problem, displayNumber: index + 1
+            }));
             this.filterproblems();
           })
           .catch((error) => {
@@ -190,26 +193,51 @@ export default {
       this.problemToDelete = null;
     },
     addproblem() {
+      const headers = {
+        'Authorization': this.token
+      }
       if (this.newproblem.question && this.newproblem.solution) {
-        const newId = Math.max(...this.problems.map(q => q.id)) + 1;
-        this.problems.push({
-          id: newId,
-          ...this.newproblem,
-          correctRate: 0
-        });
+        axios.post(`/workbook/${this.workbookId}/problem/create`,
+            {
+              question: this.newproblem.question,
+              solution: this.newproblem.solution
+            },{headers})
+            .then((res) => {
+              this.$router.go(0);
+              console.log("CREATE", res);
+            })
+            .catch((error) => {
+              alert(error.data.response.message);
+              this.$router.go(0);
+              console.log("ERROR", error);
+            })
         this.newproblem = { question: '', problem: '' };
         this.filterproblems();
       }
     },
-    startEditing(index) {
-      this.editingIndex = index;
-      this.editingproblem = { ...this.filteredproblems[index] };
+    startUpdate(index) {
+      this.updateIndex = index;
+      this.updateProblem = { ...this.filteredproblems[index] };
     },
-    saveEdit() {
-      if (this.editingproblem.problem && this.editingproblem.answer) {
-        const index = this.problems.findIndex(q => q.id === this.editingproblem.id);
-        this.problems[index] = { ...this.editingproblem };
-        this.editingIndex = null;
+    saveUpdate() {
+      const headers = {
+        'Authorization': this.token
+      }
+      if (this.updateProblem.question && this.updateProblem.solution) {
+        axios.post(`/workbook/${this.workbookId}/problem/update/${this.updateIndex}`,
+            {
+              question: this.updateProblem.question,
+              solution: this.updateProblem.solution
+            }, {headers}
+        ).then((res) => {
+          console.log("UPDATE", this.updateIndex ,res);
+        }).catch((error) => {
+          alert(error.data.response.message);
+          console.log("ERROR", error);
+        })
+        const index = this.problems.findIndex(q => q.id === this.updateProblem.id);
+        this.problems[index] = { ...this.updateProblem };
+        this.updateIndex = null;
         this.filterproblems();
       }
     },
@@ -217,8 +245,8 @@ export default {
       this.problemToDelete = problemId;
       this.showDeletePopup = true;
     },
-    cancelEdit(){
-      this.editingIndex = null;
+    cancelUpdate(){
+      this.updateIndex = null;
     },
     deleteproblem() {
       if (this.problemToDelete) {

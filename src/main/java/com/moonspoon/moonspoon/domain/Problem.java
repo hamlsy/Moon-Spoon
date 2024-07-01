@@ -20,7 +20,7 @@ public class Problem {
 
     private String solution;
     private String question;
-    private double correctRate;
+    private double correctRate = 0.0;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
@@ -36,7 +36,7 @@ public class Problem {
     public Problem(String solution, String question, Double correctRate, LocalDateTime createDate, LocalDateTime updateDate, int correctCount, int incorrectCount) {
         this.solution = solution;
         this.question = question;
-        this.correctRate = correctRate;
+        this.correctRate = correctRate != null ? correctRate : 0.0;
         this.createDate = createDate;
         this.updateDate = updateDate;
         this.correctCount = correctCount;

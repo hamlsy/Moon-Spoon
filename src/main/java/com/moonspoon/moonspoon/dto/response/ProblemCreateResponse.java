@@ -9,32 +9,23 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-public class ProblemResponse {
-    private Long id;
+public class ProblemCreateResponse {
     private String question;
     private String solution;
-    private double correctRate;
     private LocalDateTime createDate;
-    private LocalDateTime updateDate;
 
     @Builder
-    public ProblemResponse(String question, String solution, LocalDateTime createDate, LocalDateTime updateDate, double correctRate, Long id) {
-        this.id = id;
+    public ProblemCreateResponse(String question, String solution, LocalDateTime createDate) {
         this.question = question;
         this.solution = solution;
         this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.correctRate = correctRate;
     }
 
-    public static ProblemResponse fromEntity(Problem problem){
-        return ProblemResponse.builder()
-                .id(problem.getId())
+    public static ProblemCreateResponse fromEntity(Problem problem){
+        return ProblemCreateResponse.builder()
                 .question(problem.getQuestion())
                 .solution(problem.getSolution())
-                .correctRate(problem.getCorrectRate())
                 .createDate(problem.getCreateDate())
-                .updateDate(problem.getUpdateDate())
                 .build();
     }
 }

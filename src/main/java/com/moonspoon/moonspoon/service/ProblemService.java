@@ -7,10 +7,7 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
-import com.moonspoon.moonspoon.dto.response.ProblemResponse;
-import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
-import com.moonspoon.moonspoon.dto.response.TestResultResponse;
-import com.moonspoon.moonspoon.dto.response.TestResultSubmitResponse;
+import com.moonspoon.moonspoon.dto.response.*;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
@@ -37,16 +34,15 @@ public class ProblemService {
     private final UserRepository userRepository;
 
     @Transactional
-    public ProblemResponse create(Long workbookId, ProblemCreateRequest dto){
+    public ProblemCreateResponse create(Long workbookId, ProblemCreateRequest dto){
         Workbook workbook = validateUserAndWorkbook(workbookId);
 
         Problem problem = ProblemCreateRequest.toEntity(dto);
 
         problem.setWorkbook(workbook);
-        problem.setCreateDate(LocalDateTime.now());
 
         problemRepository.save(problem);
-        return ProblemResponse.fromEntity(problem);
+        return ProblemCreateResponse.fromEntity(problem);
     }
     private Workbook validateUserAndWorkbook(Long workbookId) {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
