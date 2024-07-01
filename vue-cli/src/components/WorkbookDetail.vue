@@ -42,7 +42,7 @@
 
       <div class="problem-list">
         <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
-          <div v-if="updateIndex !== index" class="problem-content" @click="showProblemDetail(problem)">
+          <div v-if="updateIndex !== index" class="problem-content" @click="showProblemDetail(problem, $event)">
             <div class="problem-actions">
               <button @click="startUpdate(index)" class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
               <button @click="confirmDelete(problem.id)" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
@@ -342,7 +342,9 @@ export default {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
 
-    showProblemDetail(problem) {
+    showProblemDetail(problem, event) {
+      // 버튼 영역을 클릭한 경우 상세 팝업을 열지 않음
+      if (event.target.closest('.problem-actions')) return;
       this.selectedProblem = problem;
       this.showDetailPopup = true;
     },
