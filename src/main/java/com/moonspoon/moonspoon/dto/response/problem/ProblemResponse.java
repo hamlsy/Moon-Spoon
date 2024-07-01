@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.response;
+package com.moonspoon.moonspoon.dto.response.problem;
 
 import com.moonspoon.moonspoon.domain.Problem;
 import lombok.Builder;

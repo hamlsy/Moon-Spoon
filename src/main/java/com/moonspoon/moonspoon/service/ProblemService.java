@@ -7,7 +7,12 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
-import com.moonspoon.moonspoon.dto.response.*;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemCreateResponse;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemFindAllResponse;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
@@ -60,14 +65,20 @@ public class ProblemService {
         return workbook;
     }
 
-    public List<ProblemResponse> findAll(Long workbookId){
-        Workbook workbook = validateUserAndWorkbook(workbookId);
-
+    public List<ProblemResponse> findAll(Workbook workbook){
         List<Problem> problems = workbook.getProblems();
 
         return problems.stream()
                 .map(p -> ProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
+    }
+
+    public ProblemFindAllResponse findAllWithWorkbookTitle(Long workbookId){
+        Workbook workbook = validateUserAndWorkbook(workbookId);
+        ProblemFindAllResponse response = new ProblemFindAllResponse();
+        response.setProblems(findAll(workbook));
+        response.setWorkbookTitle(workbook.getTitle());
+        return response;
     }
 
     @Transactional

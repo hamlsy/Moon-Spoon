@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.response;
+package com.moonspoon.moonspoon.dto.response.problem;
 
 import lombok.Getter;
 import lombok.Setter;

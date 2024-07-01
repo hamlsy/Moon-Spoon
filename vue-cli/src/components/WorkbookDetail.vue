@@ -12,12 +12,12 @@
     </nav>
 
     <div class="content">
-      <router-link to="/myWorkbooks" class="back-button">
+      <router-link to="/myWorkbook" class="back-button">
         <i class="fas fa-arrow-left"></i> 뒤로가기
       </router-link>
 
       <div class="title">
-        <h1>{{ workbook.title }}</h1>
+        <h1>{{ workbookTitle }}</h1>
       </div>
 
 
@@ -138,7 +138,7 @@ export default {
   name: 'WorkbookDetailPage',
   data() {
     return {
-      workbook: { title: '수학 문제집' },
+      workbookTitle: "",
       problems: [],
       newproblem: { question: '', solution: '' },
       showPopup: false,
@@ -178,9 +178,10 @@ export default {
       this.workbookId = this.$route.fullPath.split("/").pop();
       axios.get(`/workbook/${this.workbookId}/problem/all`, {headers})
           .then((res) => {
-            this.problems = res.data.map((problem, index) => ({
+            this.problems = res.data.problems.map((problem, index) => ({
               ...problem, displayNumber: index + 1
             }));
+            this.workbookTitle = res.data.workbookTitle;
             this.filterproblems();
           })
           .catch((error) => {

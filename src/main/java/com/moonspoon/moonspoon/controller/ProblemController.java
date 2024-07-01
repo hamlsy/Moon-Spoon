@@ -5,7 +5,12 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
-import com.moonspoon.moonspoon.dto.response.*;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemCreateResponse;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemFindAllResponse;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.service.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +35,9 @@ public class ProblemController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<ProblemResponse>> findAllProblem(@PathVariable("workbookId") Long workbookId){
-        List<ProblemResponse> responses = problemService.findAll(workbookId);
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+    public ResponseEntity<ProblemFindAllResponse> findAllProblem(@PathVariable("workbookId") Long workbookId){
+        ProblemFindAllResponse response = problemService.findAllWithWorkbookTitle(workbookId);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/update/{id}")
