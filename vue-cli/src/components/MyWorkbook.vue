@@ -3,10 +3,10 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><router-link to="/mainPage">홈</router-link></li>
-        <li><router-link to="/user/login">로그인</router-link></li>
-        <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('create')">로그아웃</a></li>
+        <li><a href="#" @click="navigateTo('home')">홈</a></li>
+        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
+        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
+        <li><router-link to="/user/signup" >회원가입</router-link></li>
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
     </nav>
@@ -30,14 +30,17 @@
 
       <div class="workbook-container">
         <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card">
-          <button class="delete-btn" @click="confirmDelete(workbook.id)">
-            <i class="fas fa-trash"></i>
-          </button>
-          <h3>{{ workbook.title }}</h3>
-          <p>{{ workbook.content }}</p>
-          <p>생성일: {{ formatDate(workbook.createDate) }}</p>
-          <p>문제 수: {{ workbook.problemCount }}</p>
-          <p>수정일: {{ formatDate(workbook.updateDate) }}</p>
+          <div @click="goWorkbookDetail(workbook.id)">
+            <button class="delete-btn" @click="confirmDelete(workbook.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <h3>{{ workbook.title }}</h3>
+            <p>{{ workbook.content }}</p>
+            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+            <p>문제 수: {{ workbook.problemCount }}</p>
+            <p>수정일: {{ formatDate(workbook.updateDate) }}</p>
+          </div>
+
         </div>
 
         <div class="workbook-card add-workbook" @click="showAddWorkbookPopup">
@@ -95,13 +98,26 @@ export default {
       filteredWorkbooks: [],
       showSortDropdown: false,
       sortOrder: 'newest',
+      isLogin: false,
       token: localStorage.getItem('token')
     }
   },
   created(){
     this.getWorkbook();
+    this.checkLogin();
   },
   methods: {
+    checkLogin(){
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.push("/mainPage");
+    },
+    goWorkbookDetail(workbookId){
+      this.$router.push("/myWorkbookDetail/" + workbookId);
+    },
     getWorkbook(){
       const headers = {
         'Authorization': this.token
