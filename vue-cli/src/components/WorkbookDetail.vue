@@ -253,6 +253,18 @@ export default {
     },
     deleteproblem() {
       if (this.problemToDelete) {
+        const headers = {
+          'Authorization': this.token
+        }
+        axios.delete(`/workbook/${this.workbookId}/problem/delete/${this.problemToDelete}`, {headers})
+            .then((res) => {
+              alert("삭제되었습니다.");
+              console.log("DELETE", res);
+            })
+            .catch((error) => {
+              alert(error.data.response.message);
+              console.log("ERROR", error);
+            })
         this.problems = this.problems.filter(q => q.id !== this.problemToDelete);
         this.filterproblems();
         this.showDeletePopup = false;
