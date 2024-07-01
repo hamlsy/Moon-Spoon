@@ -60,12 +60,12 @@ public class Problem {
     public void addCorrectCount(){
         this.correctCount++;
         double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
-        this.correctRate = Math.round(correctRate*10000)/10000.0;
+        this.correctRate = Math.round(correctRate*10000)/100.0;
     }
 
     public void addIncorrectCount(){
         this.incorrectCount++;
         double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
-        this.correctRate = Math.round(correctRate*10000)/10000.0;
+        this.correctRate = Math.round(correctRate*10000)/100.0;
     }
 }

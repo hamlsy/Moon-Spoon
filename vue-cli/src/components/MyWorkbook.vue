@@ -6,7 +6,7 @@
         <li><a href="#" @click="navigateTo('home')">홈</a></li>
         <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
         <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
-        <li><router-link to="/user/signup" >회원가입</router-link></li>
+        <li><router-link to="/user/signup">회원가입</router-link></li>
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
     </nav>
@@ -116,7 +116,7 @@ export default {
       this.$router.push("/mainPage");
     },
     goWorkbookDetail(workbookId){
-      this.$router.push("/myWorkbookDetail/" + workbookId);
+      this.$router.push(`/workbookDetail/${workbookId}`);
     },
     getWorkbook(){
       const headers = {
