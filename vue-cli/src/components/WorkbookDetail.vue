@@ -144,7 +144,7 @@ export default {
       showPopup: false,
       testSettings: {
         problemCount: 1,
-        isRandom: false,
+        random: false,
         sortOrder: 'asc'
       },
       isLogin: false,
@@ -280,6 +280,10 @@ export default {
     startTest() {
       console.log('Start test with settings:', this.testSettings);
       this.showPopup = false;
+      this.$router.push({
+        path: '/problemTest',
+        query: this.testSettings
+      })
     },
     filterproblems() {
       this.filteredproblems = this.problems.filter(q =>
