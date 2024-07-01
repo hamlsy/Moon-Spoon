@@ -217,28 +217,30 @@ export default {
       }
     },
     startUpdate(index) {
-      this.updateIndex = index;
       this.updateProblem = { ...this.filteredproblems[index] };
+      //해당 위치에서 수정창 열림
+      this.updateIndex = index;
     },
     saveUpdate() {
       const headers = {
         'Authorization': this.token
       }
       if (this.updateProblem.question && this.updateProblem.solution) {
-        axios.post(`/workbook/${this.workbookId}/problem/update/${this.updateIndex}`,
+        axios.post(`/workbook/${this.workbookId}/problem/update/${this.updateProblem.id}`,
             {
               question: this.updateProblem.question,
               solution: this.updateProblem.solution
             }, {headers}
         ).then((res) => {
-          console.log("UPDATE", this.updateIndex ,res);
+          console.log("UPDATE", this.updateProblem.id ,res);
         }).catch((error) => {
           alert(error.data.response.message);
           console.log("ERROR", error);
         })
+        //창 닫기
+        this.updateIndex = null;
         const index = this.problems.findIndex(q => q.id === this.updateProblem.id);
         this.problems[index] = { ...this.updateProblem };
-        this.updateIndex = null;
         this.filterproblems();
       }
     },
