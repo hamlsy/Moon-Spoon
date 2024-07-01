@@ -3,10 +3,10 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><router-link to="/mainPage">홈</router-link></li>
-        <li><router-link to="/user/login">로그인</router-link></li>
+        <li><a href="#" @click="navigateTo('home')">홈</a></li>
+        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
+        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
         <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('create')">로그아웃</a></li>
         <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
       </ul>
     </nav>
@@ -30,14 +30,17 @@
 
       <div class="workbook-container">
         <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card">
-          <button class="delete-btn" @click="confirmDelete(workbook.id)">
-            <i class="fas fa-trash"></i>
-          </button>
-          <h3>{{ workbook.name }}</h3>
-          <p>{{ workbook.description }}</p>
-          <p>생성일: {{ workbook.createdAt }}</p>
-          <p>문제 수: {{ workbook.problemCount }}</p>
-          <p>수정일: {{ workbook.updatedAt }}</p>
+          <div @click="goWorkbookDetail(workbook.id)">
+            <button class="delete-btn" @click="confirmDelete(workbook.id)">
+              <i class="fas fa-trash"></i>
+            </button>
+            <h3>{{ workbook.title }}</h3>
+            <p>{{ workbook.content }}</p>
+            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+            <p>문제 수: {{ workbook.problemCount }}</p>
+            <p>수정일: {{ formatDate(workbook.updateDate) }}</p>
+          </div>
+
         </div>
 
         <div class="workbook-card add-workbook" @click="showAddWorkbookPopup">
@@ -55,8 +58,8 @@
     <div v-if="showAddPopup" class="popup-overlay" @click.self="cancelAddWorkbook">
       <div class="popup">
         <h2>새 문제집 추가</h2>
-        <input v-model="newWorkbook.name" placeholder="문제집 이름" />
-        <textarea v-model="newWorkbook.description" placeholder="설명"></textarea>
+        <input v-model="newWorkbook.title" placeholder="문제집 이름" />
+        <textarea v-model="newWorkbook.content" placeholder="설명"></textarea>
         <div class="popup-buttons">
           <button @click="cancelAddWorkbook">취소</button>
           <button @click="addWorkbook">추가</button>
@@ -79,6 +82,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import dayjs from 'dayjs';
+
 export default {
   name: 'MyWorkbooksPage',
   data() {
@@ -86,15 +92,47 @@ export default {
       workbooks: [],
       showAddPopup: false,
       showDeletePopup: false,
-      newWorkbook: { name: '', description: '' },
+      newWorkbook: { title: '', content: '' },
       workbookToDelete: null,
       searchQuery: '',
       filteredWorkbooks: [],
       showSortDropdown: false,
-      sortOrder: 'newest'
+      sortOrder: 'newest',
+      isLogin: false,
+      token: localStorage.getItem('token')
     }
   },
+  created(){
+    this.getWorkbook();
+    this.checkLogin();
+  },
   methods: {
+    checkLogin(){
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.push("/mainPage");
+    },
+    goWorkbookDetail(workbookId){
+      this.$router.push(`/workbookDetail/${workbookId}`);
+    },
+    getWorkbook(){
+      const headers = {
+        'Authorization': this.token
+      }
+      axios.get("/workbook/all", {headers})
+          .then((res) => {
+            this.workbooks = res.data;
+            this.filterWorkbooks();
+            console.log("workbook loaded", res);
+          }).catch((error) => {
+            alert(error.response.data.message);
+            this.$router.push("/mainPage");
+            console.log("ERROR", error);
+      })
+    },
     navigateTo(page) {
       console.log('Navigating to:', page);
     },
@@ -102,30 +140,49 @@ export default {
       this.showAddPopup = true;
     },
     addWorkbook() {
-      const newId = this.workbooks.length > 0 ? Math.max(...this.workbooks.map(w => w.id)) + 1 : 1;
-      const newWorkbook = {
-        id: newId,
-        name: this.newWorkbook.name,
-        description: this.newWorkbook.description,
-        createdAt: new Date().toISOString().split('T')[0],
-        problemCount: 0,
-        updatedAt: new Date().toISOString().split('T')[0]
-      };
-      this.workbooks.push(newWorkbook);
+      const headers = {
+        'Authorization': this.token
+      }
+      axios.post("/workbook/create",
+          {
+            title: this.newWorkbook.title,
+            content: this.newWorkbook.content
+          },{headers})
+          .then((res) => {
+            //성공시 새로고침
+            this.$router.go(0);
+            console.log("OK", res);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+            console.log("ERROR", error);
+          })
       this.showAddPopup = false;
-      this.newWorkbook = { name: '', description: '' };
+      this.newWorkbook = { title: '', content: '' };
       this.filterWorkbooks();
     },
     cancelAddWorkbook() {
       this.showAddPopup = false;
-      this.newWorkbook = { name: '', description: '' };
+      this.newWorkbook = { title: '', content: '' };
     },
     confirmDelete(workbookId) {
       this.workbookToDelete = workbookId;
       this.showDeletePopup = true;
     },
     deleteWorkbook() {
-      this.workbooks = this.workbooks.filter(w => w.id !== this.workbookToDelete);
+      const headers = {
+        'Authorization': this.token
+      }
+      axios.delete("/workbook/delete/" + this.workbookToDelete, {headers})
+          .then((res) => {
+            alert("삭제되었습니다.");
+            this.$router.go(0);
+            console.log("삭제", res);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+            console.log("ERROR", error);
+          })
       this.showDeletePopup = false;
       this.workbookToDelete = null;
       this.filterWorkbooks();
@@ -136,7 +193,7 @@ export default {
     },
     filterWorkbooks() {
       this.filteredWorkbooks = this.workbooks.filter(w =>
-          w.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+          w.title.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.sortWorkbooks(this.sortOrder);
     },
@@ -147,31 +204,22 @@ export default {
       this.sortOrder = order;
       switch(order) {
         case 'newest':
-          this.filteredWorkbooks.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          this.filteredWorkbooks.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
           break;
         case 'oldest':
-          this.filteredWorkbooks.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+          this.filteredWorkbooks.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
           break;
         case 'alphabetical':
-          this.filteredWorkbooks.sort((a, b) => a.name.localeCompare(b.name));
+          this.filteredWorkbooks.sort((a, b) => a.title.localeCompare(b.title));
           break;
       }
       this.showSortDropdown = false;
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
     }
   },
-  mounted() {
-    this.workbooks = [
-      { id: 1, name: "수학 문제집", description: "기초 수학 문제", createdAt: "2024-01-01", problemCount: 20, updatedAt: "2024-01-05" },
-      { id: 2, name: "영어 문제집", description: "중급 영어 문제", createdAt: "2024-01-02", problemCount: 30, updatedAt: "2024-01-06" },
-      { id: 3, name: "과학 문제집", description: "고급 과학 문제", createdAt: "2024-01-03", problemCount: 25, updatedAt: "2024-01-07" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
-      { id: 4, name: "역사 문제집", description: "한국사 문제", createdAt: "2024-01-04", problemCount: 35, updatedAt: "2024-01-08" },
 
-    ];
-    this.filterWorkbooks();
-  }
 }
 </script>
 

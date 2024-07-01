@@ -1,12 +1,9 @@
 package com.moonspoon.moonspoon.service;
 
-import com.moonspoon.moonspoon.domain.Problem;
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.Workbook;
-import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
-import com.moonspoon.moonspoon.dto.response.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
@@ -69,8 +66,7 @@ public class WorkbookService {
     public List<WorkbookResponse> findAll(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
-        User user = userRepository.findByUsername(username);
-        List<Workbook> workbooks = user.getWorkbooks();
+        List<Workbook> workbooks = workbookRepository.findWorkbookWithUserAndProblems(username);
         if(workbooks.isEmpty()){
             throw new NotFoundException("문제집이 존재하지 않습니다.");
         }

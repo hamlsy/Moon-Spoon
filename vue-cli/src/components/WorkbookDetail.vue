@@ -3,21 +3,21 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><router-link to="/mainPage">홈</router-link></li>
-        <li><router-link to="/user/login">로그인</router-link></li>
-        <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" >로그아웃</a></li>
-        <li><a href="#" >프로필</a></li>
+        <li><a href="#">홈</a></li>
+        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
+        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
+        <li><router-link to="/user/signup" >회원가입</router-link></li>
+        <li><a href="#">프로필</a></li>
       </ul>
     </nav>
 
     <div class="content">
-      <router-link to="/myWorkbooks" class="back-button">
+      <router-link to="/myWorkbook" class="back-button">
         <i class="fas fa-arrow-left"></i> 뒤로가기
       </router-link>
 
       <div class="title">
-        <h1>{{ workbook.name }}</h1>
+        <h1>{{ workbookTitle }}</h1>
       </div>
 
 
@@ -35,28 +35,43 @@
       </div>
 
       <div class="add-problem-form">
-        <input v-model="newproblem.problem" placeholder="문제를 입력하세요" />
-        <textarea v-model="newproblem.answer" placeholder="답을 입력하세요"></textarea>
+        <input v-model="newproblem.question" placeholder="문제를 입력하세요" />
+        <textarea v-model="newproblem.solution" placeholder="답을 입력하세요"></textarea>
         <button @click="addproblem" class="add-btn">+</button>
       </div>
 
       <div class="problem-list">
         <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
-          <div v-if="editingIndex !== index" class="problem-content">
+          <div v-if="updateIndex !== index" class="problem-content" @click="showProblemDetail(problem, $event)">
             <div class="problem-actions">
-              <button @click="startEditing(index)" class="edit-btn">수정</button>
-              <button @click="confirmDelete(problem.id)" class="delete-btn">삭제</button>
+              <button @click="startUpdate(index)" class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+              <button @click="confirmDelete(problem.id)" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
             </div>
-            <h3>문제 {{ problem.id }}</h3>
-            <p>{{ problem.problem }}</p>
-            <p><strong>답:</strong> {{ problem.answer }}</p>
+            <h3>문제 {{ problem.displayNumber }}</h3>
+            <p><span class="problem-text">{{ truncateText(problem.question) }} </span></p>
+            <p><strong>답:</strong> <span class="problem-text">{{ truncateText(problem.solution) }} </span></p>
             <p><strong>정답률:</strong> {{ problem.correctRate }}%</p>
+            <p><strong>생성일:</strong> {{ formatDate(problem.createDate) }}</p>
           </div>
           <div v-else class="problem-edit-form">
-            <input v-model="editingproblem.problem" placeholder="문제" />
-            <textarea v-model="editingproblem.answer" placeholder="답"></textarea>
-            <button @click="cancelEdit" class="cancel-btn">취소</button>
-            <button @click="saveEdit" class="save-btn">저장</button>
+            <input v-model="updateProblem.question" placeholder="문제" />
+            <textarea v-model="updateProblem.solution" placeholder="답"></textarea>
+            <button @click="cancelUpdate" class="cancel-btn">취소</button>
+            <button @click="saveUpdate" class="save-btn">저장</button>
+          </div>
+        </div>
+      </div>
+      <!-- 문제 상세 팝업 -->
+      <div v-if="showDetailPopup" class="popup-overlay" @click="closeDetailPopup">
+        <div class="popup problem-detail-popup" @click.stop>
+          <button @click="closeDetailPopup" class="close-btn"><i class="fas fa-times"></i></button>
+          <h2>문제 상세</h2>
+          <h3>문제 {{ selectedProblem.displayNumber }}</h3>
+          <div class="problem-detail-content">
+            <p><strong>문제:</strong> {{ selectedProblem.question }}</p>
+            <p><strong>답:</strong> {{ selectedProblem.solution }}</p>
+            <p><strong>정답률:</strong> {{ selectedProblem.correctRate }}%</p>
+            <p><strong>생성일:</strong> {{ formatDate(selectedProblem.createdAt) }}</p>
           </div>
         </div>
       </div>
@@ -80,7 +95,7 @@
         </div>
         <div class="form-group checkbox-group">
           <label>
-            <input type="checkbox" v-model="testSettings.isRandom" />
+            <input type="checkbox" v-model="testSettings.random" />
             <span>랜덤</span>
           </label>
         </div>
@@ -132,61 +147,118 @@
 </template>
 
 <script>
+import axios from "axios";
+import dayjs from "dayjs";
+
 export default {
   name: 'WorkbookDetailPage',
   data() {
     return {
-      workbook: { name: '수학 문제집' },
-      problems: [
-        { id: 1, problem: '1 + 1은?', answer: '2', correctRate: 95 },
-        { id: 2, problem: '2 * 3은?', answer: '6', correctRate: 88 },
-        { id: 3, problem: '5 - 2는?', answer: '3', correctRate: 92 },
-        { id: 4, problem: '10 / 2는?', answer: '5', correctRate: 85 },
-      ],
-      newproblem: { problem: '', answer: '' },
+      workbookTitle: "",
+      problems: [],
+      newproblem: { question: '', solution: '' },
       showPopup: false,
       testSettings: {
         problemCount: 1,
-        isRandom: false,
+        random: false,
         sortOrder: 'asc'
       },
+      isLogin: false,
       showDeletePopup: false,
       problemToDelete: null,
-      editingIndex: null,
-      editingproblem: { problem: '', answer: '' },
+      updateIndex: null,
+      updateProblem: { question: '', solution: '' },
       searchQuery: '',
       filteredproblems: [],
       showSortDropdown: false,
       sortOrder: 'newest',
-      sortValue: '최신순'
+      sortValue: '최신순',
+      token: localStorage.getItem('token'),
+      workbookId: "",
+      showDetailPopup: false,
+      selectedProblem: null,
+
     }
   },
   methods: {
+    checkLogin(){
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
+    },
+    getProblems(){
+      const headers = {
+        'Authorization': this.token
+      };
+      this.workbookId = this.$route.fullPath.split("/").pop();
+      axios.get(`/workbook/${this.workbookId}/problem/all`, {headers})
+          .then((res) => {
+            this.problems = res.data.problems.map((problem, index) => ({
+              ...problem, displayNumber: index + 1
+            }));
+            this.workbookTitle = res.data.workbookTitle;
+            this.filterproblems();
+          })
+          .catch((error) => {
+            alert(error.data.response.message);
+            console.log("ERROR", error);
+          })
+    },
     cancelDelete(){
       this.showDeletePopup = false;
       this.problemToDelete = null;
     },
     addproblem() {
-      if (this.newproblem.problem && this.newproblem.answer) {
-        const newId = Math.max(...this.problems.map(q => q.id)) + 1;
-        this.problems.push({
-          id: newId,
-          ...this.newproblem,
-          correctRate: 0
-        });
-        this.newproblem = { problem: '', answer: '' };
+      const headers = {
+        'Authorization': this.token
+      }
+      if (this.newproblem.question && this.newproblem.solution) {
+        axios.post(`/workbook/${this.workbookId}/problem/create`,
+            {
+              question: this.newproblem.question,
+              solution: this.newproblem.solution
+            },{headers})
+            .then((res) => {
+              this.$router.go(0);
+              console.log("CREATE", res);
+            })
+            .catch((error) => {
+              alert(error.data.response.message);
+              this.$router.go(0);
+              console.log("ERROR", error);
+            })
+        this.newproblem = { question: '', problem: '' };
         this.filterproblems();
       }
     },
-    startEditing(index) {
-      this.editingIndex = index;
-      this.editingproblem = { ...this.filteredproblems[index] };
+    startUpdate(index) {
+      this.updateProblem = { ...this.filteredproblems[index] };
+      //해당 위치에서 수정창 열림
+      this.updateIndex = index;
     },
-    saveEdit() {
-      if (this.editingproblem.problem && this.editingproblem.answer) {
-        const index = this.problems.findIndex(q => q.id === this.editingproblem.id);
-        this.problems[index] = { ...this.editingproblem };
-        this.editingIndex = null;
+    saveUpdate() {
+      const headers = {
+        'Authorization': this.token
+      }
+      if (this.updateProblem.question && this.updateProblem.solution) {
+        axios.post(`/workbook/${this.workbookId}/problem/update/${this.updateProblem.id}`,
+            {
+              question: this.updateProblem.question,
+              solution: this.updateProblem.solution
+            }, {headers}
+        ).then((res) => {
+          console.log("UPDATE", this.updateProblem.id ,res);
+        }).catch((error) => {
+          alert(error.data.response.message);
+          console.log("ERROR", error);
+        })
+        //창 닫기
+        this.updateIndex = null;
+        const index = this.problems.findIndex(q => q.id === this.updateProblem.id);
+        this.problems[index] = { ...this.updateProblem };
         this.filterproblems();
       }
     },
@@ -194,11 +266,23 @@ export default {
       this.problemToDelete = problemId;
       this.showDeletePopup = true;
     },
-    cancelEdit(){
-      this.editingIndex = null;
+    cancelUpdate(){
+      this.updateIndex = null;
     },
     deleteproblem() {
       if (this.problemToDelete) {
+        const headers = {
+          'Authorization': this.token
+        }
+        axios.delete(`/workbook/${this.workbookId}/problem/delete/${this.problemToDelete}`, {headers})
+            .then((res) => {
+              alert("삭제되었습니다.");
+              console.log("DELETE", res);
+            })
+            .catch((error) => {
+              alert(error.data.response.message);
+              console.log("ERROR", error);
+            })
         this.problems = this.problems.filter(q => q.id !== this.problemToDelete);
         this.filterproblems();
         this.showDeletePopup = false;
@@ -214,11 +298,15 @@ export default {
     startTest() {
       console.log('Start test with settings:', this.testSettings);
       this.showPopup = false;
+      this.$router.push({
+        path: '/problemTest',
+        query: this.testSettings
+      })
     },
     filterproblems() {
       this.filteredproblems = this.problems.filter(q =>
-          q.problem.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          q.answer.toLowerCase().includes(this.searchQuery.toLowerCase())
+          q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+          q.solution.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
       this.sortproblems(this.sortOrder);
     },
@@ -249,10 +337,29 @@ export default {
     },
     setMaxproblemCount() {
       this.testSettings.problemCount = this.problems.length;
-    }
+    },
+    truncateText(text, maxLength = 30) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
+    showProblemDetail(problem, event) {
+      // 버튼 영역을 클릭한 경우 상세 팝업을 열지 않음
+      if (event.target.closest('.problem-actions')) return;
+      this.selectedProblem = problem;
+      this.showDetailPopup = true;
+    },
+
+    closeDetailPopup() {
+      this.showDetailPopup = false;
+      this.selectedProblem = null;
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
+    },
   },
   mounted() {
-    this.filterproblems();
+    this.checkLogin();
+    this.getProblems();
   }
 }
 </script>
@@ -521,8 +628,11 @@ a {
 
 .problem-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 15px;
 }
 
 .problem-item {
@@ -533,8 +643,17 @@ a {
   padding: 1rem;
   transition: all 0.3s;
   position: relative;
+  height: 250px; /* 고정 높이 설정 */
+  min-height: 200px;
+  overflow: hidden;
+  cursor: pointer;
 }
-
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 .problem-actions {
   position: absolute;
   top: 10px;
@@ -542,7 +661,14 @@ a {
   display: flex;
   gap: 5px;
 }
-
+.problem-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
 .problem-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -635,5 +761,56 @@ a {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1B2A49;
+  transition: color 0.3s;
+}
+
+.icon-btn:hover {
+  color: #FFD700;
+}
+
+.problem-detail-popup {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 40px 20px 20px; /* 상단 패딩 증가 */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.problem-detail-header h3 {
+  margin-top: 0;
+  text-align: left;
+  margin-bottom: 20px;
+  color: #1B2A49;
+}
+.problem-detail-content {
+  text-align: left;
+}
+.problem-detail-content p {
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+  z-index: 1;
 }
 </style>

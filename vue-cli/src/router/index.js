@@ -36,7 +36,7 @@ const routes = [
         component: MyWorkbook
     },
     {
-        path: '/workbookDetail',
+        path: '/workbookDetail/:id',
         name: 'WorkbookDetail',
         component: WorkbookDetail
     },

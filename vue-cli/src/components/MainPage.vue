@@ -19,11 +19,9 @@
           <h2>공유된 문제지</h2>
           <p>다른 사용자들이 만든 문제지를 열람하고 학습해보세요.</p>
         </div>
-        <div class="card" @click="navigateTo('my')">
-          <router-link to="/myWorkBook">
+        <div class="card" @click="goMyWorkbook">
             <h2>내 문제지</h2>
             <p>직접 만든 문제지로 학습하고 테스트해보세요.</p>
-          </router-link>
         </div>
       </div>
 
@@ -57,12 +55,20 @@ export default {
   name: 'MainPage',
   data(){
     return {
-      isLogin: false
+      isLogin: false,
+      token: localStorage.getItem('token')
     }
   },
   methods: {
     checkLogin(){
       this.isLogin = !!localStorage.getItem('token');
+    },
+    goMyWorkbook(){
+      if(!this.token){
+        alert("로그인이 필요한 서비스입니다.");
+      }else{
+        this.$router.push("/myWorkbook");
+      }
     },
     navigateTo(page) {
       console.log('Navigating to:', page);
