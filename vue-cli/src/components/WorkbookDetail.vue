@@ -42,21 +42,36 @@
 
       <div class="problem-list">
         <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
-          <div v-if="updateIndex !== index" class="problem-content">
+          <div v-if="updateIndex !== index" class="problem-content" @click="showProblemDetail(problem)">
             <div class="problem-actions">
-              <button @click="startUpdate(index)" class="edit-btn">수정</button>
-              <button @click="confirmDelete(problem.id)" class="delete-btn">삭제</button>
+              <button @click="startUpdate(index)" class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
+              <button @click="confirmDelete(problem.id)" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
             </div>
             <h3>문제 {{ problem.displayNumber }}</h3>
-            <p>{{ problem.question }}</p>
-            <p><strong>답:</strong> {{ problem.solution }}</p>
+            <p><span class="problem-text">{{ truncateText(problem.question) }} </span></p>
+            <p><strong>답:</strong> <span class="problem-text">{{ truncateText(problem.solution) }} </span></p>
             <p><strong>정답률:</strong> {{ problem.correctRate }}%</p>
+            <p><strong>생성일:</strong> {{ formatDate(problem.createDate) }}</p>
           </div>
           <div v-else class="problem-edit-form">
             <input v-model="updateProblem.question" placeholder="문제" />
             <textarea v-model="updateProblem.solution" placeholder="답"></textarea>
             <button @click="cancelUpdate" class="cancel-btn">취소</button>
             <button @click="saveUpdate" class="save-btn">저장</button>
+          </div>
+        </div>
+      </div>
+      <!-- 문제 상세 팝업 -->
+      <div v-if="showDetailPopup" class="popup-overlay" @click="closeDetailPopup">
+        <div class="popup problem-detail-popup" @click.stop>
+          <button @click="closeDetailPopup" class="close-btn"><i class="fas fa-times"></i></button>
+          <h2>문제 상세</h2>
+          <h3>문제 {{ selectedProblem.displayNumber }}</h3>
+          <div class="problem-detail-content">
+            <p><strong>문제:</strong> {{ selectedProblem.question }}</p>
+            <p><strong>답:</strong> {{ selectedProblem.solution }}</p>
+            <p><strong>정답률:</strong> {{ selectedProblem.correctRate }}%</p>
+            <p><strong>생성일:</strong> {{ formatDate(selectedProblem.createdAt) }}</p>
           </div>
         </div>
       </div>
@@ -133,6 +148,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: 'WorkbookDetailPage',
@@ -159,6 +175,8 @@ export default {
       sortValue: '최신순',
       token: localStorage.getItem('token'),
       workbookId: "",
+      showDetailPopup: false,
+      selectedProblem: null,
 
     }
   },
@@ -319,7 +337,23 @@ export default {
     },
     setMaxproblemCount() {
       this.testSettings.problemCount = this.problems.length;
-    }
+    },
+    truncateText(text, maxLength = 30) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
+    showProblemDetail(problem) {
+      this.selectedProblem = problem;
+      this.showDetailPopup = true;
+    },
+
+    closeDetailPopup() {
+      this.showDetailPopup = false;
+      this.selectedProblem = null;
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
+    },
   },
   mounted() {
     this.checkLogin();
@@ -592,8 +626,11 @@ a {
 
 .problem-list {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  max-height: 70vh;
+  overflow-y: auto;
+  padding-right: 15px;
 }
 
 .problem-item {
@@ -604,8 +641,17 @@ a {
   padding: 1rem;
   transition: all 0.3s;
   position: relative;
+  height: 250px; /* 고정 높이 설정 */
+  min-height: 200px;
+  overflow: hidden;
+  cursor: pointer;
 }
-
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
 .problem-actions {
   position: absolute;
   top: 10px;
@@ -613,7 +659,14 @@ a {
   display: flex;
   gap: 5px;
 }
-
+.problem-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+}
 .problem-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
@@ -706,5 +759,56 @@ a {
   display: flex;
   flex-direction: column;
   gap: 5px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1B2A49;
+  transition: color 0.3s;
+}
+
+.icon-btn:hover {
+  color: #FFD700;
+}
+
+.problem-detail-popup {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
+  padding: 40px 20px 20px; /* 상단 패딩 증가 */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.problem-detail-header h3 {
+  margin-top: 0;
+  text-align: left;
+  margin-bottom: 20px;
+  color: #1B2A49;
+}
+.problem-detail-content {
+  text-align: left;
+}
+.problem-detail-content p {
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #333;
+  padding: 5px;
+  z-index: 1;
 }
 </style>
