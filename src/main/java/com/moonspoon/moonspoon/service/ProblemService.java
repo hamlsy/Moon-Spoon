@@ -66,8 +66,7 @@ public class ProblemService {
     }
 
     public List<ProblemResponse> findAll(Workbook workbook){
-        List<Problem> problems = workbook.getProblems();
-
+        List<Problem> problems = problemRepository.findAllByWorkbookId(workbook.getId());
         return problems.stream()
                 .map(p -> ProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
