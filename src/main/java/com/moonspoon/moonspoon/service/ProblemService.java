@@ -184,10 +184,10 @@ public class ProblemService {
     }
 
     public List<TestResultResponse> getTestResultProblem(Long workbookId){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<TestResultRequest> dto = storedLists.get(username);
         //검증 로직
         validateUserAndWorkbook(workbookId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<TestResultRequest> dto = storedLists.get(username);
         List<TestResultResponse> responses =  dto.stream()
                 .map(d -> {
                     Problem problem = problemRepository.findById(d.getId()).orElseThrow(

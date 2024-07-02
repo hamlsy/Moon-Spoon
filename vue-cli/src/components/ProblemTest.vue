@@ -173,13 +173,21 @@ export default {
       )
           .then((res) => {
             console.log("STORED", res);
+            this.$router.push({
+              path: '/scoringTest',
+              query: {
+                workbookId: this.workbookId,
+                workbookTitle: this.workbookTitle
+              }
+            })
           })
           .catch((error) => {
             alert("ERROR OCCURRED!!");
             console.log("ERROR", error);
           })
+
       console.log("Test submitted:", this.userAnswers);
-      this.$router.push('/scoringTest'); // 적절한 라우트로 변경
+
     }
   }
 }
