@@ -196,6 +196,11 @@ export default {
 
 .answer-section {
   margin-bottom: 20px;
+  max-width: 100%; /* 최대 너비 제한 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%;
 }
 
 .grading-cards {
@@ -204,6 +209,7 @@ export default {
   gap: 20px;
   margin-top: 20px;
 }
+
 .grade-card {
   width: 100px;
   height: 80px;
@@ -453,7 +459,7 @@ a {
 }
 
 .sidebar {
-  width: 250px;
+  min-width: 303.25px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -495,6 +501,8 @@ a {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .problem-content {
@@ -502,9 +510,11 @@ a {
 }
 
 textarea {
-  height: 200px;
-  resize: none;
-  margin-bottom: 20px;
+  width: 100%; /* 부모 요소의 너비에 맞춤 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+  box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word
 }
 
 .navigation-buttons {

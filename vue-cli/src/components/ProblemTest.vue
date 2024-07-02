@@ -27,7 +27,7 @@
     <div class="main-content">
       <div class="problem-content">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
-        <p>{{ currentproblem.question }}</p>
+        <p class="answer-section">{{ currentproblem.question }}</p>
       </div>
       <textarea
           v-model="userAnswers[currentproblemIndex].input"
@@ -346,7 +346,20 @@ a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+.answer-section {
+  margin-bottom: 20px;
+  max-width: 100%; /* 최대 너비 제한 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤*/
+}
+.answer-section p {
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+}
 .problem-preview {
   font-weight: bold;
   margin-bottom: 5px;
@@ -443,15 +456,11 @@ a {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* 세로 스크롤 추가 */
+  max-height: 100vh; /* 뷰포트 높이를 최대로 설정 */
 }
 
 .problem-content {
-  margin-bottom: 20px;
-}
-
-textarea {
-  height: 200px;
-  resize: none;
   margin-bottom: 20px;
 }
 
@@ -541,6 +550,15 @@ textarea {
   font-size: 16px;
   line-height: 1.5;
   transition: border-color 0.3s ease;
+  width: 100%; /* 부모 요소의 너비에 맞춤 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+  box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  min-height: 100px; /* 최소 높이 설정 */
+  max-height: 300px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
 }
 
 textarea:focus {
