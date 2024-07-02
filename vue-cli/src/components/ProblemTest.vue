@@ -2,7 +2,7 @@
   <div class="test-page">
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
-      <h2 class="test-name">문제집</h2>
+      <h2 class="test-name">{{ workbookTitle }}</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list">
         <div
@@ -91,7 +91,8 @@ export default {
       showExitPopup: false,
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
-      workbookId: this.$route.query.workbookId
+      workbookId: this.$route.query.workbookId,
+      workbookTitle: this.$route.query.workbookTitle
     }
   },
   computed: {

@@ -304,7 +304,8 @@ export default {
           problemCount: this.testSettings.problemCount,
           random: this.testSettings.random,
           sortOrder: this.testSettings.sortOrder,
-          workbookId: this.workbookId
+          workbookId: this.workbookId,
+          workbookTitle: this.workbookTitle
         }
       })
     },
