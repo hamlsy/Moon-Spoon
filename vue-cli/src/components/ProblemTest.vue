@@ -2,6 +2,7 @@
   <div class="test-page">
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
+      <h2 class="test-name">문제집</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list">
         <div
@@ -14,14 +15,10 @@
             @click="goToproblem(index)"
         >
           <span class="problem-number">{{ index + 1 }}</span>
-          <span class="answer-preview">
-            {{ getproblemPreview(index) }}
-            <br>
-            <span style="font-size: 0.8em; color: darkslategray">
-              {{ getAnswerPreview(index) }}
-            </span>
-
-          </span>
+          <div class="preview-container">
+            <div class="problem-preview">{{ getProblemPreview(index) }}</div>
+            <div class="answer-preview">{{ getAnswerPreview(index) }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -126,6 +123,10 @@ export default {
             this.$router.push(`/workbookDetail/${this.workbookId}`);
             console.log("ERROR!", error);
           })
+    },
+    getProblemPreview(index) {
+      const problem = this.problems[index].question;
+      return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
     getAnswerPreview(index) {
       const answer = this.userAnswers[index];
@@ -291,6 +292,13 @@ a {
   padding: 1rem;
   transition: all 0.3s;
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  height: 60px; /* 고정 높이 설정 */
+  overflow: hidden;
 }
 
 
@@ -298,7 +306,27 @@ a {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-grow: 1;
+}
+.problem-preview, .answer-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+.problem-preview {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.answer-preview {
+  font-size: 0.8em;
+  color: #666;
+}
 .problem-edit-form input,
 .problem-edit-form textarea {
   width: 100%;
@@ -344,7 +372,7 @@ a {
 }
 
 .sidebar {
-  width: 250px;
+  min-width: 303.25px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -498,6 +526,10 @@ textarea:focus {
 .problem-item:hover {
   background-color: #e0e0e0;
 }
-
+.test-name {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
 
 </style>
