@@ -9,8 +9,8 @@
             v-for="(problem, index) in problems"
             :key="index"
             :class="['problem-item', {
-            'unanswered': !userAnswers[index],
-            'answered': userAnswers[index],
+            'unanswered': !userAnswers[index]?.input,
+            'answered': userAnswers[index]?.input,
           }]"
             @click="goToproblem(index)"
         >
@@ -30,7 +30,7 @@
         <p>{{ currentproblem.question }}</p>
       </div>
       <textarea
-          v-model="userAnswers[currentproblemIndex]"
+          v-model="userAnswers[currentproblemIndex].input"
           placeholder="답변을 입력하세요"
       ></textarea>
       <div class="navigation-buttons">
@@ -117,6 +117,7 @@ export default {
           data, {headers})
           .then((res) => {
             this.problems = res.data;
+            this.initializeUserAnswers();
             console.log("FETCH PROBLEMS", res);
           })
           .catch((error) => {
@@ -125,12 +126,18 @@ export default {
             console.log("ERROR!", error);
           })
     },
+    initializeUserAnswers() {
+      this.userAnswers = this.problems.map(problem => ({
+        id: problem.id,
+        input: ''
+      }));
+    },
     getProblemPreview(index) {
       const problem = this.problems[index].question;
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
     getAnswerPreview(index) {
-      const answer = this.userAnswers[index];
+      const answer = this.userAnswers[index].input;
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
     },
@@ -157,9 +164,22 @@ export default {
       this.$router.push(`/workBookDetail/${this.workbookId}`); // 적절한 라우트로 변경
     },
     submitTest() {
+      const headers = {
+        'Authorization': this.token
+      };
       // 테스트 제출 로직
+      axios.post(`/workbook/${this.workbookId}/problem/storeTest`,
+        this.userAnswers, {headers}
+      )
+          .then((res) => {
+            console.log("STORED", res);
+          })
+          .catch((error) => {
+            alert("ERROR OCCURRED!!");
+            console.log("ERROR", error);
+          })
       console.log("Test submitted:", this.userAnswers);
-      this.$router.push('/test-result'); // 적절한 라우트로 변경
+      this.$router.push('/scoringTest'); // 적절한 라우트로 변경
     }
   }
 }
