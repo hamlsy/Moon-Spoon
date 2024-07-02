@@ -2,6 +2,7 @@ package com.moonspoon.moonspoon.controller;
 
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestInputDTO;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
@@ -62,11 +63,10 @@ public class ProblemController {
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
-    @PostMapping("/getTestResult")
+    @GetMapping("/getTestResult")
     public ResponseEntity<List<TestResultResponse>> getTestResultProblem(
-            @PathVariable("workbookId") Long workbookId,
-            @RequestBody List<TestResultRequest> dto){
-        List<TestResultResponse> responses = problemService.getTestResultProblem(workbookId, dto);
+            @PathVariable("workbookId") Long workbookId){
+        List<TestResultResponse> responses = problemService.getTestResultProblem(workbookId);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
@@ -76,4 +76,12 @@ public class ProblemController {
         List<TestResultSubmitResponse> responses = problemService.testResultSubmit(workbookId, dto);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
+    @PostMapping("/storeTest")
+    public ResponseEntity<?> storeTest(
+            @PathVariable("workbookId") Long workbookId, @RequestBody List<TestResultRequest> listDto){
+        problemService.storeInputData(workbookId, listDto);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
 }

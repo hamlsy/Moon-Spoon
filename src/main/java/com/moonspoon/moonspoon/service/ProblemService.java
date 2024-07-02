@@ -4,6 +4,7 @@ import com.moonspoon.moonspoon.domain.Problem;
 import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestInputDTO;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
@@ -17,7 +18,6 @@ import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
 import com.moonspoon.moonspoon.repository.ProblemRepository;
-import com.moonspoon.moonspoon.repository.UserRepository;
 import com.moonspoon.moonspoon.repository.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +28,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +38,7 @@ import java.util.stream.Collectors;
 public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
-    private final UserRepository userRepository;
+    private Map<String, List<TestResultRequest>> storedLists = new ConcurrentHashMap<>();
 
     @Transactional
     public ProblemCreateResponse create(Long workbookId, ProblemCreateRequest dto){
@@ -181,7 +183,9 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
-    public List<TestResultResponse> getTestResultProblem(Long workbookId, List<TestResultRequest> dto){
+    public List<TestResultResponse> getTestResultProblem(Long workbookId){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<TestResultRequest> dto = storedLists.get(username);
         //검증 로직
         validateUserAndWorkbook(workbookId);
         List<TestResultResponse> responses =  dto.stream()
@@ -234,6 +238,13 @@ public class ProblemService {
         }else{
             problem.addIncorrectCount();
         }
+    }
+
+    public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
+        //검증 로직
+        validateUserAndWorkbook(workbookId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        this.storedLists.put(username, listDto);
     }
 
 }
