@@ -300,7 +300,12 @@ export default {
       this.showPopup = false;
       this.$router.push({
         path: '/problemTest',
-        query: this.testSettings
+        query: {
+          problemCount: this.testSettings.problemCount,
+          random: this.testSettings.random,
+          sortOrder: this.testSettings.sortOrder,
+          workbookId: this.workbookId
+        }
       })
     },
     filterproblems() {

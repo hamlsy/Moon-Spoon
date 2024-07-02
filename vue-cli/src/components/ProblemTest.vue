@@ -30,7 +30,7 @@
     <div class="main-content">
       <div class="problem-content">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
-        <p>{{ currentproblem.problem }}</p>
+        <p>{{ currentproblem.question }}</p>
       </div>
       <textarea
           v-model="userAnswers[currentproblemIndex]"
@@ -82,25 +82,19 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       problems: [
-        { question: "1 + 1 = ?" },
-        { question: "2 * 3 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-
-        // 더 많은 문제 추가...
       ],
       userAnswers: [],
       currentproblemIndex: 0,
       showExitPopup: false,
-      showSubmitPopup: false
+      showSubmitPopup: false,
+      token: localStorage.getItem('token'),
+      workbookId: this.$route.query.workbookId
     }
   },
   computed: {
@@ -108,14 +102,38 @@ export default {
       return this.problems[this.currentproblemIndex];
     }
   },
+  created(){
+    this.getProblems();
+  },
   methods: {
+    getProblems(){
+      const headers = {
+        'Authorization': this.token
+      };
+      const data = {
+        problemCount: this.$route.query.problemCount,
+        random: this.$route.query.random,
+        sortOrder: this.$route.query.sortOrder,
+      }
+      axios.post(`/workbook/${this.workbookId}/problem/getTest`,
+          data, {headers})
+          .then((res) => {
+            this.problems = res.data;
+            console.log("FETCH PROBLEMS", res);
+          })
+          .catch((error) => {
+            alert(error.data.response.message);
+            this.$router.push(`/workbookDetail/${this.workbookId}`);
+            console.log("ERROR!", error);
+          })
+    },
     getAnswerPreview(index) {
       const answer = this.userAnswers[index];
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
     },
     getproblemPreview(index){
-      const problem = this.problems[index].problem;
+      const problem = this.problems[index].question;
       if (!problem) return '';
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
@@ -134,7 +152,7 @@ export default {
     },
     exitTest() {
       // 테스트 종료 로직
-      this.$router.push('/workBookDetail'); // 적절한 라우트로 변경
+      this.$router.push(`/workBookDetail/${this.workbookId}`); // 적절한 라우트로 변경
     },
     submitTest() {
       // 테스트 제출 로직
