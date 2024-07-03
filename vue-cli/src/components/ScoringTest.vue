@@ -1,5 +1,5 @@
 <template>
-  <div class="test-page" v-if=" problems && problems.length > 0">
+  <div class="test-page" >
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
@@ -149,7 +149,7 @@ export default {
       }
     },
     gradeproblem(result) {
-      this.$set(this.problems, this.currentproblemIndex, result);
+      this.problems[this.currentproblemIndex].result = result;
     },
     exitGrading() {
       // 채점 종료 로직
@@ -157,6 +157,18 @@ export default {
     },
     submitResults() {
       // 채점 결과 제출 로직
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.post(`/workbook/${this.workbookId}/problem/submitTestResult`,
+          this.problems,
+          {headers})
+          .then((res) => {
+            console.log(res);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
       console.log("Grading results submitted:", this.problems);
       console.log("Correct answer rate:", this.correctAnswerRate);
       this.$router.push(`/workBookDetail/${this.workbookId}`);
