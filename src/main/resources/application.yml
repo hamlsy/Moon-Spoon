@@ -23,6 +23,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+        jdbc:
+          batch_size: 30
+        order_updates: true
 logging:
   level:
     org.hibernate.SQL: debug
