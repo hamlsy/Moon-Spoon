@@ -3,11 +3,11 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><a href="#" @click="navigateTo('home')">홈</a></li>
+        <li><router-link to="/mainPage">홈</router-link></li>
         <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
-        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
-        <li><router-link to="/user/signup" >회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
+        <li v-if="isLogin"><a @click="logout">로그아웃</a></li>
+        <li><router-link to="/user/signup">회원가입</router-link></li>
+        <li><a @click="notValid">프로필</a></li>
       </ul>
     </nav>
 
@@ -15,7 +15,7 @@
       <h1>마음껏 이용하세요! 당신의 학습을 위해서라면..</h1>
 
       <div class="feature-cards">
-        <div class="card" @click="navigateTo('shared')">
+        <div class="card" @click="notValid">
           <h2>공유된 문제지</h2>
           <p>다른 사용자들이 만든 문제지를 열람하고 학습해보세요.</p>
         </div>
@@ -29,15 +29,15 @@
         <h3>추가(예정) 기능</h3>
         <ul>
           <li>
-            <a href="#" @click="navigateTo('notation')">공지사항</a>
+            <a @click="notValid">공지사항</a>
             - 나의 학습 진행 상황을 한눈에 확인하세요.
           </li>
           <li>
-            <a href="#" @click="navigateTo('community')">학습 커뮤니티</a>
+            <a @click="notValid">학습 커뮤니티</a>
             - 다른 학습자들과 정보를 공유하고 소통하세요.
           </li>
           <li>
-            <a href="#" @click="navigateTo('nan')">...</a>
+            <a @click="notValid">...</a>
             - ...추가 될 내용 ...
           </li>
         </ul>
@@ -60,6 +60,9 @@ export default {
     }
   },
   methods: {
+    notValid(){
+      alert("아직 구현되지 않은 기능입니다.");
+    },
     checkLogin(){
       this.isLogin = !!localStorage.getItem('token');
     },

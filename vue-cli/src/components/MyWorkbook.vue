@@ -3,11 +3,11 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><a href="#" @click="navigateTo('home')">홈</a></li>
+        <li><router-link to="/mainPage">홈</router-link></li>
         <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
-        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
+        <li v-if="isLogin"><a @click="logout">로그아웃</a></li>
         <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
+        <li><a @click="notValid">프로필</a></li>
       </ul>
     </nav>
     <div class="title">
@@ -107,6 +107,9 @@ export default {
     this.checkLogin();
   },
   methods: {
+    notValid(){
+      alert("아직 구현되지 않은 기능입니다.");
+    },
     checkLogin(){
       this.isLogin = !!localStorage.getItem('token');
     },
