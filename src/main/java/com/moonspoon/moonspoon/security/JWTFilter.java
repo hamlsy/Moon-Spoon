@@ -2,6 +2,7 @@ package com.moonspoon.moonspoon.security;
 
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.domain.UserRole;
+import com.moonspoon.moonspoon.exception.JWTTokenExpiredException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,9 +48,8 @@ public class JWTFilter extends OncePerRequestFilter {
         if (jwtUtil.isExpired(token)) {
 
             System.out.println("token expired");
-            filterChain.doFilter(request, response);
-
             //조건이 해당되면 메소드 종료 (필수)
+            filterChain.doFilter(request, response);
             return;
         }
 

@@ -131,7 +131,13 @@ export default {
             this.filterWorkbooks();
             console.log("workbook loaded", res);
           }).catch((error) => {
-            alert(error.response.data.message);
+            if(error.response.data.message ===  "JWT token is expired"){
+              console.log(error.response.data.message);
+              alert("토큰이 만료되었습니다. 다시 로그인하세요.");
+              localStorage.removeItem("token");
+            }else{
+              alert(error.response.data.message);
+            }
             this.$router.push("/mainPage");
             console.log("ERROR", error);
       })
