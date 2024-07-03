@@ -443,7 +443,7 @@ body, html {
 
 .content {
   max-width: 1200px;
-  margin: 0px 100px 100px;
+  margin: 0px auto 100px;
   padding: 20px;
   flex: 1;
   overflow-y: auto;
@@ -644,7 +644,8 @@ a {
 
 .problem-list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /** grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); **/
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   max-height: 70vh;
   overflow-y: auto;
