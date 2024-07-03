@@ -100,6 +100,21 @@
         </div>
       </div>
     </div>
+
+    <!-- 결과 팝업 -->
+    <div v-if="showResultPopup" class="popup-overlay">
+      <div class="popup result-popup">
+        <h3>채점 결과</h3>
+        <p>문제집: {{ workbookTitle }}</p>
+        <p>맞힌 개수: {{ resultInfo.correctCount }}</p>
+        <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
+        <p>점수: {{ resultInfo.score }}점</p>
+        <div class="popup-buttons">
+          <button @click="finishGrading">확인</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -110,6 +125,12 @@ export default {
   data() {
     return {
       problems: [],
+      showResultPopup: false,
+      resultInfo:{
+        correctCount: 0,
+        incorrectCount: 0,
+        score: 0,
+      },
       currentproblemIndex: 0,
       showExitPopup: false,
       showSubmitPopup: false,
@@ -134,6 +155,10 @@ export default {
     getproblemPreview(index) {
       const problem = this.problems[index].question;
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+    },
+    finishGrading() {
+      this.showResultPopup = false;
+      this.$router.push(`/workBookDetail/${this.workbookId}`);
     },
     goToproblem(index) {
       this.currentproblemIndex = index;
@@ -164,9 +189,16 @@ export default {
           this.problems,
           {headers})
           .then((res) => {
+            this.resultInfo.correctCount = res.data.correctCount;
+            this.resultInfo.incorrectCount = res.data.incorrectCount;
+            this.resultInfo.score = res.data.score;
+            this.showSubmitPopup = false;
+            this.showResultPopup = true;
+
             console.log(res);
           })
           .catch((error) => {
+            alert(error.data.response.message);
             console.log(error);
           })
       console.log("Grading results submitted:", this.problems);
@@ -655,5 +687,17 @@ textarea:focus {
   background-color: #f0f0f0;
   padding: 5px 10px;
   border-radius: 15px;
+}
+.result-popup {
+  width: 300px;
+}
+
+.result-popup h3 {
+  margin-bottom: 20px;
+}
+
+.result-popup p {
+  text-align: left;
+  margin-bottom: 10px;
 }
 </style>

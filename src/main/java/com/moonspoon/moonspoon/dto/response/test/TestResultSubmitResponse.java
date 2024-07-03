@@ -17,7 +17,7 @@ public class TestResultSubmitResponse {
     private List<TestResultSubmitRequest> problems;
 
     @Builder
-    public TestResultSubmitResponse(int correctCount, int incorrectCount , List<TestResultSubmitRequest> problems) {
+    public TestResultSubmitResponse(int correctCount, int incorrectCount , List<TestResultSubmitRequest> problems, double score) {
         this.correctCount = correctCount;
         this.incorrectCount = incorrectCount;
         this.score = score;

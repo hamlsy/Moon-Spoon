@@ -229,6 +229,7 @@ public class ProblemService {
         TestResultSubmitResponse response = TestResultSubmitResponse.builder()
                 .correctCount(correctCount)
                 .incorrectCount(size-correctCount)
+                .score(((double)correctCount/size)*100)
                 .problems(dto)
                 .build();
         return response;
