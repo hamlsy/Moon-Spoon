@@ -51,7 +51,7 @@
     </main>
 
     <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy.</p>
+      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
     </footer>
 
     <!-- 새 문제집 추가 팝업 -->

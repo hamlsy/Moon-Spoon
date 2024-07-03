@@ -80,7 +80,7 @@
     </div>
 
     <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy.</p>
+      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
     </footer>
     <!-- 테스트 시작 팝업 -->
     <div v-if="showPopup" class="popup-overlay" @click.self="cancelTest">
