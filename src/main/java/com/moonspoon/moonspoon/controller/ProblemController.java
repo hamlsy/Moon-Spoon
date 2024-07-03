@@ -71,10 +71,10 @@ public class ProblemController {
     }
 
     @PostMapping("/submitTestResult")
-    public ResponseEntity<List<TestResultSubmitResponse>> submitTestResult(
+    public ResponseEntity<TestResultSubmitResponse> submitTestResult(
             @PathVariable("workbookId") Long workbookId, @RequestBody List<TestResultSubmitRequest> dto){
-        List<TestResultSubmitResponse> responses = problemService.testResultSubmit(workbookId, dto);
-        return new ResponseEntity<>(responses, HttpStatus.OK);
+        TestResultSubmitResponse response = problemService.testResultSubmit(workbookId, dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/storeTest")

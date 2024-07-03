@@ -215,21 +215,23 @@ public class ProblemService {
     }
 
     @Transactional
-    public List<TestResultSubmitResponse> testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
+    public TestResultSubmitResponse testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        List<TestResultSubmitResponse> responses = dto.stream()
-                .map(d -> {
-                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
-                            () -> new NotFoundException("존재하지 않는 문제입니다.")
-                    );
-                    calculateCorrectRate(problem, d.getResult());
-                    TestResultSubmitResponse res =  TestResultSubmitResponse.fromEntity(problem);
-                    res.setResult(d.getResult());
-                    return res;
-                })
-                .collect(Collectors.toList());
-        return responses;
+        //계산 및 검증로직
+        int size = dto.size();
+        int correctCount = 0;
+        for(int i = 0; i < dto.size(); i++){
+            if(dto.get(i).getResult().equals("correct")){
+                correctCount++;
+            }
+        }
+        TestResultSubmitResponse response = TestResultSubmitResponse.builder()
+                .correctCount(correctCount)
+                .incorrectCount(size-correctCount)
+                .problems(dto)
+                .build();
+        return response;
     }
 
     private void calculateCorrectRate(Problem problem, String result){
