@@ -36,9 +36,9 @@
             </button>
             <h3>{{ workbook.title }}</h3>
             <p>{{ workbook.content }}</p>
-            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
             <p>문제 수: {{ workbook.problemCount }}</p>
-            <p>수정일: {{ formatDate(workbook.updateDate) }}</p>
+            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+            <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
           </div>
 
         </div>
