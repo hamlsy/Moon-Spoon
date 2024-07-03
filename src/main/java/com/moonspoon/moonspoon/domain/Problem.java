@@ -18,8 +18,11 @@ public class Problem {
     @Column(name = "problem_id")
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String solution;
+    @Column(columnDefinition = "TEXT")
     private String question;
+
     private double correctRate = 0.0;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;

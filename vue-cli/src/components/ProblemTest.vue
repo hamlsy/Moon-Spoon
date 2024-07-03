@@ -2,26 +2,23 @@
   <div class="test-page">
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
+      <h2 class="test-name">{{ workbookTitle }}</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list">
         <div
             v-for="(problem, index) in problems"
             :key="index"
             :class="['problem-item', {
-            'unanswered': !userAnswers[index],
-            'answered': userAnswers[index],
+            'unanswered': !userAnswers[index]?.input,
+            'answered': userAnswers[index]?.input,
           }]"
             @click="goToproblem(index)"
         >
           <span class="problem-number">{{ index + 1 }}</span>
-          <span class="answer-preview">
-            {{ getproblemPreview(index) }}
-            <br>
-            <span style="font-size: 0.8em; color: darkslategray">
-              {{ getAnswerPreview(index) }}
-            </span>
-
-          </span>
+          <div class="preview-container">
+            <div class="problem-preview">{{ getProblemPreview(index) }}</div>
+            <div class="answer-preview">{{ getAnswerPreview(index) }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -30,10 +27,10 @@
     <div class="main-content">
       <div class="problem-content">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
-        <p>{{ currentproblem.problem }}</p>
+        <p class="answer-section">{{ currentproblem.question }}</p>
       </div>
       <textarea
-          v-model="userAnswers[currentproblemIndex]"
+          v-model="userAnswers[currentproblemIndex].input"
           placeholder="답변을 입력하세요"
       ></textarea>
       <div class="navigation-buttons">
@@ -82,25 +79,20 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
       problems: [
-        { question: "1 + 1 = ?" },
-        { question: "2 * 3 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-        { question: "10 / 2 = ?" },
-
-        // 더 많은 문제 추가...
       ],
       userAnswers: [],
       currentproblemIndex: 0,
       showExitPopup: false,
-      showSubmitPopup: false
+      showSubmitPopup: false,
+      token: localStorage.getItem('token'),
+      workbookId: this.$route.query.workbookId,
+      workbookTitle: this.$route.query.workbookTitle
     }
   },
   computed: {
@@ -108,14 +100,49 @@ export default {
       return this.problems[this.currentproblemIndex];
     }
   },
+  created(){
+    this.getProblems();
+  },
   methods: {
+    getProblems(){
+      const headers = {
+        'Authorization': this.token
+      };
+      const data = {
+        problemCount: this.$route.query.problemCount,
+        random: this.$route.query.random,
+        sortOrder: this.$route.query.sortOrder,
+      }
+      axios.post(`/workbook/${this.workbookId}/problem/getTest`,
+          data, {headers})
+          .then((res) => {
+            this.problems = res.data;
+            this.initializeUserAnswers();
+            console.log("FETCH PROBLEMS", res);
+          })
+          .catch((error) => {
+            alert(error.data.response.message);
+            this.$router.push(`/workbookDetail/${this.workbookId}`);
+            console.log("ERROR!", error);
+          })
+    },
+    initializeUserAnswers() {
+      this.userAnswers = this.problems.map(problem => ({
+        id: problem.id,
+        input: ''
+      }));
+    },
+    getProblemPreview(index) {
+      const problem = this.problems[index].question;
+      return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+    },
     getAnswerPreview(index) {
-      const answer = this.userAnswers[index];
+      const answer = this.userAnswers[index].input;
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
     },
     getproblemPreview(index){
-      const problem = this.problems[index].problem;
+      const problem = this.problems[index].question;
       if (!problem) return '';
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
     },
@@ -134,12 +161,33 @@ export default {
     },
     exitTest() {
       // 테스트 종료 로직
-      this.$router.push('/workBookDetail'); // 적절한 라우트로 변경
+      this.$router.push(`/workBookDetail/${this.workbookId}`); // 적절한 라우트로 변경
     },
     submitTest() {
+      const headers = {
+        'Authorization': this.token
+      };
       // 테스트 제출 로직
+      axios.post(`/workbook/${this.workbookId}/problem/storeTest`,
+        this.userAnswers, {headers}
+      )
+          .then((res) => {
+            console.log("STORED", res);
+            this.$router.push({
+              path: '/scoringTest',
+              query: {
+                workbookId: this.workbookId,
+                workbookTitle: this.workbookTitle
+              }
+            })
+          })
+          .catch((error) => {
+            alert("ERROR OCCURRED!!");
+            console.log("ERROR", error);
+          })
+
       console.log("Test submitted:", this.userAnswers);
-      this.$router.push('/test-result'); // 적절한 라우트로 변경
+
     }
   }
 }
@@ -273,6 +321,13 @@ a {
   padding: 1rem;
   transition: all 0.3s;
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  padding: 10px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  height: 60px; /* 고정 높이 설정 */
+  overflow: hidden;
 }
 
 
@@ -280,7 +335,40 @@ a {
   transform: translateY(-5px);
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex-grow: 1;
+}
+.problem-preview, .answer-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.answer-section {
+  margin-bottom: 20px;
+  max-width: 100%; /* 최대 너비 제한 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤*/
+}
+.answer-section p {
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+}
+.problem-preview {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
 
+.answer-preview {
+  font-size: 0.8em;
+  color: #666;
+}
 .problem-edit-form input,
 .problem-edit-form textarea {
   width: 100%;
@@ -326,7 +414,7 @@ a {
 }
 
 .sidebar {
-  width: 250px;
+  min-width: 303.25px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -368,15 +456,11 @@ a {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto; /* 세로 스크롤 추가 */
+  max-height: 100vh; /* 뷰포트 높이를 최대로 설정 */
 }
 
 .problem-content {
-  margin-bottom: 20px;
-}
-
-textarea {
-  height: 200px;
-  resize: none;
   margin-bottom: 20px;
 }
 
@@ -466,6 +550,15 @@ textarea {
   font-size: 16px;
   line-height: 1.5;
   transition: border-color 0.3s ease;
+  width: 100%; /* 부모 요소의 너비에 맞춤 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+  box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  min-height: 100px; /* 최소 높이 설정 */
+  max-height: 300px; /* 최대 높이 설정 */
+  overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
 }
 
 textarea:focus {
@@ -480,6 +573,10 @@ textarea:focus {
 .problem-item:hover {
   background-color: #e0e0e0;
 }
-
+.test-name {
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
 
 </style>

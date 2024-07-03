@@ -4,6 +4,7 @@ import com.moonspoon.moonspoon.domain.Problem;
 import com.moonspoon.moonspoon.domain.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestInputDTO;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
@@ -17,7 +18,6 @@ import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
 import com.moonspoon.moonspoon.repository.ProblemRepository;
-import com.moonspoon.moonspoon.repository.UserRepository;
 import com.moonspoon.moonspoon.repository.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +28,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,7 +39,7 @@ import java.util.stream.Collectors;
 public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
-    private final UserRepository userRepository;
+    private Map<String, List<TestResultRequest>> storedLists = new ConcurrentHashMap<>();
 
     @Transactional
     public ProblemCreateResponse create(Long workbookId, ProblemCreateRequest dto){
@@ -181,9 +184,11 @@ public class ProblemService {
                 .collect(Collectors.toList());
     }
 
-    public List<TestResultResponse> getTestResultProblem(Long workbookId, List<TestResultRequest> dto){
+    public List<TestResultResponse> getTestResultProblem(Long workbookId){
         //검증 로직
         validateUserAndWorkbook(workbookId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<TestResultRequest> dto = storedLists.get(username);
         List<TestResultResponse> responses =  dto.stream()
                 .map(d -> {
                     Problem problem = problemRepository.findById(d.getId()).orElseThrow(
@@ -211,29 +216,59 @@ public class ProblemService {
     }
 
     @Transactional
-    public List<TestResultSubmitResponse> testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
+    public TestResultSubmitResponse testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        List<TestResultSubmitResponse> responses = dto.stream()
-                .map(d -> {
-                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
-                            () -> new NotFoundException("존재하지 않는 문제입니다.")
-                    );
-                    calculateCorrectRate(problem, d.getResult());
-                    TestResultSubmitResponse res =  TestResultSubmitResponse.fromEntity(problem);
-                    res.setResult(d.getResult());
-                    return res;
-                })
-                .collect(Collectors.toList());
-        return responses;
+        //계산 및 검증로직
+        int size = dto.size();
+        int correctCount = 0;
+        for(int i = 0; i < dto.size(); i++){
+            if(dto.get(i).getResult().equals("correct")){
+                correctCount++;
+            }
+        }
+        TestResultSubmitResponse response = TestResultSubmitResponse.builder()
+                .correctCount(correctCount)
+                .incorrectCount(size-correctCount)
+                .score(((double)correctCount/size)*100)
+                .problems(dto)
+                .build();
+
+        // 벌크 연산
+        updateCorrectRate(dto);
+
+        return response;
     }
 
-    private void calculateCorrectRate(Problem problem, String result){
-        if(result.equals("correct")){
-            problem.addCorrectCount();
-        }else{
-            problem.addIncorrectCount();
+    private void updateCorrectRate(List<TestResultSubmitRequest> dto){
+        List<Long> problemIds = dto.stream()
+                .map(TestResultSubmitRequest::getId)
+                .collect(Collectors.toList());
+
+        //전체 관련 problem 로드
+        List<Problem> problems = problemRepository.findAllById(problemIds);
+
+        Map<Long, Problem> problemMap = problems.stream()
+                .collect(Collectors.toMap(Problem::getId, Function.identity()));
+
+        for(TestResultSubmitRequest result : dto){
+            Problem problem = problemMap.get(result.getId());
+            if(problem != null){
+                if(result.getResult().equals("correct")){
+                    problem.addCorrectCount();
+                }else{
+                    problem.addIncorrectCount();
+                }
+            }
         }
+        problemRepository.saveAll(problems);
+    }
+
+    public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
+        //검증 로직
+        validateUserAndWorkbook(workbookId);
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        this.storedLists.put(username, listDto);
     }
 
 }

@@ -1,16 +1,16 @@
 <template>
-  <div class="test-page">
+  <div class="test-page" >
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
-      <div class="problem-list">
+      <div class="problem-list" >
         <div
             v-for="(problem, index) in problems"
             :key="index"
             :class="['problem-item', {
-            'correct': results[index] === 'correct',
-            'incorrect': results[index] === 'incorrect',
-            'unanswered': !results[index]
+            'correct': problem.result === 'correct',
+            'incorrect': problem.result === 'incorrect',
+            // 'unanswered': !problem.result
           }]"
             @click="goToproblem(index)"
         >
@@ -18,8 +18,8 @@
           <span class="answer-preview">
             {{ getproblemPreview(index) }}
           </span>
-          <span class="result-preview" :class="results[index]">
-            {{ results[index] === 'correct' ? '정답' : results[index] === 'incorrect' ? '오답' : '' }}
+          <span class="result-preview" :class="problem.result">
+            {{ problem.result === 'correct' ? '정답' : problem.result === 'incorrect' ? '오답' : '' }}
           </span>
         </div>
       </div>
@@ -35,12 +35,13 @@
       </div>
       <p>{{ currentproblem.problem }}</p>
       <div class="answer-section">
-        <p><strong>정답:</strong> {{ currentproblem.correctAnswer }}</p>
-        <p><strong>작성한 답안:</strong> {{ userAnswers[currentproblemIndex] }}</p>
+        <p><strong>문제:</strong> {{ currentproblem.question }}</p>
+        <p><strong>정답:</strong> {{ currentproblem.solution }}</p>
+        <p><strong>작성한 답안:</strong> {{ currentproblem.input }}</p>
         <div class="grading-cards">
           <div
               @click="gradeproblem('correct')"
-              :class="['grade-card', 'correct-card', { 'selected': results[currentproblemIndex] === 'correct' }]"
+              :class="['grade-card', 'correct-card', { 'selected': problems[currentproblemIndex].result === 'correct' }]"
           >
             <div class="card-content">
               <span class="card-icon">✓</span>
@@ -49,7 +50,7 @@
           </div>
           <div
               @click="gradeproblem('incorrect')"
-              :class="['grade-card', 'incorrect-card', { 'selected': results[currentproblemIndex] === 'incorrect' }]"
+              :class="['grade-card', 'incorrect-card', { 'selected': problems[currentproblemIndex].result === 'incorrect' }]"
           >
             <div class="card-content">
               <span class="card-icon">✗</span>
@@ -99,24 +100,43 @@
         </div>
       </div>
     </div>
+
+    <!-- 결과 팝업 -->
+    <div v-if="showResultPopup" class="popup-overlay">
+      <div class="popup result-popup">
+        <h3>채점 결과</h3>
+        <p>문제집: {{ workbookTitle }}</p>
+        <p>맞힌 개수: {{ resultInfo.correctCount }}</p>
+        <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
+        <p>점수: {{ resultInfo.score }}점</p>
+        <div class="popup-buttons">
+          <button @click="finishGrading">확인</button>
+        </div>
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   data() {
     return {
-      problems: [
-        { question: "1 + 1 = ?", solution: "2", correctRate: 80 },
-        { question: "2 * 3 = ?", solution: "6", correctRate: null },
-        { question: "10 / 2 = ?", solution: "5", correctRate: null },
-        // 더 많은 문제 추가...
-      ],
-      userAnswers: ["2", "6", "4"], // 사용자가 제출한 답안
-      results: [], // 채점 결과 ('correct', 'incorrect', or '')
+      problems: [],
+      showResultPopup: false,
+      resultInfo:{
+        correctCount: 0,
+        incorrectCount: 0,
+        score: 0,
+      },
       currentproblemIndex: 0,
       showExitPopup: false,
-      showSubmitPopup: false
+      showSubmitPopup: false,
+      token: localStorage.getItem('token'),
+      workbookId : this.$route.query.workbookId,
+      workbookTitle : this.$route.query.workbookTitle
     }
   },
   computed: {
@@ -124,14 +144,21 @@ export default {
       return this.problems[this.currentproblemIndex];
     },
     correctAnswerRate() {
-      const correctCount = this.results.filter(result => result === 'correct').length;
+      const correctCount = this.problems.result.filter(result => result === 'correct').length;
       return (correctCount / this.problems.length * 100).toFixed(2) + '%';
     }
   },
+  created() {
+    this.fetchResults(); // 컴포넌트 생성 시 결과 가져오기
+  },
   methods: {
     getproblemPreview(index) {
-      const problem = this.problems[index].problem;
+      const problem = this.problems[index].question;
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+    },
+    finishGrading() {
+      this.showResultPopup = false;
+      this.$router.push(`/workBookDetail/${this.workbookId}`);
     },
     goToproblem(index) {
       this.currentproblemIndex = index;
@@ -147,50 +174,57 @@ export default {
       }
     },
     gradeproblem(result) {
-      this.$set(this.results, this.currentproblemIndex, result);
+      this.problems[this.currentproblemIndex].result = result;
     },
     exitGrading() {
       // 채점 종료 로직
-      this.$router.push('/workBookDetail'); // 적절한 라우트로 변경
+      this.$router.push(`/workBookDetail/${this.workbookId}`);
     },
     submitResults() {
       // 채점 결과 제출 로직
-      console.log("Grading results submitted:", this.results);
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.post(`/workbook/${this.workbookId}/problem/submitTestResult`,
+          this.problems,
+          {headers})
+          .then((res) => {
+            this.resultInfo.correctCount = res.data.correctCount;
+            this.resultInfo.incorrectCount = res.data.incorrectCount;
+            this.resultInfo.score = res.data.score;
+            this.showSubmitPopup = false;
+            this.showResultPopup = true;
+
+            console.log(res);
+          })
+          .catch((error) => {
+            alert(error.data.response.message);
+            console.log(error);
+          })
+      console.log("Grading results submitted:", this.problems);
       console.log("Correct answer rate:", this.correctAnswerRate);
-      this.$router.push('/workBookDetail'); // 적절한 라우트로 변경
+      this.$router.push(`/workBookDetail/${this.workbookId}`);
     },
     async fetchResults() {
-      // 서버에서 결과를 가져오는 로직
-      // 예시:
-      // const response = await axios.get('/api/results');
-      // this.results = response.data.results;
-
-      try {
-        // 실제 구현에서는 이 부분을 서버 API 호출로 대체해야 합니다.
-        // const response = await axios.get('/api/results');
-        // this.results = response.data.results;
-        // this.problems.forEach((q, index) => {
-        //   q.correctRate = response.data.correctRates[index];
-        // });
-
-        // 임시로 랜덤하게 결과와 정답률 생성
-        this.results = this.problems.map(() => Math.random() > 0.5 ? 'correct' : 'incorrect');
-        this.problems.forEach(q => {
-          q.correctRate = Math.floor(Math.random() * 100);
-        });
-      } catch (error) {
-        console.error("Error fetching results:", error);
-      }
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get(`/workbook/${this.workbookId}/problem/getTestResult`, {headers})
+          .then((res) => {
+            this.problems = res.data;
+            console.log("FETCH DATA", res);
+          })
+          .catch((error) => {
+            alert("ERROR OCCURRED!");
+            console.log("ERROR", error);
+          })
     },
-    created() {
-      this.fetchResults(); // 컴포넌트 생성 시 결과 가져오기
-    }
+
   }
 }
 </script>
 
 <style scoped>
-/* 기존 스타일을 유지하고 새로운 스타일 추가 */
 
 .problem-item.correct {
   border-left: 3px solid green;
@@ -206,6 +240,11 @@ export default {
 
 .answer-section {
   margin-bottom: 20px;
+  max-width: 100%; /* 최대 너비 제한 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word; /* 모든 브라우저 지원을 위한 속성 */
+  white-space: pre-wrap; /* 공백과 줄바꿈 유지 */
+  max-width: 100%;
 }
 
 .grading-cards {
@@ -214,6 +253,7 @@ export default {
   gap: 20px;
   margin-top: 20px;
 }
+
 .grade-card {
   width: 100px;
   height: 80px;
@@ -463,7 +503,7 @@ a {
 }
 
 .sidebar {
-  width: 250px;
+  min-width: 303.25px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -505,6 +545,8 @@ a {
   padding: 20px;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .problem-content {
@@ -512,9 +554,11 @@ a {
 }
 
 textarea {
-  height: 200px;
-  resize: none;
-  margin-bottom: 20px;
+  width: 100%; /* 부모 요소의 너비에 맞춤 */
+  max-width: 100%; /* 최대 너비를 부모 요소에 맞춤 */
+  box-sizing: border-box; /* 패딩과 테두리를 너비에 포함 */
+  word-wrap: break-word; /* 긴 단어 줄바꿈 */
+  overflow-wrap: break-word
 }
 
 .navigation-buttons {
@@ -643,5 +687,17 @@ textarea:focus {
   background-color: #f0f0f0;
   padding: 5px 10px;
   border-radius: 15px;
+}
+.result-popup {
+  width: 300px;
+}
+
+.result-popup h3 {
+  margin-bottom: 20px;
+}
+
+.result-popup p {
+  text-align: left;
+  margin-bottom: 10px;
 }
 </style>
