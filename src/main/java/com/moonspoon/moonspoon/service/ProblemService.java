@@ -30,6 +30,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -232,15 +233,35 @@ public class ProblemService {
                 .score(((double)correctCount/size)*100)
                 .problems(dto)
                 .build();
+
+        // 벌크 연산
+        updateCorrectRate(dto);
+
         return response;
     }
 
-    private void calculateCorrectRate(Problem problem, String result){
-        if(result.equals("correct")){
-            problem.addCorrectCount();
-        }else{
-            problem.addIncorrectCount();
+    private void updateCorrectRate(List<TestResultSubmitRequest> dto){
+        List<Long> problemIds = dto.stream()
+                .map(TestResultSubmitRequest::getId)
+                .collect(Collectors.toList());
+
+        //전체 관련 problem 로드
+        List<Problem> problems = problemRepository.findAllById(problemIds);
+
+        Map<Long, Problem> problemMap = problems.stream()
+                .collect(Collectors.toMap(Problem::getId, Function.identity()));
+
+        for(TestResultSubmitRequest result : dto){
+            Problem problem = problemMap.get(result.getId());
+            if(problem != null){
+                if(result.getResult().equals("correct")){
+                    problem.addCorrectCount();
+                }else{
+                    problem.addIncorrectCount();
+                }
+            }
         }
+        problemRepository.saveAll(problems);
     }
 
     public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
