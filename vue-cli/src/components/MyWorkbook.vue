@@ -30,19 +30,28 @@
 
       <div class="workbook-container">
         <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card">
-          <div @click="goWorkbookDetail(workbook.id)">
+          <div v-if="updateIndex !== workbook.id" @click="goWorkbookDetail(workbook.id)">
+            <button class="edit-btn" @click.stop="startUpdate(workbook.id)">
+              <i class="fas fa-edit"></i>
+            </button>
             <button class="delete-btn" @click="confirmDelete(workbook.id)">
               <i class="fas fa-trash"></i>
             </button>
-            <h3>{{ workbook.title }}</h3>
-            <p>{{ workbook.content }}</p>
-            <p>문제 수: {{ workbook.problemCount }}</p>
-            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
-            <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
+              <h3>{{ workbook.title }}</h3>
+              <p>{{ workbook.content }}</p>
+              <p>문제 수: {{ workbook.problemCount }}</p>
+              <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+              <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
+            </div>
+          <div v-else>
+            <input v-model="updateWorkbook.title" class="edit-input" />
+            <textarea v-model="updateWorkbook.content" class="edit-textarea"></textarea>
+            <div class="popup-buttons">
+              <button @click="cancelUpdate">취소</button>
+              <button @click="saveUpdate(workbook)">저장</button>
+            </div>
           </div>
-
         </div>
-
         <div class="workbook-card add-workbook" @click="showAddWorkbookPopup">
           <span class="plus-icon">+</span>
           <p>새 문제집 추가</p>
@@ -99,7 +108,9 @@ export default {
       showSortDropdown: false,
       sortOrder: 'newest',
       isLogin: false,
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      updateIndex: null,
+      updateWorkbook: {title: '', content: ''}
     }
   },
   created(){
@@ -107,6 +118,36 @@ export default {
     this.checkLogin();
   },
   methods: {
+    startUpdate(workbookId) {
+      this.updateWorkbook = this.workbooks.find(workbook => workbook.id === workbookId);
+      this.updateIndex = workbookId;
+    },
+    cancelUpdate() {
+      this.updateIndex = null;
+    },
+    saveUpdate(workbook) {
+      //axios
+      const headers = {
+        'Authorization': this.token
+      }
+
+      axios.post(`/workbook/update/${workbook.id}`,
+          {
+            title: this.updateWorkbook.title,
+            content: this.updateWorkbook.content
+          }, { headers })
+          .then((res) => {
+            this.getWorkbook();
+            console.log(res);
+          })
+          .catch((error) => {
+            alert(error.response.data.message);
+            console.log("ERROR", error);
+          })
+      const index = this.workbooks.findIndex(w => w.id === this.updateIndex);
+      this.workbooks[index] = { ...this.updateWorkbook };
+      this.updateIndex = null;
+    },
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
     },
@@ -328,7 +369,67 @@ body, html {
   border-left: 4px solid #FFD700;
   transition: all 0.3s;
   min-height: 200px;
+  width: 300px;
+  overflow: hidden;
+}
 
+.edit-input,
+.edit-textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px; /* 둥근 모서리 추가 */
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.edit-btn {
+  position: absolute;
+  top: 10px;
+  right: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1B2A49;
+  opacity: 0;
+  transition: opacity 0.3s, color 0.3s;
+}
+.workbook-card:hover .edit-btn {
+  opacity: 0.7;
+}
+.edit-btn:hover {
+  opacity: 1;
+  color: navy;
+}
+
+input, textarea {
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.popup-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.popup-buttons button {
+  padding: 10px 20px;
+  background-color: #1B2A49;
+  border-radius: 6px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.popup-buttons button:hover {
+  background-color: rgba(120,119,2,0.9);
+  opacity: 1;
 }
 
 .delete-btn {
