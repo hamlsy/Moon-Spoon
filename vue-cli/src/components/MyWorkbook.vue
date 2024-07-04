@@ -3,11 +3,11 @@
     <nav class="navbar">
       <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
       <ul class="navbar-menu">
-        <li><a href="#" @click="navigateTo('home')">홈</a></li>
+        <li><router-link to="/mainPage">홈</router-link></li>
         <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
-        <li v-if="isLogin"><a href="#" @click="logout">로그아웃</a></li>
+        <li v-if="isLogin"><a @click="logout">로그아웃</a></li>
         <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a href="#" @click="navigateTo('profile')">프로필</a></li>
+        <li><a @click="notValid">프로필</a></li>
       </ul>
     </nav>
     <div class="title">
@@ -36,9 +36,9 @@
             </button>
             <h3>{{ workbook.title }}</h3>
             <p>{{ workbook.content }}</p>
-            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
             <p>문제 수: {{ workbook.problemCount }}</p>
-            <p>수정일: {{ formatDate(workbook.updateDate) }}</p>
+            <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+            <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
           </div>
 
         </div>
@@ -51,7 +51,7 @@
     </main>
 
     <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy.</p>
+      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
     </footer>
 
     <!-- 새 문제집 추가 팝업 -->
@@ -107,6 +107,9 @@ export default {
     this.checkLogin();
   },
   methods: {
+    notValid(){
+      alert("아직 구현되지 않은 기능입니다.");
+    },
     checkLogin(){
       this.isLogin = !!localStorage.getItem('token');
     },
@@ -128,7 +131,13 @@ export default {
             this.filterWorkbooks();
             console.log("workbook loaded", res);
           }).catch((error) => {
-            alert(error.response.data.message);
+            if(error.response.data.message ===  "JWT token is expired"){
+              console.log(error.response.data.message);
+              alert("토큰이 만료되었습니다. 다시 로그인하세요.");
+              localStorage.removeItem("token");
+            }else{
+              alert(error.response.data.message);
+            }
             this.$router.push("/mainPage");
             console.log("ERROR", error);
       })

@@ -1,5 +1,7 @@
 package com.moonspoon.moonspoon.security;
 
+import com.moonspoon.moonspoon.exception.JWTTokenExpiredException;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -33,8 +35,13 @@ public class JWTUtil {
     }
 
     public Boolean isExpired(String token) {
-
-        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        try{
+            return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token).getPayload().getExpiration().before(new Date());
+        }catch(ExpiredJwtException e){
+            throw new JWTTokenExpiredException("JWT token is expired");
+        }catch(Exception e){
+            throw new JWTTokenExpiredException("JWT token is invalid");
+        }
     }
 
     public String createJwt(String username, String role, Long expiredMs) {
