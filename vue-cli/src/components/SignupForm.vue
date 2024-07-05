@@ -30,6 +30,12 @@
         <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
         <p v-if="isPasswordValid" class="success-message">올바른 비밀번호입니다.</p>
       </div>
+      <div class="input-group">
+        <label for="confirmPassword">Password 확인</label>
+        <input type="password" id="confirmPassword" v-model="confirmPassword" required placeholder="비밀번호 확인"
+               :class="{ 'error': confirmPasswordError, 'success': isConfirmPasswordValid }">
+        <p v-if="confirmPasswordError" class="error-message">{{ confirmPasswordError }}</p>
+      </div>
       <button type="submit" :disabled="!isFormValid">회원가입</button>
     </form>
     <p class="login-link">이미 계정이 있나요? <router-link to="/user/login">로그인</router-link></p>
@@ -46,6 +52,7 @@ export default {
       name: '',
       username: '',
       password: '',
+      confirmPassword: '',
       nameError: '',
       usernameError: '',
       passwordError: '',
@@ -57,10 +64,14 @@ export default {
   },
   computed: {
     isFormValid() {
-      return this.isNameValid && this.isUsernameValid && this.isPasswordValid;
+      return this.isNameValid && this.isUsernameValid
+          && this.isPasswordValid && this.isConfirmPasswordValid;
     },
     isPasswordValid() {
       return /^[A-Za-z0-9]{6,24}$/.test(this.password);
+    },
+    isConfirmPasswordValid() {
+      return this.password === this.confirmPassword && this.password !== '';
     },
     isNameFormatValid() {
       return this.name.length >= 4 && this.name.length < 16 && !/[!@#$%^&*(),.?":{}|<>]/.test(this.name);
@@ -82,6 +93,9 @@ export default {
     },
     password() {
       this.validatePassword();
+    },
+    confirmPassword() {
+      this.validateConfirmPassword();
     }
   },
   methods: {
@@ -101,6 +115,21 @@ export default {
         this.usernameError = '아이디는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
       } else {
         this.usernameError = '';
+      }
+    },
+    validatePassword() {
+      if (!this.isPasswordValid) {
+        this.passwordError = '비밀번호는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
+      } else {
+        this.passwordError = '';
+      }
+      this.validateConfirmPassword();
+    },
+    validateConfirmPassword() {
+      if (!this.isConfirmPasswordValid) {
+        this.confirmPasswordError = '비밀번호가 일치하지 않습니다.';
+      } else {
+        this.confirmPasswordError = '';
       }
     },
     checkNameDuplicate() {
@@ -138,13 +167,6 @@ export default {
             this.usernameSuccess = false;
             console.error(error);
           });
-    },
-    validatePassword() {
-      if (!this.isPasswordValid) {
-        this.passwordError = '비밀번호는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
-      } else {
-        this.passwordError = '';
-      }
     },
     signup() {
       axios.post("/user/signup", {
