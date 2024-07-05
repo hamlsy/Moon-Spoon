@@ -13,7 +13,7 @@ import lombok.Setter;
 public class UserSignupRequest {
 
     @NotBlank(message = "아이디를 입력하세요.")
-    @Size(min = 4, max = 20)
+    @Size(min = 2, max = 20)
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "아이디는 영문과 숫자로 이루어져야 합니다.")
     private String username;
 
@@ -23,7 +23,7 @@ public class UserSignupRequest {
     private String name;
 
     @NotBlank(message = "비밀번호를 입력하세요.")
-    @Size(min = 4, max = 24)
+    @Size(min = 6, max = 24)
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "비밀번호는 영문과 숫자로 이루어져야 합니다.")
     private String password;
 

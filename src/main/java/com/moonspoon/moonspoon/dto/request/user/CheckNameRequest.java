@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class CheckNameRequest {
     @NotBlank(message = "이름(닉네임)을 입력하세요.")
-    @Size(min = 4, max = 16)
+    @Size(min = 2, max = 16)
     @Pattern(regexp = "^[a-zA-Z0-9가-힣\\s_-]+$", message = "특수문자는 허용되지 않습니다.")
     private String name;
 }

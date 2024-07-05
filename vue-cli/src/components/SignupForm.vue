@@ -6,7 +6,7 @@
       <div class="input-group">
         <label for="name">사용할 이름(닉네임)</label>
         <div class="input-with-button">
-          <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)(4~16자)"
+          <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)(2~16자)"
                  :class="{ 'error': nameError, 'success': nameSuccess}">
           <button type="button" @click="checkNameDuplicate">중복확인</button>
         </div>
@@ -16,7 +16,7 @@
       <div class="input-group">
         <label for="userId">ID</label>
         <div class="input-with-button">
-          <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)"
+          <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~20자)"
                  :class="{ 'error': usernameError, 'success': usernameSuccess  }">
           <button type="button" @click="checkUsernameDuplicate">중복확인</button>
         </div>
@@ -75,7 +75,7 @@ export default {
       return this.password === this.confirmPassword && this.password !== '';
     },
     isNameFormatValid() {
-      return this.name.length >= 4 && this.name.length < 16 && !/[!@#$%^&*(),.?":{}|<>]/.test(this.name);
+      return this.name.length >= 2 && this.name.length < 16 && !/[!@#$%^&*(),.?":{}|<>]/.test(this.name);
     },
     isUsernameFormatValid() {
       return /^[A-Za-z0-9]{6,20}$/.test(this.username);
@@ -104,7 +104,7 @@ export default {
       this.isNameValid = false;
       this.nameSuccess = false;
       if (!this.isNameFormatValid) {
-        this.nameError = '닉네임은 4~20자 사이여야 하며 특수문자를 포함할 수 없습니다.';
+        this.nameError = '닉네임은 2~16자 사이여야 하며 특수문자를 포함할 수 없습니다.';
       } else {
         this.nameError = '';
       }
@@ -113,14 +113,14 @@ export default {
       this.isUsernameValid = false;
       this.usernameSuccess = false;
       if (!this.isUsernameFormatValid) {
-        this.usernameError = '아이디는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
+        this.usernameError = '아이디는 영문과 숫자로만 6~20자로 구성되어야 합니다.';
       } else {
         this.usernameError = '';
       }
     },
     validatePassword() {
       if (!this.isPasswordValid) {
-        this.passwordError = '비밀번호는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
+        this.passwordError = '비밀번호는 영문과 숫자로만 6~24자로 구성되어야 합니다.';
       } else {
         this.passwordError = '';
       }
