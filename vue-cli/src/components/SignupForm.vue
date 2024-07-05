@@ -169,20 +169,25 @@ export default {
           });
     },
     signup() {
-      axios.post("/user/signup", {
-        name: this.name,
-        username: this.username,
-        password: this.password
-      })
-          .then((res) =>{
-            alert("회원가입 성공!");
-            this.$router.push("/user/login");
-            console.log("회원가입 성공", res);
-          })
-          .catch((error) => {
-            alert(error.response.data.message);
-            console.log("로그인 실패", error);
-          })
+      if (this.isFormValid){
+        axios.post("/user/signup", {
+          name: this.name,
+          username: this.username,
+          password: this.password
+        })
+            .then((res) =>{
+              alert("회원가입 성공!");
+              this.$router.push("/user/login");
+              console.log("회원가입 성공", res);
+            })
+            .catch((error) => {
+              alert(error.response.data.message);
+              console.log("로그인 실패", error);
+            })
+      }else{
+        alert("모든 필드를 올바르게 입력해주세요.");
+      }
+
     }
   }
 }
