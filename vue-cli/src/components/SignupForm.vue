@@ -1,54 +1,37 @@
 <template>
+  <body>
   <div class="container">
     <h1 class="logo"><router-link to="/mainPage">Moon-Spoon</router-link></h1>
     <form @submit.prevent="signup">
       <div class="input-group">
         <label for="name">사용할 이름(닉네임)</label>
-        <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)을 입력하세요."
-               :class="{ 'error': nameError }">
-        <button type="button" @click="checkNameDuplicate">중복확인</button>
-      </div>
+        <div class="input-with-button">
+          <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)을 입력하세요."
+                 :class="{ 'error': nameError }">
+          <button type="button" @click="checkNameDuplicate">중복확인</button>
+        </div>
       <p v-if="nameError" class="error-message">{{ nameError }}</p>
       </div>
       <div class="input-group">
         <label for="userId">ID</label>
-        <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)"
-               :class="{ 'error': usernameError }">
-        <button type="button" @click="checkUsernameDuplicate">중복확인</button>
-      </div>
+        <div class="input-with-button">
+          <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)"
+                 :class="{ 'error': usernameError }">
+          <button type="button" @click="checkUsernameDuplicate">중복확인</button>
+        </div>
       <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
-    <div class="container">
-      <h1 class="logo"><router-link to="/mainPage">Moon-Spoon</router-link></h1>
-      <form @submit.prevent="signup">
-        <div class="input-group">
-          <label for="name">사용할 이름(닉네임)</label>
-          <div class="input-with-button">
-            <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)을 입력하세요."
-                   :class="{ 'error': nameError }">
-            <button type="button" @click="checkNameDuplicate">중복확인</button>
-          </div>
-          <p v-if="nameError" class="error-message">{{ nameError }}</p>
-        </div>
-        <div class="input-group">
-          <label for="userId">ID</label>
-          <div class="input-with-button">
-            <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)"
-                   :class="{ 'error': usernameError }">
-            <button type="button" @click="checkUsernameDuplicate">중복확인</button>
-          </div>
-          <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
-        </div>
+      </div>
       <div class="input-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~12자)"
-               :class="{'error': passwordError }">
-        <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+      <label for="password">Password</label>
+      <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~12자)"
+             :class="{ 'error': passwordError }">
+      <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
       </div>
       <button type="submit" :disabled="!isFormValid">회원가입</button>
     </form>
     <p class="login-link">이미 계정이 있나요? <router-link to="/user/login">로그인</router-link></p>
   </div>
-
+  </body>
 </template>
 
 <script>
@@ -255,6 +238,8 @@ a {
 
 .input-with-button button {
   padding: 0.5rem 1rem;
+  color: #1B2A49;
+  width: 140px;
   margin-top: 0;
 }
 
