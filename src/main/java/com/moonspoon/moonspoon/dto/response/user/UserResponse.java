@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.response;
+package com.moonspoon.moonspoon.dto.response.user;
 
 import com.moonspoon.moonspoon.domain.User;
 import lombok.Builder;

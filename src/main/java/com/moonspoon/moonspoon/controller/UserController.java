@@ -1,7 +1,9 @@
 package com.moonspoon.moonspoon.controller;
 
+import com.moonspoon.moonspoon.dto.request.user.CheckNameRequest;
+import com.moonspoon.moonspoon.dto.request.user.CheckUsernameRequest;
 import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
-import com.moonspoon.moonspoon.dto.response.UserResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 import com.moonspoon.moonspoon.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,4 +25,16 @@ public class UserController {
         UserResponse response = userService.signup(dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("/checkUsername")
+    public ResponseEntity<?> checkUsername(@Valid @RequestBody CheckUsernameRequest dto){
+        userService.isDuplicatedUsername(dto.getUsername());
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+    @PostMapping("/checkName")
+    public ResponseEntity<?> checkName(@Valid @RequestBody CheckNameRequest dto){
+        userService.isDuplicatedName(dto.getName());
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
 }
