@@ -185,7 +185,6 @@ export default {
               alert(error.response.data.message);
               this.$router.push("/mainPage");
             }
-
             console.log("ERROR", error);
       })
     },

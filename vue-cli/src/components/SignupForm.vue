@@ -53,6 +53,7 @@ export default {
       username: '',
       password: '',
       confirmPassword: '',
+      confirmPasswordError: '',
       nameError: '',
       usernameError: '',
       passwordError: '',
@@ -145,7 +146,11 @@ export default {
             }
           })
           .catch(error => {
-            this.nameError = '이름 중복 확인 중 오류가 발생했습니다.';
+            if(error.response.data.validate === false){
+              this.nameError = '이미 사용 중인 이름입니다.';
+            }else{
+              this.nameError = '이름 중복 확인 중 오류가 발생했습니다.';
+            }
             this.nameSuccess = false;
             console.error(error);
           });
@@ -163,7 +168,11 @@ export default {
             }
           })
           .catch(error => {
-            this.usernameError = '아이디 중복 확인 중 오류가 발생했습니다.';
+            if(error.response.data.validate === false){
+              this.usernameError = '이미 사용 중인 아이디입니다.';
+            }else{
+              this.usernameError = '아이디 중복 확인 중 오류가 발생했습니다.';
+            }
             this.usernameSuccess = false;
             console.error(error);
           });
