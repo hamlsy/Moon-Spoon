@@ -6,26 +6,29 @@
       <div class="input-group">
         <label for="name">사용할 이름(닉네임)</label>
         <div class="input-with-button">
-          <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)을 입력하세요."
-                 :class="{ 'error': nameError }">
+          <input type="text" id="name" v-model="name" required placeholder="이름(닉네임)(4~16자)"
+                 :class="{ 'error': nameError, 'success': nameSuccess}">
           <button type="button" @click="checkNameDuplicate">중복확인</button>
         </div>
-      <p v-if="nameError" class="error-message">{{ nameError }}</p>
+        <p v-if="nameError" class="error-message">{{ nameError }}</p>
+        <p v-if="nameSuccess" class="success-message">올바른 닉네임입니다.</p>
       </div>
       <div class="input-group">
         <label for="userId">ID</label>
         <div class="input-with-button">
           <input type="text" id="userId" v-model="username" required placeholder="아이디(영문 6~12자)"
-                 :class="{ 'error': usernameError }">
+                 :class="{ 'error': usernameError, 'success': usernameSuccess  }">
           <button type="button" @click="checkUsernameDuplicate">중복확인</button>
         </div>
-      <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+        <p v-if="usernameError" class="error-message">{{ usernameError }}</p>
+        <p v-if="usernameSuccess" class="success-message">올바른 아이디입니다.</p>
       </div>
       <div class="input-group">
       <label for="password">Password</label>
-      <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~12자)"
+      <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~24자)"
              :class="{ 'error': passwordError }">
-      <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+        <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
+        <p v-if="isPasswordValid" class="success-message">올바른 비밀번호입니다.</p>
       </div>
       <button type="submit" :disabled="!isFormValid">회원가입</button>
     </form>
@@ -46,6 +49,8 @@ export default {
       nameError: '',
       usernameError: '',
       passwordError: '',
+      nameSuccess: false,
+      usernameSuccess: false,
       isNameValid: false,
       isUsernameValid: false
     }
@@ -55,15 +60,23 @@ export default {
       return this.isNameValid && this.isUsernameValid && this.isPasswordValid;
     },
     isPasswordValid() {
-      return /^[A-Za-z0-9]{6,12}$/.test(this.password);
+      return /^[A-Za-z0-9]{6,24}$/.test(this.password);
+    },
+    isNameFormatValid() {
+      return this.name.length >= 4 && this.name.length < 16 && !/[!@#$%^&*(),.?":{}|<>]/.test(this.name);
+    },
+    isUsernameFormatValid() {
+      return /^[A-Za-z0-9]{6,20}$/.test(this.username);
     }
   },
   watch: {
     name() {
+      this.validateName();
       this.isNameValid = false;
       this.nameError = '';
     },
     username() {
+      this.validateUsername();
       this.isUsernameValid = false;
       this.usernameError = '';
     },
@@ -72,33 +85,57 @@ export default {
     }
   },
   methods: {
+    validateName() {
+      this.isNameValid = false;
+      this.nameSuccess = false;
+      if (!this.isNameFormatValid) {
+        this.nameError = '닉네임은 4~20자 사이여야 하며 특수문자를 포함할 수 없습니다.';
+      } else {
+        this.nameError = '';
+      }
+    },
+    validateUsername() {
+      this.isUsernameValid = false;
+      this.usernameSuccess = false;
+      if (!this.isUsernameFormatValid) {
+        this.usernameError = '아이디는 영문과 숫자로만 6~12자로 구성되어야 합니다.';
+      } else {
+        this.usernameError = '';
+      }
+    },
     checkNameDuplicate() {
-      axios.post("/user/check-name", { name: this.name })
+      axios.post("/user/checkName", { name: this.name })
           .then(response => {
             if (response.data.validate) {
               this.isNameValid = true;
+              this.nameSuccess = true;
               this.nameError = '';
             } else {
               this.nameError = '이미 사용 중인 이름입니다.';
+              this.nameSuccess = false;
             }
           })
           .catch(error => {
             this.nameError = '이름 중복 확인 중 오류가 발생했습니다.';
+            this.nameSuccess = false;
             console.error(error);
           });
     },
     checkUsernameDuplicate() {
-      axios.post("/user/check-username", { username: this.username })
+      axios.post("/user/checkUsername", { username: this.username })
           .then(response => {
             if (response.data.validate) {
               this.isUsernameValid = true;
+              this.usernameSuccess = true;
               this.usernameError = '';
             } else {
               this.usernameError = '이미 사용 중인 아이디입니다.';
+              this.usernameSuccess = false;
             }
           })
           .catch(error => {
             this.usernameError = '아이디 중복 확인 중 오류가 발생했습니다.';
+            this.usernameSuccess = false;
             console.error(error);
           });
     },
@@ -110,7 +147,6 @@ export default {
       }
     },
     signup() {
-      // 여기에 회원가입 로직을 구현하세요
       axios.post("/user/signup", {
         name: this.name,
         username: this.username,
@@ -249,6 +285,15 @@ a {
 
 .error-message {
   color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+.success {
+  border-color: green;
+}
+
+.success-message {
+  color: green;
   font-size: 0.9rem;
   margin-top: 0.5rem;
 }
