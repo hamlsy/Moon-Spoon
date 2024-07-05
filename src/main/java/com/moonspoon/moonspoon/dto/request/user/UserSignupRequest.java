@@ -23,6 +23,8 @@ public class UserSignupRequest {
     private String name;
 
     @NotBlank(message = "비밀번호를 입력하세요.")
+    @Size(min = 4, max = 24)
+    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "비밀번호는 영문과 숫자로 이루어져야 합니다.")
     private String password;
 
     public static User toEntity(UserSignupRequest dto){
