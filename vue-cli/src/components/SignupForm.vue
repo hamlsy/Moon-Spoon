@@ -309,14 +309,17 @@ a {
   color: red;
   font-size: 0.9rem;
   margin-top: 0.5rem;
+  position: absolute;
 }
 .success {
   border-color: green;
 }
 
 .success-message {
-  color: green;
+  color: rgba(0,255,32,0.89);
   font-size: 0.9rem;
   margin-top: 0.5rem;
+  position: absolute;
 }
+
 </style>
