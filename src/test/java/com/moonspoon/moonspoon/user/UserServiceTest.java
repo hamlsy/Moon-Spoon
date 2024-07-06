@@ -28,11 +28,8 @@ public class UserServiceTest {
     private TestUserRepository repository;
 
     @Test
-    @Transactional
-    void concurrentSignupTest() throws InterruptedException{
+    void concurrentSignupOptimisticLockTest() throws InterruptedException{
         //given
-        TestUser user = new TestUser();
-        user.setName("userA");
         int threadCount = 20;
         CountDownLatch latch = new CountDownLatch(threadCount);
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
@@ -40,9 +37,11 @@ public class UserServiceTest {
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
+                    TestUser user = new TestUser();
+                    user.setName("userA");
                     service.signup(user);
                 } catch (Exception e) {
-                    // Expected exception for duplicate names
+                    System.out.println("Exception occurred: " + e.getMessage());
                 } finally {
                     latch.countDown();
                 }
@@ -53,4 +52,32 @@ public class UserServiceTest {
         assertEquals(1, repository.count());
 
     }
+
+    @Test
+    void concurrentSignupPessimisticLockTest() throws InterruptedException{
+        //given
+
+        int threadCount = 20;
+        CountDownLatch latch = new CountDownLatch(threadCount);
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    TestUser user = new TestUser();
+                    user.setName("userA");
+                    service.signupPessimistic(user);
+                } catch (Exception e) {
+                    System.out.println("Exception occurred: " + e.getMessage());
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+        assertEquals(1, repository.count());
+
+    }
+
 }
