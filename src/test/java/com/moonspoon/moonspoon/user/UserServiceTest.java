@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -20,28 +21,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureMockMvc
 public class UserServiceTest {
     @Autowired
-    private TestUserService testUserService;
+    private TestUserService service;
 
     @Autowired
-    private TestUserRepository testUserRepository;
+    private TestUserRepository repository;
 
     @Test
+    @Transactional
     void concurrentSignupTest() throws InterruptedException{
-        int threadCount = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        //given
+        TestUser user = new TestUser();
+        user.setName("userA");
+        int threadCount = 50;
         CountDownLatch latch = new CountDownLatch(threadCount);
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 
         for (int i = 0; i < threadCount; i++) {
-            final int index = i;
             executorService.submit(() -> {
                 try {
-                    TestUser user = new TestUser();
-                    user.setName("name" + index);
-                    // 회원가입 시도
-                    testUserService.signup(user);
+                    service.signup(user);
                 } catch (Exception e) {
-                    // 예외 처리
-                    e.printStackTrace();
+                    // Expected exception for duplicate names
                 } finally {
                     latch.countDown();
                 }
@@ -49,8 +49,7 @@ public class UserServiceTest {
         }
 
         latch.await();
+        assertEquals(1, repository.count());
 
-        // 모든 쓰레드가 실행을 완료한 후, 회원 수 검증
-        assertEquals(threadCount, testUserRepository.count());
     }
 }

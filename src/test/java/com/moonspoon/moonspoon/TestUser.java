@@ -3,6 +3,8 @@ package com.moonspoon.moonspoon;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class TestUser {
     @Id
@@ -13,6 +15,16 @@ public class TestUser {
 
     @Version
     private Long version;
+
+    private LocalDateTime createDate;
+
+    public LocalDateTime getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(LocalDateTime createDate) {
+        this.createDate = createDate;
+    }
 
     public Long getId() {
         return id;
