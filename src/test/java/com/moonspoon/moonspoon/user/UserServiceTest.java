@@ -30,7 +30,7 @@ public class UserServiceTest {
     private TestUserRepository repository;
 
     @Test
-    void concurrentSignupOptimisticLockTest() throws InterruptedException{
+    void concurrentSignupTest() throws InterruptedException{
         //given
         int threadCount = 20;
         CountDownLatch latch = new CountDownLatch(threadCount);
@@ -55,34 +55,6 @@ public class UserServiceTest {
 
     }
 
-    @Test
-    @DisplayName("같은 이름으로 20번의 회원 동시 가입")
-    void concurrentSignupPessimisticLockTest() throws InterruptedException{
-        //given
-
-        int threadCount = 20;
-        CountDownLatch latch = new CountDownLatch(threadCount);
-        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
-
-        for (int i = 0; i < threadCount; i++) {
-            executorService.submit(() -> {
-                try {
-                    TestUser user = new TestUser();
-                    user.setName("userA");
-                    user.setPassword("ps");
-                    service.signupPessimistic(user);
-                } catch (Exception e) {
-                    System.out.println("Exception occurred: " + e.getMessage());
-                } finally {
-                    latch.countDown();
-                }
-            });
-        }
-
-        latch.await();
-        assertEquals(1, repository.count());
-
-    }
     @AfterEach
     void tearDown() {
         repository.deleteAll();

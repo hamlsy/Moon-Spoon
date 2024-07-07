@@ -26,10 +26,6 @@ public class TestUser {
     }
 
 
-
-    @Version
-    private Long version;
-
     private LocalDateTime createDate;
 
     public LocalDateTime getCreateDate() {
@@ -48,10 +44,6 @@ public class TestUser {
         return name;
     }
 
-    public Long getVersion() {
-        return version;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
@@ -60,7 +52,4 @@ public class TestUser {
         this.name = name;
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
 }

@@ -13,8 +13,4 @@ import java.util.Optional;
 @Repository
 public interface TestUserRepository extends JpaRepository<TestUser, Long> {
     boolean existsByName(String name);
-
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT u FROM TestUser u WHERE u.name = :name")
-    Optional<TestUser> findByNameForUpdate(@Param("name") String name);
 }

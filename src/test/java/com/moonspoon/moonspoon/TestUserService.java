@@ -29,14 +29,5 @@ public class TestUserService {
             throw new IllegalStateException("동시성 문제 발견됨", e);
         }
     }
-    @Transactional
-    public void signupPessimistic(TestUser testUser){
-        testUser.setCreateDate(LocalDateTime.now());
-        Optional<TestUser> existingUser = repository.findByNameForUpdate(testUser.getName());
-        if(existingUser.isPresent()){
-            throw new DuplicateUserException("존재하는 이름입니다.");
-        }
-        repository.save(testUser);
-    }
 
 }
