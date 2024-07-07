@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.controller;
 
 import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
+import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 import com.moonspoon.moonspoon.dto.response.UserResponse;
 import com.moonspoon.moonspoon.service.UserService;
 import jakarta.validation.Valid;
@@ -22,5 +23,11 @@ public class UserController {
     public ResponseEntity<UserResponse> signup(@Valid @RequestBody UserSignupRequest dto){
         UserResponse response = userService.signup(dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/validateName")
+    public ResponseEntity<?> validateName(@Valid @RequestBody UserValidateNameRequest dto){
+
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

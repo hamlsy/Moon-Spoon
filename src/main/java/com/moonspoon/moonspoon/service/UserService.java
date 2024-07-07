@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.service;
 import com.moonspoon.moonspoon.domain.User;
 import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
+import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 import com.moonspoon.moonspoon.dto.response.UserResponse;
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
 import com.moonspoon.moonspoon.repository.UserRepository;
@@ -16,7 +17,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserResponse signup(UserSignupRequest dto){
-        isDuplicated(dto.getUsername(), dto.getName());
+        isDuplicatedUsername(dto.getUsername());
+        isDuplicatedName(dto.getName());
         //비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(dto.getPassword());
         dto.setPassword(encodedPassword);
@@ -26,12 +28,18 @@ public class UserService {
         return UserResponse.fromEntity(user);
     }
 
-    private void isDuplicated(String username, String name){
+    private void isDuplicatedUsername(String username){
         if(userRepository.existsByUsername(username)) {
             throw new DuplicateUserException("중복된 아이디가 존재합니다.");
         }
-        else if(userRepository.existsByName(name)){
+
+    }
+    private void isDuplicatedName(String name){
+        if(userRepository.existsByName(name)){
             throw new DuplicateUserException("중복된 이름이 존재합니다.");
         }
+    }
+    public void validateName(UserValidateNameRequest dto){
+        isDuplicatedName(dto.getName());
     }
 }
