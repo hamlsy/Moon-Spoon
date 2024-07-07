@@ -31,10 +31,11 @@ public class UserServiceTest {
 
     @Test
     void concurrentSignupTest() throws InterruptedException{
-        //given
-        int threadCount = 20;
+        int threadCount = 200;
         CountDownLatch latch = new CountDownLatch(threadCount);
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+
+        long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
@@ -49,24 +50,27 @@ public class UserServiceTest {
                 }
             });
         }
+        long endTime = System.currentTimeMillis();
 
+        System.out.println("Unique Key Time: " + (endTime - startTime) + "ms");
         latch.await();
         assertEquals(1, repository.count());
 
     }
     @Test
     void concurrentSignupSynTest() throws InterruptedException{
-        //given
-        int threadCount = 20;
+        int threadCount = 200;
         CountDownLatch latch = new CountDownLatch(threadCount);
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+
+        long startTime = System.currentTimeMillis();
 
         for (int i = 0; i < threadCount; i++) {
             executorService.submit(() -> {
                 try {
                     TestUser user = new TestUser();
                     user.setSynName("userA");
-                    service.signupUnique(user);
+                    service.signupSynchronized(user);
                 } catch (Exception e) {
                     System.out.println("Exception occurred: " + e.getMessage());
                 } finally {
@@ -74,7 +78,9 @@ public class UserServiceTest {
                 }
             });
         }
+        long endTime = System.currentTimeMillis();
 
+        System.out.println("Synchronized Time: " + (endTime - startTime) + "ms");
         latch.await();
         assertEquals(1, repository.count());
 

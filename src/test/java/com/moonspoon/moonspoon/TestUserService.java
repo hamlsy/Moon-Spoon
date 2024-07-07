@@ -30,7 +30,6 @@ public class TestUserService {
         }
     }
 
-    @Transactional
     public synchronized void signupSynchronized(TestUser testUser){
         testUser.setCreateDate(LocalDateTime.now());
         if(repository.existsBySynName(testUser.getSynName())){
