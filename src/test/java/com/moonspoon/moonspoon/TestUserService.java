@@ -9,12 +9,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 
 public class TestUserService {
     @Autowired
     private TestUserRepository repository;
+
     @Transactional
     public void signup(TestUser testUser){
         testUser.setCreateDate(LocalDateTime.now());
@@ -30,7 +32,8 @@ public class TestUserService {
     @Transactional
     public void signupPessimistic(TestUser testUser){
         testUser.setCreateDate(LocalDateTime.now());
-        if(repository.findByNameForUpdate(testUser.getName()).isPresent()){
+        Optional<TestUser> existingUser = repository.findByNameForUpdate(testUser.getName());
+        if(existingUser.isPresent()){
             throw new DuplicateUserException("존재하는 이름입니다.");
         }
         repository.save(testUser);

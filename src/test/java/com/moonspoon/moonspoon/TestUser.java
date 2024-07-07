@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "test_user", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class TestUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @Version
