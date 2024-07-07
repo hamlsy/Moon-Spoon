@@ -13,4 +13,6 @@ import java.util.Optional;
 @Repository
 public interface TestUserRepository extends JpaRepository<TestUser, Long> {
     boolean existsByName(String name);
+
+    boolean existsBySynName(String synName);
 }

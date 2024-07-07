@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "test_user", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
+//@Table(name = "test_user", uniqueConstraints = @UniqueConstraint(columnNames = "name"))
 public class TestUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +14,16 @@ public class TestUser {
 
     @Column(unique = true)
     private String name;
+
+    public String getSynName() {
+        return synName;
+    }
+
+    public void setSynName(String synName) {
+        this.synName = synName;
+    }
+
+    private String synName;
 
     private String password;
 

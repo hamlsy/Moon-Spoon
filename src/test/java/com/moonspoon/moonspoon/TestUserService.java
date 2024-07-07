@@ -18,7 +18,7 @@ public class TestUserService {
     private TestUserRepository repository;
 
     @Transactional
-    public void signup(TestUser testUser){
+    public void signupUnique(TestUser testUser){
         testUser.setCreateDate(LocalDateTime.now());
         if(repository.existsByName(testUser.getName())){
             throw new DuplicateUserException("존재하는 이름입니다.");
@@ -30,4 +30,16 @@ public class TestUserService {
         }
     }
 
+    @Transactional
+    public synchronized void signupSynchronized(TestUser testUser){
+        testUser.setCreateDate(LocalDateTime.now());
+        if(repository.existsBySynName(testUser.getSynName())){
+            throw new DuplicateUserException("존재하는 이름입니다.");
+        }
+        try{
+            repository.save(testUser);
+        }catch (ObjectOptimisticLockingFailureException e){
+            throw new IllegalStateException("동시성 문제 발견됨", e);
+        }
+    }
 }

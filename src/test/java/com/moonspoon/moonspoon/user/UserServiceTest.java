@@ -41,7 +41,7 @@ public class UserServiceTest {
                 try {
                     TestUser user = new TestUser();
                     user.setName("userA");
-                    service.signup(user);
+                    service.signupUnique(user);
                 } catch (Exception e) {
                     System.out.println("Exception occurred: " + e.getMessage());
                 } finally {
@@ -54,7 +54,31 @@ public class UserServiceTest {
         assertEquals(1, repository.count());
 
     }
+    @Test
+    void concurrentSignupSynTest() throws InterruptedException{
+        //given
+        int threadCount = 20;
+        CountDownLatch latch = new CountDownLatch(threadCount);
+        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
 
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    TestUser user = new TestUser();
+                    user.setSynName("userA");
+                    service.signupUnique(user);
+                } catch (Exception e) {
+                    System.out.println("Exception occurred: " + e.getMessage());
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+        assertEquals(1, repository.count());
+
+    }
     @AfterEach
     void tearDown() {
         repository.deleteAll();
