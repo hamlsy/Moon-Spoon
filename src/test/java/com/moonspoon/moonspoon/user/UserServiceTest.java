@@ -69,6 +69,7 @@ public class UserServiceTest {
                 try {
                     TestUser user = new TestUser();
                     user.setName("userA");
+                    user.setPassword("ps");
                     service.signupPessimistic(user);
                 } catch (Exception e) {
                     System.out.println("Exception occurred: " + e.getMessage());

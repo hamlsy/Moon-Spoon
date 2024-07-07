@@ -15,6 +15,18 @@ public class TestUser {
     @Column(unique = true)
     private String name;
 
+    private String password;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+
     @Version
     private Long version;
 
