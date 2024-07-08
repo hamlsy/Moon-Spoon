@@ -30,6 +30,7 @@ public class UserServiceTest {
     private TestUserRepository repository;
 
     @Test
+    @DisplayName("유니크 제약 테스트")
     void concurrentSignupTest() throws InterruptedException{
         int threadCount = 200;
         CountDownLatch latch = new CountDownLatch(threadCount);
@@ -58,6 +59,7 @@ public class UserServiceTest {
 
     }
     @Test
+    @DisplayName("Synchronized 테스트")
     void concurrentSignupSynTest() throws InterruptedException{
         int threadCount = 200;
         CountDownLatch latch = new CountDownLatch(threadCount);
