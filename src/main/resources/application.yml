@@ -17,11 +17,6 @@ spring:
     username: seungyoung
     password: lsy991122
 
-  #    url: jdbc:h2:tcp://localhost/~/moonspoon
-#    username: sa
-#    password:
-#    driver-class-name: org.h2.Driver
-
   jpa:
     hibernate:
       ddl-auto: create
