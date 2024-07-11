@@ -1,0 +1,3 @@
+[submodule "private_repo"]
+	path = private_repo
+	url = https://github.com/hamlsy/private_repo.git

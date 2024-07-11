@@ -176,10 +176,15 @@ export default {
               console.log(error.response.data.message);
               alert("토큰이 만료되었습니다. 다시 로그인하세요.");
               localStorage.removeItem("token");
-            }else{
-              alert(error.response.data.message);
+              this.$router.push("/mainPage");
             }
-            this.$router.push("/mainPage");
+            else if(error.response.status === 404){
+              console.log("문제집 없음");
+            }
+            else{
+              alert(error.response.data.message);
+              this.$router.push("/mainPage");
+            }
             console.log("ERROR", error);
       })
     },

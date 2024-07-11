@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.exception;
+package com.moonspoon.moonspoon.dto.response.error;
 
 import lombok.*;
 
