@@ -4,11 +4,13 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Moon-Spoon/**'
+      - '**'
+      - '!vue-cli/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'Moon-Spoon/**'
+      - '**'
+      - '!vue-cli/**'
 
 jobs:
   build-and-deploy-backend:
