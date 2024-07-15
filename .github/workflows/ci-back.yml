@@ -4,11 +4,13 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'Moon-Spoon/**'
+      - '**'
+      - '!vue-cli/**'
   pull_request:
     branches: [ main ]
     paths:
-      - 'Moon-Spoon/**'
+      - '**'
+      - '!vue-cli/**'
 
 jobs:
   build-and-deploy-backend:
@@ -35,7 +37,7 @@ jobs:
       run: |
         cd backend
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker build -t $DOCKER_USERNAME/backend:latest .
+        docker build -t $DOCKER_USERNAME/moonspoon:latest .
         docker push $DOCKER_USERNAME/backend:latest
     
     - name: Deploy to AWS ECS
