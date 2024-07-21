@@ -1,5 +1,17 @@
 name: moonspoon CI/CD
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        repository: hamlsy/private_repo
+        token: ${{ secrets.ACCESS_TOKEN }}
+        path: private-config
 
+    - name: Copy application.yml
+      run: |
+        cp application.yml ./src/main/resources/application.yml
 on:
   push:
     branches: [ main ]
