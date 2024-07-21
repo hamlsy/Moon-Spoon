@@ -26,7 +26,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout main project
+        uses: actions/checkout@v3
+        
+      - name: Checkout Submodule 
+        uses: actions/checkout@v3
         with:
           repository: hamlsy/private_repo
           token: ${{ secrets.ACCESS_TOKEN }}
