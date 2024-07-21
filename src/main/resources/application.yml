@@ -1,0 +1,30 @@
+#서버 재시작시 세션 초기화
+server:
+  servlet:
+    session:
+      persistent: false
+
+spring:
+  jwt:
+    secret: ${{ secrets.JWT_SECRET }}
+    expiration: 86400000  # 1 day in milliseconds
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${RDS_ENDPOINT}:3306/${RDS_DB_NAME}
+    username: ${RDS_USERNAME}
+    password: ${RDS_PASSWORD}
+    
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        jdbc:
+          batch_size: 30
+        order_updates: true
+logging:
+  level:
+    org.hibernate.SQL: debug
