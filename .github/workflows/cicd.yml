@@ -41,6 +41,7 @@ jobs:
           
       - name: Copy application.yml
         run: |
+          pwd
           ls -la
           cp private_repo/application.yml src/main/resources/application.yml
           
