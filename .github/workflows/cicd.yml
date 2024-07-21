@@ -41,7 +41,7 @@ jobs:
           
       - name: Copy application.yml
         run: |
-          cp ./private_repo/application.yml ./src/main/resources/application.yml
+          cp private_repo/application.yml ./src/main/resources/application.yml
           
       - name: Set up Node.js
         uses: actions/setup-node@v3
