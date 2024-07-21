@@ -30,7 +30,7 @@ jobs:
         with:
           repository: hamlsy/private_repo
           token: ${{ secrets.ACCESS_TOKEN }}
-          submodules: true
+          submodules: 'true'
           path: private-config
           
       - name: Set up JDK 17
