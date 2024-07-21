@@ -41,7 +41,7 @@ jobs:
           
       - name: Copy application.yml
         run: |
-          ls -l private_repo/application.yml
+          ls -la
           cp private_repo/application.yml src/main/resources/application.yml
           
       - name: Set up Node.js
