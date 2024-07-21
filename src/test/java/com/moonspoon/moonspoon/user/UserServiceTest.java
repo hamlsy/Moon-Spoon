@@ -91,4 +91,8 @@ public class UserServiceTest {
     void tearDown() {
         repository.deleteAll();
     }
+
+    @Test
+    void contextLoads() {
+    }
 }
