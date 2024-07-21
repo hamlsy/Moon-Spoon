@@ -39,7 +39,7 @@ jobs:
           distribution: 'temurin'  # adopt는 더 이상 사용되지 않음
       - name: Copy application.yml
         run: |
-          cp application.yml ./src/main/resources/application.yml
+          cp /application.yml ./src/main/resources/application.yml
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
