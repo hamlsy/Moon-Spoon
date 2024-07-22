@@ -92,7 +92,4 @@ public class UserServiceTest {
         repository.deleteAll();
     }
 
-    @Test
-    void contextLoads() {
-    }
 }
