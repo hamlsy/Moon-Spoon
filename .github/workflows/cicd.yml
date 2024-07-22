@@ -116,6 +116,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
           script: |
+            whoami
             docker-compose pull spring-blue vue-blue
             docker-compose up -d spring-blue vue-blue
             sleep 30
