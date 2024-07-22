@@ -84,12 +84,11 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           
           # Backend
-          cd Moon-Spoon
           docker build -t $DOCKER_USERNAME/msp_back:blue .
           docker push $DOCKER_USERNAME/msp_back:blue
           
           # Frontend
-          cd ../vue-cli
+          cd /vue-cli
           docker build -t $DOCKER_USERNAME/msp_front:blue .
           docker push $DOCKER_USERNAME/msp_front:blue
 
@@ -115,7 +114,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /path/to/your/project
             docker-compose pull spring-blue vue-blue
             docker-compose up -d spring-blue vue-blue
             sleep 30
