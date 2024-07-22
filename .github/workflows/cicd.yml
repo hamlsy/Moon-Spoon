@@ -124,8 +124,8 @@ jobs:
             if docker exec spring-container-blue curl -f http://localhost:8080/health && \
                docker exec vue-container-blue curl -f http://localhost:3000; then
               # Update Nginx to route to blue versions
-              sed -i 's/spring-green/spring-blue/g' /path/to/nginx.conf
-              sed -i 's/vue-green/vue-blue/g' /path/to/nginx.conf
+              sed -i 's/spring-green/spring-blue/g' /etc/nginx/nginx.conf
+              sed -i 's/vue-green/vue-blue/g' /etc/nginx/nginx.conf
               docker-compose up -d --no-deps nginx
               echo "Deployment successful, updated nginx to route to blue versions"
             else
