@@ -133,14 +133,14 @@ jobs:
               echo "Deployment failed, rolling back"
             fi
 
-      - name: Cleanup old deployments
-        if: success()
-        uses: appleboy/ssh-action@v0.1.4
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            docker-compose stop spring-green vue-green
-            docker-compose rm -f spring-green vue-green
-            docker image prune -af
+      # - name: Cleanup old deployments
+      #   if: success()
+      #   uses: appleboy/ssh-action@v0.1.4
+      #   with:
+      #     host: ${{ secrets.EC2_HOST }}
+      #     username: ${{ secrets.EC2_USERNAME }}
+      #     key: ${{ secrets.EC2_SSH_KEY }}
+      #     script: |
+      #       docker-compose stop spring-green vue-green
+      #       docker-compose rm -f spring-green vue-green
+      #       docker image prune -af
