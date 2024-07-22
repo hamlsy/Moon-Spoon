@@ -60,7 +60,7 @@ jobs:
         
       - name: Build and test backend
         run: |
-          ./gradlew build test -i
+          ./gradlew build test
 
       - name: Build and test frontend
         run: |
