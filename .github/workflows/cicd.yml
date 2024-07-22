@@ -92,6 +92,7 @@ jobs:
           cd vue-cli
           docker build -t $DOCKER_USERNAME/msp_front:blue .
           docker push $DOCKER_USERNAME/msp_front:blue
+          cd ..
 
       - name: Create deployment package
         run: |
