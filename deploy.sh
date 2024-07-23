@@ -1,6 +1,11 @@
 #!/bin/bash
 set -e
 cd /home/ubuntu/git-action-test
+# 환경 변수 설정
+export RDS_ENDPOINT=$RDS_ENDPOINT
+export RDS_USERNAME=$RDS_USERNAME
+export RDS_PASSWORD=$RDS_PASSWORD
+export RDS_DB_NAME=$RDS_DB_NAME
 
 # 환경 변수 설정 (필요한 경우)
 export DOCKER_COMPOSE_FILE=docker-compose.yml
