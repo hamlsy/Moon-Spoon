@@ -131,7 +131,7 @@ jobs:
             
             # image 이름
             docker-compose pull msp_back:blue msp_front:blue 
-            docker-compose up -d msp_back:blue msp_front:blue
+            docker-compose up -d spring-blue vue-blue
             sleep 30
             if docker exec spring-container-blue curl -f http://localhost:8080 && \
                docker exec vue-container-blue curl -f http://localhost:3000; then
