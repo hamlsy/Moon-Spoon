@@ -13,6 +13,8 @@ permissions:
     mode: 755
 
   - object: /home/ubuntu/git-action-test/deploy.sh
+    owner: ubuntu
+    group: ubuntu
     mode: 755
 hooks:
   AfterInstall:
