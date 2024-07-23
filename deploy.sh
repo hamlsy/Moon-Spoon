@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-cd /home/ubuntu/app
-
 # 환경 변수 설정 (필요한 경우)
 export DOCKER_COMPOSE_FILE=docker-compose.yml
 
