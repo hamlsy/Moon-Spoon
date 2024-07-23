@@ -118,6 +118,16 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             whoami
+            cd /home/ubuntu/git-action-test
+            
+            # docker-compose 설치 확인 및 설치
+            if ! command -v docker-compose &> /dev/null
+            then
+              echo "docker-compose could not be found, installing now"
+              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+            
             # image 이름
             docker-compose pull msp_back:blue msp_front:blue 
             docker-compose up -d msp_back:blue msp_front:blue
@@ -125,8 +135,8 @@ jobs:
             if docker exec spring-container-blue curl -f http://localhost:8080 && \
                docker exec vue-container-blue curl -f http://localhost:3000; then
               # Update Nginx to route to blue versions
-              sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
-              sed -i 's/msp_front:green/msp_front:blue/g' /etc/nginx/nginx.conf
+              sudo sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
+              sudo sed -i 's/msp_front:green/msp_front:blue/g' /etc/nginx/nginx.conf
               docker-compose up -d --no-deps nginx
               echo "Deployment successful, updated nginx to route to blue versions"
             else
@@ -142,6 +152,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            cd /home/ubuntu/git-action-test
             docker-compose stop msp_back:green msp_back:green
             docker-compose rm -f msp_back:green msp_back:green
             docker image prune -af
