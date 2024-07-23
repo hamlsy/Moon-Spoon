@@ -134,8 +134,8 @@ jobs:
               sudo chmod +x /usr/local/bin/docker-compose
             fi
             
-            # image 이름
-            docker-compose pull msp_back:blue msp_front:blue 
+            # service 이름
+            docker-compose pull spring-blue vue-blue 
             docker-compose up -d spring-blue vue-blue
             sleep 30
             if docker exec spring-container-blue curl -f http://localhost:8080 && \
