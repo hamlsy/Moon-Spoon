@@ -12,10 +12,6 @@ permissions:
     group: ubuntu
     mode: 755
 
-  - object: /home/ubuntu/git-action-test/deploy.sh
-    owner: ubuntu
-    group: ubuntu
-    mode: 755
 hooks:
   AfterInstall:
     - location: deploy.sh    # locaiton 기준 => project root 디렉토리
