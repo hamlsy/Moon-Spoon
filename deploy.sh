@@ -10,8 +10,22 @@ export RDS_DB_NAME=$RDS_DB_NAME
 # 환경 변수 설정 (필요한 경우)
 export DOCKER_COMPOSE_FILE=docker-compose.yml
 
+# 기존 컨테이너 정리
+docker-compose down --remove-orphans
+
 # Docker 이미지 pull (만약 원격 레지스트리를 사용한다면)
 docker-compose pull
+
+# Vue.js 종속성 설치
+cd vue-cli
+npm install
+cd ..
+
+# Docker 이미지 빌드
+docker-compose build
+
+# 컨테이너 시작
+docker-compose up -d
 
 # Blue/Green 배포 로직
 if [ "$(docker ps -q -f name=spring-container-blue)" ]; then
