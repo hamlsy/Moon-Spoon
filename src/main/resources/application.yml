@@ -6,11 +6,10 @@ server:
 
 spring:
   jwt:
-    secret: ${{ secrets.JWT_SECRET }}
+    secret: testzzcxdfgbsfgSecretKey2adasd024202asdsad4testasdasdSecradazxcetKey2024asdasdsa2024te
     expiration: 86400000  # 1 day in milliseconds
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${RDS_ENDPOINT}:3306/${RDS_DB_NAME}
     username: ${RDS_USERNAME}
     password: ${RDS_PASSWORD}
