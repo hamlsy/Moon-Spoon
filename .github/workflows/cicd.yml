@@ -116,9 +116,15 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
+          envs: RDS_ENDPOINT,RDS_USERNAME,RDS_PASSWORD
           script: |
             whoami
             cd /home/ubuntu/git-action-test
+            
+            export RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}
+            export RDS_USERNAME=${{ secrets.RDS_USERNAME }}
+            export RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}
+            export RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}
             
             # docker-compose 설치 확인 및 설치
             if ! command -v docker-compose &> /dev/null
