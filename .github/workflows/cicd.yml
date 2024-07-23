@@ -118,6 +118,11 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           envs: RDS_ENDPOINT,RDS_USERNAME,RDS_PASSWORD,RDS_DB_NAME
           script: |
+            export RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}
+            export RDS_USERNAME=${{ secrets.RDS_USERNAME }}
+            export RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}
+            export RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}
+            
             whoami
             cd /home/ubuntu/git-action-test
             
@@ -141,7 +146,7 @@ jobs:
               docker-compose up -d --no-deps nginx
               echo "Deployment successful, updated nginx to route to blue versions"
             else
-              docker-compose stop msp_back:blue msp_front:blue
+              docker-compose stop spring-blue vue-blue
               echo "Deployment failed, rolling back"
             fi
 
@@ -154,6 +159,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd /home/ubuntu/git-action-test
-            docker-compose stop msp_back:green msp_back:green
-            docker-compose rm -f msp_back:green msp_back:green
+            docker-compose stop spring-green vue-green
+            docker-compose rm -f spring-green vue-green
             docker image prune -af
