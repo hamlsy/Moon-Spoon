@@ -134,10 +134,13 @@ jobs:
               sudo chmod +x /usr/local/bin/docker-compose
             fi
             
-            # service 이름
+            
+            # Docker 이미지 빌드, 서비스 이름
+            docker-compose build spring-blue vue-blue
             docker-compose pull spring-blue vue-blue 
             docker-compose up -d spring-blue vue-blue
             sleep 30
+            
             if docker exec spring-container-blue curl -f http://localhost:8080 && \
                docker exec vue-container-blue curl -f http://localhost:3000; then
               # Update Nginx to route to blue versions

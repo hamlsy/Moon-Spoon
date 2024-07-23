@@ -3,10 +3,6 @@
 # jdk17 Image Start
 FROM bellsoft/liberica-openjdk-alpine:17
 
-CMD ["./gradlew", "clean", "build"]
-
-VOLUME /tmp
-
 # 인자 설정 - JAR_File
 ARG JAR_FILE=build/libs/*.jar
 
