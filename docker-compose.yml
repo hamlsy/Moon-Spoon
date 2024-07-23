@@ -9,9 +9,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/moonspoon
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:mysql://${{ secrets.RDS_ENDPOINT }}:3306/moonspoon
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.RDS_USERNAME }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.RDS_PASSWORD }}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - mysql
@@ -27,9 +27,9 @@ services:
     ports:
       - "8081:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/moonspoon
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:mysql://${{ secrets.RDS_ENDPOINT }}:3306/moonspoon
+      SPRING_DATASOURCE_USERNAME: ${{ secrets.RDS_USERNAME }}
+      SPRING_DATASOURCE_PASSWORD: ${{ secrets.RDS_PASSWORD }}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - mysql
@@ -78,8 +78,8 @@ services:
     image: mysql:8.0
     container_name: mysql-container
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: moonspoon
+      MYSQL_ROOT_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+      MYSQL_DATABASE: ${{ secrets.RDS_DB_NAME }}
     ports:
       - "3306:3306"
     networks:
