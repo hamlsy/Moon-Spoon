@@ -119,15 +119,15 @@ jobs:
           port: ${{ secrets.EC2_PORT }}
           script: |
             
-            sudo chmod 666 /home/$EC2_USERNAME/git-action-test/.env
+            sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
             
             whoami
-            cd /home/$EC2_USERNAME/git-action-test
+            cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
             
-            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
-            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
-            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
-            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" >> .env
+            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
+            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
+            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env
                     
 
           # docker-compose 설치 확인 및 설치
