@@ -1,5 +1,5 @@
 # Use the official node image as a parent image
-FROM node:20
+FROM node:20 as builder
 
 # Set the working directory
 WORKDIR /app
@@ -14,16 +14,17 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN yarn run build
 
 # Use nginx to serve the application
-FROM nginx:alpine
+FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
-COPY --from=0 /app/dist /usr/share/nginx/html
+#COPY --from=0 /app/dist /usr/share/nginx/html
+COPY --from=builder /app/dist /app
 
 # Expose port 3000
-EXPOSE 3000
+EXPOSE 80
 
 # Command to run the application
-CMD ["nginx", "-g", "daemon off;"]
+#CMD ["nginx", "-g", "daemon off;"]
