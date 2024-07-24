@@ -16,6 +16,10 @@ env:
   AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
   S3_BUCKET: ${{ secrets.S3_BUCKET }}
+  RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
+  RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+  RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+  RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
 
 jobs:
   build-and-deploy:
@@ -113,12 +117,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          env:
-            RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
-            RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-            RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-            RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
-            EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
           script: |
             
             sudo chmod 666 /home/$EC2_USERNAME/git-action-test/.env
@@ -126,12 +124,13 @@ jobs:
             whoami
             cd /home/$EC2_USERNAME/git-action-test
             
-            echo "RDS_ENDPOINT=$RDS_ENDPOINT" >> .env
-            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
-            
-            # docker-compose 설치 확인 및 설치
+            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+                    
+
+          # docker-compose 설치 확인 및 설치
             if ! command -v docker-compose &> /dev/null
             then
               echo "docker-compose could not be found, installing now"
