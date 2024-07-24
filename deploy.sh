@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
+
 cd /home/ubuntu/git-action-test
+
 # 환경 변수 설정
 set -a
 source .env
