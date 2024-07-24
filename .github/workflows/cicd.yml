@@ -110,6 +110,12 @@ jobs:
             --deployment-group-name msp_deploy_group \
             --s3-location bucket=${{ secrets.S3_BUCKET }},key=deploy.zip,bundleType=zip          
 
+      - name: Create env
+        run: |
+          echo "RDS_ENDPOINT=$RDS_ENDPOINT" >> .env
+          echo "RDS_USERNAME=$RDS_USERNAME" >> .env
+          echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
+          echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
@@ -118,14 +124,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          run: |
-            sudo chmod +x /home/${{ secrets.EC2_USERNAME }}/git-action-test/
-            cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
-            echo "RDS_ENDPOINT=$RDS_ENDPOINT" >> .env
-            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
-
           script: |
             
             sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
@@ -133,7 +131,11 @@ jobs:
             
             whoami
             cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
-
+            
+            ls -la
+            
+            cp /home/${{ secrets.EC2_USERNAME }}/.env /home/${{ secrets.EC2_USERNAME }}/git-action-test/
+            
             if ! command -v docker-compose &> /dev/null
             then
               echo "docker-compose could not be found, installing now"
