@@ -11,7 +11,7 @@ echo "RDS_DB_NAME=${RDS_DB_NAME}" >> .env
 
 # 환경 변수 파일 권한 설정
 chmod 644 .env
-
+chmod +x .env
 # 환경 변수 설정
 set -a
 source .env
