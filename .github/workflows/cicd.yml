@@ -130,7 +130,6 @@ jobs:
             echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env
                     
 
-          # docker-compose 설치 확인 및 설치
             if ! command -v docker-compose &> /dev/null
             then
               echo "docker-compose could not be found, installing now"
@@ -146,7 +145,7 @@ jobs:
             sleep 30
             
             if docker exec spring-container-blue curl -f http://localhost:8080 && \
-               docker exec vue-container-blue curl -f http://localhost:3000; then
+              docker exec vue-container-blue curl -f http://localhost:3000; then
               # Update Nginx to route to blue versions
               sudo sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
               sudo sed -i 's/msp_front:green/msp_front:blue/g' /etc/nginx/nginx.conf
