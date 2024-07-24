@@ -78,18 +78,18 @@ services:
     networks:
       - app-network
 
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-container
-    environment:
-      MYSQL_ROOT_PASSWORD: ${RDS_PASSWORD}
-      MYSQL_DATABASE: ${RDS_DB_NAME}
-    ports:
-      - "3306:3306"
-    networks:
-      - app-network
-    env_file:
-      - .env
+#  mysql:
+#    image: mysql:8.0
+#    container_name: mysql-container
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${RDS_PASSWORD}
+#      MYSQL_DATABASE: ${RDS_DB_NAME}
+#    ports:
+#      - "3306:3306"
+#    networks:
+#      - app-network
+#    env_file:
+#      - .env
 
 networks:
   app-network:
