@@ -118,7 +118,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          envs:
+          env:
             RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
             RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
             RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
