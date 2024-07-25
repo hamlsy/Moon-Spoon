@@ -1,7 +1,7 @@
 HELP.md
 .gradle
 build/
-!gradle/wrapper/gradle-wrapper.jar
+!backend/gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
 
@@ -18,7 +18,7 @@ bin/
 !**/src/test/**/bin/
 
 ### IntelliJ IDEA ###
-.idea
+backend/.idea
 *.iws
 *.iml
 *.ipr
@@ -48,4 +48,4 @@ vue-cli/node_modules
 ### yml
 src/main/resources/application.yml
 src/main/resources/application.properties
-private_repo
+backend/private_repo
