@@ -40,27 +40,27 @@ services:
     env_file:
       - .env
 
-  vue-blue:
-    image: msp_front:blue
-    container_name: vue-container-blue
-    build:
-      context: ./vue-cli
-      dockerfile: Dockerfile
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
-
-  vue-green:
-    image: msp_front:green
-    container_name: vue-container-green
-    build:
-      context: ./vue-cli
-      dockerfile: Dockerfile
-    ports:
-      - "3001:3000"
-    networks:
-      - app-network
+#  vue-blue:
+#    image: msp_front:blue
+#    container_name: vue-container-blue
+#    build:
+#      context: ./vue-cli
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - app-network
+#
+#  vue-green:
+#    image: msp_front:green
+#    container_name: vue-container-green
+#    build:
+#      context: ./vue-cli
+#      dockerfile: Dockerfile
+#    ports:
+#      - "3001:3000"
+#    networks:
+#      - app-network
 
   nginx:
     image: nginx:latest
