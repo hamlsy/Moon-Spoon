@@ -139,6 +139,7 @@ jobs:
           script: |
             
             sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/
             sudo chmod +x /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
             
             ls -la
