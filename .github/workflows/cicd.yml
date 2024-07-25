@@ -116,6 +116,11 @@ jobs:
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
+        env:
+          RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
+          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
@@ -164,11 +169,7 @@ jobs:
               docker-compose stop spring-blue
               echo "Deployment failed, rolling back"
             fi
-          env:
-            RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
-            RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-            RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-            RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
+
       # - name: Cleanup old deployments
       #   if: success()
       #   uses: appleboy/ssh-action@v0.1.4
