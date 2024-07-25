@@ -121,6 +121,7 @@ jobs:
           echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
           echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
           echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env
+          cat .env
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
@@ -142,6 +143,7 @@ jobs:
             ls -la
             
             sudo cp /home/${{ secrets.EC2_USERNAME }}/.env /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            cat .env
             
             if ! command -v docker-compose &> /dev/null
             then
