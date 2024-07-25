@@ -98,20 +98,6 @@ jobs:
         run: |
           aws s3 sync frontend/dist s3://${{ secrets.S3_BUCKET }} --delete
 
-      - name: Create env
-        env:
-          RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
-          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
-        run: |
-          cd backend
-          echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
-          echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-          echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-          echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
-          cd ..
-
       - name: Build and push Docker images
         run: |
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
@@ -160,7 +146,26 @@ jobs:
             whoami
             cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
             
+            echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
+            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
+            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
+            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
+            
             cat .env
+            
+            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" > .env_1
+            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env_1
+            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env_1
+            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env_1
+            
+            cat .env_1
+            
+            echo "RDS_ENDPOINT=${RDS_ENDPOINT}" > .env_2
+            echo "RDS_USERNAME=${RDS_USERNAME}" >> .env_2
+            echo "RDS_PASSWORD=${RDS_PASSWORD}" >> .env_2
+            echo "RDS_DB_NAME=${RDS_DB_NAME}" >> .env_2
+            
+            cat .env_2
             
             ls -la
             
@@ -170,8 +175,6 @@ jobs:
               sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
               sudo chmod +x /usr/local/bin/docker-compose
             fi
-            
-            sudo docker compose convert
             
             # Docker 이미지 빌드, 서비스 이름
             sudo docker-compose build spring-blue
