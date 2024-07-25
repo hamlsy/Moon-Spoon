@@ -71,7 +71,7 @@ jobs:
 
       - name: Build frontend
         run: |
-          cd /frontend
+          cd frontend
           npm install
           npm run build
           cd ..
