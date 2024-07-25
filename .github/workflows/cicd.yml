@@ -141,7 +141,7 @@ jobs:
             
             ls -la
             
-            sudo cp /home/${{ secrets.EC2_USERNAME }}/.env /home/${{ secrets.EC2_USERNAME }}/git-action-test/
+            sudo cp /home/${{ secrets.EC2_USERNAME }}/.env /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
             
             if ! command -v docker-compose &> /dev/null
             then
