@@ -114,15 +114,6 @@ jobs:
             --deployment-group-name msp_deploy_group \
             --s3-location bucket=${{ secrets.S3_BUCKET }},key=deploy.zip,bundleType=zip          
 
-      - name: Create env
-        run: |
-
-          sudo echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" > .env
-          sudo echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
-          sudo echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
-          sudo echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env
-          cat .env
-
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
         with:
@@ -130,6 +121,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
+          env: RDS_ENDPOINT, RDS_USERNAME, RDS_PASSWORD, RDS_DB_NAME
           script: |
             
             sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
@@ -140,10 +132,14 @@ jobs:
             whoami
             cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
             
-            ls -la
+            echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
+            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
+            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
+            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
             
-            sudo cp /home/${{ secrets.EC2_USERNAME }}/.env /home/${{ secrets.EC2_USERNAME }}/git-action-test/
             cat .env
+            
+            ls -la
             
             if ! command -v docker-compose &> /dev/null
             then
