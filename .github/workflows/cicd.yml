@@ -20,7 +20,7 @@ env:
   RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
   RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
   RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
-  RESOURCE_PATH: ../backend/src/main/resources/application.yml
+  RESOURCE_PATH: ./backend/src/main/resources/application.yml
 
 jobs:
   build-and-deploy:
