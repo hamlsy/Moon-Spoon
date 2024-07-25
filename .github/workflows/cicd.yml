@@ -63,7 +63,9 @@ jobs:
         
       - name: Build and test backend
         run: |
-          cd /backend
+          pwd
+          ls -la
+          cd backend
           gradlew build test
           cd ..
 
