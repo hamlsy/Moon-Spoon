@@ -15,12 +15,12 @@ RUN yarn install
 COPY . .
 
 # Build the application
-RUN #yarn run build
+# RUN yarn run build
 
 # Use nginx to serve the application
 FROM nginx:latest
 
-# Copy the build output to replace the default nginx contents.
+#Copy the build output to replace the default nginx contents.
 #COPY --from=0 /app/dist /usr/share/nginx/html
 COPY --from=builder /app/dist /app
 
