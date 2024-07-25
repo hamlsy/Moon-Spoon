@@ -109,7 +109,20 @@ jobs:
           cd ..
           
 
-#      appspec.yml 실행지점
+      - name: Create env
+        env:
+          RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
+          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
+        run: |
+          cd backend
+          echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
+          echo "RDS_USERNAME=$RDS_USERNAME" >> .env
+          echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
+          echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
+          cd ..
+
       - name: Create deployment package
         run: |
           zip -r deploy.zip * -x "*.git*"
@@ -125,17 +138,7 @@ jobs:
             --deployment-group-name msp_deploy_group \
             --s3-location bucket=${{ secrets.S3_BUCKET }},key=deploy.zip,bundleType=zip
 
-      - name: Create env
-        env:
-          RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
-          RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-          RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-          RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
-        run: |
-          echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
-          echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-          echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-          echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
+      
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.4
@@ -158,11 +161,6 @@ jobs:
             
             whoami
             cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
-            
-            echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
-            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
             
             cat .env
             
