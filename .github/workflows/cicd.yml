@@ -126,49 +126,49 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-        run: |
-          
-          sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
-          sudo chmod +x /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
-          
-          ls -la
-          
-          whoami
-          cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
-          
-          echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
-          echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-          echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-          echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
-          
-          cat .env
-          
-          ls -la
-          
-          if ! command -v docker-compose &> /dev/null
-          then
-            echo "docker-compose could not be found, installing now"
-            sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-          fi
-          
-          sudo docker compose convert
-          
-          # Docker 이미지 빌드, 서비스 이름
-          sudo docker-compose build spring-blue
-          sudo docker-compose pull spring-blue 
-          sudo docker-compose up -d spring-blue
-          sleep 30
-          
-          if docker exec spring-container-blue curl -f http://localhost:8080; then
-            # Update Nginx to route to blue versions
-            sudo sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
-            docker-compose up -d --no-deps nginx
-            echo "Deployment successful, updated nginx to route to blue versions"
-          else
-            docker-compose stop spring-blue
-            echo "Deployment failed, rolling back"
-          fi
+          script: |
+            
+            sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            sudo chmod +x /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
+            
+            ls -la
+            
+            whoami
+            cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
+            
+            echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
+            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
+            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
+            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
+            
+            cat .env
+            
+            ls -la
+            
+            if ! command -v docker-compose &> /dev/null
+            then
+              echo "docker-compose could not be found, installing now"
+              sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+              sudo chmod +x /usr/local/bin/docker-compose
+            fi
+            
+            sudo docker compose convert
+            
+            # Docker 이미지 빌드, 서비스 이름
+            sudo docker-compose build spring-blue
+            sudo docker-compose pull spring-blue 
+            sudo docker-compose up -d spring-blue
+            sleep 30
+            
+            if docker exec spring-container-blue curl -f http://localhost:8080; then
+              # Update Nginx to route to blue versions
+              sudo sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
+              docker-compose up -d --no-deps nginx
+              echo "Deployment successful, updated nginx to route to blue versions"
+            else
+              docker-compose stop spring-blue
+              echo "Deployment failed, rolling back"
+            fi
 
       # - name: Cleanup old deployments
       #   if: success()
