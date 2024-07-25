@@ -49,7 +49,7 @@ jobs:
           pwd
           ls
           ls -la
-          cp private_repo/application.yml src/main/resources/application.yml
+          cp private_repo/application.yml /backend/src/main/resources/application.yml
           
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -65,7 +65,7 @@ jobs:
 
       - name: Build frontend
         run: |
-          cd vue-cli
+          cd frontend
           npm install
           npm run build
 
@@ -78,7 +78,7 @@ jobs:
 
       - name: Deploy frontend to S3
         run: |
-          aws s3 sync vue-cli/dist s3://${{ secrets.S3_BUCKET }} --delete
+          aws s3 sync frontend/dist s3://${{ secrets.S3_BUCKET }} --delete
 
       - name: Build and push Docker images
         run: |
