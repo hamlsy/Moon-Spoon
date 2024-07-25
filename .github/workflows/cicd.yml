@@ -121,11 +121,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          env:
-            RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
-            RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
-            RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
-            RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
           run: |
             
             sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
@@ -169,7 +164,11 @@ jobs:
               docker-compose stop spring-blue
               echo "Deployment failed, rolling back"
             fi
-
+          env:
+            RDS_ENDPOINT: ${{ secrets.RDS_ENDPOINT }}
+            RDS_USERNAME: ${{ secrets.RDS_USERNAME }}
+            RDS_PASSWORD: ${{ secrets.RDS_PASSWORD }}
+            RDS_DB_NAME: ${{ secrets.RDS_DB_NAME }}
       # - name: Cleanup old deployments
       #   if: success()
       #   uses: appleboy/ssh-action@v0.1.4
