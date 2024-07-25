@@ -121,8 +121,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           port: ${{ secrets.EC2_PORT }}
-          env: RDS_ENDPOINT, RDS_USERNAME, RDS_PASSWORD, RDS_DB_NAME
-          script: |
+          envs: RDS_ENDPOINT, RDS_USERNAME, RDS_PASSWORD, RDS_DB_NAME
+          run: |
             
             sudo chmod 666 /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
             sudo chmod +x /home/${{ secrets.EC2_USERNAME }}/git-action-test/.env
