@@ -63,11 +63,13 @@ jobs:
         
       - name: Build and test backend
         run: |
-          backend/gradlew build test
+          cd /backend
+          gradlew build test
+          cd ..
 
       - name: Build frontend
         run: |
-          cd frontend
+          cd /frontend
           npm install
           npm run build
           cd ..
