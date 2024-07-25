@@ -149,26 +149,12 @@ jobs:
             whoami
             cd /home/${{ secrets.EC2_USERNAME }}/git-action-test
             
-            echo "RDS_ENDPOINT=$RDS_ENDPOINT" > .env
-            echo "RDS_USERNAME=$RDS_USERNAME" >> .env
-            echo "RDS_PASSWORD=$RDS_PASSWORD" >> .env
-            echo "RDS_DB_NAME=$RDS_DB_NAME" >> .env
+            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" > .env
+            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env
+            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env
+            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env
             
             cat .env
-            
-            echo "RDS_ENDPOINT=${{ secrets.RDS_ENDPOINT }}" > .env_1
-            echo "RDS_USERNAME=${{ secrets.RDS_USERNAME }}" >> .env_1
-            echo "RDS_PASSWORD=${{ secrets.RDS_PASSWORD }}" >> .env_1
-            echo "RDS_DB_NAME=${{ secrets.RDS_DB_NAME }}" >> .env_1
-            
-            cat .env_1
-            
-            echo "RDS_ENDPOINT=${RDS_ENDPOINT}" > .env_2
-            echo "RDS_USERNAME=${RDS_USERNAME}" >> .env_2
-            echo "RDS_PASSWORD=${RDS_PASSWORD}" >> .env_2
-            echo "RDS_DB_NAME=${RDS_DB_NAME}" >> .env_2
-            
-            cat .env_2
             
             ls -la
             
