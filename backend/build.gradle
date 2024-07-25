@@ -53,7 +53,7 @@ dependencies {
 //}
 task copyPrivate(type: Copy) {
 	copy {
-		from './private_repo'
+		from '../private_repo'
 		include "*.yml"
 		into 'src/main/resources'
 	}
