@@ -134,7 +134,7 @@ export default {
       }
     },
     checkNameDuplicate() {
-      axios.post("/user/checkName", { name: this.name })
+      axios.post("/api/user/checkName", { name: this.name })
           .then(response => {
             if (response.data.validate) {
               this.isNameValid = true;
@@ -156,7 +156,7 @@ export default {
           });
     },
     checkUsernameDuplicate() {
-      axios.post("/user/checkUsername", { username: this.username })
+      axios.post("/api/user/checkUsername", { username: this.username })
           .then(response => {
             if (response.data.validate) {
               this.isUsernameValid = true;
@@ -179,7 +179,7 @@ export default {
     },
     signup() {
       if (this.isFormValid){
-        axios.post("/user/signup", {
+        axios.post("/api/user/signup", {
           name: this.name,
           username: this.username,
           password: this.password

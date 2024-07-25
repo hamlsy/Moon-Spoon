@@ -185,7 +185,7 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      axios.post(`/workbook/${this.workbookId}/problem/submitTestResult`,
+      axios.post(`/api/workbook/${this.workbookId}/problem/submitTestResult`,
           this.problems,
           {headers})
           .then((res) => {

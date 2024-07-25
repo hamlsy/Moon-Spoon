@@ -131,7 +131,7 @@ export default {
         'Authorization': this.token
       }
 
-      axios.post(`/workbook/update/${workbook.id}`,
+      axios.post(`/api/workbook/update/${workbook.id}`,
           {
             title: this.updateWorkbook.title,
             content: this.updateWorkbook.content
@@ -160,13 +160,13 @@ export default {
       this.$router.push("/mainPage");
     },
     goWorkbookDetail(workbookId){
-      this.$router.push(`/workbookDetail/${workbookId}`);
+      this.$router.push(`/api/workbookDetail/${workbookId}`);
     },
     getWorkbook(){
       const headers = {
         'Authorization': this.token
       }
-      axios.get("/workbook/all", {headers})
+      axios.get("/api/workbook/all", {headers})
           .then((res) => {
             this.workbooks = res.data;
             this.filterWorkbooks();
@@ -198,7 +198,7 @@ export default {
       const headers = {
         'Authorization': this.token
       }
-      axios.post("/workbook/create",
+      axios.post("/api/workbook/create",
           {
             title: this.newWorkbook.title,
             content: this.newWorkbook.content
@@ -228,7 +228,7 @@ export default {
       const headers = {
         'Authorization': this.token
       }
-      axios.delete("/workbook/delete/" + this.workbookToDelete, {headers})
+      axios.delete("/api/workbook/delete/" + this.workbookToDelete, {headers})
           .then((res) => {
             alert("삭제되었습니다.");
             this.$router.go(0);

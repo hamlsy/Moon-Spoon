@@ -197,7 +197,7 @@ export default {
         'Authorization': this.token
       };
       this.workbookId = this.$route.fullPath.split("/").pop();
-      axios.get(`/workbook/${this.workbookId}/problem/all`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/all`, {headers})
           .then((res) => {
             this.problems = res.data.problems.map((problem, index) => ({
               ...problem, displayNumber: index + 1
@@ -226,7 +226,7 @@ export default {
         'Authorization': this.token
       }
       if (this.newproblem.question && this.newproblem.solution) {
-        axios.post(`/workbook/${this.workbookId}/problem/create`,
+        axios.post(`/api/workbook/${this.workbookId}/problem/create`,
             {
               question: this.newproblem.question,
               solution: this.newproblem.solution
@@ -254,7 +254,7 @@ export default {
         'Authorization': this.token
       }
       if (this.updateProblem.question && this.updateProblem.solution) {
-        axios.post(`/workbook/${this.workbookId}/problem/update/${this.updateProblem.id}`,
+        axios.post(`/api/workbook/${this.workbookId}/problem/update/${this.updateProblem.id}`,
             {
               question: this.updateProblem.question,
               solution: this.updateProblem.solution
@@ -284,7 +284,7 @@ export default {
         const headers = {
           'Authorization': this.token
         }
-        axios.delete(`/workbook/${this.workbookId}/problem/delete/${this.problemToDelete}`, {headers})
+        axios.delete(`/api/workbook/${this.workbookId}/problem/delete/${this.problemToDelete}`, {headers})
             .then((res) => {
               alert("삭제되었습니다.");
               console.log("DELETE", res);

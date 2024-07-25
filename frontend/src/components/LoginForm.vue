@@ -31,7 +31,7 @@ export default {
   methods: {
     login() {
       // 여기에 로그인 로직을 구현하세요
-      axios.post("/login", {
+      axios.post("/api/login", {
         username: this.username,
         password: this.password
       })

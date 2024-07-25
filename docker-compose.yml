@@ -4,7 +4,7 @@ services:
     image: msp_back:blue
     container_name: spring-container-blue
     build:
-      context: /backend
+      context: backend
       dockerfile: backend/Dockerfile
     ports:
       - "8080:8080"
@@ -24,7 +24,7 @@ services:
     image: msp_back:green
     container_name: spring-container-green
     build:
-      context: /backend
+      context: backend
       dockerfile: backend/Dockerfile
     ports:
       - "8081:8080"
@@ -73,8 +73,8 @@ services:
     depends_on:
       - spring-blue
       - spring-green
-      - vue-blue
-      - vue-green
+#      - vue-blue
+#      - vue-green
     networks:
       - app-network
 

@@ -5,6 +5,14 @@ module.exports = defineConfig({
   outputDir: "dist",
   devServer: {
     // 프록시 설정
-    proxy: 'http://localhost:8080'
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': '' // Spring 백엔드에서 /api를 사용하지 않는 경우 이 줄을 추가
+        }
+      }
+    }
   }
 })
