@@ -92,8 +92,10 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           
           # Backend
+          cd backend
           docker build -t $DOCKER_USERNAME/msp_back:blue .
           docker push $DOCKER_USERNAME/msp_back:blue
+          cd ..
           
 
 #      appspec.yml 실행지점
