@@ -209,7 +209,7 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      axios.get(`/workbook/${this.workbookId}/problem/getTestResult`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/getTestResult`, {headers})
           .then((res) => {
             this.problems = res.data;
             console.log("FETCH DATA", res);
