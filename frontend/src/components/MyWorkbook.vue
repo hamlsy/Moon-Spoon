@@ -160,7 +160,7 @@ export default {
       this.$router.push("/mainPage");
     },
     goWorkbookDetail(workbookId){
-      this.$router.push(`/api/workbookDetail/${workbookId}`);
+      this.$router.push(`/workbookDetail/${workbookId}`);
     },
     getWorkbook(){
       const headers = {
