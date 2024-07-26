@@ -3,12 +3,6 @@ set -e
 
 cd /home/ubuntu/git-action-test
 
-# 환경 변수 설정
-echo "RDS_ENDPOINT=${RDS_ENDPOINT}" >> .env
-echo "RDS_USERNAME=${RDS_USERNAME}" >> .env
-echo "RDS_PASSWORD=${RDS_PASSWORD}" >> .env
-echo "RDS_DB_NAME=${RDS_DB_NAME}" >> .env
-
 # 환경 변수 파일 권한 설정
 chmod 644 .env
 chmod +x .env
