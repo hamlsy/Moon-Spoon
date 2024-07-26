@@ -26,11 +26,9 @@ docker-compose pull
 #npm install
 #cd ..
 
-# Docker 이미지 빌드
-docker-compose build
-
 # 컨테이너 시작
-docker-compose up -d
+docker-compose up -d nginx
+docker-compose up -d spring-blue
 
 # Blue/Green 배포 로직
 if [ "$(docker ps -q -f name=spring-container-blue)" ]; then
