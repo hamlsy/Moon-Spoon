@@ -167,31 +167,37 @@ jobs:
               sudo chmod +x /usr/local/bin/docker-compose
             fi
             
+            
+            sudo docker-compose down
+            
             # Docker 이미지 빌드, 서비스 이름
-            sudo docker-compose build spring-blue
-            sudo docker-compose pull spring-blue 
+            sudo docker-compose pull spring-blue nginx
+            sudo docker-compose build spring-blue nginx
+      
+            # 컨테이너 시작
+            sudo docker-compose up -d nginx
             sudo docker-compose up -d spring-blue
             sleep 30
             
-#            if docker exec spring-container-blue curl -f http://localhost:8080; then
-#              # Update Nginx to route to blue versions
-#              sudo sed -i 's/msp_back:green/msp_back:blue/g' /etc/nginx/nginx.conf
-#              docker-compose up -d --no-deps nginx
-#              echo "Deployment successful, updated nginx to route to blue versions"
-#            else
-#              docker-compose stop spring-blue
-#              echo "Deployment failed, rolling back"
-#            fi
+            
+            if [ "$(docker ps -q -f name=spring-container-blue)" ]; then
+                echo "Deploying to Green"
+                sudo docker-compose up -d --no-deps spring-green
+                sleep 30
+                sudo docker-compose exec -T nginx nginx -s reload
+                sudo docker-compose stop spring-blue
+                sudo docker-compose rm -f spring-blue
+            else
+                echo "Deploying to Blue"
+                sudo docker-compose up -d --no-deps spring-blue
+                sleep 30
+                sudo docker-compose exec -T nginx nginx -s reload
+                sudo docker-compose stop spring-green
+                sudo docker-compose rm -f spring-green
+            fi
+      
+            # 사용하지 않는 Docker 이미지 정리
+            docker image prune -af
+      
+            echo "Deployment completed successfully"
 
-      # - name: Cleanup old deployments
-      #   if: success()
-      #   uses: appleboy/ssh-action@v0.1.4
-      #   with:
-      #     host: ${{ secrets.EC2_HOST }}
-      #     username: ${{ secrets.EC2_USERNAME }}
-      #     key: ${{ secrets.EC2_SSH_KEY }}
-      #     script: |
-      #       cd /home/ubuntu/git-action-test
-      #       docker-compose stop spring-green vue-green
-      #       docker-compose rm -f spring-green vue-green
-      #       docker image prune -af

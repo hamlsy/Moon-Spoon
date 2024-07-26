@@ -17,5 +17,5 @@ permissions:
 hooks:
   AfterInstall:
     - location: deploy.sh    # locaiton 기준 => project root 디렉토리
-      timeout: 1800
+      timeout: 180
       runas: root
