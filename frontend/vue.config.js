@@ -13,6 +13,13 @@ module.exports = defineConfig({
           '^/api': '' // Spring 백엔드에서 /api를 사용하지 않는 경우 이 줄을 추가
         }
       }
+    },
+    configureWebpack: {
+      externals: {
+        config: JSON.stringify({
+          apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:8080/api'
+        })
+      }
     }
   }
 })

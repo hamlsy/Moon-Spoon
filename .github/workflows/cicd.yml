@@ -81,6 +81,8 @@ jobs:
           cd ..
 
       - name: Build frontend
+        env:
+          VUE_APP_API_URL: ${{ secrets.EC2_PUBLIC_DNS }}
         run: |
           cd frontend
           npm install
