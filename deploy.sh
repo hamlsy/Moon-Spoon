@@ -25,6 +25,11 @@ docker-compose pull
 #cd vue-cli
 #npm install
 #cd ..
+update_nginx_config() {
+    local active_container=$1
+    sed -i '/upstream backend {/,/}/c\upstream backend {\n    server '"$active_container"':8080;\n}' nginx.conf
+    docker-compose exec -T nginx nginx -s reload
+}
 
 # 컨테이너 시작
 docker-compose up -d nginx
@@ -38,6 +43,8 @@ if [ "$(docker ps -q -f name=spring-container-blue)" ]; then
     docker-compose up -d --no-deps spring-green
     sleep 30  # 새 컨테이너가 완전히 시작될 때까지 대기
 
+    update_nginx_config spring-green
+
     # Nginx 설정 업데이트 (Green으로 트래픽 전환)
     docker-compose exec -T nginx nginx -s reload
 
@@ -49,6 +56,8 @@ else
     echo "Deploying to Blue"
     docker-compose up -d --no-deps spring-blue
     sleep 30  # 새 컨테이너가 완전히 시작될 때까지 대기
+
+    update_nginx_config spring-blue
 
     # Nginx 설정 업데이트 (Blue로 트래픽 전환)
     docker-compose exec -T nginx nginx -s reload
