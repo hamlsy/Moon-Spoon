@@ -1,0 +1,114 @@
+
+.workbook-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.workbook-item {
+    background-color: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 700px;
+    min-height: 100px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border: 2px solid #FFD700;
+    position: relative;
+    overflow: hidden;
+}
+.workbook-main {
+    flex: 2;
+    overflow: hidden;
+}
+.workbook-content {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+.workbook-info {
+    flex: 1;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.workbook-actions {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 10px;
+}
+.workbook-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+.workbook-item:hover .action-btn {
+    opacity: 0.7;
+}
+
+
+.workbook-card:hover .edit-btn {
+    opacity: 0.7;
+}
+
+.workbook-card:hover .delete-btn {
+    opacity: 0.7;
+}
+
+.workbook-card:hover {
+    background-color: #FFD700;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/** btn layer **/
+
+
+.edit-input,
+.edit-textarea {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.edit-textarea {
+    height: 100px;
+}
+
+.workbook-item .edit-btn{
+    left: -50px;
+}
+.workbook-item .delete-btn{
+    left: -20px;
+}
+
+.workbook-item .share-btn{
+    left: -80px;
+}
+.edit-btn, .delete-btn, .share-btn {
+    position: absolute;
+    top: 1px;
+    left: -10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #1B2A49;
+    opacity: 0;
+    transition: opacity 0.3s, color 0.3s;
+}
+
+.edit-input,
+.edit-textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 8px; /* 둥근 모서리 추가 */
+    font-size: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}

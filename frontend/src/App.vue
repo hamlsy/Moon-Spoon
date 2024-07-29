@@ -17,6 +17,13 @@ export default {
 </script>
 
 <style>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -25,9 +32,7 @@ export default {
   color: #2c3e50;
   margin: 0px;
 }
-body{
-  margin: 0px;
-}
+
 :root {
   --secondary-blue: black; /* 스틸블루 */
   --background-light: #FFFAF0; /* 플로랄 화이트 */
@@ -39,4 +44,5 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
 </style>

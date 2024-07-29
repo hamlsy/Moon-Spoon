@@ -1,17 +1,21 @@
 <template>
   <div class="main-page">
     <nav class="navbar">
-      <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
-      <ul class="navbar-menu">
-        <li><router-link to="/mainPage">홈</router-link></li>
-        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
-        <li v-if="isLogin"><a @click="logout">로그아웃</a></li>
-        <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a @click="notValid">프로필</a></li>
-      </ul>
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
+        </div>
+        <ul class="navbar-menu">
+          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        </ul>
+      </div>
     </nav>
     <div class="title">
-      <h1 style="height: 50px">내 문제집</h1>
+      <h1>내 문제집</h1>
     </div>
 
     <div class="search-sort-container">
@@ -27,22 +31,32 @@
 
     </div>
     <main class="content">
-
-      <div class="workbook-container">
-        <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card">
+      <div class="workbook-list">
+        <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-item">
           <div v-if="updateIndex !== workbook.id" @click="goWorkbookDetail(workbook.id)">
-            <button class="edit-btn" @click.stop="startUpdate(workbook.id)">
-              <i class="fas fa-edit"></i>
-            </button>
-            <button class="delete-btn" @click="confirmDelete(workbook.id)">
-              <i class="fas fa-trash"></i>
-            </button>
-              <h3>{{ workbook.title }}</h3>
-              <p>{{ workbook.content }}</p>
-              <p>문제 수: {{ workbook.problemCount }}</p>
-              <p>생성일: {{ formatDate(workbook.createDate) }}</p>
-              <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
+            <div class="workbook-content">
+              <div class="workbook-main">
+                <h3>{{ workbook.title }}</h3>
+                <p>{{ workbook.content }}</p>
+              </div>
+              <div class="workbook-info">
+                <p>문제 수: {{ workbook.problemCount }}</p>
+                <p>생성일: {{ formatDate(workbook.createDate) }}</p>
+                <p v-if="workbook.updateDate">수정일: {{ formatDate(workbook.updateDate) }}</p>
+              </div>
             </div>
+            <div class="workbook-actions">
+              <button class="action-btn edit-btn" @click.stop="startUpdate(workbook.id)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="action-btn delete-btn" @click.stop="confirmDelete(workbook.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="action-btn share-btn" @click.stop="notImplemented">
+                <i class="fas fa-share"></i>
+              </button>
+            </div>
+          </div>
           <div v-else>
             <input v-model="updateWorkbook.title" class="edit-input" />
             <textarea v-model="updateWorkbook.content" class="edit-textarea"></textarea>
@@ -52,10 +66,10 @@
             </div>
           </div>
         </div>
-        <div class="workbook-card add-workbook" @click="showAddWorkbookPopup">
+        <button class="add-workbook-btn" @click="showAddWorkbookPopup">
           <span class="plus-icon">+</span>
-          <p>새 문제집 추가</p>
-        </div>
+          <span>새 문제집 추가</span>
+        </button>
       </div>
     </main>
 
@@ -64,29 +78,33 @@
     </footer>
 
     <!-- 새 문제집 추가 팝업 -->
-    <div v-if="showAddPopup" class="popup-overlay" @click.self="cancelAddWorkbook">
-      <div class="popup">
-        <h2>새 문제집 추가</h2>
-        <input v-model="newWorkbook.title" placeholder="문제집 이름" />
-        <textarea v-model="newWorkbook.content" placeholder="설명"></textarea>
-        <div class="popup-buttons">
-          <button @click="cancelAddWorkbook">취소</button>
-          <button @click="addWorkbook">추가</button>
+    <transition name="fade">
+      <div v-if="showAddPopup" class="popup-overlay" @click.self="cancelAddWorkbook">
+        <div class="popup">
+          <h2>새 문제집 추가</h2>
+          <input v-model="newWorkbook.title" placeholder="문제집 이름" />
+          <textarea v-model="newWorkbook.content" placeholder="설명"></textarea>
+          <div class="popup-buttons">
+            <button @click="cancelAddWorkbook">취소</button>
+            <button @click="addWorkbook">추가</button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
 
     <!-- 삭제 확인 팝업 -->
-    <div v-if="showDeletePopup" class="popup-overlay" @click.self="cancelDelete">
-      <div class="popup">
-        <h2>문제집 삭제</h2>
-        <p>정말로 이 문제집을 삭제하시겠습니까?</p>
-        <div class="popup-buttons">
-          <button @click="cancelDelete">취소</button>
-          <button @click="deleteWorkbook">삭제</button>
+    <transition name="fade">
+      <div v-if="showDeletePopup" class="popup-overlay" @click.self="cancelDelete">
+        <div class="popup">
+          <h2>문제집 삭제</h2>
+          <p>정말로 이 문제집을 삭제하시겠습니까?</p>
+          <div class="popup-buttons">
+            <button @click="cancelDelete">취소</button>
+            <button @click="deleteWorkbook">삭제</button>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -96,6 +114,7 @@ import dayjs from 'dayjs';
 
 export default {
   name: 'MyWorkbooksPage',
+
   data() {
     return {
       workbooks: [],
@@ -124,6 +143,9 @@ export default {
     },
     cancelUpdate() {
       this.updateIndex = null;
+    },
+    notImplemented() {
+      alert("이 기능은 아직 구현되지 않았습니다.");
     },
     saveUpdate(workbook) {
       //axios
@@ -172,20 +194,20 @@ export default {
             this.filterWorkbooks();
             console.log("workbook loaded", res);
           }).catch((error) => {
-            if(error.response.data.message ===  "JWT token is expired"){
-              console.log(error.response.data.message);
-              alert("토큰이 만료되었습니다. 다시 로그인하세요.");
-              localStorage.removeItem("token");
-              this.$router.push("/mainPage");
-            }
-            else if(error.response.status === 404){
-              console.log("문제집 없음");
-            }
-            else{
-              alert(error.response.data.message);
-              this.$router.push("/mainPage");
-            }
-            console.log("ERROR", error);
+        if(error.response.data.message ===  "JWT token is expired"){
+          console.log(error.response.data.message);
+          alert("토큰이 만료되었습니다. 다시 로그인하세요.");
+          localStorage.removeItem("token");
+          this.$router.push("/mainPage");
+        }
+        else if(error.response.status === 404){
+          console.log("문제집 없음");
+        }
+        else{
+          alert(error.response.data.message);
+          this.$router.push("/mainPage");
+        }
+        console.log("ERROR", error);
       })
     },
     navigateTo(page) {
@@ -284,61 +306,30 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
 }
 
 .main-page {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #FFFAF0;
+  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(1,25,214,0.4));
+  color: #191f28;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.navbar {
-  background-color: #1B2A49;
-  color: #fff;
-  padding: 0.1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
+
+
+.title {
+  max-width: 1200px;
+  margin: 80px auto 0px;
+  padding: 10px;
 }
 
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #FFD700;
-
-}
-
-.navbar-brand::after {
-  content: "🥄";
-  margin-right: 5px;
-}
-
-.navbar-menu {
-  list-style-type: none;
-  display: flex;
-}
-
-.navbar-menu li {
-  margin-left: 1rem;
-}
-
-.navbar-menu a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.navbar-menu a:hover {
-  color: #FFD700;
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  flex: 1;
 }
 
 .content {
@@ -348,51 +339,24 @@ body, html {
   overflow-y: auto;
 
 }
-.title {
-  max-width: 1200px;
-  margin: 80px auto 0px;
-  padding: 10px;
 
-  display: flex;
 
-}
-.workbook-container {
-  display: flex;
-  flex-wrap: wrap;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 2rem;
-
+.action-btn:hover {
+  opacity: 1 !important;
 }
 
-.workbook-card {
-  position: relative;
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  padding: 1.5rem;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border-left: 4px solid #FFD700;
-  transition: all 0.3s;
-  min-height: 200px;
-  width: 300px;
-  overflow: hidden;
+
+h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
 }
 
-.edit-input,
-.edit-textarea {
-  width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px; /* 둥근 모서리 추가 */
-  font-size: 1rem;
-  box-sizing: border-box;
-  transition: border-color 0.3s, box-shadow 0.3s;
+p {
+  margin: 5px 0;
 }
-.edit-btn {
-  position: absolute;
-  top: 10px;
-  right: 40px;
+
+
+.action-btn {
   background: none;
   border: none;
   cursor: pointer;
@@ -400,13 +364,6 @@ body, html {
   color: #1B2A49;
   opacity: 0;
   transition: opacity 0.3s, color 0.3s;
-}
-.workbook-card:hover .edit-btn {
-  opacity: 0.7;
-}
-.edit-btn:hover {
-  opacity: 1;
-  color: navy;
 }
 
 input, textarea {
@@ -416,31 +373,9 @@ input, textarea {
   box-sizing: border-box;
 }
 
-.popup-buttons {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.popup-buttons button {
-  padding: 10px 20px;
-  background-color: #1B2A49;
-  border-radius: 6px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.3s, color 0.3s;
-}
-
-.popup-buttons button:hover {
-  background-color: rgba(120,119,2,0.9);
-  opacity: 1;
-}
 
 .delete-btn {
   position: absolute;
-  top: 10px;
-  right: 10px;
   background: none;
   border: none;
   cursor: pointer;
@@ -450,29 +385,64 @@ input, textarea {
   transition: opacity 0.3s, color 0.3s;
 }
 
-.workbook-card:hover .delete-btn {
-  opacity: 0.7;
-}
+
 
 .delete-btn:hover {
   opacity: 1;
   color: #ff0000;
 }
 
-.add-workbook {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+.add-workbook-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+.add-workbook-btn:hover {
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+.add-workbook-btn .plus-icon {
+  font-size: 24px;
+}
+
+.add-workbook-btn span:last-child {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .add-workbook-btn {
+    width: auto;
+    height: auto;
+    border-radius: 30px;
+    padding: 10px 20px;
+  }
+
+  .add-workbook-btn .plus-icon {
+    margin-right: 10px;
+  }
+
+  .add-workbook-btn span:last-child {
+    display: inline;
+  }
+}
 .plus-icon {
   font-size: 3rem;
   color: #1B2A49;
 }
 
-h1, h2, h3 {
+h1, h2 {
   color: #1B2A49;
 }
 
@@ -536,68 +506,31 @@ h1::after, h2::after, h3::after {
   background-color: #f1f1f1;
 }
 
-.workbook-card:hover {
-  background-color: #FFD700;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
+
 
 .footer {
-  background-color: #1B2A49;
-  color: #fff;
+  background-color: #f2f4f6;
+  color: #191f28;
   text-align: center;
-  padding: 0.1rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  padding: 1rem;
+  margin-top: 2rem;
 }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
-
-.popup {
-  background-color: #FFFFFF;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 300px;
-}
-
-.popup input, .popup textarea {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-}
-
-.popup-buttons {
-  display: flex;
-  justify-content: space-between;
-}
-
-.popup button {
-  padding: 0.5rem 1rem;
-  background-color: #FFD700;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.popup button:hover {
-  background-color: #FFC000;
-}
 a{
   text-decoration: none;
   color: inherit;
 }
 
+/* 페이드 애니메이션 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
 
 </style>
