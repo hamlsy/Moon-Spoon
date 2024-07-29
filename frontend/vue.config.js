@@ -14,12 +14,12 @@ module.exports = defineConfig({
         }
       }
     },
-    configureWebpack: {
-      externals: {
-        config: JSON.stringify({
-          apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:8080/api'
-        })
-      }
-    }
+    // configureWebpack: {
+    //   externals: {
+    //     config: JSON.stringify({
+    //       apiUrl: process.env.VUE_APP_API_URL || 'http://localhost:8080/api'
+    //     })
+    //   }
+    // }
   }
 })
