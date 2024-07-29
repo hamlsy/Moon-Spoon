@@ -14,6 +14,9 @@
         </ul>
       </div>
     </nav>
+    <router-link to="/mainPage" class="back-button">
+      <i class="fas fa-arrow-left"></i> 뒤로가기
+    </router-link>
     <div class="title">
       <h1>내 문제집</h1>
     </div>
@@ -310,7 +313,7 @@ body, html {
 }
 
 .main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(1,25,214,0.4));
+  background: rgba(255,244,255,0.35);
   color: #191f28;
   min-height: 100vh;
   display: flex;
@@ -332,13 +335,6 @@ body, html {
   flex: 1;
 }
 
-.content {
-  max-width: 1200px;
-  margin: 0px auto 100px;
-  flex: 1;
-  overflow-y: auto;
-
-}
 
 
 .action-btn:hover {
@@ -532,5 +528,15 @@ a{
   opacity: 0;
   transform: translateY(-20px);
 }
-
+.back-button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  font-size: 1rem;
+  color: #1B2A49;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
 </style>
