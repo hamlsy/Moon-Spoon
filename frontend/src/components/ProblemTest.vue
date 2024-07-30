@@ -442,7 +442,7 @@ a {
 }
 
 .problem-item.answered {
-  border-left: 3px solid green;
+  border-left: 3px solid skyblue;
 }
 
 
