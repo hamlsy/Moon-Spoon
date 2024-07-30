@@ -33,6 +33,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user")
+    private List<Notice> notices = new ArrayList<>();
+
     @Builder
     public User(String username, String name, String password, UserRole role){
         this.username = username;
@@ -40,4 +43,6 @@ public class User {
         this.password = password;
         this.role = role;
     }
+
+
 }
