@@ -1,25 +1,40 @@
 <template>
   <div class="main-page">
     <nav class="navbar">
-      <!-- 네비게이션 바 내용은 동일하므로 생략 -->
-    </nav>
-
-    <main class="content">
-      <button @click="goBack" class="back-button">← 뒤로가기</button>
-
-      <div class="notice-detail">
-        <h1 class="notice-title">{{ notice.title }}</h1>
-        <div class="notice-info">
-          <span>작성자: {{ notice.author }}</span>
-          <span>작성시간: {{ notice.createdAt }}</span>
-          <span v-if="notice.updatedAt">수정시간: {{ notice.updatedAt }}</span>
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
         </div>
-        <div class="notice-content" v-html="notice.content"></div>
+        <ul class="navbar-menu">
+          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        </ul>
       </div>
+    </nav>
+    <main class="content">
+      <div class="notice-container">
+        <button @click="goBack" class="back-button">← 뒤로가기</button>
 
-      <div v-if="isAdmin" class="admin-actions">
-        <button @click="editNotice" class="edit-button">수정</button>
-        <button @click="deleteNotice" class="delete-button">삭제</button>
+        <div class="notice-detail">
+          <h1 class="notice-title">
+            <span class="notice-tag">[공지]</span>
+            {{ notice.title }}
+          </h1>
+          <div class="notice-info">
+            <span>작성자: {{ notice.author }}</span>
+            <span>작성시간: {{ notice.createdAt }}</span>
+            <span v-if="notice.updatedAt">수정시간: {{ notice.updatedAt }}</span>
+          </div>
+          <div class="notice-content" v-html="notice.content"></div>
+        </div>
+
+        <div v-if="isAdmin" class="admin-actions">
+          <button @click="editNotice" class="edit-button">수정</button>
+          <button @click="deleteNotice" class="delete-button">삭제</button>
+        </div>
       </div>
     </main>
 
@@ -36,11 +51,11 @@ export default {
     return {
       isAdmin: false,
       notice: {
-        title: '',
-        author: '',
-        createdAt: '',
-        updatedAt: '',
-        content: ''
+        title: 'asd',
+        author: 'asd',
+        createdAt: 'asd',
+        updatedAt: 'asd',
+        content: 'asdasd'
       }
     }
   },
@@ -70,7 +85,19 @@ export default {
 
 <style scoped>
 /* 기존 스타일 유지 */
-
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+.notice-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+}
 .back-button {
   position: absolute;
   top: 1rem;
@@ -91,6 +118,8 @@ export default {
 .notice-title {
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .notice-info {
@@ -105,7 +134,11 @@ export default {
 .notice-content {
   line-height: 1.6;
 }
-
+.notice-tag {
+  color: red;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
 .admin-actions {
   margin-top: 2rem;
   text-align: right;

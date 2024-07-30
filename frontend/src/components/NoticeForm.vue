@@ -1,23 +1,39 @@
 <template>
   <div class="main-page">
     <nav class="navbar">
-      <!-- 네비게이션 바 내용은 동일하므로 생략 -->
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
+        </div>
+        <ul class="navbar-menu">
+          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        </ul>
+      </div>
     </nav>
 
     <main class="content">
-      <h1 class="page-title">공지사항 작성</h1>
+      <div class="notice-container">
+        <h1 class="page-title">공지사항 작성</h1>
 
-      <form @submit.prevent="submitNotice" class="notice-form">
-        <div class="form-group">
-          <label for="title">제목</label>
-          <input type="text" id="title" v-model="notice.title" required>
-        </div>
-        <div class="form-group">
-          <label for="content">내용</label>
-          <textarea id="content" v-model="notice.content" rows="10" required></textarea>
-        </div>
-        <button type="submit" class="submit-button">작성 완료</button>
-      </form>
+        <form @submit.prevent="submitNotice" class="notice-form">
+          <div class="form-group">
+            <label for="title">제목</label>
+            <input type="text" id="title" v-model="notice.title" required>
+          </div>
+          <div class="form-group">
+            <label for="content">내용</label>
+            <textarea id="content" v-model="notice.content" rows="15" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="button" @click="cancel" class="cancel-button">취소</button>
+            <button type="submit" class="submit-button">작성 완료</button>
+          </div>
+        </form>
+      </div>
     </main>
 
     <footer class="footer">
@@ -40,16 +56,34 @@ export default {
   methods: {
     submitNotice() {
       // 서버에 공지사항 작성 요청
+    },
+    cancel() {
+      this.$router.go(-1);
     }
   },
   created() {
     // 관리자 권한 확인 (필요시)
-  }
+  },
+
 }
 </script>
 
 <style scoped>
 /* 기존 스타일 유지 */
+
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.notice-container {
+  width: 100%;
+  max-width: 800px;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+}
 
 .page-title {
   text-align: center;
@@ -57,9 +91,8 @@ export default {
 }
 
 .notice-form {
-  background-color: white;
-  border-radius: 12px;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .form-group {
@@ -79,14 +112,27 @@ export default {
   border-radius: 4px;
 }
 
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cancel-button,
 .submit-button {
-  display: block;
-  width: 100%;
-  padding: 0.75rem;
-  background-color: #FFD700;
+  padding: 0.75rem 1.5rem;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
 }
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.submit-button {
+  background-color: #FFD700;
+}
+
 </style>

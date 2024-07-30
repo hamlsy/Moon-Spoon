@@ -16,30 +16,29 @@
     </nav>
 
     <main class="content">
-      <h1 class="page-title">공지사항</h1>
+      <div class="notice-container">
+        <h1 class="page-title">공지사항</h1>
 
-      <div class="notice-list">
-        <div v-for="notice in notices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
-          <span class="notice-title">
-            {{ notice.title }}
+        <div class="notice-list">
+          <div v-for="notice in notices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
             <span class="notice-tag">[공지]</span>
-          </span>
-          <span class="notice-info">
-            <span>{{ notice.author }}</span>
-            <span>{{ notice.createdAt }}</span>
-            <span v-if="notice.updatedAt">수정: {{ notice.updatedAt }}</span>
-          </span>
+            <span class="notice-title">{{ notice.title }}</span>
+            <span class="notice-info">
+              <span>{{ notice.author }}</span>
+              <span>{{ notice.createdAt }}</span>
+              <span v-if="notice.updatedAt">수정: {{ notice.updatedAt }}</span>
+            </span>
+          </div>
         </div>
+
+        <div class="pagination">
+          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">이전</button>
+          <span>{{ currentPage }} / {{ totalPages }}</span>
+          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">다음</button>
+        </div>
+
+        <button v-if="isAdmin" @click="goToWrite" class="write-button">공지사항 작성</button>
       </div>
-
-
-      <div class="pagination">
-        <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">이전</button>
-        <span>{{ currentPage }} / {{ totalPages }}</span>
-        <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">다음</button>
-      </div>
-
-      <button v-if="isAdmin" @click="goToWrite" class="write-button">공지사항 작성</button>
     </main>
 
     <footer class="footer">
@@ -47,6 +46,7 @@
     </footer>
   </div>
 </template>
+
 
 <script>
 export default {
@@ -99,21 +99,102 @@ export default {
 <style scoped>
 /* 기존 스타일 유지 */
 
+/** slide fade end **/
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.main-page {
+  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53));
+  color: #191f28;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 80px auto 0;
+  padding: 2rem;
+  flex: 1;
+}
+
+
+.feature-card h2 {
+  color: black;
+  margin-bottom: 1rem;
+}
+
+
+.additional-features h3 {
+  color: black;
+  margin-bottom: 1.5rem;
+}
+
+.additional-features ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.additional-features li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  background-color: white;
+}
+
+.additional-features li.feature-hovered {
+  background-color: white;
+}
+
+.additional-features a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer {
+  background-color: #f2f4f6;
+  color: #191f28;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+
+.footer a {
+  color: black;
+  text-decoration: none;
+}
+.content {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
 .page-title {
   text-align: center;
   margin-bottom: 2rem;
 }
 
-.notice-list {
+.notice-container {
+  width: 100%;
+  max-width: 800px;
   background-color: white;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 2rem;
+}
+.notice-list {
+  border-top: 2px solid #e0e0e0;
 }
 
 .notice-item {
   display: flex;
-  justify-content: space-between;
-  padding: 1rem;
+  align-items: center;
+  padding: 1rem 0;
   border-bottom: 1px solid #e0e0e0;
   cursor: pointer;
 }
@@ -123,6 +204,7 @@ export default {
 }
 
 .notice-title {
+  flex-grow: 1;
   font-weight: bold;
 }
 
@@ -140,7 +222,9 @@ export default {
 .notice-info span {
   margin-left: 1rem;
 }
-
+.notice-info span {
+  margin-left: 1rem;
+}
 .pagination {
   display: flex;
   justify-content: center;
