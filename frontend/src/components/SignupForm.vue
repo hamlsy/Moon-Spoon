@@ -1,7 +1,21 @@
 <template>
   <body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">
+        <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
+      </div>
+      <ul class="navbar-menu">
+        <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
+        <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
+        <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
+        <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
+        <li><a @click="notValid" class="nav-link">프로필</a></li>
+      </ul>
+    </div>
+  </nav>
   <div class="container">
-    <h1 class="logo"><router-link to="/mainPage">Moon-Spoon</router-link></h1>
+    <h1 class="signup_logo"><router-link to="/mainPage">Moon-Spoon</router-link></h1>
     <form @submit.prevent="signup">
       <div class="input-group">
         <label for="name">사용할 이름(닉네임)</label>
@@ -24,9 +38,9 @@
         <p v-if="usernameSuccess" class="success-message">올바른 아이디입니다.</p>
       </div>
       <div class="input-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~24자)"
-             :class="{ 'error': passwordError }">
+        <label for="password">Password</label>
+        <input type="password" id="password" v-model="password" required placeholder="비밀번호(영문, 숫자 6~24자)"
+               :class="{ 'error': passwordError }">
         <p v-if="passwordError" class="error-message">{{ passwordError }}</p>
         <p v-if="isPasswordValid" class="success-message">올바른 비밀번호입니다.</p>
       </div>
@@ -60,7 +74,9 @@ export default {
       nameSuccess: false,
       usernameSuccess: false,
       isNameValid: false,
-      isUsernameValid: false
+      isUsernameValid: false,
+      isLogin: false,
+      token: localStorage.getItem('token'),
     }
   },
   computed: {
@@ -100,6 +116,17 @@ export default {
     }
   },
   methods: {
+    notValid() {
+      alert("아직 구현되지 않은 기능입니다.");
+    },
+    checkLogin() {
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout() {
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
+    },
     validateName() {
       this.isNameValid = false;
       this.nameSuccess = false;
@@ -206,31 +233,33 @@ export default {
 /* CSS 스타일은 아래에 추가됩니다 */
 body {
   font-family: Arial, sans-serif;
-  background-color: #FFFAF0; /* 플로랄 화이트 */
+  background: linear-gradient(white, rgba(0,13,181,0.42));
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  color: white;
+
 }
 
 .container {
+  margin-top: 60px;
   background-color: #1B2A49;
-  padding: 3rem 2.5rem;
+  padding: 1rem 2.5rem 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 400px; /* 컨테이너 너비 조정 */
   height: auto;
-  min-height: 550px;
+  min-height: 400px;
+  color: white;
 }
 
-.logo {
+.signup_logo {
   text-align: center;
   color: #ffd700;
   font-weight: bold;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
   text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
@@ -240,7 +269,7 @@ form {
 }
 
 .input-group {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   width: 100%; /* 입력 그룹의 너비를 100%로 설정 */
 }
 
@@ -249,12 +278,12 @@ label {
   margin-bottom: 0.7rem;
   font-weight: bold;
   color: white;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 input {
   width: 100%; /* 입력 필드의 너비를 100%로 설정 */
-  padding: 0.9rem;
+  padding: 0.8rem;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 1rem;
@@ -275,10 +304,10 @@ button {
   border: none;
   padding: 1rem;
   border-radius: 4px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   font-weight: bold;
   box-sizing: border-box; /* padding을 width에 포함 */
 }
@@ -294,14 +323,14 @@ button:hover {
 }
 
 a {
-  color: #ffd700;
+
   text-decoration: none;
   font-weight: bold;
 }
 
 .input-with-button {
   display: flex;
-  gap: 10px;
+  gap: 7px;
 }
 
 .input-with-button input {
@@ -309,7 +338,7 @@ a {
 }
 
 .input-with-button button {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.7rem;
   color: #1B2A49;
   width: 140px;
   margin-top: 0;
@@ -335,5 +364,7 @@ a {
   margin-top: 0.5rem;
   position: absolute;
 }
-
+.navbar-container{
+  color: #191f28;
+}
 </style>
