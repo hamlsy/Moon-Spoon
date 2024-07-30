@@ -1,38 +1,42 @@
 <template>
   <div class="main-page">
     <nav class="navbar">
-      <div class="navbar-brand"><router-link to="/mainPage">Moon-Spoon</router-link></div>
-      <ul class="navbar-menu">
-        <li><router-link to="/mainPage">홈</router-link></li>
-        <li><router-link to="/user/login" v-if="!isLogin">로그인</router-link></li>
-        <li v-if="isLogin"><a @click="logout">로그아웃</a></li>
-        <li><router-link to="/user/signup">회원가입</router-link></li>
-        <li><a @click="notValid">프로필</a></li>
-      </ul>
+      <div class="navbar-container">
+        <div class="navbar-brand">
+          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
+        </div>
+        <ul class="navbar-menu">
+          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        </ul>
+      </div>
     </nav>
 
-    <div class="content">
+    <main class="content">
       <router-link to="/myWorkbook" class="back-button">
         <i class="fas fa-arrow-left"></i> 뒤로가기
       </router-link>
+      <section class="hero">
+        <h1 class="main-title slide-in-fade">{{ workbookTitle }}</h1>
+      </section>
 
-      <div class="title">
-        <h1>{{ workbookTitle }}</h1>
-      </div>
 
-
-      <div class="search-sort-container">
-        <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />
-        <div class="sort-dropdown">
-          <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
-          <div v-if="showSortDropdown" class="dropdown-content">
-            <a href="#" @click="sortproblems('newest')">최신순</a>
-            <a href="#" @click="sortproblems('oldest')">오래된순</a>
-            <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>
-            <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>
+      <section class="features">
+        <div class="search-sort-container">
+          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />
+          <div class="sort-dropdown">
+            <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
+            <div v-if="showSortDropdown" class="dropdown-content">
+              <a href="#" @click="sortproblems('newest')">최신순</a>
+              <a href="#" @click="sortproblems('oldest')">오래된순</a>
+              <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>
+              <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>
+            </div>
           </div>
         </div>
-      </div>
 
       <div class="add-problem-form">
         <input v-model="newproblem.question" placeholder="문제를 입력하세요" />
@@ -40,27 +44,33 @@
         <button @click="addproblem" class="add-btn">+</button>
       </div>
 
-      <div class="problem-list">
-        <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
-          <div v-if="updateIndex !== index" class="problem-content" @click="showProblemDetail(problem, $event)">
-            <div class="problem-actions">
-              <button @click="startUpdate(index)" class="icon-btn edit-btn"><i class="fas fa-edit"></i></button>
-              <button @click="confirmDelete(problem.id)" class="icon-btn delete-btn"><i class="fas fa-trash"></i></button>
+        <div class="problem-list">
+          <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
+            <div v-if="updateIndex !== index" @click="showProblemDetail(problem, $event)">
+              <div class="problem-content">
+                <div class="problem-main">
+                  <h3>P{{ problem.displayNumber }}</h3>
+                  <span class="problem-text"><strong>문제:</strong> {{ truncateText(problem.question) }}</span>
+                </div>
+                <div class="problem-info">
+                  <span><strong>정답률:</strong> {{ problem.correctRate }}%</span>
+                  <span><strong>생성일:</strong> {{ formatDate(problem.createDate) }}</span>
+                </div>
+              </div>
+              <div class="problem-actions">
+                <button @click.stop="startUpdate(index)" class="action-btn edit-btn"><i class="fas fa-edit"></i></button>
+                <button @click.stop="confirmDelete(problem.id)" class="action-btn delete-btn"><i class="fas fa-trash"></i></button>
+              </div>
             </div>
-            <h3>문제 {{ problem.displayNumber }}</h3>
-            <p><span class="problem-text">{{ truncateText(problem.question) }} </span></p>
-            <p><strong>답:</strong> <span class="problem-text">{{ truncateText(problem.solution) }} </span></p>
-            <p><strong>정답률:</strong> {{ problem.correctRate }}%</p>
-            <p><strong>생성일:</strong> {{ formatDate(problem.createDate) }}</p>
-          </div>
-          <div v-else class="problem-edit-form">
-            <input v-model="updateProblem.question" placeholder="문제" />
-            <textarea v-model="updateProblem.solution" placeholder="답"></textarea>
-            <button @click="cancelUpdate" class="cancel-btn">취소</button>
-            <button @click="saveUpdate" class="save-btn">저장</button>
+            <div v-else class="problem-edit-form">
+              <input v-model="updateProblem.question" placeholder="문제" />
+              <textarea v-model="updateProblem.solution" placeholder="답"></textarea>
+              <button @click="cancelUpdate" class="cancel-btn">취소</button>
+              <button @click="saveUpdate" class="save-btn">저장</button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
       <!-- 문제 상세 팝업 -->
       <div v-if="showDetailPopup" class="popup-overlay" @click="closeDetailPopup">
         <div class="popup problem-detail-popup" @click.stop>
@@ -77,10 +87,10 @@
       </div>
 
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
-    </div>
+    </main>
 
     <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
+      <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </footer>
     <!-- 테스트 시작 팝업 -->
     <div v-if="showPopup" class="popup-overlay" @click.self="cancelTest">
@@ -388,65 +398,34 @@ body, html {
 }
 
 .main-page {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  background-color: #FFFAF0;
+  /** background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53)); **/
+  background: rgba(255,244,255,0.35);
+  /** background: white; **/
+  color: #191f28;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.navbar {
-  background-color: #1B2A49;
-  color: #fff;
-  padding: 0.1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #FFD700;
-}
-
-.navbar-brand::after {
-  content: "🥄";
-  margin-right: 5px;
-}
-
-.navbar-menu {
-  list-style-type: none;
-  display: flex;
-}
-
-.navbar-menu li {
-  margin-left: 1rem;
-}
-
-.navbar-menu a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.navbar-menu a:hover {
-  color: #FFD700;
-}
 
 .content {
-  max-width: 1200px;
-  margin: 0px auto 100px;
-  padding: 20px;
+  max-width: 1800px;
+/**  margin: 0 auto; **/
+  padding: 2rem;
   flex: 1;
-  overflow-y: auto;
+}
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #1B2A49;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+
+}
+.action-btn:hover {
+  opacity: 1;
 }
 
 .title {
@@ -466,14 +445,13 @@ h1::after, h2::after, h3::after {
   width: 50px;
   height: 3px;
   background-color: #FFD700;
-  margin-top: 10px;
+  margin-top: 1px;
 }
 
 .search-sort-container {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   margin-bottom: 1rem;
-  gap: 20px;
 }
 
 .search-sort-container input {
@@ -518,83 +496,8 @@ h1::after, h2::after, h3::after {
   background-color: #f1f1f1;
 }
 
-.footer {
-  background-color: #1B2A49;
-  color: #fff;
-  text-align: center;
-  padding: 0.1rem;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1001;
-}
 
-.popup {
-  background-color: #FFFFFF;
-  padding: 2rem;
-  border-radius: 8px;
-  width: 300px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  text-align: center;
-}
-
-.popup input, .popup textarea {
-  width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-}
-
-.popup-buttons {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
-}
-
-.popup button {
-  padding: 0.5rem 1rem;
-  background-color: #FFD700;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.popup-buttons button {
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.popup button:hover {
-  background-color: #FFC000;
-}
-.popup-buttons button:first-child {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.popup-buttons button:last-child {
-  background-color: #f44336;
-  color: white;
-}
-
-.popup-buttons button:hover {
-  opacity: 0.8;
-}
 a {
   text-decoration: none;
   color: inherit;
@@ -622,8 +525,8 @@ a {
 
 .add-problem-form {
   display: flex;
+  gap: 1rem;
   margin-bottom: 2rem;
-  gap: 10px;
 }
 
 .add-problem-form input,
@@ -642,97 +545,26 @@ a {
   cursor: pointer;
 }
 
-.problem-list {
-  display: grid;
-  /** grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); **/
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-height: 70vh;
-  overflow-y: auto;
-  padding-right: 15px;
-}
-
-.problem-item {
-  background-color: #FFFFFF;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  border-left: 4px solid #FFD700;
-  padding: 1rem;
-  transition: all 0.3s;
-  position: relative;
-  height: 250px; /* 고정 높이 설정 */
-  min-height: 200px;
-  overflow: hidden;
-  cursor: pointer;
-}
-.truncate {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.problem-actions {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  display: flex;
-  gap: 5px;
-}
-.problem-text {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-word;
-}
-.problem-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
-
-.problem-edit-form input,
-.problem-edit-form textarea {
-  width: 100%;
-  margin-bottom: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.edit-btn, .save-btn, .delete-btn, .cancel-btn {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.edit-btn, .save-btn, .cancel-btn {
-  background-color: #4CAF50;
-  color: white;
-}
-
-.delete-btn {
-  background-color: #f44336;
-  color: white;
-}
 
 .start-test-btn {
   position: fixed;
-  bottom: 80px;
-  right: 20px;
+  bottom: 30px;
+  right: 30px;
   background-color: #FFD700;
-  color: #1B2A49;
+  color: #191f28;
   border: none;
-  border-radius: 50px;
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
-
-.popup {
-  width: 400px;
+.start-test-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .form-group {
@@ -780,18 +612,127 @@ a {
   gap: 5px;
 }
 
-.icon-btn {
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
+  font-size: 1.5rem;
   cursor: pointer;
-  font-size: 1rem;
-  color: #1B2A49;
-  transition: color 0.3s;
+  color: #333;
+  padding: 5px;
+  z-index: 1;
 }
 
-.icon-btn:hover {
-  color: #FFD700;
+problem-main {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
+.problem-info {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.9em;
+  color: #666;
+}
+
+problem-content{
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.problem-detail-header h3 {
+  margin-top: 0;
+  text-align: left;
+  margin-bottom: 20px;
+  color: #1B2A49;
+}
+.problem-main h3 {
+  min-width: 40px;
+  margin: 0;
+}
+.problem-detail-content {
+  text-align: left;
+}
+.problem-detail-content p {
+  word-wrap: break-word;
+  margin-bottom: 10px;
+}
+
+.problem-list {
+  /** display: flex; **/
+  /** padding: 10px; /* 컨테이너 내부 여백  **/
+  /** flex-direction: column; **/
+  /** gap: 0.5rem;
+  margin-top: 2rem; **/
+
+  display: grid; /* Grid 레이아웃을 활성화 */
+  grid-template-columns: repeat(2, 1fr); /* 두 개의 동일한 너비의 열을 생성 */
+  gap: 10px; /* 열과 열 사이의 간격 설정 */
+  width: 100%; /* 컨테이너의 너비를 100%로 설정 (부모 요소에 따라 조정 가능) */
+  box-sizing: border-box; /* 패딩 및 보더를 포함한 전체 크기 계산 */
+}
+
+.problem-item {
+  /** flex: 1; **/
+  width: 100%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  /** position: relative; **/
+  box-sizing: border-box;
+  border: 1px solid skyblue;
+
+}
+
+.problem-item:hover {
+  background-color: #e0e0e0;
+  transform: translateX(5px);
+}
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.problem-actions {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.problem-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.problem-text {
+  flex-grow: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.problem-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.problem-edit-form input,
+.problem-edit-form textarea {
+  width: 100%;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 
 .problem-detail-popup {
   position: relative;
@@ -805,29 +746,29 @@ a {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
-.problem-detail-header h3 {
-  margin-top: 0;
-  text-align: left;
-  margin-bottom: 20px;
-  color: #1B2A49;
+.edit-btn {
+  left: -50px;
 }
-.problem-detail-content {
-  text-align: left;
+.delete-btn{
+  left: -20px;
 }
-.problem-detail-content p {
-  word-wrap: break-word;
-  margin-bottom: 10px;
+
+.edit-btn:hover {
+  color: #4CAF50;
 }
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  color: #333;
-  padding: 5px;
-  z-index: 1;
+
+.delete-btn:hover {
+  color: #F44336;
+}
+.hero {
+  text-align: center;
+  padding: 4rem 0;
+  border-radius: 12px;
+
+}
+.main-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: black;
 }
 </style>

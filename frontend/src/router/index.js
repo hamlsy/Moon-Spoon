@@ -7,6 +7,7 @@ import MyWorkbook from "@/components/MyWorkbook.vue";
 import WorkbookDetail from "@/components/WorkbookDetail.vue";
 import ScoringTest from "@/components/ScoringTest.vue";
 import SignupForm from "@/components/SignupForm.vue";
+import TestPage from "@/components/TestPage.vue";
 
 Vue.use(VueRouter);
 
@@ -49,6 +50,11 @@ const routes = [
         path: '/scoringTest',
         name: 'ScoringTest',
         component: ScoringTest
+    },
+    {
+        path: '/test',
+        name: 'TestPage',
+        component: TestPage
     }
 ];
 
