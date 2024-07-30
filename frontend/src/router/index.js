@@ -8,6 +8,9 @@ import WorkbookDetail from "@/components/WorkbookDetail.vue";
 import ScoringTest from "@/components/ScoringTest.vue";
 import SignupForm from "@/components/SignupForm.vue";
 import TestPage from "@/components/TestPage.vue";
+import NoticeForm from "@/components/NoticeForm.vue";
+import NoticeDetail from "@/components/NoticeDetail.vue";
+import NoticeList from "@/components/NoticeList.vue";
 
 Vue.use(VueRouter);
 
@@ -50,6 +53,21 @@ const routes = [
         path: '/scoringTest',
         name: 'ScoringTest',
         component: ScoringTest
+    },
+    {
+        path: '/noticeList',
+        name: 'NoticeForm',
+        component: NoticeList
+    },
+    {
+        path: '/noticeDetail',
+        name: 'NoticeDetail',
+        component: NoticeDetail
+    },
+    {
+        path: '/noticeForm',
+        name: 'NoticeForm',
+        component: NoticeForm
     },
     {
         path: '/test',
