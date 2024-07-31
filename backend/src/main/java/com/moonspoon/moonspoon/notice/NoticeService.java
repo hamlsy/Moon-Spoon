@@ -6,6 +6,7 @@ import com.moonspoon.moonspoon.dto.response.notice.NoticeListResponse;
 import com.moonspoon.moonspoon.dto.response.notice.NoticeResponse;
 import com.moonspoon.moonspoon.exception.AccessDeniedException;
 import com.moonspoon.moonspoon.exception.NotFoundException;
+import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -66,6 +67,11 @@ public class NoticeService {
     private User validAdmin(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
+
+        if(user == null){
+            throw new NotUserException("로그인이 필요한 서비스입니다.");
+        }
+
         if(!user.getRole().getValue().equals("admin")){
             throw new AccessDeniedException("권한이 부족합니다.");
         }
