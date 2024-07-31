@@ -1,5 +1,7 @@
-package com.moonspoon.moonspoon.domain;
+package com.moonspoon.moonspoon.user;
 
+import com.moonspoon.moonspoon.workbook.Workbook;
+import com.moonspoon.moonspoon.notice.Notice;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

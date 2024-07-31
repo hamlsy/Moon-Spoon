@@ -1,6 +1,6 @@
-package com.moonspoon.moonspoon.repository;
+package com.moonspoon.moonspoon.notice;
 
-import com.moonspoon.moonspoon.domain.Notice;
+import com.moonspoon.moonspoon.notice.Notice;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {

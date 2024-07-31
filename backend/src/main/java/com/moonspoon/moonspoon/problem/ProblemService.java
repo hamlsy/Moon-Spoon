@@ -1,10 +1,8 @@
-package com.moonspoon.moonspoon.service;
+package com.moonspoon.moonspoon.problem;
 
-import com.moonspoon.moonspoon.domain.Problem;
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
-import com.moonspoon.moonspoon.dto.request.test.TestInputDTO;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
@@ -17,8 +15,7 @@ import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
-import com.moonspoon.moonspoon.repository.ProblemRepository;
-import com.moonspoon.moonspoon.repository.WorkbookRepository;
+import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

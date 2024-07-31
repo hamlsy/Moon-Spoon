@@ -1,8 +1,7 @@
-package com.moonspoon.moonspoon.controller;
+package com.moonspoon.moonspoon.problem;
 
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
-import com.moonspoon.moonspoon.dto.request.test.TestInputDTO;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
@@ -12,7 +11,7 @@ import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
-import com.moonspoon.moonspoon.service.ProblemService;
+import com.moonspoon.moonspoon.problem.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

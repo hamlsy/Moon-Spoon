@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.domain;
+package com.moonspoon.moonspoon.user;
 
 
 import lombok.Getter;

@@ -1,10 +1,9 @@
-package com.moonspoon.moonspoon.repository;
+package com.moonspoon.moonspoon.workbook;
 
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.workbook.Workbook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 

@@ -1,8 +1,7 @@
 package com.moonspoon.moonspoon.security;
 
-import com.moonspoon.moonspoon.domain.User;
-import com.moonspoon.moonspoon.domain.UserRole;
-import com.moonspoon.moonspoon.exception.JWTTokenExpiredException;
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRole;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

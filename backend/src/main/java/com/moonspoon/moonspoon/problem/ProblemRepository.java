@@ -1,6 +1,5 @@
-package com.moonspoon.moonspoon.repository;
+package com.moonspoon.moonspoon.problem;
 
-import com.moonspoon.moonspoon.domain.Problem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
