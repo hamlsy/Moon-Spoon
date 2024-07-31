@@ -20,21 +20,26 @@
         <h1 class="page-title">공지사항</h1>
 
         <div class="notice-list">
-          <div v-for="notice in notices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
+          <div v-for="notice in paginatedNotices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
             <span class="notice-tag">[공지]</span>
             <span class="notice-title">{{ notice.title }}</span>
             <span class="notice-info">
-              <span>{{ notice.author }}</span>
-              <span>{{ notice.createdAt }}</span>
-              <span v-if="notice.updatedAt">수정: {{ notice.updatedAt }}</span>
-            </span>
+            <span>{{ notice.author }}</span>
+            <span>{{ notice.createdAt }}</span>
+            <span v-if="notice.updatedAt">수정: {{ notice.updatedAt }}</span>
+          </span>
           </div>
         </div>
 
-        <div class="pagination">
-          <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1">이전</button>
-          <span>{{ currentPage }} / {{ totalPages }}</span>
-          <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages">다음</button>
+        <div class="pagination" v-if="totalPages > 1">
+          <button
+              v-for="page in totalPages"
+              :key="page"
+              @click="changePage(page)"
+              :class="{ active: currentPage === page }"
+          >
+            {{ page }}
+          </button>
         </div>
 
         <button v-if="isAdmin" @click="goToWrite" class="write-button">공지사항 작성</button>
@@ -55,9 +60,19 @@ export default {
     return {
       isLogin: false,
       isAdmin: false,
-      notices: [{'title':"aaa", "content":"adsadsaas", "author":"asdasdasd"}], // 서버에서 받아올 공지사항 목록
+      notices: [], // 서버에서 받아올 공지사항 목록
       currentPage: 1,
-      totalPages: 1,
+      itemsPerPage: 7,
+    }
+  },
+  computed: {
+    totalPages() {
+      return Math.ceil(this.notices.length / this.itemsPerPage);
+    },
+    paginatedNotices() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      return this.notices.slice(start, end);
     }
   },
   methods: {
@@ -75,17 +90,25 @@ export default {
     goToWrite() {
       this.$router.push('/notice/write');
     },
-    changePage() {
-      // 페이지 변경 로직 (서버에 요청)
-    },
     checkLogin() {
       this.isLogin = !!localStorage.getItem('token');
     },
     checkAdmin() {
       // 서버에 관리자 권한 확인 요청
     },
+    changePage(page) {
+      this.currentPage = page;
+    },
     fetchNotices() {
       // 서버에서 공지사항 목록 가져오기
+      // 예시 데이터:
+      this.notices = Array(20).fill().map((_, i) => ({
+        id: i + 1,
+        title: `공지사항 ${i + 1}`,
+        author: '관리자',
+        createdAt: '2024-07-31',
+        content: `공지사항 내용 ${i + 1}`
+      }));
     }
   },
   created() {
@@ -108,7 +131,7 @@ body, html {
 }
 
 .main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53));
+  /** background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53)); **/
   color: #191f28;
   min-height: 100vh;
   display: flex;
@@ -172,7 +195,9 @@ body, html {
 .content {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
+
+  margin: 40px;
 }
 
 .page-title {
@@ -181,14 +206,18 @@ body, html {
 }
 
 .notice-container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 200px); /* 대략적인 높이 조정 */
+
   width: 100%;
-  max-width: 800px;
   background-color: white;
   border-radius: 12px;
   padding: 2rem;
 }
 .notice-list {
   border-top: 2px solid #e0e0e0;
+  flex-grow: 1;
 }
 
 .notice-item {
@@ -243,5 +272,29 @@ body, html {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  position: sticky;
+  bottom: 1rem;
+  background-color: white;
+  padding: 1rem 0;
+}
+
+.pagination button {
+  margin: 0 0.25rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid #e0e0e0;
+  background-color: white;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #FFD700;
+  color: white;
+  border-color: #FFD700;
 }
 </style>
