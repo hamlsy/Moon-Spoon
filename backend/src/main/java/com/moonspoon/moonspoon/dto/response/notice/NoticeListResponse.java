@@ -14,14 +14,16 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class NoticeListResponse {
+    private Long id;
     private String title;
     private String author;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     @Builder
-    public NoticeListResponse(String title, String author, LocalDateTime createDate,
+    public NoticeListResponse(Long id, String title, String author, LocalDateTime createDate,
                               LocalDateTime updateDate) {
+        this.id = id;
         this.title = title;
         this.author = author;
         this.createDate = createDate;
@@ -30,6 +32,7 @@ public class NoticeListResponse {
 
     public static NoticeListResponse fromEntity(Notice notice){
         return NoticeListResponse.builder()
+                .id(notice.getId())
                 .author(notice.getAuthor())
                 .title(notice.getTitle())
                 .createDate(notice.getCreateDate())

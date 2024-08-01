@@ -60,7 +60,7 @@ const routes = [
         component: NoticeList
     },
     {
-        path: '/noticeDetail',
+        path: '/notice/:id',
         name: 'NoticeDetail',
         component: NoticeDetail
     },

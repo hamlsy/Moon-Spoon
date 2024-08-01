@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'NoticeWrite',
   data() {
@@ -50,12 +52,27 @@ export default {
       notice: {
         title: '',
         content: ''
-      }
+      },
+      token: localStorage.getItem('token'),
     }
   },
   methods: {
     submitNotice() {
-      // 서버에 공지사항 작성 요청
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.post("/api/notice/create",{
+        title: this.notice.title,
+        content: this.notice.content
+      } ,{headers})
+          .then((res) => {
+            alert("등록되었습니다.");
+            this.$router.push("/noticeList");
+            console.log(res, "등록");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
     },
     cancel() {
       this.$router.go(-1);

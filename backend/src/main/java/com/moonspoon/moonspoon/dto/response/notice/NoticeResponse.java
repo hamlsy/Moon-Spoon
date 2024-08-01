@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class NoticeResponse {
+    private Long id;
     private String title;
     private String content;
     private String author;
@@ -21,9 +22,10 @@ public class NoticeResponse {
     private LocalDateTime updateDate;
 
     @Builder
-    public NoticeResponse(String title, String content, String author,
+    public NoticeResponse(Long id, String title, String content, String author,
                           String role,
                           LocalDateTime createDate, LocalDateTime updateDate) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
@@ -34,6 +36,7 @@ public class NoticeResponse {
 
     public static NoticeResponse fromEntity(Notice notice){
         return NoticeResponse.builder()
+                .id(notice.getId())
                 .author(notice.getAuthor())
                 .title(notice.getTitle())
                 .content(notice.getContent())

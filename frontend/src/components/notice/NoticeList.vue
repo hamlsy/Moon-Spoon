@@ -65,6 +65,7 @@ export default {
       notices: [], // 서버에서 받아올 공지사항 목록
       currentPage: 1,
       itemsPerPage: 7,
+      token: localStorage.getItem('token'),
     }
   },
   computed: {
@@ -101,7 +102,7 @@ export default {
       };
       axios.get("/api/user/isAdmin", {headers})
           .then((res) => {
-            this.isAdmin = res.data.isAdmin;
+            this.isAdmin = res.data.admin;
           })
           .catch((err) => {
             console.log(err, "ERROR");

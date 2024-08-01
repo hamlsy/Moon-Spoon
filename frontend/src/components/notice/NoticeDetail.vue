@@ -14,6 +14,7 @@
         </ul>
       </div>
     </nav>
+
     <main class="content">
       <div class="notice-container">
         <button @click="goBack" class="back-button">← 뒤로가기</button>
@@ -25,16 +26,16 @@
           </h1>
           <div class="notice-info">
             <span>작성자: {{ notice.author }}</span>
-            <span>작성시간: {{ notice.createdAt }}</span>
-            <span v-if="notice.updatedAt">수정시간: {{ notice.updatedAt }}</span>
+            <span>작성시간: {{ notice.createDate }}</span>
+            <span v-if="notice.updateDate">수정시간: {{ notice.updateDate }}</span>
+          </div>
+          <div v-if="isAdmin" class="admin-actions">
+            <button @click="editNotice" class="edit-button">수정</button>
+            <button @click="deleteNotice" class="delete-button">삭제</button>
           </div>
           <div class="notice-content" v-html="notice.content"></div>
         </div>
 
-        <div v-if="isAdmin" class="admin-actions">
-          <button @click="editNotice" class="edit-button">수정</button>
-          <button @click="deleteNotice" class="delete-button">삭제</button>
-        </div>
       </div>
     </main>
 
@@ -45,23 +46,28 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'NoticeDetail',
   data() {
     return {
-      isAdmin: false,
       notice: {
-        title: 'asd',
-        author: 'asd',
-        createdAt: 'asd',
-        updatedAt: 'asd',
-        content: 'asdasd'
-      }
+        title: '',
+        author: '',
+        createDate: '',
+        updateDate: '',
+        content: '',
+      },
+      noticeId: this.$route.fullPath.split("/").pop(),
+      token: localStorage.getItem("token"),
+      isAdmin: false,
+      isLogin: false,
     }
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.push("/noticeList")
     },
     editNotice() {
       // 수정 페이지로 이동
@@ -70,15 +76,42 @@ export default {
       // 삭제 확인 후 삭제 요청
     },
     fetchNoticeDetail() {
-      // 서버에서 공지사항 상세 정보 가져오기
+      axios.get(`/api/notice/${this.noticeId}`)
+          .then((res) => {
+            this.notice = res.data;
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
     },
     checkAdmin() {
-      // 관리자 권한 확인
-    }
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get("/api/user/isAdmin", {headers})
+          .then((res) => {
+            this.isAdmin = res.data.admin;
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
+    },
+    checkLogin() {
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
+    },
+    notValid(){
+      alert("아직 구현되지 않은 기능입니다.");
+    },
   },
   created() {
     this.fetchNoticeDetail();
     this.checkAdmin();
+    this.checkLogin();
   }
 }
 </script>
