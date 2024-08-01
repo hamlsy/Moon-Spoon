@@ -16,13 +16,13 @@ public class NoticeResponse {
     private String title;
     private String content;
     private String author;
-    private UserRole role;
+    private String role;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     @Builder
     public NoticeResponse(String title, String content, String author,
-                          UserRole role,
+                          String role,
                           LocalDateTime createDate, LocalDateTime updateDate) {
         this.title = title;
         this.content = content;
@@ -37,7 +37,7 @@ public class NoticeResponse {
                 .author(notice.getAuthor())
                 .title(notice.getTitle())
                 .content(notice.getContent())
-                .role(notice.getUser().getRole())
+                .role(notice.getUser().getRole().getValue())
                 .createDate(notice.getCreateDate())
                 .updateDate(notice.getUpdateDate())
                 .build();

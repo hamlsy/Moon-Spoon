@@ -54,6 +54,8 @@
 
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'NoticePage',
   data() {
@@ -88,7 +90,7 @@ export default {
       this.$router.push(`/notice/${id}`);
     },
     goToWrite() {
-      this.$router.push('/notice/write');
+      this.$router.push('/noticeForm');
     },
     checkLogin() {
       this.isLogin = !!localStorage.getItem('token');
@@ -100,15 +102,18 @@ export default {
       this.currentPage = page;
     },
     fetchNotices() {
-      // 서버에서 공지사항 목록 가져오기
-      // 예시 데이터:
-      this.notices = Array(20).fill().map((_, i) => ({
-        id: i + 1,
-        title: `공지사항 ${i + 1}`,
-        author: '관리자',
-        createdAt: '2024-07-31',
-        content: `공지사항 내용 ${i + 1}`
-      }));
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get("/api/notice/list", {headers})
+          .then((res) => {
+            this.notices = res.data;
+            console.log(res, "notice loaded");
+          })
+          .catch((error) => {
+            console.log(error, "ERROR");
+          })
+
     }
   },
   created() {

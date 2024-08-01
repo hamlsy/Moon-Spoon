@@ -5,10 +5,13 @@ import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
+import com.moonspoon.moonspoon.exception.NotUserException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -52,7 +55,14 @@ public class UserService {
         isDuplicatedName(dto.getName());
     }
 
-
-
+    public UserInfoResponse getUserInfo(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new NotUserException("존재하지 않는 유저입니다.");
+        }
+        UserInfoResponse response = UserInfoResponse.fromEntity(user);
+        return response;
+    }
 
 }

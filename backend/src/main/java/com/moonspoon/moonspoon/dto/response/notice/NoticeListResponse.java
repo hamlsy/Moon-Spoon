@@ -16,25 +16,22 @@ import java.time.LocalDateTime;
 public class NoticeListResponse {
     private String title;
     private String author;
-    private UserRole role;
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     @Builder
     public NoticeListResponse(String title, String author, LocalDateTime createDate,
-                              LocalDateTime updateDate, UserRole role) {
+                              LocalDateTime updateDate) {
         this.title = title;
         this.author = author;
         this.createDate = createDate;
         this.updateDate = updateDate;
-        this.role = role;
     }
 
     public static NoticeListResponse fromEntity(Notice notice){
         return NoticeListResponse.builder()
                 .author(notice.getAuthor())
                 .title(notice.getTitle())
-                .role(notice.getUser().getRole())
                 .createDate(notice.getCreateDate())
                 .updateDate(notice.getUpdateDate())
                 .build();
