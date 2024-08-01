@@ -30,8 +30,8 @@
             <span v-if="notice.updateDate">수정시간: {{ notice.updateDate }}</span>
           </div>
           <div v-if="isAdmin" class="admin-actions">
-            <button @click="editNotice" class="edit-button">수정</button>
-            <button @click="deleteNotice" class="delete-button">삭제</button>
+            <button v-if="isAdmin" @click="editNotice" class="edit-button">수정</button>
+            <button v-if="isAdmin" @click="deleteNotice" class="delete-button">삭제</button>
           </div>
           <div class="notice-content" v-html="notice.content"></div>
         </div>
@@ -70,10 +70,16 @@ export default {
       this.$router.push("/noticeList")
     },
     editNotice() {
-      // 수정 페이지로 이동
+      this.$router.push({
+        path: "/noticeUpdateForm",
+        query: {
+          noticeId: this.noticeId
+        }
+      })
     },
     deleteNotice() {
       // 삭제 확인 후 삭제 요청
+
     },
     fetchNoticeDetail() {
       axios.get(`/api/notice/${this.noticeId}`)

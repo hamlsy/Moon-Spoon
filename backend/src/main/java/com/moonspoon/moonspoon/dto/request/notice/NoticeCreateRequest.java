@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.dto.request.notice;
 
 import com.moonspoon.moonspoon.notice.Notice;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NoticeCreateRequest {
+    @NotBlank(message = "제목을 입력해주세요.")
     String title;
+
+    @NotBlank(message = "내용을 입력해주세요.")
     String content;
 
     public static Notice toEntity(NoticeCreateRequest request){

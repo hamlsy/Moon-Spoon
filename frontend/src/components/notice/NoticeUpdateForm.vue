@@ -19,7 +19,7 @@
       <div class="notice-container">
         <h1 class="page-title">공지사항 작성</h1>
 
-        <form @submit.prevent="submitNotice" class="notice-form">
+        <form @submit.prevent="updateNotice" class="notice-form">
           <div class="form-group">
             <label for="title">제목</label>
             <input type="text" id="title" v-model="notice.title" required>
@@ -30,7 +30,7 @@
           </div>
           <div class="form-actions">
             <button type="button" @click="cancel" class="cancel-button">취소</button>
-            <button type="submit" class="submit-button">저장</button>
+            <button type="submit" class="submit-button">수정</button>
           </div>
         </form>
       </div>
@@ -46,7 +46,7 @@
 import axios from "axios";
 
 export default {
-  name: 'NoticeWrite',
+  name: 'NoticeUpdate',
   data() {
     return {
       notice: {
@@ -54,32 +54,79 @@ export default {
         content: ''
       },
       token: localStorage.getItem('token'),
+      noticeId: this.$route.query.noticeId,
+      isAdmin: false,
+      isLogin: false,
     }
   },
   methods: {
-    submitNotice() {
+    updateNotice() {
       const headers = {
         'Authorization': this.token
       };
-      axios.post("/api/notice/create",{
+      axios.post(`/api/notice/update/${this.noticeId}`,{
         title: this.notice.title,
         content: this.notice.content
       } ,{headers})
           .then((res) => {
-            alert("등록되었습니다.");
-            this.$router.push("/noticeList");
+            alert("수정되었습니다.");
+            this.$router.push(`/notice/${this.noticeId}`);
             console.log(res, "등록");
           })
           .catch((err) => {
             console.log(err, "ERROR");
           })
     },
+
+    fetchNotice(){
+      axios.get(`/api/notice/${this.noticeId}`)
+          .then((res) => {
+            this.notice = res.data;
+            console.log(res, "FETCH NOTICE");
+          })
+          .catch((err) => {
+            alert("ERROR!")
+            console.log(err, "ERROR");
+          })
+    },
+    checkRole(){
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get('/api/user/isAdmin', {headers})
+          .then((res) => {
+            this.isAdmin = res.data.admin;
+            if(!this.isAdmin) {
+              alert("권한이 없습니다!");
+              this.$router.go(-1);
+            }
+            console.log(res, "check admin");
+          })
+          .catch((err) => {
+            alert("ERROR OCCURRED!");
+            console.log(err, "ERROR");
+          });
+
+    },
     cancel() {
       this.$router.go(-1);
-    }
+    },
+    notValid() {
+      alert("아직 구현되지 않은 기능입니다.");
+    },
+    checkLogin() {
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout() {
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
+    },
   },
   created() {
     // 관리자 권한 확인 (필요시)
+    this.checkRole();
+    this.fetchNotice();
   },
 
 }

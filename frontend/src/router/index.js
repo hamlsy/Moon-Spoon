@@ -11,6 +11,7 @@ import TestPage from "@/components/TestPage.vue";
 import NoticeForm from "@/components/notice/NoticeForm.vue";
 import NoticeDetail from "@/components/notice/NoticeDetail.vue";
 import NoticeList from "@/components/notice/NoticeList.vue";
+import NoticeUpdateForm from "@/components/notice/NoticeUpdateForm.vue";
 
 Vue.use(VueRouter);
 
@@ -68,6 +69,11 @@ const routes = [
         path: '/noticeForm',
         name: 'NoticeForm',
         component: NoticeForm
+    },
+    {
+        path: '/noticeUpdateForm',
+        name: 'NoticeUpdateForm',
+        component: NoticeUpdateForm
     },
     {
         path: '/test',

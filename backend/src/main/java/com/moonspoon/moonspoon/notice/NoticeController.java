@@ -5,6 +5,7 @@ import com.moonspoon.moonspoon.dto.request.notice.NoticeUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.notice.NoticeListResponse;
 import com.moonspoon.moonspoon.dto.response.notice.NoticeResponse;
 import com.moonspoon.moonspoon.notice.NoticeService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class NoticeController {
     private final NoticeService noticeService;
 
     @PostMapping("/create")
-    public ResponseEntity<NoticeResponse> createNotice(@RequestBody NoticeCreateRequest request){
+    public ResponseEntity<NoticeResponse> createNotice(@Valid @RequestBody NoticeCreateRequest request){
         NoticeResponse response = noticeService.createNotice(request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -42,7 +43,7 @@ public class NoticeController {
     @PostMapping("/update/{id}")
     public ResponseEntity<NoticeResponse> updateNotice(
             @PathVariable("id") Long id,
-            @RequestBody NoticeUpdateRequest request){
+            @Valid @RequestBody NoticeUpdateRequest request){
         NoticeResponse response = noticeService.updateNotice(id, request);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

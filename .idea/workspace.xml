@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeUpdateForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/notice/NoticeListResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/notice/NoticeListResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/notice/NoticeResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/notice/NoticeResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/notice/NoticeCreateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/notice/NoticeCreateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/notice/NoticeUpdateRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/notice/NoticeUpdateRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +201,7 @@
       <workItem from="1722343049773" duration="1235000" />
       <workItem from="1722348954977" duration="2428000" />
       <workItem from="1722436786701" duration="1112000" />
-      <workItem from="1722510009723" duration="12748000" />
+      <workItem from="1722510009723" duration="14782000" />
     </task>
     <servers />
   </component>
