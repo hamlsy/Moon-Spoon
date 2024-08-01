@@ -96,7 +96,16 @@ export default {
       this.isLogin = !!localStorage.getItem('token');
     },
     checkAdmin() {
-      // 서버에 관리자 권한 확인 요청
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get("/api/user/isAdmin", {headers})
+          .then((res) => {
+            this.isAdmin = res.data.isAdmin;
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
     },
     changePage(page) {
       this.currentPage = page;
@@ -110,8 +119,8 @@ export default {
             this.notices = res.data;
             console.log(res, "notice loaded");
           })
-          .catch((error) => {
-            console.log(error, "ERROR");
+          .catch((err) => {
+            console.log(err, "ERROR");
           })
 
     }

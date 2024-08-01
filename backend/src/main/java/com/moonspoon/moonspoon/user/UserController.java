@@ -7,6 +7,7 @@ import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
 import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserAdminRoleResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 import com.moonspoon.moonspoon.user.UserService;
@@ -43,9 +44,15 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/user/info")
+    @GetMapping("/getInfo")
     public ResponseEntity<UserInfoResponse> getUserInfo(){
         UserInfoResponse response = userService.getUserInfo();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/isAdmin")
+    public ResponseEntity<UserAdminRoleResponse> getAdminRole(){
+        UserAdminRoleResponse response = userService.isAdmin();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

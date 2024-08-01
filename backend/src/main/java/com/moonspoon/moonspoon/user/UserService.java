@@ -5,6 +5,7 @@ import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserAdminRoleResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
@@ -56,13 +57,29 @@ public class UserService {
     }
 
     public UserInfoResponse getUserInfo(){
+        User user = getCurrentUser();
+        UserInfoResponse response = UserInfoResponse.fromEntity(user);
+        return response;
+    }
+
+    public UserAdminRoleResponse isAdmin(){
+        User user = getCurrentUser();
+        UserAdminRoleResponse response = new UserAdminRoleResponse();
+        if(user.getRole().getValue().equals("admin")){
+            response.setAdmin(true);
+        }
+        else{
+            response.setAdmin(false);
+        }
+        return response;
+    }
+
+    private User getCurrentUser(){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username);
         if(user == null){
             throw new NotUserException("존재하지 않는 유저입니다.");
         }
-        UserInfoResponse response = UserInfoResponse.fromEntity(user);
-        return response;
+        return user;
     }
-
 }
