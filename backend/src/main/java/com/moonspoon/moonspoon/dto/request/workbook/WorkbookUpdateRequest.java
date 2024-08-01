@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.dto.request.workbook;
 
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;

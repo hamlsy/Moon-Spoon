@@ -1,9 +1,9 @@
 package com.moonspoon.moonspoon.security;
 
-import com.moonspoon.moonspoon.repository.UserRepository;
+import com.moonspoon.moonspoon.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
-import com.moonspoon.moonspoon.domain.User;
+import com.moonspoon.moonspoon.user.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

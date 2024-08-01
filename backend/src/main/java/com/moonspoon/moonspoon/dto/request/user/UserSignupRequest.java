@@ -1,7 +1,7 @@
 package com.moonspoon.moonspoon.dto.request.user;
 
-import com.moonspoon.moonspoon.domain.User;
-import com.moonspoon.moonspoon.domain.UserRole;
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

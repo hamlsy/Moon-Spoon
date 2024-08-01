@@ -1,14 +1,12 @@
-package com.moonspoon.moonspoon.service;
+package com.moonspoon.moonspoon.workbook;
 
-import com.moonspoon.moonspoon.domain.User;
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
-import com.moonspoon.moonspoon.repository.UserRepository;
-import com.moonspoon.moonspoon.repository.WorkbookRepository;
+import com.moonspoon.moonspoon.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;

@@ -84,19 +84,78 @@ export default {
 </script>
 
 <style scoped>
-/* 기존 스타일 유지 */
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.main-page {
+  /** background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53)); **/
+  color: #191f28;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 80px 20px 0;
+  padding: 2rem;
+  flex: 1;
+}
+
+
+.feature-card h2 {
+  color: black;
+  margin-bottom: 1rem;
+}
+
+
+.additional-features h3 {
+  color: black;
+  margin-bottom: 1.5rem;
+}
+
+.additional-features ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.additional-features li {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  background-color: white;
+}
+
+.additional-features li.feature-hovered {
+  background-color: white;
+}
+
+.additional-features a {
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+}
 .content {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: 1rem;
+
 }
 .notice-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 1000px;
   background-color: white;
   border-radius: 12px;
   padding: 2rem;
   position: relative;
+  min-height: calc(100vh - 200px); /* 대략적인 높이 조정 */
+
 }
 .back-button {
   position: absolute;
@@ -113,6 +172,7 @@ export default {
   border-radius: 12px;
   padding: 2rem;
   margin-top: 3rem;
+  border-top: 3px solid darkgray;
 }
 
 .notice-title {
@@ -133,6 +193,7 @@ export default {
 
 .notice-content {
   line-height: 1.6;
+  height: 100%;
 }
 .notice-tag {
   color: red;
@@ -161,4 +222,6 @@ export default {
   background-color: #f44336;
   color: white;
 }
+
+
 </style>

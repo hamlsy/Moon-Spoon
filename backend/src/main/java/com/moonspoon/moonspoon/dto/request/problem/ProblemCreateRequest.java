@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.dto.request.problem;
 
-import com.moonspoon.moonspoon.domain.Problem;
+import com.moonspoon.moonspoon.problem.Problem;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;

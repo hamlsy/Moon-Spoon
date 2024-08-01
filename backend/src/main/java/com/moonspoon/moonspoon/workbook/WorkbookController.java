@@ -1,9 +1,9 @@
-package com.moonspoon.moonspoon.controller;
+package com.moonspoon.moonspoon.workbook;
 
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
-import com.moonspoon.moonspoon.service.WorkbookService;
+import com.moonspoon.moonspoon.workbook.WorkbookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

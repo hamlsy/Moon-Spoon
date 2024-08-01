@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.controller;
+package com.moonspoon.moonspoon.user;
 
 import com.moonspoon.moonspoon.dto.request.user.CheckNameRequest;
 import com.moonspoon.moonspoon.dto.request.user.CheckUsernameRequest;
@@ -8,7 +8,7 @@ import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
-import com.moonspoon.moonspoon.service.UserService;
+import com.moonspoon.moonspoon.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

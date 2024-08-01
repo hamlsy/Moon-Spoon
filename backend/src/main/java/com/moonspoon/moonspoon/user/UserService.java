@@ -1,5 +1,4 @@
-package com.moonspoon.moonspoon.service;
-import com.moonspoon.moonspoon.domain.User;
+package com.moonspoon.moonspoon.user;
 import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
 
 import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
@@ -9,7 +8,6 @@ import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
-import com.moonspoon.moonspoon.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

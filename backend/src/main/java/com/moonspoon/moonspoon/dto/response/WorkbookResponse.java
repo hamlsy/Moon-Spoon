@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.dto.response;
 
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.workbook.Workbook;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
