@@ -29,21 +29,12 @@ export default {
     return {
       username: '',
       password: '',
-      isLogin: false,
       token: localStorage.getItem('token'),
     }
   },
   methods: {
     notValid() {
       alert("아직 구현되지 않은 기능입니다.");
-    },
-    checkLogin() {
-      this.isLogin = !!localStorage.getItem('token');
-    },
-    logout() {
-      alert("로그아웃 되었습니다.");
-      localStorage.removeItem("token");
-      this.$router.go(0);
     },
     login() {
       // 여기에 로그인 로직을 구현하세요

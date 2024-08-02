@@ -61,7 +61,6 @@ export default {
       usernameSuccess: false,
       isNameValid: false,
       isUsernameValid: false,
-      isLogin: false,
       token: localStorage.getItem('token'),
     }
   },
@@ -104,14 +103,6 @@ export default {
   methods: {
     notValid() {
       alert("아직 구현되지 않은 기능입니다.");
-    },
-    checkLogin() {
-      this.isLogin = !!localStorage.getItem('token');
-    },
-    logout() {
-      alert("로그아웃 되었습니다.");
-      localStorage.removeItem("token");
-      this.$router.go(0);
     },
     validateName() {
       this.isNameValid = false;

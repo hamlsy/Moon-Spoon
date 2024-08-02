@@ -1,6 +1,5 @@
 <template>
   <div class="main-page">
-
     <router-link to="/mainPage" class="back-button">
       <i class="fas fa-arrow-left"></i> 뒤로가기
     </router-link>
@@ -116,7 +115,6 @@ export default {
       filteredWorkbooks: [],
       showSortDropdown: false,
       sortOrder: 'newest',
-      isLogin: false,
       token: localStorage.getItem('token'),
       updateIndex: null,
       updateWorkbook: {title: '', content: ''}
@@ -138,7 +136,6 @@ export default {
       alert("이 기능은 아직 구현되지 않았습니다.");
     },
     saveUpdate(workbook) {
-      //axios
       const headers = {
         'Authorization': this.token
       }
@@ -162,14 +159,6 @@ export default {
     },
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
-    },
-    checkLogin(){
-      this.isLogin = !!localStorage.getItem('token');
-    },
-    logout(){
-      alert("로그아웃 되었습니다.");
-      localStorage.removeItem("token");
-      this.$router.push("/mainPage");
     },
     goWorkbookDetail(workbookId){
       this.$router.push(`/workbookDetail/${workbookId}`);
@@ -199,9 +188,6 @@ export default {
         }
         console.log("ERROR", error);
       })
-    },
-    navigateTo(page) {
-      console.log('Navigating to:', page);
     },
     showAddWorkbookPopup() {
       this.showAddPopup = true;

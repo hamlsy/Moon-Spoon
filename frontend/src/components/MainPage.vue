@@ -55,9 +55,6 @@ export default {
     notValid() {
       alert("아직 구현되지 않은 기능입니다.");
     },
-    checkLogin() {
-      this.isLogin = !!localStorage.getItem('token');
-    },
     goMyWorkbook() {
       if (!this.token) {
         alert("로그인이 필요한 서비스입니다.");
@@ -67,11 +64,6 @@ export default {
     },
     goNoticeDetail(id){
       this.$router.push(`/notice/${id}`);
-    },
-    logout() {
-      alert("로그아웃 되었습니다.");
-      localStorage.removeItem("token");
-      this.$router.go(0);
     },
     fetchNotices(){
       axios.get("/api/notice/recentNotices")
@@ -85,7 +77,6 @@ export default {
     }
   },
   created() {
-    this.checkLogin();
     this.fetchNotices();
   }
 }
