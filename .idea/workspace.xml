@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/security/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/security/SecurityConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo/application.yml" afterDir="false" />
     </list>
@@ -197,7 +197,7 @@
       <workItem from="1722348954977" duration="2428000" />
       <workItem from="1722436786701" duration="1112000" />
       <workItem from="1722510009723" duration="15415000" />
-      <workItem from="1722571983134" duration="20533000" />
+      <workItem from="1722571983134" duration="24110000" />
     </task>
     <servers />
   </component>
