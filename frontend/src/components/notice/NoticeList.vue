@@ -12,8 +12,8 @@
             <span class="notice-title"> {{ notice.title }}</span>
             <span class="notice-info">
             <span>{{ notice.author }}</span>
-            <span>{{ notice.createDate }}</span>
-            <span v-if="notice.updateDate">수정: {{ notice.updateDate }}</span>
+            <span> {{ formatDate(notice.createDate) }}</span>
+            <span v-if="notice.updateDate">수정: {{ formatDate(notice.updateDate) }}</span>
           </span>
           </div>
         </div>
@@ -42,12 +42,12 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: 'NoticePage',
   data() {
     return {
-      isLogin: false,
       isAdmin: false,
       notices: [], // 서버에서 받아올 공지사항 목록
       currentPage: 1,
@@ -80,9 +80,6 @@ export default {
     goToWrite() {
       this.$router.push('/noticeForm');
     },
-    checkLogin() {
-      this.isLogin = !!localStorage.getItem('token');
-    },
     checkAdmin() {
       const headers = {
         'Authorization': this.token
@@ -111,10 +108,12 @@ export default {
             console.log(err, "ERROR");
           })
 
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YY.MM.DD HH:mm');
     }
   },
   created() {
-    this.checkLogin();
     this.checkAdmin();
     this.fetchNotices();
   }

@@ -168,7 +168,7 @@ export default {
       sortOrder: 'newest',
       sortValue: '최신순',
       token: localStorage.getItem('token'),
-      workbookId: "",
+      workbookId: this.$route.fullPath.split("/").pop(),
       showDetailPopup: false,
       selectedProblem: null,
 
@@ -360,7 +360,6 @@ export default {
     },
   },
   mounted() {
-    this.checkLogin();
     this.getProblems();
   }
 }

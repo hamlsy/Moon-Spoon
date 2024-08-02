@@ -414,7 +414,7 @@ a {
 }
 
 .sidebar {
-  min-width: 303.25px;
+  min-width: 2rem;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -462,6 +462,7 @@ a {
 
 .problem-content {
   margin-bottom: 20px;
+  margin-top: 70px;
 }
 
 .navigation-buttons {

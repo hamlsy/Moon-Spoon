@@ -12,8 +12,8 @@
           </h1>
           <div class="notice-info">
             <span>작성자: {{ notice.author }}</span>
-            <span>작성시간: {{ notice.createDate }}</span>
-            <span v-if="notice.updateDate">수정시간: {{ notice.updateDate }}</span>
+            <span>작성시간: {{ formatDate(notice.createDate) }}</span>
+            <span v-if="notice.updateDate">수정시간: {{ formatDate(notice.updateDate) }}</span>
           </div>
           <div v-if="isAdmin" class="admin-actions">
             <button v-if="isAdmin" @click="editNotice" class="edit-button">수정</button>
@@ -33,6 +33,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: 'NoticeDetail',
@@ -112,6 +113,9 @@ export default {
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
     },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YY.MM.DD HH:mm');
+    }
   },
   created() {
     this.fetchNoticeDetail();

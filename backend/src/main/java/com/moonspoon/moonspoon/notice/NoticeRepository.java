@@ -15,11 +15,12 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     Optional<Notice> findByIdWithUser(@Param("noticeId") Long noticeId);
 
     @Query("select distinct n from Notice n " +
-            "join fetch n.user")
-    List<Notice> findAllWithUser();
+            "join fetch n.user order by n.createDate desc")
+    List<Notice> findAllWithUserDesc();
 
     @Query("select n from Notice n " +
     "order by n.createDate desc")
     List<Notice> findRecentNotices(Pageable pageable);
+
 
 }

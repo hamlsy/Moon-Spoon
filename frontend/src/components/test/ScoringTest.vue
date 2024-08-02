@@ -503,7 +503,7 @@ a {
 }
 
 .sidebar {
-  min-width: 303.25px;
+  min-width: 5rem;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -524,6 +524,7 @@ a {
   padding: 10px;
   margin-bottom: 5px;
   cursor: pointer;
+  max-height: 2rem;
 }
 
 .problem-item.unanswered {
@@ -549,9 +550,6 @@ a {
   max-height: 100vh;
 }
 
-.problem-content {
-  margin-bottom: 20px;
-}
 
 textarea {
   width: 100%; /* 부모 요소의 너비에 맞춤 */
@@ -679,6 +677,7 @@ textarea:focus {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 15px;
+  margin-top: 70px;
 }
 
 .correct-rate {

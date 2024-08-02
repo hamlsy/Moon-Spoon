@@ -29,7 +29,7 @@ public class NoticeService {
     private final UserRepository userRepository;
 
     public List<NoticeListResponse> findAllNotice(){
-        List<Notice> notices = noticeRepository.findAllWithUser();
+        List<Notice> notices = noticeRepository.findAllWithUserDesc();
         List<NoticeListResponse> responses = notices.stream()
                 .map(n -> NoticeListResponse.fromEntity(n))
                 .collect(Collectors.toList());

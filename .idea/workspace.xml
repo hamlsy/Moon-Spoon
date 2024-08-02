@@ -6,10 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/login/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login/SignupForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/login/SignupForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/test/ProblemTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/test/ProblemTest.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -200,7 +202,7 @@
       <workItem from="1722348954977" duration="2428000" />
       <workItem from="1722436786701" duration="1112000" />
       <workItem from="1722510009723" duration="15415000" />
-      <workItem from="1722571983134" duration="9549000" />
+      <workItem from="1722571983134" duration="12404000" />
     </task>
     <servers />
   </component>
