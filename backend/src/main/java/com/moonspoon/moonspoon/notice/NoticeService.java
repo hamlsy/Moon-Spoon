@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +46,7 @@ public class NoticeService {
     public NoticeResponse createNotice(NoticeCreateRequest request){
         User user = validAdmin();
         Notice notice = NoticeCreateRequest.toEntity(request);
+        notice.setCreateDate(LocalDateTime.now());
         notice.setAuthor(user.getName());
         notice.setUser(user);
         noticeRepository.save(notice);
@@ -64,6 +66,7 @@ public class NoticeService {
         Notice notice = noticeRepository.findByIdWithUser(id).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 글입니다."));
         notice.update(request.getTitle(), request.getContent());
+        notice.setUpdateDate(LocalDateTime.now());
         return NoticeResponse.fromEntity(notice);
     }
 

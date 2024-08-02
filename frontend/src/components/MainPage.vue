@@ -1,20 +1,5 @@
 <template>
   <div class="main-page">
-    <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
-          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
-        </div>
-        <ul class="navbar-menu">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
-        </ul>
-      </div>
-    </nav>
-
     <main class="content">
       <section class="hero">
         <h1 class="main-title slide-in-fade">나만의 학습, Moon-Spoon과 함께</h1><br>
@@ -37,10 +22,10 @@
       </section>
 
       <section class="additional-features">
-        <h3><router-link to="/noticeList">공지사항</router-link></h3>
+        <h1 class="notice-icon"><router-link to="/noticeList"> 📢 공지사항</router-link></h1>
         <ul>
-          <div v-for="(notice) in notices" :key="notice.id">
-            <li @click="goNoticeDetail(notice.id)" style="cursor: pointer"><a style="color:red">[공지]</a>{{ notice.title }}</li>
+          <div v-for="(notice) in notices" :key="notice.id" class="notice-list">
+            <li @click="goNoticeDetail(notice.id)" class="notice" ><a style="color:red">[공지]</a>{{ notice.title }}</li>
           </div>
         </ul>
       </section>
@@ -191,6 +176,11 @@ body, html {
   margin-bottom: 1rem;
 }
 
+.notice-icon {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
 .feature-card h2 {
   color: black;
   margin-bottom: 1rem;
@@ -223,7 +213,6 @@ body, html {
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 8px;
-  transition: background-color 0.3s;
   background-color: white;
 }
 
@@ -250,4 +239,18 @@ body, html {
   text-decoration: none;
 }
 
+.notice {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 80%;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px white;
+  border-left: 2px solid lightgray;
+}
+.notice:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
 </style>

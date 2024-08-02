@@ -1,19 +1,5 @@
 <template>
   <div class="main-page">
-    <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
-          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
-        </div>
-        <ul class="navbar-menu">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
-        </ul>
-      </div>
-    </nav>
 
     <main class="content">
       <div class="notice-container">
@@ -21,12 +7,13 @@
 
         <div class="notice-list">
           <div v-for="notice in paginatedNotices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
-            <span class="notice-tag">[공지]</span>
-            <span class="notice-title">{{ notice.title }}</span>
+            <span class="notice-tag">[공지] </span>
+            <pre> </pre>
+            <span class="notice-title"> {{ notice.title }}</span>
             <span class="notice-info">
             <span>{{ notice.author }}</span>
-            <span>{{ notice.createdAt }}</span>
-            <span v-if="notice.updatedAt">수정: {{ notice.updatedAt }}</span>
+            <span>{{ notice.createDate }}</span>
+            <span v-if="notice.updateDate">수정: {{ notice.updateDate }}</span>
           </span>
           </div>
         </div>

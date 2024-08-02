@@ -1,19 +1,6 @@
 <template>
   <div class="main-page">
-    <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
-          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
-        </div>
-        <ul class="navbar-menu">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
-        </ul>
-      </div>
-    </nav>
+
     <router-link to="/mainPage" class="back-button">
       <i class="fas fa-arrow-left"></i> 뒤로가기
     </router-link>
