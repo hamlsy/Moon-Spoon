@@ -54,6 +54,7 @@ export default {
         content: ''
       },
       token: localStorage.getItem('token'),
+      isLogin: false
     }
   },
   methods: {
@@ -66,9 +67,9 @@ export default {
         content: this.notice.content
       } ,{headers})
           .then((res) => {
-            alert("등록되었습니다.");
-            this.$router.push("/noticeList");
+            alert("등록되었습니다.")
             console.log(res, "등록");
+            this.$router.push("/noticeList");
           })
           .catch((err) => {
             console.log(err, "ERROR");
@@ -76,7 +77,18 @@ export default {
     },
     cancel() {
       this.$router.go(-1);
-    }
+    },
+    checkLogin() {
+      this.isLogin = !!localStorage.getItem('token');
+    },
+    logout(){
+      alert("로그아웃 되었습니다.");
+      localStorage.removeItem("token");
+      this.$router.go(0);
+    },
+    notValid(){
+      alert("아직 구현되지 않은 기능입니다.");
+    },
   },
   created() {
     // 관리자 권한 확인 (필요시)

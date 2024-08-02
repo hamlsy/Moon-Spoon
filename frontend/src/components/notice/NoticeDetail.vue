@@ -78,7 +78,20 @@ export default {
       })
     },
     deleteNotice() {
-      // 삭제 확인 후 삭제 요청
+      const headers = {
+        'Authorization': this.token
+      };
+      if(confirm("삭제하시겠습니까?")){
+        axios.delete(`/api/notice/delete/${this.noticeId}`, {headers})
+            .then((res) => {
+              alert("삭제되었습니다.");
+              console.log(res,"삭제되었습니다.");
+              this.$router.push("/noticeList");
+            })
+            .catch((err) => {
+              console.log(err, "ERROR");
+            })
+      }
 
     },
     fetchNoticeDetail() {
