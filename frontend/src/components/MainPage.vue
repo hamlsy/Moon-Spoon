@@ -1,5 +1,6 @@
 <template>
   <div class="main-page">
+
     <main class="content">
       <section class="hero">
         <h1 class="main-title slide-in-fade">나만의 학습, Moon-Spoon과 함께</h1><br>
