@@ -54,5 +54,10 @@ public class NoticeController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @GetMapping("/recentNotices")
+    public ResponseEntity<List<NoticeListResponse>> getRecentNotices(){
+        List<NoticeListResponse> responses = noticeService.getRecentNotices();
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
 
 }

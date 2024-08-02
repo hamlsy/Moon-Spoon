@@ -37,20 +37,11 @@
       </section>
 
       <section class="additional-features">
-        <h3>추가(예정) 기능</h3>
+        <h3><router-link to="/noticeList">공지사항</router-link></h3>
         <ul>
-          <li @mouseover="hoverFeature = 1" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 1 }">
-            <a @click="notValid">공지사항</a>
-            <span>- 나의 학습 진행 상황을 한눈에 확인하세요.</span>
-          </li>
-          <li @mouseover="hoverFeature = 2" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 2 }">
-            <a @click="notValid">학습 커뮤니티</a>
-            <span>- 다른 학습자들과 정보를 공유하고 소통하세요.</span>
-          </li>
-          <li @mouseover="hoverFeature = 3" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 3 }">
-            <a @click="notValid">...</a>
-            <span>- ...추가 될 내용 ...</span>
-          </li>
+          <div v-for="(notice) in notices" :key="notice.id">
+            <li @click="goNoticeDetail(notice.id)" style="cursor: pointer"><a style="color:red">[공지]</a>{{ notice.title }}</li>
+          </div>
         </ul>
       </section>
     </main>
@@ -62,6 +53,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'MainPage',
   data() {
@@ -69,7 +62,8 @@ export default {
       isLogin: false,
       token: localStorage.getItem('token'),
       hover: null,
-      hoverFeature: null
+      hoverFeature: null,
+      notices: []
     }
   },
   methods: {
@@ -86,15 +80,28 @@ export default {
         this.$router.push("/myWorkbook");
       }
     },
+    goNoticeDetail(id){
+      this.$router.push(`/notice/${id}`);
+    },
     logout() {
       alert("로그아웃 되었습니다.");
       localStorage.removeItem("token");
       this.$router.go(0);
     },
+    fetchNotices(){
+      axios.get("/api/notice/recentNotices")
+          .then((res) => {
+            this.notices = res.data;
+            console.log(res, "fetch notices");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
+    }
   },
   created() {
     this.checkLogin();
-
+    this.fetchNotices();
   }
 }
 </script>

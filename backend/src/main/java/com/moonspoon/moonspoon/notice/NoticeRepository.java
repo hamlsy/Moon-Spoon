@@ -1,7 +1,6 @@
 package com.moonspoon.moonspoon.notice;
 
-import com.moonspoon.moonspoon.notice.Notice;
-import com.moonspoon.moonspoon.problem.Problem;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,4 +17,9 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     @Query("select distinct n from Notice n " +
             "join fetch n.user")
     List<Notice> findAllWithUser();
+
+    @Query("select n from Notice n " +
+    "order by n.createDate desc")
+    List<Notice> findRecentNotices(Pageable pageable);
+
 }
