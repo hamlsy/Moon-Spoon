@@ -18,7 +18,10 @@ public class Notice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+
     private String author;
 
     @ManyToOne(fetch = FetchType.LAZY)
