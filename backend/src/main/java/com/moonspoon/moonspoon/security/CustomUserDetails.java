@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.security;
 
-import com.moonspoon.moonspoon.domain.User;
+import com.moonspoon.moonspoon.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 

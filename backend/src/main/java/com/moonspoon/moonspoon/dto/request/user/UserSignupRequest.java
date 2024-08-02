@@ -1,7 +1,7 @@
 package com.moonspoon.moonspoon.dto.request.user;
 
-import com.moonspoon.moonspoon.domain.User;
-import com.moonspoon.moonspoon.domain.UserRole;
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -13,7 +13,7 @@ import lombok.Setter;
 public class UserSignupRequest {
 
     @NotBlank(message = "아이디를 입력하세요.")
-    @Size(min = 2, max = 20)
+    @Size(min = 4, max = 20)
     @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "아이디는 영문과 숫자로 이루어져야 합니다.")
     private String username;
 
