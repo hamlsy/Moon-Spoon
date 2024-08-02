@@ -21,8 +21,8 @@ public class Notice {
     private String content;
     private String author;
 
-    @ManyToOne
-    @JoinColumn(name = "userId")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private LocalDateTime createDate;
