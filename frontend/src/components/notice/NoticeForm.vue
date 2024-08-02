@@ -3,7 +3,7 @@
 
     <main class="content">
       <div class="notice-container">
-        <h1 class="page-title">공지사항 작성</h1>
+        <h3 class="page-title">공지사항 작성</h3>
 
         <form @submit.prevent="submitNotice" class="notice-form">
           <div class="form-group">
