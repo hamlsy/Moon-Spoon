@@ -108,6 +108,10 @@ jobs:
           cd backend
           docker build -t $DOCKER_USERNAME/msp_back:blue .
           docker push $DOCKER_USERNAME/msp_back:blue
+          
+          docker build -t $DOCKER_USERNAME/msp_back:green .
+          docker push $DOCKER_USERNAME/msp_back:green
+          
           cd ..
 
 
