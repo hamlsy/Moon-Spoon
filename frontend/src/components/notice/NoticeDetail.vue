@@ -19,7 +19,7 @@
             <button v-if="isAdmin" @click="editNotice" class="edit-button">수정</button>
             <button v-if="isAdmin" @click="deleteNotice" class="delete-button">삭제</button>
           </div>
-          <div class="notice-content" v-html="notice.content"></div>
+          <pre class="notice-content" v-html="notice.content"></pre>
         </div>
 
       </div>
