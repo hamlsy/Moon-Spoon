@@ -15,6 +15,9 @@ set +a
 # 환경 변수 설정 (필요한 경우)
 export DOCKER_COMPOSE_FILE=docker-compose.yml
 
+#Docker 이미지 최신화
+docker-compose build
+
 # 기존 컨테이너 정리
 docker-compose down --remove-orphans
 
