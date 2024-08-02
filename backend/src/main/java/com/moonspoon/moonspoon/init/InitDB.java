@@ -1,9 +1,9 @@
 package com.moonspoon.moonspoon.init;
 
-import com.moonspoon.moonspoon.domain.Problem;
-import com.moonspoon.moonspoon.domain.User;
-import com.moonspoon.moonspoon.domain.UserRole;
-import com.moonspoon.moonspoon.domain.Workbook;
+import com.moonspoon.moonspoon.problem.Problem;
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRole;
+import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

@@ -62,6 +62,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers( "/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
+                        .requestMatchers("/notice/create","/notice/delete/**").hasRole("ADMIN")
                         .anyRequest().authenticated());
         //JWTFilter 등록
         http

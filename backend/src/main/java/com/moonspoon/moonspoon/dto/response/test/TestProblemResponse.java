@@ -1,6 +1,6 @@
 package com.moonspoon.moonspoon.dto.response.test;
 
-import com.moonspoon.moonspoon.domain.Problem;
+import com.moonspoon.moonspoon.problem.Problem;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

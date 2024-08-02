@@ -1,19 +1,5 @@
 <template>
   <div class="main-page">
-    <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
-          <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
-        </div>
-        <ul class="navbar-menu">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
-        </ul>
-      </div>
-    </nav>
 
     <main class="content">
       <section class="hero">
@@ -37,20 +23,11 @@
       </section>
 
       <section class="additional-features">
-        <h3>추가(예정) 기능</h3>
+        <h1 class="notice-icon"><router-link to="/noticeList"> 📢 공지사항</router-link></h1>
         <ul>
-          <li @mouseover="hoverFeature = 1" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 1 }">
-            <a @click="notValid">공지사항</a>
-            <span>- 나의 학습 진행 상황을 한눈에 확인하세요.</span>
-          </li>
-          <li @mouseover="hoverFeature = 2" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 2 }">
-            <a @click="notValid">학습 커뮤니티</a>
-            <span>- 다른 학습자들과 정보를 공유하고 소통하세요.</span>
-          </li>
-          <li @mouseover="hoverFeature = 3" @mouseleave="hoverFeature = null" :class="{ 'feature-hovered': hoverFeature === 3 }">
-            <a @click="notValid">...</a>
-            <span>- ...추가 될 내용 ...</span>
-          </li>
+          <div v-for="(notice) in notices" :key="notice.id" class="notice-list">
+            <li @click="goNoticeDetail(notice.id)" class="notice" ><a style="color:red">[공지]</a>{{ notice.title }}</li>
+          </div>
         </ul>
       </section>
     </main>
@@ -62,6 +39,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'MainPage',
   data() {
@@ -69,15 +48,13 @@ export default {
       isLogin: false,
       token: localStorage.getItem('token'),
       hover: null,
-      hoverFeature: null
+      hoverFeature: null,
+      notices: []
     }
   },
   methods: {
     notValid() {
       alert("아직 구현되지 않은 기능입니다.");
-    },
-    checkLogin() {
-      this.isLogin = !!localStorage.getItem('token');
     },
     goMyWorkbook() {
       if (!this.token) {
@@ -86,15 +63,22 @@ export default {
         this.$router.push("/myWorkbook");
       }
     },
-    logout() {
-      alert("로그아웃 되었습니다.");
-      localStorage.removeItem("token");
-      this.$router.go(0);
+    goNoticeDetail(id){
+      this.$router.push(`/notice/${id}`);
     },
+    fetchNotices(){
+      axios.get("/api/notice/recentNotices")
+          .then((res) => {
+            this.notices = res.data;
+            console.log(res, "fetch notices");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
+    }
   },
   created() {
-    this.checkLogin();
-
+    this.fetchNotices();
   }
 }
 </script>
@@ -184,6 +168,11 @@ body, html {
   margin-bottom: 1rem;
 }
 
+.notice-icon {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
 .feature-card h2 {
   color: black;
   margin-bottom: 1rem;
@@ -216,7 +205,6 @@ body, html {
   margin-bottom: 1rem;
   padding: 1rem;
   border-radius: 8px;
-  transition: background-color 0.3s;
   background-color: white;
 }
 
@@ -243,4 +231,18 @@ body, html {
   text-decoration: none;
 }
 
+.notice {
+  cursor: pointer;
+  background-color: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 80%;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px white;
+  border-left: 2px solid lightgray;
+}
+.notice:hover{
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
 </style>
