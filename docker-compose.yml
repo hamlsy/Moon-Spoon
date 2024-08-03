@@ -13,6 +13,7 @@ services:
       SPRING_DATASOURCE_USERNAME: ${RDS_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${RDS_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      TZ:Asia/Seoul
 #    depends_on:
 #      - mysql
     networks:
@@ -33,6 +34,7 @@ services:
       SPRING_DATASOURCE_USERNAME: ${RDS_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${RDS_PASSWORD}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      TZ:Asia/Seoul
 #    depends_on:
 #      - mysql
     networks:
