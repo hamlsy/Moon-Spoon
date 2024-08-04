@@ -17,6 +17,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class UserService {
         dto.setPassword(encodedPassword);
 
         User user = UserSignupRequest.toEntity(dto);
+        user.setSignupDate(LocalDateTime.now());
         userRepository.save(user);
         return UserResponse.fromEntity(user);
     }
