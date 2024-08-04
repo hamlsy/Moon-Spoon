@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
+import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -29,6 +30,15 @@ public class SharedWorkbook {
     @OneToOne
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public void setUser(User user){
+        this.user = user;
+        user.getSharedWorkbooks().add(this);
+    }
 
     public void setWorkbook(Workbook workbook){
         this.workbook = workbook;

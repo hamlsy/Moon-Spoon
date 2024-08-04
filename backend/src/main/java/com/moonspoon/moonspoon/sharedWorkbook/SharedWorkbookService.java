@@ -4,10 +4,12 @@ import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
+import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -61,10 +63,11 @@ public class SharedWorkbookService {
     //수정
     @Transactional
     public SharedWorkbookResponse updateSharedWorkbook(SharedWorkbookUpdateRequest dto){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findById(dto.getId())
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(dto.getId())
                 .orElseThrow(
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
+        validUser(sharedWorkbook.getUser().getUsername());
         sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent());
 
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
@@ -75,6 +78,19 @@ public class SharedWorkbookService {
     //삭제
     @Transactional
     public void deleteSharedWorkbook(Long id){
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(id)
+                .orElseThrow(
+                        () -> new NotFoundException(notFoundWorkbookMessage)
+                );
+        validUser(sharedWorkbook.getUser().getUsername());
         sharedWorkbookRepository.deleteById(id);
+    }
+
+
+    private void validUser(String username){
+        String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+        if(!currentUser.equals(username)){
+            throw new NotUserException("권한이 없습니다.");
+        }
     }
 }
