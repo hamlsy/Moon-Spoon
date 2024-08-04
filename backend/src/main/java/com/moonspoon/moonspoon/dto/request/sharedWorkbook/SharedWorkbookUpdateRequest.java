@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SharedWorkbookUpdateRequest {
-    private Long id;
     private String title;
     private String content;
 

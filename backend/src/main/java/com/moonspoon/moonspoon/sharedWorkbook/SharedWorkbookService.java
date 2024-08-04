@@ -62,8 +62,8 @@ public class SharedWorkbookService {
 
     //수정
     @Transactional
-    public SharedWorkbookResponse updateSharedWorkbook(SharedWorkbookUpdateRequest dto){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(dto.getId())
+    public SharedWorkbookResponse updateSharedWorkbook(Long id, SharedWorkbookUpdateRequest dto){
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(id)
                 .orElseThrow(
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
