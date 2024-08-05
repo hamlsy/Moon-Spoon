@@ -5,22 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/sharedWorkbook/SharedWorkbookRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/sharedWorkbook/SharedWorkbookUpdateRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookTestResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbook.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/com.moonspoon.moonspoon.main.iml" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserInfoResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserInfoResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo/application.yml" afterDir="false" />
     </list>
@@ -213,7 +202,8 @@
       <workItem from="1722510009723" duration="15415000" />
       <workItem from="1722571983134" duration="27837000" />
       <workItem from="1722748137027" duration="1222000" />
-      <workItem from="1722774049366" duration="2702000" />
+      <workItem from="1722774049366" duration="2725000" />
+      <workItem from="1722848786817" duration="1633000" />
     </task>
     <servers />
   </component>

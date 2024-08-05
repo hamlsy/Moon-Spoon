@@ -49,6 +49,12 @@ export default {
         // 여기에 실제 데이터를 넣으세요
         { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
         { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
+        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
+        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
+        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
+        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
+        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
+        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
         // ... 더 많은 문제집 데이터
       ]
     }
