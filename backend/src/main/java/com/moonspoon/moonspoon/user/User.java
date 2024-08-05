@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.user;
 
+import com.moonspoon.moonspoon.comment.Comment;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.notice.Notice;
@@ -44,6 +45,9 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Notice> notices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder
     public User(String username, String name, String password, UserRole role){

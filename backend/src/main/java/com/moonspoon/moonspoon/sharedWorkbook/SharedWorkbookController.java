@@ -16,7 +16,6 @@ import java.util.List;
 public class SharedWorkbookController {
     private final SharedWorkbookService sharedWorkbookService;
 
-
     //단일 조회
     @GetMapping("/{id}")
     public ResponseEntity<SharedWorkbookResponse> findSharedWorkbook(@PathVariable("id") Long id){

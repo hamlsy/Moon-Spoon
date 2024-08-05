@@ -1,20 +1,26 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
+import com.moonspoon.moonspoon.comment.Comment;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class SharedWorkbook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "sharedWorkbook_id")
     private Long id;
 
     private String title;
@@ -34,6 +40,9 @@ public class SharedWorkbook {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
+    List<Comment> comments = new ArrayList<>();
 
     public void setUser(User user){
         this.user = user;

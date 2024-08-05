@@ -11,4 +11,7 @@ public interface SharedWorkbookRepository extends JpaRepository<SharedWorkbook, 
     @Query("select s from SharedWorkbook s join fetch s.user where s.id = :id")
     Optional<SharedWorkbook> findByIdWithUser(@Param("id") Long id);
 
+    @Query("select s from SharedWorkbook s join fetch s.comments where s.id = :id")
+    Optional<SharedWorkbook> findByIdWithComments(@Param("id") Long id);
+
 }
