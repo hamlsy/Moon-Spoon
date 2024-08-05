@@ -3,8 +3,11 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
+import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
+import com.moonspoon.moonspoon.problem.Problem;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -93,4 +96,18 @@ public class SharedWorkbookService {
             throw new NotUserException("권한이 없습니다.");
         }
     }
+
+    public List<SharedWorkbookTestResponse> testSharedWorkbook(Long id){
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id)
+                .orElseThrow(
+                        () -> new NotFoundException(notFoundWorkbookMessage)
+                );
+        Workbook workbook = sharedWorkbook.getWorkbook();
+        List<Problem> problems = workbook.getProblems();
+        List<SharedWorkbookTestResponse> responses = problems.stream()
+                .map(p -> SharedWorkbookTestResponse.fromEntity(p))
+                .collect(Collectors.toList());
+        return responses;
+    }
+
 }

@@ -3,6 +3,7 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/sharedWorkbook")
 public class SharedWorkbookController {
     private final SharedWorkbookService sharedWorkbookService;
+    //todo url 규칙 Restful하게 변경
 
     //단일 조회
     @GetMapping("/{id}")
@@ -50,4 +52,12 @@ public class SharedWorkbookController {
         sharedWorkbookService.deleteSharedWorkbook(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
+
+    //테스트
+    @GetMapping("/{id}/getTest")
+    public ResponseEntity<List<SharedWorkbookTestResponse>> getTestSharedWorkbook(@PathVariable("id") Long id){
+        List<SharedWorkbookTestResponse> responses = sharedWorkbookService.testSharedWorkbook(id);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
 }

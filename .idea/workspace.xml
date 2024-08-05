@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/Comment.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentController.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentRepository.java" afterDir="false" />
@@ -19,6 +20,15 @@
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/private_repo/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo/application.yml" afterDir="false" />
+>>>>>>> 2b62dc23f4debd595e84cb5c68f8ddb7105c539b
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,8 +63,11 @@
       <list>
         <option value="CSS File" />
         <option value="Vue Composition API Component" />
+<<<<<<< HEAD
         <option value="Interface" />
         <option value="package-info" />
+=======
+>>>>>>> 2b62dc23f4debd595e84cb5c68f8ddb7105c539b
         <option value="Class" />
       </list>
     </option>
@@ -70,9 +83,6 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="2jlpN1p8e44shsE5pdyOHMOxmCi" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -158,6 +168,19 @@
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:5173">
       <method v="2" />
     </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="com.moonspoon.moonspoon" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="com.moonspoon.moonspoon" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MoonspoonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -199,8 +222,15 @@
       <workItem from="1722348954977" duration="2428000" />
       <workItem from="1722436786701" duration="1112000" />
       <workItem from="1722510009723" duration="15415000" />
+<<<<<<< HEAD
       <workItem from="1722571983134" duration="27782000" />
       <workItem from="1722856425143" duration="5226000" />
+=======
+      <workItem from="1722571983134" duration="27837000" />
+      <workItem from="1722748137027" duration="1222000" />
+      <workItem from="1722774049366" duration="2725000" />
+      <workItem from="1722848786817" duration="1633000" />
+>>>>>>> 2b62dc23f4debd595e84cb5c68f8ddb7105c539b
     </task>
     <servers />
   </component>

@@ -14,6 +14,8 @@ import NoticeDetail from "@/components/notice/NoticeDetail.vue";
 import NoticeList from "@/components/notice/NoticeList.vue";
 import NoticeUpdateForm from "@/components/notice/NoticeUpdateForm.vue";
 import TestPage from "@/components/TestPage.vue";
+import SharedWorkbookList from "@/components/sharedWorkbook/SharedWorkbookList.vue";
+import SharedWorkbookDetail from "@/components/sharedWorkbook/SharedWorkbookDetail.vue";
 
 
 Vue.use(VueRouter);
@@ -77,6 +79,16 @@ const routes = [
         path: '/noticeUpdateForm',
         name: 'NoticeUpdateForm',
         component: NoticeUpdateForm
+    },
+    {
+        path: '/sharedWorkbookList',
+        name: 'SharedWorkbookList',
+        component: SharedWorkbookList
+    },
+    {
+        path: '/sharedWorkbook/:id',
+        name: 'SharedWorkbookDetail',
+        component: SharedWorkbookDetail
     },
     {
         path: '/test',

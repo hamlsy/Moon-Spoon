@@ -17,12 +17,13 @@ public class SharedWorkbookRequest {
     private String content;
 
     private boolean isRandom;
-
+    private boolean hasRandom;
     public static SharedWorkbook toEntity(SharedWorkbookRequest dto){
         return SharedWorkbook.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .isRandom(dto.isRandom())
+                .hasRandom(dto.hasRandom)
                 .build();
     }
 
