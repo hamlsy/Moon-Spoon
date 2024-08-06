@@ -20,13 +20,13 @@
           <div class="workbook-info">
             <h3>{{ workbook.title }}</h3>
             <p>작성자: {{ workbook.author }}</p>
-            <p>작성일: {{ workbook.date }}</p>
-            <p>댓글: {{ workbook.commentCount }}</p>
+            <p>작성일: {{ workbook.sharedDate }}</p>
+<!--            <p>댓글: {{ workbook.commentCount }}</p>-->
           </div>
           <div class="workbook-actions">
-            <button class="like-button" @click.stop="likeWorkbook(workbook.id)">
-              👍 {{ workbook.likes }}
-            </button>
+<!--            <button class="like-button" @click.stop="likeWorkbook(workbook.id)">-->
+<!--              👍 {{ workbook.likes }}-->
+<!--            </button>-->
           </div>
         </div>
       </section>
@@ -39,30 +39,22 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'MainPage',
   data() {
     return {
       currentCategory: 'recent',
       hoveredWorkbook: null,
-      workbooks: [
-        // 여기에 실제 데이터를 넣으세요
-        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
-        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
-        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
-        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
-        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
-        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
-        { id: 1, title: "수학 기초", author: "김철수", date: "2024-08-01", commentCount: 5, likes: 10 },
-        { id: 2, title: "영어 문법", author: "이영희", date: "2024-08-02", commentCount: 3, likes: 8 },
-        // ... 더 많은 문제집 데이터
+      sharedWorkbooks: [
       ]
     }
   },
   computed: {
     filteredWorkbooks() {
       // 실제로는 여기서 카테고리에 따라 필터링을 구현해야 합니다
-      return this.workbooks;
+      return this.sharedWorkbooks;
     }
   },
   methods: {
@@ -70,13 +62,24 @@ export default {
       this.currentCategory = category;
     },
     goToWorkbookDetail(id) {
-      // 실제로는 여기서 라우팅을 구현해야 합니다
-      console.log(`문제집 ${id}의 상세 페이지로 이동`);
+      this.$router.push(`/sharedWorkbook/${id}`)
     },
     likeWorkbook(id) {
-      // 실제로는 여기서 좋아요 기능을 구현해야 합니다
       console.log(`문제집 ${id}에 좋아요`);
+    },
+    fetchSharedWorkbook(){
+      axios.get("/api/sharedWorkbook/all")
+          .then((res) => {
+            this.sharedWorkbooks = res.data;
+            console.log(res, "fetch data");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR!");
+          })
     }
+  },
+  created() {
+    this.fetchSharedWorkbook();
   }
 }
 </script>
@@ -178,7 +181,10 @@ export default {
 }
 
 .workbook-info h3 {
-  margin-top: 0;
+  margin-top: 20px;
+  margin-bottom: 0px;
+  text-align: left;
+  margin-left: 20px;
 }
 
 .workbook-actions {

@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'WorkbookDetailPage',
   data() {
@@ -74,6 +76,16 @@ export default {
     likeWorkbook() {
       this.workbook.isLiked = !this.workbook.isLiked;
       this.workbook.likes += this.workbook.isLiked ? 1 : -1;
+    },
+    fetchSharedWorkbook(){
+      axios.get(`/sharedWorkbook/${sharedWorkbookId}`)
+          .then((res) => {
+
+            console.log(res, "fetch data");
+          })
+          .catch((err) => {
+
+          })
     },
     startTest() {
       // 테스트 시작 로직 구현
