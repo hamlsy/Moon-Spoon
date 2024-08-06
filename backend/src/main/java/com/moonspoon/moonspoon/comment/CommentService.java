@@ -32,14 +32,13 @@ public class CommentService {
     //생성
     @Transactional
     public CommentResponse createComment(CommentRequest dto){
+        User user = findCurrentUser();
 
         SharedWorkbook sharedWorkbook = findSharedWorkbookById(dto.getSharedWorkbookId());
 
         Comment comment = CommentRequest.toEntity(dto);
         comment.setCreateDate(LocalDateTime.now());
         comment.setSharedWorkbook(sharedWorkbook);
-
-        User user = findCurrentUser();
 
         comment.setUser(user);
         comment.setAuthor(user.getName());
@@ -52,11 +51,13 @@ public class CommentService {
     }
     //수정
     @Transactional
-    public CommentResponse updateComment(CommentUpdateRequest dto){
-        Comment comment = commentRepository.findById(dto.getId())
+    public CommentResponse updateComment(Long id , CommentUpdateRequest dto){
+        Comment comment = commentRepository.findByIdWithUser(id)
                 .orElseThrow(
                         () -> new NotFoundException("존재하지 않는 댓글입니다.")
                 );
+        validUser(comment.getUser().getUsername());
+
         comment.updateComment(dto.getContent(), LocalDateTime.now());
 
         CommentResponse response = CommentResponse.fromEntity(comment);
@@ -80,11 +81,8 @@ public class CommentService {
     @Transactional
     public void deleteComment(Long id){
         Comment comment = findCommentByIdWithUser(id);
-        String username = comment.getUser().getUsername();
-        validUser(username);
-
+        validUser(comment.getUser().getUsername());
         commentRepository.delete(comment);
-
     }
 
 

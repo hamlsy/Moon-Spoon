@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class SharedWorkbookResponse {
+    private Long id;
     private String title;
     private String content;
     private String author;
@@ -17,7 +18,8 @@ public class SharedWorkbookResponse {
     private LocalDateTime updateDate;
 
     @Builder
-    public SharedWorkbookResponse(String title, String content, String author, LocalDateTime sharedDate, LocalDateTime updateDate) {
+    public SharedWorkbookResponse(Long id, String title, String content, String author, LocalDateTime sharedDate, LocalDateTime updateDate) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
@@ -27,6 +29,7 @@ public class SharedWorkbookResponse {
 
     public static SharedWorkbookResponse fromEntity(SharedWorkbook sharedWorkbook){
         return SharedWorkbookResponse.builder()
+                .id(sharedWorkbook.getId())
                 .title(sharedWorkbook.getTitle())
                 .content(sharedWorkbook.getContent())
                 .author(sharedWorkbook.getAuthor())

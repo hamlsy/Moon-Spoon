@@ -10,8 +10,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class CommentResponse {
-    private Long sharedWorkbookId;
+
     private Long id;
+    private Long sharedWorkbookId;
     private String content;
     private String author;
     private LocalDateTime createDate;
