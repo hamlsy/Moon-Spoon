@@ -41,7 +41,7 @@
               <button class="action-btn delete-btn" @click.stop="confirmDelete(workbook.id)">
                 <i class="fas fa-trash"></i>
               </button>
-              <button class="action-btn share-btn" @click.stop="notImplemented">
+              <button class="action-btn share-btn" @click.stop="showSharePopup(workbook)">
                 <i class="fas fa-share"></i>
               </button>
             </div>
@@ -94,6 +94,30 @@
         </div>
       </div>
     </transition>
+
+    <!-- 공유 팝업 -->
+    <transition name="fade">
+      <div v-if="showShareWorkbookPopup" class="popup-overlay" @click.self="cancelShare">
+        <div class="popup">
+          <h2>문제집 공유</h2>
+          <input v-model="shareWorkbookDetail.title" placeholder="제목" />
+          <textarea v-model="shareWorkbookDetail.content" placeholder="내용"></textarea>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" v-model="shareWorkbookDetail.isRandom"> 랜덤 출제
+            </label>
+            <label>
+              <input type="checkbox" v-model="shareWorkbookDetail.hasSolution"> 정답 공개
+            </label>
+          </div>
+          <div class="popup-buttons">
+            <button @click="cancelShare">취소</button>
+            <button @click="shareWorkbook">공유</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -109,6 +133,14 @@ export default {
       workbooks: [],
       showAddPopup: false,
       showDeletePopup: false,
+      showShareWorkbookPopup: false,
+      shareWorkbookDetail: {
+        workbookId: '',
+        title: '',
+        content: '',
+        isRandom: false,
+        hasSolution: false,
+      },
       newWorkbook: { title: '', content: '' },
       workbookToDelete: null,
       searchQuery: '',
@@ -270,8 +302,40 @@ export default {
     },
     formatDate(dateString) {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
-    }
+    },
+    showSharePopup(workbook){
+      this.shareWorkbookDetail = {
+        workbookId: workbook.id,
+        title: workbook.title,
+        content: workbook.title,
+
+      };
+      this.showShareWorkbookPopup = true;
+    },
+    cancelShare(){
+      this.showShareWorkbookPopup = false;
+    },
+    shareWorkbook(){
+      const headers = {
+        'Authorization': this.token
+      }
+      if(confirm("공유 문제집에 등록하시겠습니까?")){
+        axios.post(`/api/sharedWorkbook/create`,
+            this.shareWorkbookDetail,
+            {headers})
+            .then((res) => {
+              console.log(res, "등록");
+              alert("등록되었습니다.");
+              this.showShareWorkbookPopup = false;
+            })
+            .catch((err) => {
+              console.log(err, "ERROR");
+              alert("ERROR!");
+            })
+      }
+    },
   },
+
 
 }
 </script>

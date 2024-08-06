@@ -32,7 +32,7 @@ public class SharedWorkbook {
     private LocalDateTime updateDate;
 
     private boolean isRandom;
-    private boolean hasRandom;
+    private boolean hasSolution;
 
     @OneToOne
     @JoinColumn(name = "workbook_id")
@@ -63,12 +63,12 @@ public class SharedWorkbook {
 
     @Builder
     public SharedWorkbook(String title, String content, String author,
-                          LocalDateTime sharedDate, boolean isRandom, boolean hasRandom) {
+                          LocalDateTime sharedDate, boolean isRandom, boolean hasSolution) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.sharedDate = sharedDate;
         this.isRandom = isRandom;
-        this.hasRandom = hasRandom;
+        this.hasSolution = hasSolution;
     }
 }

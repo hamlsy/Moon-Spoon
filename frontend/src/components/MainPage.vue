@@ -8,7 +8,7 @@
       </section>
 
       <section class="features">
-        <div class="feature-card slide-in-fade" @click="notValid" @mouseover="hover = 1" @mouseleave="hover = null" :class="{ 'hovered': hover === 1 }">
+        <div class="feature-card slide-in-fade" @click="goSharedWorkbookList" @mouseover="hover = 1" @mouseleave="hover = null" :class="{ 'hovered': hover === 1 }">
           <div class="card-icon">📚</div>
           <h2>공유된 문제집</h2>
           <p>다른 사용자들이 만든 문제집을 열람하고 학습해보세요.</p>
@@ -75,6 +75,9 @@ export default {
           .catch((err) => {
             console.log(err, "ERROR");
           })
+    },
+    goSharedWorkbookList(){
+      this.$router.push("/sharedWorkbookList")
     }
   },
   created() {
