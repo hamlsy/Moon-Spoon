@@ -59,6 +59,8 @@ public class SharedWorkbookService {
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
 
+        sharedWorkbookRepository.save(sharedWorkbook);
+
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
         return response;
     }
