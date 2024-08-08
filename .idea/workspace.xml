@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo/application.yml" afterDir="false" />
     </list>
@@ -203,7 +199,8 @@
       <workItem from="1722571983134" duration="27837000" />
       <workItem from="1722748137027" duration="1222000" />
       <workItem from="1722774049366" duration="2725000" />
-      <workItem from="1722848786817" duration="1633000" />
+      <workItem from="1722848786817" duration="2500000" />
+      <workItem from="1723126278458" duration="308000" />
     </task>
     <servers />
   </component>
