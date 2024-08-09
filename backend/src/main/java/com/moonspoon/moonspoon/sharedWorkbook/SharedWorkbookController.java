@@ -2,6 +2,7 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +59,13 @@ public class SharedWorkbookController {
     public ResponseEntity<List<SharedWorkbookTestResponse>> getTestSharedWorkbook(@PathVariable("id") Long id){
         List<SharedWorkbookTestResponse> responses = sharedWorkbookService.testSharedWorkbook(id);
         return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    //사용자 검증
+    @GetMapping("/{id}/getUser")
+    public ResponseEntity<SharedWorkbookGetUserResponse> getUser(@PathVariable("id") Long id){
+        SharedWorkbookGetUserResponse response = sharedWorkbookService.getUser(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 }

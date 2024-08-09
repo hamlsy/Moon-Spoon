@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication
-//시큐리티 일시중지
 public class MoonspoonApplication {
 
 	public static void main(String[] args) {

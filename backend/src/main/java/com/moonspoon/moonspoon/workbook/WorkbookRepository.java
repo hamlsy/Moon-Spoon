@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
@@ -14,4 +15,7 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
     "LEFT JOIN FETCH w.problems p " +
     "WHERE u.username = :username")
     List<Workbook> findWorkbookWithUserAndProblems(@Param("username") String username);
+
+    @Query("select w from Workbook w join fetch w.user u where w.id = :id")
+    Optional<Workbook> findByIdWithUser(@Param("id") Long id);
 }

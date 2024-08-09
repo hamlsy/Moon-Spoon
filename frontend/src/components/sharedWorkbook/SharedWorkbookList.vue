@@ -3,16 +3,17 @@
     <main class="content">
       <section class="hero">
         <h1 class="main-title slide-in-fade">문제집 공유 플랫폼</h1>
-        <p class="subtitle slide-in-fade">다양한 문제집으로 함께 학습해보세요.</p>
+        <hr>
+        <p class="subtitle slide-in-fade">다른 사용자의 문제집으로 함께 학습해보세요.</p>
       </section>
 
       <section class="workbook-categories">
-        <h2>카테고리</h2>
-        <div class="category-buttons">
-          <button @click="setCategory('recent')" :class="{ active: currentCategory === 'recent' }">최근 올라온 문제집</button>
-          <button @click="setCategory('popular')" :class="{ active: currentCategory === 'popular' }">인기 문제집</button>
-          <button @click="setCategory('all')" :class="{ active: currentCategory === 'all' }">전체 문제집</button>
-        </div>
+<!--        <h2>카테고리</h2>-->
+<!--        <div class="category-buttons">-->
+<!--          <button @click="setCategory('recent')" :class="{ active: currentCategory === 'recent' }">최근 올라온 문제집</button>-->
+<!--          <button @click="setCategory('popular')" :class="{ active: currentCategory === 'popular' }">인기 문제집</button>-->
+<!--          <button @click="setCategory('all')" :class="{ active: currentCategory === 'all' }">전체 문제집</button>-->
+<!--        </div>-->
       </section>
 
       <section class="workbook-grid">
@@ -20,7 +21,7 @@
           <div class="workbook-info">
             <h3>{{ workbook.title }}</h3>
             <p>작성자: {{ workbook.author }}</p>
-            <p>작성일: {{ workbook.sharedDate }}</p>
+            <p>작성일: {{ formatDate(workbook.sharedDate) }}</p>
 <!--            <p>댓글: {{ workbook.commentCount }}</p>-->
           </div>
           <div class="workbook-actions">
@@ -40,6 +41,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: 'MainPage',
@@ -76,7 +78,10 @@ export default {
           .catch((err) => {
             console.log(err, "ERROR!");
           })
-    }
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YY.MM.DD HH:mm');
+    },
   },
   created() {
     this.fetchSharedWorkbook();
@@ -112,6 +117,7 @@ export default {
 
 .content {
   max-width: 1200px;
+  width: 120vh;
   margin: 80px auto 0;
   padding: 2rem;
   flex: 1;
