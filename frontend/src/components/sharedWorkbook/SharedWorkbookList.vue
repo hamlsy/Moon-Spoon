@@ -49,8 +49,7 @@ export default {
     return {
       currentCategory: 'recent',
       hoveredWorkbook: null,
-      sharedWorkbooks: [
-      ]
+      sharedWorkbooks: []
     }
   },
   computed: {
