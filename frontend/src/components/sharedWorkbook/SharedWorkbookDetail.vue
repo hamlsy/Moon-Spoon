@@ -125,9 +125,20 @@ export default {
       console.log("테스트 시작");
     },
     deleteWorkbook() {
-      // 문제집 삭제 확인 및 삭제 로직 구현
-      if (confirm("정말로 이 문제집을 삭제하시겠습니까?")) {
-        console.log("문제집 삭제");
+      const headers = {
+        'Authorization': this.token
+      };
+      if (confirm("공유 문제집을 삭제하시겠습니까?(기존 문제집은 유지됩니다.)")) {
+        axios.delete(`/api/sharedWorkbook/${this.sharedWorkbookId}`, {headers})
+            .then((res) => {
+              alert("삭제되었습니다.")
+              this.$router.push("/sharedWorkbookList")
+              console.log(res, "deleted!")
+            })
+            .catch((err) => {
+              alert("ERROR!")
+              console.log(err, "ERROR")
+            })
       }
     },
     formatDate(dateString) {
@@ -155,7 +166,7 @@ export default {
         title: this.sharedWorkbook.title,
         content: this.sharedWorkbook.content,
         isRandom: this.sharedWorkbook.isRandom,
-        showAnswer: this.sharedWorkbook.showAnswer
+        hasSolution: this.sharedWorkbook.hasSolution
       };
       this.showEditPopup = true;
     },
