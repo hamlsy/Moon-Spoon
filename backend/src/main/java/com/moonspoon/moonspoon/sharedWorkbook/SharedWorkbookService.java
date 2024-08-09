@@ -77,7 +77,9 @@ public class SharedWorkbookService {
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
         validUser(sharedWorkbook.getUser().getUsername());
-        sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent());
+
+        sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent(),
+                dto.isRandom(), dto.isHasSolution(), LocalDateTime.now());
 
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
         return response;

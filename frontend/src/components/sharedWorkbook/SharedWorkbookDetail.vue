@@ -56,7 +56,7 @@
             <input type="checkbox" v-model="editForm.isRandom" /> 랜덤 여부
           </label>
           <label>
-            <input type="checkbox" v-model="editForm.showAnswer" /> 정답 공개 여부
+            <input type="checkbox" v-model="editForm.hasSolution" /> 정답 공개 여부
           </label>
         </div>
         <div class="edit-popup-actions">
@@ -88,6 +88,7 @@ export default {
         sharedDate: "",
         random: "",
         content: "",
+        hasSolution: "",
       },
       comments: [],
       newComment: "",
@@ -99,7 +100,7 @@ export default {
         title: "",
         content: "",
         isRandom: false,
-        showAnswer: false
+        hasSolution: false
       }
     }
   },
@@ -122,10 +123,6 @@ export default {
     startTest() {
       // 테스트 시작 로직 구현
       console.log("테스트 시작");
-    },
-    editWorkbook() {
-      // 문제집 수정 페이지로 이동 또는 수정 모달 표시
-      console.log("문제집 수정");
     },
     deleteWorkbook() {
       // 문제집 삭제 확인 및 삭제 로직 구현
@@ -166,9 +163,22 @@ export default {
       this.showEditPopup = false;
     },
     submitEdit() {
-      // 여기에 수정 로직 구현
-      console.log("문제집 수정 제출", this.editForm);
-      this.showEditPopup = false;
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.post(`/api/sharedWorkbook/${this.sharedWorkbookId}`,this.editForm,
+          {headers})
+          .then((res) => {
+            alert("수정되었습니다.")
+            this.showEditPopup = false;
+            this.$router.go(0);
+            console.log(res, "UPDATE!")
+          })
+          .catch((err) => {
+            alert("ERROR!")
+            console.log(err, "ERROR");
+          })
+
     }
   },
   created() {
@@ -234,6 +244,7 @@ export default {
 }
 
 .start-test-button {
+  z-index: 0;
   display: block;
   margin: 2rem auto;
   padding: 1rem 2rem;
