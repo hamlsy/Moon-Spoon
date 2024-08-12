@@ -14,6 +14,7 @@ public class SharedWorkbookResponse {
     private String title;
     private String content;
     private String author;
+    private int problemCount;
     private boolean isRandom;
     private boolean hasSolution;
 
@@ -22,15 +23,16 @@ public class SharedWorkbookResponse {
 
     @Builder
     public SharedWorkbookResponse(Long id, String title, String content, String author,
+                                  int problemCount,
                                   boolean isRandom, boolean hasSolution,
                                   LocalDateTime sharedDate, LocalDateTime updateDate) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
+        this.problemCount = problemCount;
         this.isRandom = isRandom;
         this.hasSolution = hasSolution;
-
         this.sharedDate = sharedDate;
         this.updateDate = updateDate;
     }
@@ -42,6 +44,7 @@ public class SharedWorkbookResponse {
                 .content(sharedWorkbook.getContent())
                 .author(sharedWorkbook.getAuthor())
                 .isRandom(sharedWorkbook.isRandom())
+                .problemCount(sharedWorkbook.getWorkbook().getProblems().size())
                 .hasSolution(sharedWorkbook.isHasSolution())
                 .sharedDate(sharedWorkbook.getSharedDate())
                 .updateDate(sharedWorkbook.getUpdateDate())

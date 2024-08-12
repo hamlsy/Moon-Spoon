@@ -10,6 +10,7 @@
         <div class="workbook-meta">
           <span>작성자: {{ sharedWorkbook.author }}</span>
 <!--          <span>조회수: {{ sharedWorkbook.views }}</span>-->
+          <span>문제 수: {{ sharedWorkbook.problemCount }}</span>
           <span>랜덤 여부: {{ sharedWorkbook.random ? 'O' : 'X' }}</span>
           <span>정답 공개: {{ sharedWorkbook.hasSolution ? 'O' : 'X' }}</span>
           <span>작성일: {{ formatDate(sharedWorkbook.sharedDate) }}</span>
@@ -88,6 +89,7 @@ export default {
         sharedDate: "",
         random: "",
         content: "",
+        problemCount: "",
         hasSolution: "",
       },
       comments: [],

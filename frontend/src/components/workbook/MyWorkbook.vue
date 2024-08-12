@@ -307,7 +307,7 @@ export default {
       this.shareWorkbookDetail = {
         workbookId: workbook.id,
         title: workbook.title,
-        content: workbook.title,
+        content: workbook.content,
 
       };
       this.showShareWorkbookPopup = true;

@@ -33,7 +33,7 @@ public class SharedWorkbookService {
 
     //단일 조회
     public SharedWorkbookResponse findSharedWorkbook(Long id){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findById(id).orElseThrow(
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id).orElseThrow(
                 () -> new NotFoundException(notFoundWorkbookMessage)
         );
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
