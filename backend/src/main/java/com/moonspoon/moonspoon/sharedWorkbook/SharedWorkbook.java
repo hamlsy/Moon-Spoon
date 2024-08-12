@@ -38,7 +38,7 @@ public class SharedWorkbook {
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -55,10 +55,13 @@ public class SharedWorkbook {
         workbook.setSharedWorkbook(this);
     }
 
-    public void updateSharedWorkbook(String title, String content){
+
+    public void updateSharedWorkbook(String title, String content, boolean isRandom, boolean hasSolution, LocalDateTime updateDate){
         this.title = title;
         this.content = content;
-        this.updateDate = LocalDateTime.now();
+        this.hasSolution = hasSolution;
+        this.isRandom = isRandom;
+        this.updateDate = updateDate;
     }
 
     @Builder

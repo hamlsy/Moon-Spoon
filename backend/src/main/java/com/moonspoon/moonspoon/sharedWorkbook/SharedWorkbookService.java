@@ -2,12 +2,14 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.problem.Problem;
+import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -52,12 +54,14 @@ public class SharedWorkbookService {
     @Transactional
     public SharedWorkbookResponse sharedWorkbook(SharedWorkbookRequest dto){
         SharedWorkbook sharedWorkbook = SharedWorkbookRequest.toEntity(dto);
-        Workbook workbook = workbookRepository.findById(dto.getWorkbookId()).orElseThrow(
+        Workbook workbook = workbookRepository.findByIdWithUser(dto.getWorkbookId()).orElseThrow(
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
         sharedWorkbook.setSharedDate(LocalDateTime.now());
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
+        sharedWorkbook.setUser(workbook.getUser());
+
 
         sharedWorkbookRepository.save(sharedWorkbook);
 
@@ -73,7 +77,9 @@ public class SharedWorkbookService {
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
         validUser(sharedWorkbook.getUser().getUsername());
-        sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent());
+
+        sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent(),
+                dto.isRandom(), dto.isHasSolution(), LocalDateTime.now());
 
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
         return response;
@@ -110,6 +116,23 @@ public class SharedWorkbookService {
                 .map(p -> SharedWorkbookTestResponse.fromEntity(p))
                 .collect(Collectors.toList());
         return responses;
+    }
+
+    //유저 검증
+    public SharedWorkbookGetUserResponse getUser(Long id){
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(id).orElseThrow(
+                () -> new NotFoundException(notFoundWorkbookMessage)
+        );
+        String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        SharedWorkbookGetUserResponse response = new SharedWorkbookGetUserResponse();
+
+        if(currentUser.equals(sharedWorkbook.getUser().getUsername())){
+            response.setUser(true);
+        }else{
+            response.setUser(false);
+        }
+        return response;
     }
 
 }
