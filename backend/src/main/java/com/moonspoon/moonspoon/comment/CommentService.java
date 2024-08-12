@@ -42,10 +42,11 @@ public class CommentService {
 
         comment.setUser(user);
         comment.setAuthor(user.getName());
+        comment.setSharedWorkbook(sharedWorkbook);
 
         commentRepository.save(comment);
-
         CommentResponse response = CommentResponse.fromEntity(comment);
+        response.setSharedWorkbookId(dto.getSharedWorkbookId());
 
         return response;
     }
@@ -66,11 +67,7 @@ public class CommentService {
 
     //전체조회
     public List<CommentResponse> findAllComments(Long sharedWorkbookId){
-        List<Comment> comments = sharedWorkbookRepository.findByIdWithComments(sharedWorkbookId)
-                .orElseThrow(
-                        () -> new NotFoundException(notFoundWorkbookMessage)
-                ).getComments();
-
+        List<Comment> comments = commentRepository.findAllBySharedWorkbookId(sharedWorkbookId);
         List<CommentResponse> responses = comments.stream()
                 .map(c -> CommentResponse.fromEntity(c))
                 .collect(Collectors.toList());

@@ -31,14 +31,14 @@
       <section class="comments-section">
         <h2>댓글 ({{ comments.length }})</h2>
         <div class="comment-form">
-          <textarea v-model="newComment" placeholder="댓글을 입력하세요"></textarea>
+          <textarea v-model="commentContent" placeholder="댓글을 입력하세요"></textarea>
           <button @click="addComment" class="comment-submit-button">댓글 작성</button>
         </div>
         <div class="comments-list">
-          <div v-for="comment in sharedWorkbook.comments" :key="comment.id" class="comment">
+          <div v-for="comment in comments" :key="comment.id" class="comment">
             <div class="comment-header">
               <span class="comment-author">{{ comment.author }}</span>
-              <span class="comment-date">{{ comment.date }}</span>
+              <span class="comment-date">{{ formatDate(comment.createDate) }}</span>
             </div>
             <p class="comment-content">{{ comment.content }}</p>
           </div>
@@ -93,7 +93,7 @@ export default {
         hasSolution: "",
       },
       comments: [],
-      newComment: "",
+      commentContent: "",
       sharedWorkbookId: this.$route.fullPath.split("/").pop(),
       token: localStorage.getItem("token"),
       isUser: false,
@@ -147,7 +147,31 @@ export default {
       return dayjs(dateString).format('YY.MM.DD HH:mm');
     },
     addComment() {
-
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.post("/api/comment/create", {
+        content: this.commentContent,
+        sharedWorkbookId: this.sharedWorkbookId
+      }, {headers})
+          .then((res) => {
+            this.$router.go(0);
+            console.log(res, "등록");
+          })
+          .catch((err) => {
+            alert(err.message)
+            console.log(err, "ERROR")
+          })
+    },
+    getComments(){
+      axios.get(`/api/comment/${this.sharedWorkbookId}/all`)
+          .then((res) => {
+            this.comments = res.data;
+            console.log(res, "Get Comments");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
     },
     getUser(){
       const headers = {
@@ -197,6 +221,7 @@ export default {
   created() {
     this.getSharedWorkbook();
     this.getUser();
+    this.getComments();
   }
 }
 </script>
