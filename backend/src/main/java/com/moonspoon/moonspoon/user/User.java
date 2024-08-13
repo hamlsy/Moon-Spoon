@@ -2,6 +2,7 @@ package com.moonspoon.moonspoon.user;
 
 import com.moonspoon.moonspoon.comment.Comment;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
+import com.moonspoon.moonspoon.test.Test;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.notice.Notice;
 import jakarta.persistence.*;
@@ -48,6 +49,10 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Test> tests = new ArrayList<>();
+
 
     @Builder
     public User(String username, String name, String password, UserRole role){

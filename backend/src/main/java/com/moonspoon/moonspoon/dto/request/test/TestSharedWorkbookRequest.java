@@ -5,10 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TestRequest {
+public class TestSharedWorkbookRequest {
     private Long id;
     private boolean random;
-    private int problemCount;
-    private String sortOrder;
-
 }

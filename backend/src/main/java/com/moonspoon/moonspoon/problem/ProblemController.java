@@ -55,4 +55,32 @@ public class ProblemController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @PostMapping("/getTest")
+    public ResponseEntity<List<TestProblemResponse>> getTestProblem(
+            @PathVariable("workbookId") Long workbookId, @RequestBody TestRequest dto){
+        List<TestProblemResponse> responses = problemService.getTestProblems(workbookId, dto);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @GetMapping("/getTestResult")
+    public ResponseEntity<List<TestResultResponse>> getTestResultProblem(
+            @PathVariable("workbookId") Long workbookId){
+        List<TestResultResponse> responses = problemService.getTestResultProblem(workbookId);
+        return new ResponseEntity<>(responses, HttpStatus.OK);
+    }
+
+    @PostMapping("/submitTestResult")
+    public ResponseEntity<TestResultSubmitResponse> submitTestResult(
+            @PathVariable("workbookId") Long workbookId, @RequestBody List<TestResultSubmitRequest> dto){
+        TestResultSubmitResponse response = problemService.testResultSubmit(workbookId, dto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/storeTest")
+    public ResponseEntity<?> storeTest(
+            @PathVariable("workbookId") Long workbookId, @RequestBody List<TestResultRequest> listDto){
+        problemService.storeInputData(workbookId, listDto);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
 }

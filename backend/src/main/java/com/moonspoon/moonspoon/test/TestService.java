@@ -3,6 +3,7 @@ package com.moonspoon.moonspoon.test;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
+import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
@@ -12,6 +13,8 @@ import com.moonspoon.moonspoon.problem.Problem;
 import com.moonspoon.moonspoon.problem.ProblemRepository;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbookRepository;
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,15 +33,17 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TestService {
     private final WorkbookRepository workbookRepository;
     private final ProblemRepository problemRepository;
     private final SharedWorkbookRepository sharedWorkbookRepository;
-    private Map<String, List<TestResultRequest>> storedLists = new ConcurrentHashMap<>();
-
+    private final UserRepository userRepository;
+    private final TestRepository testRepository;
+    private Map<String, List<TestResultRequest>> localStoredLists = new ConcurrentHashMap<>();
 
     private Workbook validateUserAndWorkbook(Long workbookId) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         if(username == null || username.equals("anonymousUser")){
             throw new NotUserException("권한이 없습니다.");
         }
@@ -53,15 +59,31 @@ public class TestService {
     }
 
     //Test logic
-    public List<TestProblemResponse> getTestProblems(TestRequest dto){
-        List<Problem> problems = (dto.isShared()) ? getSharedTest(dto) : getLocalTest(dto);
-        return problems.stream()
-                .map(p -> TestProblemResponse.fromEntity(p))
-                .collect(Collectors.toList());
+    //create Test , Get Test Problem 분리
+
+    //todo get Test Problems
+
+
+    //todo create Test
+    @Transactional
+    public Long createSharedTest(Long id){
+        String username = getCurrentUsername();
+        User user = userRepository.findByUsername(username);
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        );
+        Test test = new Test();
+        test.setTestDate(LocalDateTime.now());
+        test.setUser(user);
+        test.setSharedWorkbook(sharedWorkbook);
+        Test saveTest = testRepository.save(test);
+
+        return saveTest.getId();
     }
 
-    private List<Problem> getSharedTest(TestRequest dto){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(dto.getId())
+    private List<Problem> getSharedTest(Long testId, TestSharedWorkbookRequest dto){
+
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id)
                 .orElseThrow(
                         () -> new NotFoundException("존재하지 않는 문제집입니다.")
                 );
@@ -72,76 +94,20 @@ public class TestService {
         return problems;
     }
 
-    private List<Problem> getLocalTest(TestRequest dto){
-        Workbook workbook = validateUserAndWorkbook(dto.getId());
-
-        List<Problem> problems = workbook.getProblems();
-
-        int selectCount = Math.min(dto.getProblemCount(), problems.size());
-
-        if(dto.isRandom() && !dto.getSortOrder().equals("none")){
-            //순서 정렬
-            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
-            Collections.shuffle(problems);
-        }else if(dto.isRandom() && dto.getSortOrder().equals("none")){
-            Collections.shuffle(problems);
-            problems = problems.subList(0, selectCount);
-        }else if(!dto.isRandom() && !dto.getSortOrder().equals("none")){
-            //순서 정렬
-            problems = setOrderProblemList(dto.getSortOrder(), problems).subList(0, selectCount);
-        }else{
-            //순서 정렬
-            problems = setOrderProblemList("asc", problems).subList(0, selectCount);
-        }
-
-        return problems;
-    }
-
-    private List<Problem> setOrderProblemList(String order, List<Problem> problems){
-        switch(order){
-            case "asc":
-                return sortByCreateDateAsc(problems);
-            case "desc":
-                return sortByCreateDateDesc(problems);
-            case "correctRateAsc":
-                return sortByCorrectRateAsc(problems);
-            case "correctRateDesc":
-                return sortByCorrectRateDesc(problems);
-            default:
-                return problems;
-        }
-    }
-
-    private List<Problem> sortByCorrectRateAsc(List<Problem> problems){
-        return problems.stream()
-                .sorted(Comparator.comparingDouble(Problem::getCorrectRate))
-                .collect(Collectors.toList());
-    }
-
-    private List<Problem> sortByCorrectRateDesc(List<Problem> problems){
-        return problems.stream()
-                .sorted(Comparator.comparingDouble(Problem::getCorrectRate).reversed())
-                .collect(Collectors.toList());
-    }
-
-    private List<Problem> sortByCreateDateAsc(List<Problem> problems){
-        return problems.stream()
-                .sorted(Comparator.comparing(Problem::getCreateDate))
-                .collect(Collectors.toList());
-    }
-
-    private List<Problem> sortByCreateDateDesc(List<Problem> problems){
-        return problems.stream()
-                .sorted(Comparator.comparing(Problem::getCreateDate).reversed())
-                .collect(Collectors.toList());
-    }
-
     public List<TestResultResponse> getTestResultProblem(Long workbookId){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<TestResultRequest> dto = storedLists.get(username);
-        List<TestResultResponse> responses =  dto.stream()
+        List<TestResultRequest> listDto = localStoredLists.get(getCurrentUsername());
+        return getTestResultList(listDto);
+
+    }
+
+    public List<TestResultResponse> getSharedTestResultProblem(Long id){
+        return null;
+    }
+
+    private List<TestResultResponse> getTestResultList(List<TestResultRequest> listDto){
+        List<TestResultResponse> responses =  listDto.stream()
                 .map(d -> {
                     Problem problem = problemRepository.findById(d.getId()).orElseThrow(
                             () -> new NotFoundException("존재하지 않는 문제입니다.")
@@ -154,7 +120,6 @@ public class TestService {
                 .collect(Collectors.toList());
 
         return responses;
-
     }
 
     private String compareStrings(String input, String sol){
@@ -216,10 +181,15 @@ public class TestService {
         problemRepository.saveAll(problems);
     }
 
-    public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
+    public void storeLocalInputData(Long workbookId ,List<TestResultRequest> listDto){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        this.storedLists.put(username, listDto);
+        this.localStoredLists.put(getCurrentUsername(), listDto);
+    }
+
+
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

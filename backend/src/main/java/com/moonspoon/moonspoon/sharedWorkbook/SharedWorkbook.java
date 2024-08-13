@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
 import com.moonspoon.moonspoon.comment.Comment;
+import com.moonspoon.moonspoon.test.Test;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.persistence.*;
@@ -44,6 +45,9 @@ public class SharedWorkbook {
 
     @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
     List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
+    List<Test> tests = new ArrayList<>();
 
     public void setUser(User user){
         this.user = user;
