@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.problem;
 
+import com.moonspoon.moonspoon.testAnswer.TestAnswer;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -8,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,6 +37,9 @@ public class Problem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
+
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.REMOVE)
+    private List<TestAnswer> testAnswers = new ArrayList<>();
 
 
     @Builder

@@ -4,15 +4,15 @@ import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
-import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
+import com.moonspoon.moonspoon.dto.response.test.*;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.problem.Problem;
 import com.moonspoon.moonspoon.problem.ProblemRepository;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbookRepository;
+import com.moonspoon.moonspoon.testAnswer.TestAnswer;
+import com.moonspoon.moonspoon.testAnswer.TestAnswerRepository;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
@@ -35,43 +35,35 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TestService {
-    private final WorkbookRepository workbookRepository;
     private final ProblemRepository problemRepository;
     private final SharedWorkbookRepository sharedWorkbookRepository;
     private final UserRepository userRepository;
     private final TestRepository testRepository;
-    private Map<String, List<TestResultRequest>> localStoredLists = new ConcurrentHashMap<>();
-
-    private Workbook validateUserAndWorkbook(Long workbookId) {
+    private final TestAnswerRepository testAnswerRepository;
+    private SharedWorkbook validateUserAndSharedWorkbook(Long sharedWorkbookId) {
         String username = getCurrentUsername();
         if(username == null || username.equals("anonymousUser")){
             throw new NotUserException("권한이 없습니다.");
         }
         //문제집 예외
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(sharedWorkbookId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제집입니다.")
         );
         //사용자 예외
-        if(!workbook.getUser().getUsername().equals(username)){
+        if(!sharedWorkbook.getUser().getUsername().equals(username)){
             throw new NotUserException("권한이 없습니다.");
         }
-        return workbook;
+        return sharedWorkbook;
     }
 
     //Test logic
     //create Test , Get Test Problem 분리
-
-    //todo get Test Problems
-
-
     //todo create Test
     @Transactional
     public Long createSharedTest(Long id){
         String username = getCurrentUsername();
         User user = userRepository.findByUsername(username);
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
-        );
+        SharedWorkbook sharedWorkbook = validateUserAndSharedWorkbook(id);
         Test test = new Test();
         test.setTestDate(LocalDateTime.now());
         test.setUser(user);
@@ -81,45 +73,94 @@ public class TestService {
         return saveTest.getId();
     }
 
-    private List<Problem> getSharedTest(Long testId, TestSharedWorkbookRequest dto){
-
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id)
+    //todo get Test Problems
+    //todo refactor
+    public List<TestSharedProblemResponse> getSharedTest(Long testId, TestSharedWorkbookRequest dto){
+        Test test = testRepository.findByIdWithSharedWorkbookAndWorkbookAndProblems(testId)
                 .orElseThrow(
-                        () -> new NotFoundException("존재하지 않는 문제집입니다.")
+                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
                 );
-        List<Problem> problems = sharedWorkbook.getWorkbook().getProblems();
+        List<Problem> problems = test.getSharedWorkbook().getWorkbook().getProblems();
         if(dto.isRandom()){
             Collections.shuffle(problems);
         }
-        return problems;
-    }
-
-    public List<TestResultResponse> getTestResultProblem(Long workbookId){
-        //검증 로직
-        validateUserAndWorkbook(workbookId);
-        List<TestResultRequest> listDto = localStoredLists.get(getCurrentUsername());
-        return getTestResultList(listDto);
-
-    }
-
-    public List<TestResultResponse> getSharedTestResultProblem(Long id){
-        return null;
-    }
-
-    private List<TestResultResponse> getTestResultList(List<TestResultRequest> listDto){
-        List<TestResultResponse> responses =  listDto.stream()
-                .map(d -> {
-                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
-                            () -> new NotFoundException("존재하지 않는 문제입니다.")
-                    );
-                    TestResultResponse res = TestResultResponse.fromEntity(problem);
-                    res.setInput(d.getInput());
-                    res.setResult(compareStrings(d.getInput(), problem.getSolution()));
-                    return res;
-                })
+        return problems.stream()
+                .map(p -> TestSharedProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
+    }
 
+    //답변 저장
+    @Transactional
+    public void submitSharedTest(Long id, List<TestResultRequest> listDto){
+        Test test = testRepository.findById(id).orElseThrow(
+                () -> new NotFoundException("존재하지 않는 테스트입니다.")
+        );
+        List<TestAnswer> answers =  listDto.stream()
+                .map(d -> {
+                    TestAnswer testAnswer = TestAnswer.builder()
+                            .userAnswer(d.getInput())
+                            .name(getCurrentUsername())
+                            .build();
+
+                    Problem problem = problemRepository.findById(d.getId())
+                            .orElseThrow(
+                                    () -> new NotFoundException("존재하지 않는 문제입니다.")
+                            );
+                    testAnswer.setTest(test);
+                    testAnswer.setProblem(problem);
+                    testAnswerRepository.save(testAnswer);
+                    return testAnswer;
+                }).collect(Collectors.toList());
+    }
+
+
+    //정답 비교 및 자동 채점 결과 반환
+    public List<TestSharedResultResponse> getSharedTestResult(Long id){
+        Test test = testRepository.findByIdWithTestAnswersAndProblem(id)
+                .orElseThrow(
+                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
+                );
+        List<TestAnswer> testAnswers = test.getTestAnswers();
+        List<TestSharedResultResponse> responses =  testAnswers.stream()
+                .map(t -> {
+                    TestSharedResultResponse response = TestSharedResultResponse.fromEntity(t.getProblem());
+                    response.setInput(t.getUserAnswer());
+                    response.setResult(compareStrings(
+                            t.getUserAnswer(), t.getProblem().getSolution()
+                    ));
+                    return response;
+                }).collect(Collectors.toList());
         return responses;
+    }
+
+    //자동채점 결과 제출 및 score 기록
+    @Transactional
+    public TestSharedResultSubmitResponse submitSharedTestResult(Long testId, List<TestResultSubmitRequest> listDto){
+        Test test = testRepository.findByIdWithTestAnswersAndProblem(testId)
+                .orElseThrow(
+                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
+                );
+        int correctCount = 0;
+        int incorrectCount = 0;
+        for(TestResultSubmitRequest dto : listDto){
+            if(dto.getResult().equals("correct")){
+                correctCount += 1;
+            }else{
+                incorrectCount += 1;
+            }
+        }
+        double score = (correctCount)/(correctCount+incorrectCount) * 100;
+        //update
+        test.setScore(score);
+
+        TestSharedResultSubmitResponse response =
+                TestSharedResultSubmitResponse.builder()
+                        .id(testId)
+                        .correctCount(correctCount)
+                        .incorrectCount(incorrectCount)
+                        .score(score)
+                        .build();
+        return response;
     }
 
     private String compareStrings(String input, String sol){
@@ -131,62 +172,6 @@ public class TestService {
             return "incorrect";
         }
     }
-
-    @Transactional
-    public TestResultSubmitResponse testResultSubmit(Long workbookId, List<TestResultSubmitRequest> dto){
-        //검증 로직
-        validateUserAndWorkbook(workbookId);
-        //계산 및 검증로직
-        int size = dto.size();
-        int correctCount = 0;
-        for(int i = 0; i < dto.size(); i++){
-            if(dto.get(i).getResult().equals("correct")){
-                correctCount++;
-            }
-        }
-        TestResultSubmitResponse response = TestResultSubmitResponse.builder()
-                .correctCount(correctCount)
-                .incorrectCount(size-correctCount)
-                .score(((double)correctCount/size)*100)
-                .problems(dto)
-                .build();
-
-        // 벌크 연산
-        updateCorrectRate(dto);
-
-        return response;
-    }
-
-    private void updateCorrectRate(List<TestResultSubmitRequest> dto){
-        List<Long> problemIds = dto.stream()
-                .map(TestResultSubmitRequest::getId)
-                .collect(Collectors.toList());
-
-        //전체 관련 problem 로드
-        List<Problem> problems = problemRepository.findAllById(problemIds);
-
-        Map<Long, Problem> problemMap = problems.stream()
-                .collect(Collectors.toMap(Problem::getId, Function.identity()));
-
-        for(TestResultSubmitRequest result : dto){
-            Problem problem = problemMap.get(result.getId());
-            if(problem != null){
-                if(result.getResult().equals("correct")){
-                    problem.addCorrectCount();
-                }else{
-                    problem.addIncorrectCount();
-                }
-            }
-        }
-        problemRepository.saveAll(problems);
-    }
-
-    public void storeLocalInputData(Long workbookId ,List<TestResultRequest> listDto){
-        //검증 로직
-        validateUserAndWorkbook(workbookId);
-        this.localStoredLists.put(getCurrentUsername(), listDto);
-    }
-
 
 
     private String getCurrentUsername(){
