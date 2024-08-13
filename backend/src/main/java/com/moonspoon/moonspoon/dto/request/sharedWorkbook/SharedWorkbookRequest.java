@@ -16,14 +16,12 @@ public class SharedWorkbookRequest {
     @NotBlank(message = "내용은 필수 입력사항입니다.")
     private String content;
 
-    private boolean isRandom;
-    private boolean hasSolution;
+    private boolean random;
     public static SharedWorkbook toEntity(SharedWorkbookRequest dto){
         return SharedWorkbook.builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
-                .isRandom(dto.isRandom())
-                .hasSolution(dto.isHasSolution())
+                .random(dto.isRandom())
                 .build();
     }
 

@@ -108,7 +108,7 @@
         <p>문제집: {{ workbookTitle }}</p>
         <p>맞힌 개수: {{ resultInfo.correctCount }}</p>
         <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
-        <p>점수: {{ resultInfo.score }}점</p>
+        <p>점수: {{ resultInfo.score.toFixed(2) }}점</p>
         <div class="popup-buttons">
           <button @click="finishGrading">확인</button>
         </div>
@@ -136,6 +136,7 @@ export default {
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
       testId : this.$route.query.testId,
+      sharedWorkbookId : this.$route.query.sharedWorkbookId,
       sharedWorkbookTitle : this.$route.query.sharedWorkbookTitle
     }
   },
@@ -158,7 +159,7 @@ export default {
     },
     finishGrading() {
       this.showResultPopup = false;
-      this.$router.push(`/sharedWorkBook/${this.workbookId}`);
+      this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`);
     },
     goToproblem(index) {
       this.currentproblemIndex = index;
@@ -203,13 +204,13 @@ export default {
           })
       console.log("Grading results submitted:", this.problems);
       console.log("Correct answer rate:", this.correctAnswerRate);
-      this.$router.push(`/workBookDetail/${this.workbookId}`);
+      this.$router.push(`/sharedWorkbook/${this.sharedWorkbookId}`);
     },
     async fetchResults() {
       const headers = {
         'Authorization': this.token
       };
-      axios.get(`/api/test/${this.workbookId}/getSharedTestResult`, {headers})
+      axios.get(`/api/test/${this.testId}/getSharedTestResult`, {headers})
           .then((res) => {
             this.problems = res.data;
             console.log("FETCH DATA", res);

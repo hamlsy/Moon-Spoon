@@ -62,7 +62,6 @@ public class SharedWorkbookService {
         sharedWorkbook.setAuthor(workbook.getAuthor());
         sharedWorkbook.setUser(workbook.getUser());
 
-
         sharedWorkbookRepository.save(sharedWorkbook);
 
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
@@ -79,7 +78,7 @@ public class SharedWorkbookService {
         validUser(sharedWorkbook.getUser().getUsername());
 
         sharedWorkbook.updateSharedWorkbook(dto.getTitle(), dto.getContent(),
-                dto.isRandom(), dto.isHasSolution(), LocalDateTime.now());
+                dto.isRandom(), LocalDateTime.now());
 
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
         return response;
@@ -105,18 +104,6 @@ public class SharedWorkbookService {
         }
     }
 
-    public List<SharedWorkbookTestResponse> testSharedWorkbook(Long id){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id)
-                .orElseThrow(
-                        () -> new NotFoundException(notFoundWorkbookMessage)
-                );
-        Workbook workbook = sharedWorkbook.getWorkbook();
-        List<Problem> problems = workbook.getProblems();
-        List<SharedWorkbookTestResponse> responses = problems.stream()
-                .map(p -> SharedWorkbookTestResponse.fromEntity(p))
-                .collect(Collectors.toList());
-        return responses;
-    }
 
     //유저 검증
     public SharedWorkbookGetUserResponse getUser(Long id){

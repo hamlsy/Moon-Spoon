@@ -32,8 +32,7 @@ public class SharedWorkbook {
     private LocalDateTime sharedDate;
     private LocalDateTime updateDate;
 
-    private boolean isRandom;
-    private boolean hasSolution;
+    private boolean random;
 
     @OneToOne
     @JoinColumn(name = "workbook_id")
@@ -44,10 +43,10 @@ public class SharedWorkbook {
     private User user;
 
     @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
-    List<Comment> comments = new ArrayList<>();
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
-    List<Test> tests = new ArrayList<>();
+    private List<Test> tests = new ArrayList<>();
 
     public void setUser(User user){
         this.user = user;
@@ -60,22 +59,20 @@ public class SharedWorkbook {
     }
 
 
-    public void updateSharedWorkbook(String title, String content, boolean isRandom, boolean hasSolution, LocalDateTime updateDate){
+    public void updateSharedWorkbook(String title, String content, boolean random, LocalDateTime updateDate){
         this.title = title;
         this.content = content;
-        this.hasSolution = hasSolution;
-        this.isRandom = isRandom;
+        this.random = random;
         this.updateDate = updateDate;
     }
 
     @Builder
     public SharedWorkbook(String title, String content, String author,
-                          LocalDateTime sharedDate, boolean isRandom, boolean hasSolution) {
+                          boolean random, LocalDateTime sharedDate) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.sharedDate = sharedDate;
-        this.isRandom = isRandom;
-        this.hasSolution = hasSolution;
+        this.random = random;
     }
 }

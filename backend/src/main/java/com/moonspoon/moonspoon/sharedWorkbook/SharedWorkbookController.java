@@ -54,12 +54,6 @@ public class SharedWorkbookController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    //테스트
-    @GetMapping("/{id}/getTest")
-    public ResponseEntity<List<SharedWorkbookTestResponse>> getTestSharedWorkbook(@PathVariable("id") Long id){
-        List<SharedWorkbookTestResponse> responses = sharedWorkbookService.testSharedWorkbook(id);
-        return new ResponseEntity<>(responses, HttpStatus.OK);
-    }
 
     //사용자 검증
     @GetMapping("/{id}/getUser")

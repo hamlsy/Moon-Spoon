@@ -93,7 +93,7 @@ export default {
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
       sharedWorkbookId: this.$route.query.sharedWorkbookId,
-      sharedWorkbookTitle: this.$route.query.sharedWorkbookTitle
+      sharedWorkbookTitle: this.$route.query.sharedWorkbookTitle,
     }
   },
   computed: {
@@ -161,14 +161,14 @@ export default {
     },
     exitTest() {
       // 테스트 종료 로직
-      this.$router.push(`/sharedWorkBook/${this.workbookId}`); // 적절한 라우트로 변경
+      this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`); // 적절한 라우트로 변경
     },
     submitTest() {
       const headers = {
         'Authorization': this.token
       };
       // 테스트 제출 로직
-      axios.post(`/api/test/${this.testId}/submitSharedTestResult`,
+      axios.post(`/api/test/${this.testId}/submitSharedTest`,
         this.userAnswers, {headers}
       )
           .then((res) => {
@@ -177,6 +177,7 @@ export default {
               path: `/sharedScoringTest/${this.testId}`,
               query: {
                 testId: this.testId,
+                sharedWorkbookId: this.sharedWorkbookId,
                 sharedWorkbookTitle: this.sharedWorkbookTitle
               }
             })

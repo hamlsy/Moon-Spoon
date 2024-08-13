@@ -1,16 +1,15 @@
 package com.moonspoon.moonspoon.test;
 
-import com.moonspoon.moonspoon.dto.request.test.TestRequest;
+
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
-import com.moonspoon.moonspoon.dto.request.testAnswer.TestAnswerRequest;
+
 import com.moonspoon.moonspoon.dto.response.test.*;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public class TestController {
     }
 
     //테스트 제출, 입력 답 저장
-    @PostMapping("/{id}/submitSharedTestResult")
+    @PostMapping("/{id}/submitSharedTest")
     public ResponseEntity<?> submitSharedTestAnswer(@PathVariable("id") Long testId, @RequestBody List<TestResultRequest> listDto){
         testService.submitSharedTest(testId, listDto);
         return new ResponseEntity<>(null, HttpStatus.OK);
@@ -39,7 +38,7 @@ public class TestController {
 
 
     //테스트 결과 및 답안 조회
-    @PostMapping("/{id}/getSharedTestResult")
+    @GetMapping("/{id}/getSharedTestResult")
     public ResponseEntity<List<TestSharedResultResponse>> getSharedTestResult(
             @PathVariable("id") Long testId){
         List<TestSharedResultResponse> responses = testService.getSharedTestResult(testId);

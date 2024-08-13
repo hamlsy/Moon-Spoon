@@ -13,7 +13,6 @@ public class TestSharedResultSubmitResponse {
     private double score;
 
     @Builder
-
     public TestSharedResultSubmitResponse(Long id, int correctCount, int incorrectCount, double score) {
         this.id = id;
         this.correctCount = correctCount;

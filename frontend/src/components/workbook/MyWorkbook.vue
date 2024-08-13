@@ -104,10 +104,7 @@
           <textarea v-model="shareWorkbookDetail.content" placeholder="내용"></textarea>
           <div class="checkbox-group">
             <label>
-              <input type="checkbox" v-model="shareWorkbookDetail.isRandom"> 랜덤 출제
-            </label>
-            <label>
-              <input type="checkbox" v-model="shareWorkbookDetail.hasSolution"> 정답 공개
+              <input type="checkbox" v-model="shareWorkbookDetail.random"> 랜덤 출제
             </label>
           </div>
           <div class="popup-buttons">
@@ -138,8 +135,7 @@ export default {
         workbookId: '',
         title: '',
         content: '',
-        isRandom: false,
-        hasSolution: false,
+        random: false,
       },
       newWorkbook: { title: '', content: '' },
       workbookToDelete: null,

@@ -67,6 +67,7 @@ public class TestService {
         Test test = new Test();
         test.setTestDate(LocalDateTime.now());
         test.setUser(user);
+        test.setName(user.getName());
         test.setSharedWorkbook(sharedWorkbook);
         Test saveTest = testRepository.save(test);
 
@@ -146,8 +147,8 @@ public class TestService {
                 .orElseThrow(
                         () -> new NotFoundException("존재하지 않는 테스트입니다.")
                 );
-        int correctCount = 0;
-        int incorrectCount = 0;
+        double correctCount = 0;
+        double incorrectCount = 0;
         for(TestResultSubmitRequest dto : listDto){
             if(dto.getResult().equals("correct")){
                 correctCount += 1;
@@ -155,15 +156,15 @@ public class TestService {
                 incorrectCount += 1;
             }
         }
-        double score = (correctCount)/(correctCount+incorrectCount) * 100;
+        double score = ((correctCount)/(correctCount+incorrectCount)) * 100;
         //update
         test.setScore(score);
 
         TestSharedResultSubmitResponse response =
                 TestSharedResultSubmitResponse.builder()
                         .id(testId)
-                        .correctCount(correctCount)
-                        .incorrectCount(incorrectCount)
+                        .correctCount((int)correctCount)
+                        .incorrectCount((int)incorrectCount)
                         .score(score)
                         .build();
         return response;

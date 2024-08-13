@@ -12,7 +12,6 @@
 <!--          <span>조회수: {{ sharedWorkbook.views }}</span>-->
           <span>문제 수: {{ sharedWorkbook.problemCount }}</span>
           <span>랜덤 여부: {{ sharedWorkbook.random ? 'O' : 'X' }}</span>
-          <span>정답 공개: {{ sharedWorkbook.hasSolution ? 'O' : 'X' }}</span>
           <span>작성일: {{ formatDate(sharedWorkbook.sharedDate) }}</span>
 
         </div>
@@ -54,10 +53,7 @@
         <textarea v-model="editForm.content" placeholder="내용"></textarea>
         <div class="checkbox-group">
           <label>
-            <input type="checkbox" v-model="editForm.isRandom" /> 랜덤 여부
-          </label>
-          <label>
-            <input type="checkbox" v-model="editForm.hasSolution" /> 정답 공개 여부
+            <input type="checkbox" v-model="editForm.random" /> 랜덤 여부
           </label>
         </div>
         <div class="edit-popup-actions">
@@ -101,8 +97,7 @@ export default {
       editForm: {
         title: "",
         content: "",
-        isRandom: false,
-        hasSolution: false
+        random: false,
       }
     }
   },
@@ -127,7 +122,8 @@ export default {
         path: `/sharedProblemTest/${this.sharedWorkbookId}`,
         query: {
           sharedWorkbookId: this.sharedWorkbookId,
-          sharedWorkbookTitle: this.sharedWorkbook.title
+          sharedWorkbookTitle: this.sharedWorkbook.title,
+          random: this.sharedWorkbook.random
         }
       })
     },
@@ -196,8 +192,7 @@ export default {
       this.editForm = {
         title: this.sharedWorkbook.title,
         content: this.sharedWorkbook.content,
-        isRandom: this.sharedWorkbook.isRandom,
-        hasSolution: this.sharedWorkbook.hasSolution
+        random: this.sharedWorkbook.random,
       };
       this.showEditPopup = true;
     },
