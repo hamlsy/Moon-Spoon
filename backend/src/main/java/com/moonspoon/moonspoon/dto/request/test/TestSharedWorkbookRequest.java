@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TestSharedWorkbookRequest {
-    private Long id;
     private boolean random;
 
 }

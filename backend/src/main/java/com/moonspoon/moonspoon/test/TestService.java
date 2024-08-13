@@ -75,7 +75,7 @@ public class TestService {
 
     //todo get Test Problems
     //todo refactor
-    public List<TestSharedProblemResponse> getSharedTest(Long testId, TestSharedWorkbookRequest dto){
+    public TestSharedResponse getSharedTest(Long testId, TestSharedWorkbookRequest dto){
         Test test = testRepository.findByIdWithSharedWorkbookAndWorkbookAndProblems(testId)
                 .orElseThrow(
                         () -> new NotFoundException("존재하지 않는 테스트입니다.")
@@ -84,9 +84,15 @@ public class TestService {
         if(dto.isRandom()){
             Collections.shuffle(problems);
         }
-        return problems.stream()
+        List<TestSharedProblemResponse> testSharedProblems = problems.stream()
                 .map(p -> TestSharedProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
+
+        TestSharedResponse response = TestSharedResponse.builder()
+                .testSharedProblems(testSharedProblems)
+                .testId(testId)
+                .build();
+        return response;
     }
 
     //답변 저장

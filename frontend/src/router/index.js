@@ -16,6 +16,8 @@ import NoticeUpdateForm from "@/components/notice/NoticeUpdateForm.vue";
 import TestPage from "@/components/TestPage.vue";
 import SharedWorkbookList from "@/components/sharedWorkbook/SharedWorkbookList.vue";
 import SharedWorkbookDetail from "@/components/sharedWorkbook/SharedWorkbookDetail.vue";
+import SharedProblemTest from "@/components/sharedTest/SharedProblemTest.vue";
+import SharedScoringTest from "@/components/sharedTest/SharedScoringTest.vue";
 
 
 Vue.use(VueRouter);
@@ -89,6 +91,16 @@ const routes = [
         path: '/sharedWorkbook/:id',
         name: 'SharedWorkbookDetail',
         component: SharedWorkbookDetail
+    },
+    {
+        path: '/sharedProblemTest/:id',
+        name: 'SharedProblemTest',
+        component: SharedProblemTest
+    },
+    {
+        path: '/sharedScoringTest/:id',
+        name: 'SharedScoringTest',
+        component: SharedScoringTest
     },
     {
         path: '/test',

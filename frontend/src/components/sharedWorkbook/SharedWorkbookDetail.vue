@@ -123,8 +123,13 @@ export default {
           })
     },
     startTest() {
-      // 테스트 시작 로직 구현
-      console.log("테스트 시작");
+      this.$router.push({
+        path: `/sharedProblemTest/${this.sharedWorkbookId}`,
+        query: {
+          sharedWorkbookId: this.sharedWorkbookId,
+          sharedWorkbookTitle: this.sharedWorkbook.title
+        }
+      })
     },
     deleteWorkbook() {
       const headers = {
