@@ -4,7 +4,7 @@
       <i class="fas fa-arrow-left"></i> 뒤로가기
     </router-link>
     <div class="title">
-      <h1>내 문제집</h1>
+      <h1><div class="card-icon slide-in-fade">📝 내 문제집</div></h1>
     </div>
 
     <div class="search-sort-container">
@@ -340,9 +340,23 @@ body, html {
   height: 100%;
   font-family: 'Noto Sans KR', sans-serif;
 }
-
+/** slide fade **/
+@keyframes slideInFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-in-fade {
+  display: inline-block;
+  animation: slideInFade 1.4s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+}
 .main-page {
-  background: rgba(255,244,255,0.35);
+  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
   color: #191f28;
   min-height: 100vh;
   display: flex;

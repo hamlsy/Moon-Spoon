@@ -2,9 +2,9 @@
   <div class="main-page">
     <main class="content">
       <section class="hero">
-        <h1 class="main-title slide-in-fade">문제집 공유 플랫폼</h1>
+        <h1 class="main-title slide-in-fade"><div class="card-icon">📚 공유된 문제집</div></h1>
         <hr>
-        <p class="subtitle slide-in-fade">다른 사용자의 문제집으로 함께 학습해보세요.</p>
+        <p class="subtitle slide-in-fade">다른 사용자들의 문제집으로 함께 학습해보세요.</p>
       </section>
 
       <section class="workbook-categories">
@@ -102,7 +102,7 @@ export default {
 }
 
 .main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53));
+  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
   color: #191f28;
   min-height: 100vh;
   display: flex;
@@ -120,7 +120,7 @@ export default {
 
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 0.5rem 0;
   background-color: white;
   border-radius: 12px;
   margin-bottom: 3rem;
@@ -170,6 +170,7 @@ export default {
 .workbook-card {
   background-color: white;
   border-radius: 12px;
+  border-left: 1.5px solid yellow;
   padding: 1rem;
   cursor: pointer;
   transition: all 0.3s;

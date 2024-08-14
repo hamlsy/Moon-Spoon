@@ -5,7 +5,7 @@
         <i class="fas fa-arrow-left"></i> 뒤로가기
       </router-link>
       <section class="hero">
-        <h1 class="main-title slide-in-fade">{{ workbookTitle }}</h1>
+        <h1 class="main-title slide-in-fade">📖 {{ workbookTitle }}</h1>
       </section>
 
 
@@ -369,9 +369,25 @@ body, html {
   height: 100%;
 }
 
+/** slide fade **/
+@keyframes slideInFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-in-fade {
+  display: inline-block;
+  animation: slideInFade 1.4s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+}
+
 .main-page {
   /** background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53)); **/
-  background: rgba(255,244,255,0.35);
+  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
   /** background: white; **/
   color: #191f28;
   min-height: 100vh;
@@ -734,12 +750,12 @@ problem-content{
 }
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 3rem 0;
   border-radius: 12px;
 
 }
 .main-title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   margin-bottom: 1rem;
   color: black;
 }

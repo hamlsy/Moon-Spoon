@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/notice/NoticeUpdateForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/notice/NoticeUpdateForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
@@ -219,7 +212,7 @@
       <workItem from="1723130519554" duration="3329000" />
       <workItem from="1723435845889" duration="22721000" />
       <workItem from="1723518039147" duration="34128000" />
-      <workItem from="1723599189777" duration="4486000" />
+      <workItem from="1723599189777" duration="6525000" />
     </task>
     <servers />
   </component>

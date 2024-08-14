@@ -30,8 +30,11 @@
           </div>
         </ul>
       </section>
-    </main>
 
+    </main>
+    <footer class="footer">
+      <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
   </div>
 </template>
 
@@ -124,7 +127,7 @@ body, html {
 
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 3rem 0;
   background-color: white;
   border-radius: 12px;
   margin-bottom: 3rem;
@@ -234,4 +237,17 @@ body, html {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
+
+.footer {
+  background-color: #f2f4f6;
+  color: #191f28;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.footer a {
+  color: black;
+  text-decoration: none;
+}
+
 </style>
