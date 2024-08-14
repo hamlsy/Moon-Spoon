@@ -353,7 +353,7 @@ body, html {
 }
 .slide-in-fade {
   display: inline-block;
-  animation: slideInFade 1.4s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+  animation: slideInFade 0.9s cubic-bezier(0.5, 0.01, 0.115, 0.5);
 }
 .main-page {
   background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
@@ -575,4 +575,18 @@ a{
   align-items: center;
   transition: color 0.3s;
 }
+/** **/
+
+.checkbox-group label, .radio-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.checkbox-group input[type="checkbox"], .radio-group input[type="radio"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
 </style>

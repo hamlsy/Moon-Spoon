@@ -1,9 +1,10 @@
 <template>
   <div class="workbook-detail-page">
+    <router-link to="/sharedWorkbookList" class="back-button">
+      <i class="fas fa-arrow-left"></i> 뒤로가기
+    </router-link>
     <main class="content">
-      <router-link to="/sharedWorkbookList" class="back-button">
-        <i class="fas fa-arrow-left"></i> 뒤로가기
-      </router-link>
+
       <section class="workbook-info">
         <h1 class="workbook-title">{{ sharedWorkbook.title }}</h1>
         <div v-if="isUser" class="author-actions">
@@ -227,6 +228,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .workbook-detail-page {
   background-color: #f9f9f9;
   min-height: 100vh;
@@ -492,7 +495,7 @@ export default {
   background: none;
   font-size: 1rem;
   margin: 2rem auto;
-  z-index: 1;
+  z-index: 0;
   -webkit-backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   border: 1px solid;
@@ -544,4 +547,17 @@ export default {
   -webkit-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
+.checkbox-group label, .radio-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.checkbox-group input[type="checkbox"], .radio-group input[type="radio"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+
 </style>

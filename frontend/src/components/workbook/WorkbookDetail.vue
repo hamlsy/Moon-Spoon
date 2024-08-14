@@ -382,7 +382,7 @@ body, html {
 }
 .slide-in-fade {
   display: inline-block;
-  animation: slideInFade 1.4s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+  animation: slideInFade 0.9s cubic-bezier(0.5, 0.01, 0.115, 0.5);
 }
 
 .main-page {
