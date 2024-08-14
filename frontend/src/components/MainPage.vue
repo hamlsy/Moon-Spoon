@@ -8,7 +8,7 @@
       </section>
 
       <section class="features">
-        <div class="feature-card slide-in-fade" @click="notValid" @mouseover="hover = 1" @mouseleave="hover = null" :class="{ 'hovered': hover === 1 }">
+        <div class="feature-card slide-in-fade" @click="goSharedWorkbookList" @mouseover="hover = 1" @mouseleave="hover = null" :class="{ 'hovered': hover === 1 }">
           <div class="card-icon">📚</div>
           <h2>공유된 문제집</h2>
           <p>다른 사용자들이 만든 문제집을 열람하고 학습해보세요.</p>
@@ -30,8 +30,8 @@
           </div>
         </ul>
       </section>
-    </main>
 
+    </main>
     <footer class="footer">
       <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
     </footer>
@@ -75,6 +75,9 @@ export default {
           .catch((err) => {
             console.log(err, "ERROR");
           })
+    },
+    goSharedWorkbookList(){
+      this.$router.push("/sharedWorkbookList")
     }
   },
   created() {
@@ -124,7 +127,7 @@ body, html {
 
 .hero {
   text-align: center;
-  padding: 4rem 0;
+  padding: 3rem 0;
   background-color: white;
   border-radius: 12px;
   margin-bottom: 3rem;
@@ -218,18 +221,7 @@ body, html {
   font-weight: bold;
 }
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
 
-.footer a {
-  color: black;
-  text-decoration: none;
-}
 
 .notice {
   cursor: pointer;
@@ -245,4 +237,17 @@ body, html {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
+
+.footer {
+  background-color: #f2f4f6;
+  color: #191f28;
+  text-align: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.footer a {
+  color: black;
+  text-decoration: none;
+}
+
 </style>

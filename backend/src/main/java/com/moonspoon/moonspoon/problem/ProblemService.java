@@ -195,7 +195,7 @@ public class ProblemService {
                     res.setInput(d.getInput());
                     res.setResult(compareStrings(d.getInput(), problem.getSolution()));
                     return res;
-                        })
+                })
                 .collect(Collectors.toList());
 
         return responses;

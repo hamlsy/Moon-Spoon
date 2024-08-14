@@ -44,7 +44,19 @@ export default {
   },
   created() {
     this.checkLogin();
+
+  },
+  head() {
+    return {
+      title: "Moon-Spoon",
+      meta: [
+        { name: 'description', content: "스스로 학습, 테스트를 Moon-Spoon과 함께하세요."},
+        { name: 'keywords', content: 'Custom, test, 테스트, 시험, cbt, 문제, 학습, 문제집, 커스텀, 훈련, 암기, 백지'},
+        { name: 'author', content: 'hamlsy'}
+      ]
+    }
   }
+
   // components: {
   //
   // }
@@ -79,5 +91,6 @@ a{
   text-decoration: none;
   color: inherit;
 }
+
 
 </style>

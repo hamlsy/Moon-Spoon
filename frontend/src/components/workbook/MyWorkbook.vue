@@ -4,7 +4,7 @@
       <i class="fas fa-arrow-left"></i> 뒤로가기
     </router-link>
     <div class="title">
-      <h1>내 문제집</h1>
+      <h1><div class="card-icon slide-in-fade">📝 내 문제집</div></h1>
     </div>
 
     <div class="search-sort-container">
@@ -41,7 +41,7 @@
               <button class="action-btn delete-btn" @click.stop="confirmDelete(workbook.id)">
                 <i class="fas fa-trash"></i>
               </button>
-              <button class="action-btn share-btn" @click.stop="notImplemented">
+              <button class="action-btn share-btn" @click.stop="showSharePopup(workbook)">
                 <i class="fas fa-share"></i>
               </button>
             </div>
@@ -61,10 +61,6 @@
         </button>
       </div>
     </main>
-
-    <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
-    </footer>
 
     <!-- 새 문제집 추가 팝업 -->
     <transition name="fade">
@@ -94,6 +90,27 @@
         </div>
       </div>
     </transition>
+
+    <!-- 공유 팝업 -->
+    <transition name="fade">
+      <div v-if="showShareWorkbookPopup" class="popup-overlay" @click.self="cancelShare">
+        <div class="popup">
+          <h2>문제집 공유</h2>
+          <input v-model="shareWorkbookDetail.title" placeholder="제목" />
+          <textarea v-model="shareWorkbookDetail.content" placeholder="내용"></textarea>
+          <div class="checkbox-group">
+            <label>
+              <input type="checkbox" v-model="shareWorkbookDetail.random"> 랜덤 출제
+            </label>
+          </div>
+          <div class="popup-buttons">
+            <button @click="cancelShare">취소</button>
+            <button @click="shareWorkbook">공유</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </div>
 </template>
 
@@ -109,6 +126,13 @@ export default {
       workbooks: [],
       showAddPopup: false,
       showDeletePopup: false,
+      showShareWorkbookPopup: false,
+      shareWorkbookDetail: {
+        workbookId: '',
+        title: '',
+        content: '',
+        random: false,
+      },
       newWorkbook: { title: '', content: '' },
       workbookToDelete: null,
       searchQuery: '',
@@ -270,8 +294,40 @@ export default {
     },
     formatDate(dateString) {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
-    }
+    },
+    showSharePopup(workbook){
+      this.shareWorkbookDetail = {
+        workbookId: workbook.id,
+        title: workbook.title,
+        content: workbook.content,
+
+      };
+      this.showShareWorkbookPopup = true;
+    },
+    cancelShare(){
+      this.showShareWorkbookPopup = false;
+    },
+    shareWorkbook(){
+      const headers = {
+        'Authorization': this.token
+      }
+      if(confirm("공유 문제집에 등록하시겠습니까?")){
+        axios.post(`/api/sharedWorkbook/create`,
+            this.shareWorkbookDetail,
+            {headers})
+            .then((res) => {
+              console.log(res, "등록");
+              alert("등록되었습니다.");
+              this.showShareWorkbookPopup = false;
+            })
+            .catch((err) => {
+              console.log(err, "ERROR");
+              alert("ERROR!");
+            })
+      }
+    },
   },
+
 
 }
 </script>
@@ -284,9 +340,23 @@ body, html {
   height: 100%;
   font-family: 'Noto Sans KR', sans-serif;
 }
-
+/** slide fade **/
+@keyframes slideInFade {
+  0% {
+    opacity: 0;
+    transform: translateY(-20%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.slide-in-fade {
+  display: inline-block;
+  animation: slideInFade 0.9s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+}
 .main-page {
-  background: rgba(255,244,255,0.35);
+  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
   color: #191f28;
   min-height: 100vh;
   display: flex;
@@ -477,13 +547,6 @@ h1::after, h2::after, h3::after {
 
 
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
 
 a{
   text-decoration: none;
@@ -512,4 +575,18 @@ a{
   align-items: center;
   transition: color 0.3s;
 }
+/** **/
+
+.checkbox-group label, .radio-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.checkbox-group input[type="checkbox"], .radio-group input[type="radio"] {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
 </style>

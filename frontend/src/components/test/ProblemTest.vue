@@ -112,6 +112,7 @@ export default {
         problemCount: this.$route.query.problemCount,
         random: this.$route.query.random,
         sortOrder: this.$route.query.sortOrder,
+        shared: false
       }
       axios.post(`/api/workbook/${this.workbookId}/problem/getTest`,
           data, {headers})

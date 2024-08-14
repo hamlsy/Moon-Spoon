@@ -1,6 +1,7 @@
 package com.moonspoon.moonspoon.workbook;
 
 import com.moonspoon.moonspoon.problem.Problem;
+import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import com.moonspoon.moonspoon.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -23,7 +24,10 @@ public class Workbook {
     private Long id;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+
     private String author;
     private int problemCount;
 
@@ -37,6 +41,8 @@ public class Workbook {
     @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
     private List<Problem> problems = new ArrayList<>();
 
+    @OneToOne(mappedBy = "workbook", cascade = CascadeType.REMOVE)
+    private SharedWorkbook sharedWorkbook;
 
     @Builder
     public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate) {
