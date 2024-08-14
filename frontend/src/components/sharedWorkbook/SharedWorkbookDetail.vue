@@ -26,7 +26,7 @@
         </div>
       </section>
       <section class="workbook-content">
-        <p>{{ sharedWorkbook.content }}</p>
+        <pre>{{ sharedWorkbook.content }}</pre>
       </section>
       <button @click="startTest" class="button button--ujarak button--border-thin button--text-thick">
         <span>테스트 시작</span>
@@ -43,7 +43,7 @@
               <span class="comment-author">{{ comment.author }}</span>
               <span class="comment-date">{{ formatDate(comment.createDate) }}</span>
             </div>
-            <p class="comment-content">{{ comment.content }}</p>
+            <pre class="comment-content">{{ comment.content }}</pre>
           </div>
         </div>
       </section>

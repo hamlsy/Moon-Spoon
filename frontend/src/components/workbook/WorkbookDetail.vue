@@ -24,7 +24,7 @@
         </div>
 
       <div class="add-problem-form">
-        <input v-model="newproblem.question" placeholder="문제를 입력하세요" />
+        <textarea v-model="newproblem.question" placeholder="문제를 입력하세요"></textarea>
         <textarea v-model="newproblem.solution" placeholder="답을 입력하세요"></textarea>
         <button @click="addproblem" class="add-btn">+</button>
       </div>
@@ -63,8 +63,8 @@
           <h2>문제 상세</h2>
           <h3>문제 {{ selectedProblem.displayNumber }}</h3>
           <div class="problem-detail-content">
-            <p><strong>문제:</strong> {{ selectedProblem.question }}</p>
-            <p><strong>답:</strong> {{ selectedProblem.solution }}</p>
+            <pre><strong>문제:</strong> {{ selectedProblem.question }}</pre>
+            <pre><strong>답:</strong> {{ selectedProblem.solution }}</pre>
             <p><strong>정답률:</strong> {{ selectedProblem.correctRate }}%</p>
             <p><strong>생성일:</strong> {{ formatDate(selectedProblem.createdAt) }}</p>
           </div>
