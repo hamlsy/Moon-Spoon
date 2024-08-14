@@ -1,40 +1,6 @@
 <template>
   <div class="main-page">
-    <main class="content">
-      <section class="hero">
-        <h1 class="main-title slide-in-fade">문제집 공유 플랫폼</h1>
-        <p class="subtitle slide-in-fade">다양한 문제집으로 함께 학습해보세요.</p>
-      </section>
-
-      <section class="workbook-categories">
-        <h2>카테고리</h2>
-        <div class="category-buttons">
-          <button @click="setCategory('recent')" :class="{ active: currentCategory === 'recent' }">최근 올라온 문제집</button>
-          <button @click="setCategory('popular')" :class="{ active: currentCategory === 'popular' }">인기 문제집</button>
-          <button @click="setCategory('all')" :class="{ active: currentCategory === 'all' }">전체 문제집</button>
-        </div>
-      </section>
-
-      <section class="workbook-grid">
-        <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card" @click="goToWorkbookDetail(workbook.id)" @mouseover="hoveredWorkbook = workbook.id" @mouseleave="hoveredWorkbook = null">
-          <div class="workbook-info">
-            <h3>{{ workbook.title }}</h3>
-            <p>작성자: {{ workbook.author }}</p>
-            <p>작성일: {{ workbook.date }}</p>
-            <p>댓글: {{ workbook.commentCount }}</p>
-          </div>
-          <div class="workbook-actions">
-            <button class="like-button" @click.stop="likeWorkbook(workbook.id)">
-              👍 {{ workbook.likes }}
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p>&copy; 2024 문제집 공유 플랫폼. <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
+    <button class="button button--ujarak button--border-thin button--text-thick">테스트 시작</button>
   </div>
 </template>
 
@@ -76,128 +42,78 @@ export default {
 </script>
 
 <style scoped>
-@keyframes slideInFade {
-  0% {
-    opacity: 0;
-    transform: translateY(-20%);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+.button {
+  float: left;
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  margin: 1em;
+  padding: 1em 2em;
+  border: none;
+  background: none;
+  color: inherit;
+  vertical-align: middle;
+  position: relative;
+  font-size: 1rem;
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  border: 1px solid;
+  font-weight: 600;
 }
 
-.slide-in-fade {
-  display: inline-block;
-  animation: slideInFade 1.4s cubic-bezier(0.5, 0.01, 0.115, 0.5);
+.button--ujarak {
+  -webkit-transition: border-color 0.4s, color 0.4s;
+  transition: border-color 0.4s, color 0.4s;
 }
-
-.main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53));
-  color: #191f28;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Noto Sans KR', sans-serif;
+.button--ujarak::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #37474f;
+  z-index: -1;
+  opacity: 0;
+  -webkit-transform: scale3d(0.7, 1, 1);
+  transform: scale3d(0.7, 1, 1);
+  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
-
-.content {
-  max-width: 1200px;
-  margin: 80px auto 0;
-  padding: 2rem;
-  flex: 1;
+.button--ujarak.button--round-s::before {
+  border-radius: 2px;
 }
-
-.hero {
-  text-align: center;
-  padding: 4rem 0;
-  background-color: white;
-  border-radius: 12px;
-  margin-bottom: 3rem;
+.button--ujarak.button--inverted::before {
+  background: #7986CB;
 }
-
-.main-title {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  color: black;
+.button--ujarak,
+.button--ujarak::before {
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
-
-.subtitle {
-  font-size: 1.2rem;
-  color: black;
+.button--ujarak:hover {
+  color: #fff;
+  border-color: #37474f;
 }
-
-.workbook-categories {
-  margin-bottom: 2rem;
+.button--ujarak.button--inverted:hover {
+  color: #37474F;
+  border-color: #fff;
 }
-
-.category-buttons {
+.button--ujarak:hover::before {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.main-page{
   display: flex;
   justify-content: center;
-  gap: 1rem;
-}
-
-.category-buttons button {
-  padding: 0.5rem 1rem;
-  border: none;
+  align-items: center;
+  height: 100vh;
   background-color: #f0f0f0;
-  cursor: pointer;
-  border-radius: 20px;
-  transition: background-color 0.3s;
-}
-
-.category-buttons button.active {
-  background-color: #FFD700;
-  color: black;
-}
-
-.workbook-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 2rem;
-}
-
-.workbook-card {
-  background-color: white;
-  border-radius: 12px;
-  padding: 1rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.workbook-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-}
-
-.workbook-info h3 {
-  margin-top: 0;
-}
-
-.workbook-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
-
-.like-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 1.2rem;
-}
-
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-
-.footer a {
-  color: black;
-  text-decoration: none;
+  margin: 0;
 }
 </style>

@@ -62,10 +62,6 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. GitHub: https://github.com/hamlsy</p>
-    </footer>
-
     <!-- 새 문제집 추가 팝업 -->
     <transition name="fade">
       <div v-if="showAddPopup" class="popup-overlay" @click.self="cancelAddWorkbook">
@@ -537,13 +533,6 @@ h1::after, h2::after, h3::after {
 
 
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
 
 a{
   text-decoration: none;

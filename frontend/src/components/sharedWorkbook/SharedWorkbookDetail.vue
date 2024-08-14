@@ -1,6 +1,9 @@
 <template>
   <div class="workbook-detail-page">
     <main class="content">
+      <router-link to="/sharedWorkbookList" class="back-button">
+        <i class="fas fa-arrow-left"></i> 뒤로가기
+      </router-link>
       <section class="workbook-info">
         <h1 class="workbook-title">{{ sharedWorkbook.title }}</h1>
         <div v-if="isUser" class="author-actions">
@@ -24,7 +27,7 @@
       <section class="workbook-content">
         <p>{{ sharedWorkbook.content }}</p>
       </section>
-      <button @click="startTest" class="start-test-button">
+      <button @click="startTest" class="button button--ujarak button--border-thin button--text-thick">
         <span>테스트 시작</span>
       </button>
       <section class="comments-section">
@@ -64,9 +67,6 @@
     </div>
 
 
-    <footer class="footer">
-      <p>&copy; 2024 문제집 공유 플랫폼. <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
   </div>
 </template>
 
@@ -282,19 +282,23 @@ export default {
 }
 
 .start-test-button {
-  z-index: 0;
   display: block;
   margin: 2rem auto;
-  padding: 1rem 2rem;
   font-size: 1.2rem;
-  background-color: white;
-  color: #FFC000;
-  border: 2px solid black;
-  border-radius: 4px;
-  cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: color 0.3s ease;
+
+  background-color: #f39c12; /* 짙은 노란색 */
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 18px;
+
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px #e67e22; /* 좀 더 짙은 노란색 */
+  transition: all 0.2s ease-in-out;
+
 }
 
 .start-test-button span {
@@ -302,25 +306,16 @@ export default {
   z-index: 1;
 }
 
-.start-test-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 0;
-  background-color: #FFD700;
-  transition: height 0.3s ease;
-}
-
-.start-test-button:hover::before {
-  height: 100%;
-}
-
 .start-test-button:hover {
-  color: #000;
+  background-color: #e67e22; /* 클릭 시 배경 색상 */
+  box-shadow: 0 2px #d35400; /* 클릭 시 그림자 색상 */
+  transform: translateY(2px);
 }
-
+.start-test-button:active {
+  background-color: #d35400; /* 클릭 시 배경 색상 */
+  box-shadow: 0 1px #c0392b; /* 클릭 시 그림자 색상 */
+  transform: translateY(4px);
+}
 
 .edit-button, .delete-button {
   padding: 0.5rem 1rem;
@@ -401,18 +396,6 @@ export default {
   color: #666;
 }
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: auto;
-}
-
-.footer a {
-  color: black;
-  text-decoration: none;
-}
 
 
 .author-actions {
@@ -483,5 +466,82 @@ export default {
   background-color: #4CAF50;
   color: white;
 }
+.back-button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  font-size: 1rem;
+  color: #1B2A49;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  transition: color 0.3s;
+}
 
+/** start button **/
+
+.button {
+  min-width: 150px;
+  max-width: 250px;
+  display: block;
+  margin: 1em;
+  padding: 1em 2em;
+  color: inherit;
+  vertical-align: middle;
+  position: relative;
+  background: none;
+  font-size: 1rem;
+  margin: 2rem auto;
+  z-index: 1;
+  -webkit-backface-visibility: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  border: 1px solid;
+  font-weight: 600;
+}
+
+.button--ujarak {
+  -webkit-transition: border-color 0.4s, color 0.4s;
+  transition: border-color 0.4s, color 0.4s;
+}
+.button--ujarak::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #37474f;
+  z-index: -1;
+  opacity: 0;
+  -webkit-transform: scale3d(0.7, 1, 1);
+  transform: scale3d(0.7, 1, 1);
+  -webkit-transition: -webkit-transform 0.4s, opacity 0.4s;
+  transition: transform 0.4s, opacity 0.4s;
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.button--ujarak.button--round-s::before {
+  border-radius: 2px;
+}
+.button--ujarak.button--inverted::before {
+  background: #7986CB;
+}
+.button--ujarak,
+.button--ujarak::before {
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+}
+.button--ujarak:hover {
+  color: #fff;
+  border-color: #37474f;
+}
+.button--ujarak.button--inverted:hover {
+  color: #37474F;
+  border-color: #fff;
+}
+.button--ujarak:hover::before {
+  opacity: 1;
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
 </style>

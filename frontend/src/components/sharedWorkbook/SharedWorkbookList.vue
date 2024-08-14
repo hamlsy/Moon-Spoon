@@ -32,10 +32,6 @@
         </div>
       </section>
     </main>
-
-    <footer class="footer">
-      <p>&copy; 2024 문제집 공유 플랫폼. <a href="https://github.com/your-github" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
   </div>
 </template>
 
@@ -205,16 +201,4 @@ export default {
   font-size: 1.2rem;
 }
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-
-.footer a {
-  color: black;
-  text-decoration: none;
-}
 </style>

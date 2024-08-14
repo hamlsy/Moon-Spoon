@@ -22,9 +22,6 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
   </div>
 </template>
 

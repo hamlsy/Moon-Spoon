@@ -33,9 +33,6 @@
       </div>
     </main>
 
-    <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
   </div>
 </template>
 
@@ -181,18 +178,6 @@ body, html {
   font-weight: bold;
 }
 
-.footer {
-  background-color: #f2f4f6;
-  color: #191f28;
-  text-align: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-
-.footer a {
-  color: black;
-  text-decoration: none;
-}
 .content {
   display: flex;
   justify-content: center;

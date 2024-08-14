@@ -74,9 +74,6 @@
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
     </main>
 
-    <footer class="footer">
-      <p>&copy; 2024 Moon-Spoon. <a href="https://github.com/hamlsy" target="_blank" rel="noopener noreferrer">GitHub</a></p>
-    </footer>
     <!-- 테스트 시작 팝업 -->
     <div v-if="showPopup" class="popup-overlay" @click.self="cancelTest">
       <div class="popup">
