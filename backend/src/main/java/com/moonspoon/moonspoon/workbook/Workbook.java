@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Workbook {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="workbook_id")
     private Long id;
 
