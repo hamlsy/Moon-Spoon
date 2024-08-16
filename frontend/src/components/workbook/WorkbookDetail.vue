@@ -337,7 +337,7 @@ export default {
     setMaxproblemCount() {
       this.testSettings.problemCount = this.problems.length;
     },
-    truncateText(text, maxLength = 30) {
+    truncateText(text, maxLength = 15) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
 
@@ -368,7 +368,41 @@ body, html {
   padding: 0;
   height: 100%;
 }
+/** media query ** /
 
+ */
+@media (max-width: 768px) {
+  .content {
+    padding: 1rem;
+  }
+
+  .problem-list {
+    grid-template-columns: 2fr;
+  }
+
+  .main-title {
+    font-size: 1.5rem;
+  }
+
+  .problem-item {
+    padding: 0.75rem;
+  }
+
+  .problem-main h3 {
+    font-size: 1rem;
+  }
+
+  .problem-info {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .problem-list {
+    grid-template-columns: 2fr; /* 모바일에서는 1열로 */
+  }
+}
 /** slide fade **/
 @keyframes slideInFade {
   0% {
@@ -619,19 +653,16 @@ problem-main {
   display: flex;
   align-items: center;
   gap: 1rem;
+  margin-bottom: 0.5rem;
 }
 .problem-info {
   display: flex;
   gap: 1rem;
-  font-size: 0.9em;
+  font-size: 0.8em;
   color: #666;
+
 }
 
-problem-content{
-  display: flex;
-  justify-content: space-between;
-  height: 100%;
-}
 
 .problem-detail-header h3 {
   margin-top: 0;
@@ -652,14 +683,9 @@ problem-content{
 }
 
 .problem-list {
-  /** display: flex; **/
-  /** padding: 10px; /* 컨테이너 내부 여백  **/
-  /** flex-direction: column; **/
-  /** gap: 0.5rem;
-  margin-top: 2rem; **/
-
   display: grid; /* Grid 레이아웃을 활성화 */
-  grid-template-columns: repeat(2, 1fr); /* 두 개의 동일한 너비의 열을 생성 */
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* 두 개의 동일한 너비의 열을 생성 */
   gap: 10px; /* 열과 열 사이의 간격 설정 */
   width: 100%; /* 컨테이너의 너비를 100%로 설정 (부모 요소에 따라 조정 가능) */
   box-sizing: border-box; /* 패딩 및 보더를 포함한 전체 크기 계산 */
@@ -670,11 +696,17 @@ problem-content{
   width: 100%;
   background-color: white;
   border-radius: 10px;
-  padding: 0.75rem 1rem;
+  /** padding: 0.75rem 1rem; **/
   transition: all 0.3s ease;
   /** position: relative; **/
   box-sizing: border-box;
   border: 1px solid skyblue;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 1rem;
+
 
 }
 
@@ -700,6 +732,7 @@ problem-content{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-grow: 1;
 }
 .problem-text {
   flex-grow: 1;
@@ -758,5 +791,7 @@ problem-content{
   font-size: 2rem;
   margin-bottom: 1rem;
   color: black;
+  word-break: break-word;
+  padding: 0 1rem;
 }
 </style>
