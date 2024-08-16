@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/styles/global_nav.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/styles/global_nav.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -205,7 +206,7 @@
       <workItem from="1723126278458" duration="308000" />
       <workItem from="1723130519554" duration="3298000" />
       <workItem from="1723180618352" duration="7832000" />
-      <workItem from="1723785596895" duration="2470000" />
+      <workItem from="1723785596895" duration="6358000" />
     </task>
     <servers />
   </component>

@@ -5,7 +5,12 @@
         <div class="navbar-brand">
           <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
         </div>
-        <ul class="navbar-menu">
+        <button class="navbar-toggle" @click="toggleMenu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <ul class="navbar-menu" :class="{ 'active': menuActive }">
           <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
           <li><router-link to="/noticeList" class="nav-link">공지사항</router-link></li>
           <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
@@ -27,6 +32,7 @@ export default {
     return {
       isLogin: false,
       token: localStorage.getItem('token'),
+      menuActive: false
     }
   },
   methods: {
@@ -41,6 +47,9 @@ export default {
       localStorage.removeItem("token");
       this.$router.go(0);
     },
+    toggleMenu() {
+      this.menuActive = !this.menuActive;
+    }
   },
   created() {
     this.checkLogin();
