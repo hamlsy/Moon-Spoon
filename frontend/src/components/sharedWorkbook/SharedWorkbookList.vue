@@ -106,6 +106,7 @@ export default {
   color: #191f28;
   min-height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
   font-family: 'Noto Sans KR', sans-serif;
 }
