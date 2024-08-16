@@ -236,22 +236,27 @@ export default {
   display: flex;
   flex-direction: column;
   font-family: 'Noto Sans KR', sans-serif;
+  width: 100%;
+  word-break: break-all;
 }
 
 .content {
   max-width: 800px;
-  margin: 5rem auto;
-  min-width: 600px;
+  margin-top: 6rem;
+  margin-left: 4rem;
+  margin-right: 4rem;
   padding: 2rem 4rem;
   background-color: white;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  word-break: break-all;
 }
 
 .workbook-title {
   font-size: 2rem;
   text-align: left;
   margin-bottom: 1rem;
+
 }
 
 .workbook-meta {
@@ -259,6 +264,7 @@ export default {
   justify-content: space-between;
   margin-bottom: 1rem;
   color: #666;
+
 }
 
 .workbook-actions {
@@ -347,6 +353,7 @@ export default {
 .workbook-content {
   margin-bottom: 2rem;
   line-height: 1.6;
+
 }
 
 .comments-section {
@@ -559,5 +566,8 @@ export default {
   height: 20px;
 }
 
-
+pre{
+  word-break: break-word;
+  white-space: pre-wrap;
+}
 </style>

@@ -23,6 +23,7 @@ public class Workbook {
     @Column(name="workbook_id")
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String title;
 
     @Column(columnDefinition = "TEXT")
