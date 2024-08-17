@@ -572,4 +572,20 @@ pre{
   word-break: break-word;
   white-space: pre-wrap;
 }
+
+
+@media (max-width: 600px){
+  .workbook-title{
+    font-size: 1.3rem;
+  }
+  .content{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    padding: 2rem 2rem;
+    background-color: white;
+  }
+  .workbook-meta{
+    font-size: 0.7rem;
+  }
+}
 </style>
