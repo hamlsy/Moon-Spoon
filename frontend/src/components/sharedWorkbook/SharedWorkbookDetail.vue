@@ -6,11 +6,11 @@
     <main class="content">
 
       <section class="workbook-info">
-        <h1 class="workbook-title">{{ sharedWorkbook.title }}</h1>
         <div v-if="isUser" class="author-actions">
           <button @click="showEditForm" class="edit-button">수정</button>
           <button @click="deleteWorkbook" class="delete-button">삭제</button>
         </div>
+        <h1 class="workbook-title">{{ sharedWorkbook.title }}</h1>
         <div class="workbook-meta">
           <span>작성자: {{ sharedWorkbook.author }}</span>
 <!--          <span>조회수: {{ sharedWorkbook.views }}</span>-->
@@ -333,6 +333,8 @@ export default {
   cursor: pointer;
   transition: all 0.3s ease;
   margin-left: 0.5rem;
+  position: relative;
+  top: 4.5rem;
 }
 
 .edit-button {

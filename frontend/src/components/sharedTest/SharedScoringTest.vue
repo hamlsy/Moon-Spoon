@@ -504,7 +504,7 @@ a {
 }
 
 .sidebar {
-  min-width: 5rem;
+  min-width: 2rem;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -548,6 +548,7 @@ a {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  width: 90%;
   max-height: 100vh;
 }
 
@@ -659,6 +660,12 @@ textarea:focus {
 }
 .problem-item:hover {
   background-color: #e0e0e0;
+}
+
+.problem-preview, .answer-preview {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .result-preview {
