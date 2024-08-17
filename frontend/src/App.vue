@@ -1,22 +1,22 @@
 <template>
-  <main>
+  <main @click="handleGlobalClick">
     <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
+      <div class="navbar-container" >
+        <div class="navbar-brand" >
           <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
         </div>
-        <button class="navbar-toggle" @click="toggleMenu">
+        <button class="navbar-toggle" @click.stop="toggleMenu">
           <span class="bar"></span>
           <span class="bar"></span>
           <span class="bar"></span>
         </button>
-        <ul class="navbar-menu" :class="{ 'active': menuActive }">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li><router-link to="/noticeList" class="nav-link">공지사항</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        <ul class="navbar-menu" :class="{ 'active': menuActive }" @click.stop>
+          <li><router-link to="/mainPage" class="nav-link" @click.native="closeMenu">홈</router-link></li>
+          <li><router-link to="/noticeList" class="nav-link" @click.native="closeMenu">공지사항</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link" @click.native="closeMenu">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link" @click.native="closeMenu">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link" @click.native="closeMenu">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link" @click.native="closeMenu">프로필</a></li>
         </ul>
       </div>
     </nav>
@@ -49,12 +49,23 @@ export default {
     },
     toggleMenu() {
       this.menuActive = !this.menuActive;
+    },
+    closeMenu() {
+      this.menuActive = false;
+    },
+    handleGlobalClick() {
+      if (this.menuActive) {
+        this.closeMenu();
+      }
     }
+
+
+
   },
   created() {
     this.checkLogin();
-
   },
+
   head() {
     return {
       title: "Moon-Spoon",
