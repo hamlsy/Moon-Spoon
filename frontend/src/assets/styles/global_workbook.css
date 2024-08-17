@@ -10,14 +10,16 @@
     background-color: white;
     border-radius: 12px;
     padding: 1.5rem;
+    justify-content: space-between;
+    height: 100%;
     width: 80%;
-    min-height: 100px;
     cursor: pointer;
     transition: all 0.3s;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border: 2px solid skyblue;
     position: relative;
     overflow: hidden;
+
 
 }
 .workbook-main {
@@ -26,7 +28,9 @@
 }
 .workbook-content {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
     height: 100%;
 }
 .workbook-info {

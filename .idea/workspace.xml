@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="" />
+    <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/assets/styles/global_workbook.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/assets/styles/global_workbook.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/MainPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -202,7 +207,7 @@
       <workItem from="1723130519554" duration="3298000" />
       <workItem from="1723180618352" duration="7832000" />
       <workItem from="1723785596895" duration="15174000" />
-      <workItem from="1723892612667" duration="1546000" />
+      <workItem from="1723892612667" duration="3369000" />
     </task>
     <servers />
   </component>

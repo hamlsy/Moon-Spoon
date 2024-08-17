@@ -119,12 +119,13 @@ body, html {
   color: #191f28;
   min-height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 
 .content {
   max-width: 1100px;
-  width: 90%;
+  width: 85%;
   margin: 80px auto 0;
   padding: 2rem;
   flex: 1;
