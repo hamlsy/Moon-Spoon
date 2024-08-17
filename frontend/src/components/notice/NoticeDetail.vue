@@ -145,6 +145,7 @@ body, html {
   margin: 80px 20px 0;
   padding: 2rem;
   flex: 1;
+
 }
 
 
@@ -213,6 +214,7 @@ body, html {
   padding: 2rem;
   margin-top: 3rem;
   border-top: 3px solid darkgray;
+  word-break: break-all;
 }
 
 .notice-title {
@@ -234,6 +236,8 @@ body, html {
 .notice-content {
   line-height: 1.6;
   height: 100%;
+  white-space: pre-wrap; /* 공백과 줄 바꿈을 유지하면서 줄 바꿈 */
+  word-wrap: break-word; /* 긴 단어가 넘치지 않도록 줄 바꿈 */
 }
 .notice-tag {
   color: red;

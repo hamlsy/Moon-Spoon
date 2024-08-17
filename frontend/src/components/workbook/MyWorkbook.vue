@@ -25,8 +25,8 @@
           <div v-if="updateIndex !== workbook.id" @click="goWorkbookDetail(workbook.id)">
             <div class="workbook-content">
               <div class="workbook-main">
-                <h3>{{ workbook.title }}</h3>
-                <p>{{ workbook.content }}</p>
+                <h3>{{ truncateText(workbook.title) }}</h3>
+                <p>{{ truncateText(workbook.content) }}</p>
               </div>
               <div class="workbook-info">
                 <p>문제 수: {{ workbook.problemCount }}</p>
@@ -326,6 +326,10 @@ export default {
             })
       }
     },
+    truncateText(text, maxLength = 25) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
   },
 
 
@@ -373,6 +377,7 @@ body, html {
 
 .content {
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
   padding: 2rem;
   flex: 1;

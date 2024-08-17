@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +28,6 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/backend">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -47,7 +42,6 @@
       <list>
         <option value="CSS File" />
         <option value="Vue Composition API Component" />
-        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -77,7 +71,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/springWorkspace/moonspoon/frontend/src/components/sharedTest&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/springProjectWorkspace/Moon-Spoon/backend&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -85,11 +79,11 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\82104\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\이승영\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -100,7 +94,6 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\springWorkspace\moonspoon\frontend\src\components\sharedTest" />
       <recent name="C:\springWorkspace\moonspoon\frontend\public" />
     </key>
   </component>
@@ -149,13 +142,13 @@
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
-      <module name="com.moonspoon.moonspoon" />
+      <module name="frontend" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="com.moonspoon.moonspoon" />
+      <module name="frontend" />
       <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -205,29 +198,20 @@
       <workItem from="1722571983134" duration="27837000" />
       <workItem from="1722748137027" duration="1222000" />
       <workItem from="1722774049366" duration="2725000" />
+      <workItem from="1722848786817" duration="1633000" />
+      <workItem from="1723011226646" duration="23000" />
+      <workItem from="1723179695148" duration="13000" />
       <workItem from="1722848786817" duration="2500000" />
       <workItem from="1723126278458" duration="308000" />
-      <workItem from="1723130519554" duration="3329000" />
-      <workItem from="1723435845889" duration="22721000" />
-      <workItem from="1723518039147" duration="34128000" />
-      <workItem from="1723599189777" duration="11537000" />
-      <workItem from="1723625192726" duration="189000" />
+      <workItem from="1723130519554" duration="3298000" />
+      <workItem from="1723180618352" duration="7832000" />
+      <workItem from="1723785596895" duration="15174000" />
+      <workItem from="1723892612667" duration="780000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

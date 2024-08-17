@@ -26,7 +26,7 @@
         <h1 class="notice-icon"><router-link to="/noticeList"> 📢 공지사항</router-link></h1>
         <ul>
           <div v-for="(notice) in notices" :key="notice.id" class="notice-list">
-            <li @click="goNoticeDetail(notice.id)" class="notice" ><a style="color:red">[공지]</a>{{ notice.title }}</li>
+            <li @click="goNoticeDetail(notice.id)" class="notice" ><a style="color:red">[공지]</a>{{ truncateText(notice.title) }}</li>
           </div>
         </ul>
       </section>
@@ -78,7 +78,11 @@ export default {
     },
     goSharedWorkbookList(){
       this.$router.push("/sharedWorkbookList")
-    }
+    },
+    truncateText(text, maxLength = 50) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
   },
   created() {
     this.fetchNotices();
@@ -119,7 +123,8 @@ body, html {
 }
 
 .content {
-  max-width: 1200px;
+  max-width: 1100px;
+  width: 90%;
   margin: 80px auto 0;
   padding: 2rem;
   flex: 1;
@@ -232,6 +237,7 @@ body, html {
   transition: all 0.3s;
   box-shadow: 0 4px 12px white;
   border-left: 2px solid lightgray;
+  overflow: auto;
 }
 .notice:hover{
   transform: translateY(-5px);
