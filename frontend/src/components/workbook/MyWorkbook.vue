@@ -380,6 +380,7 @@ body, html {
   max-width: 1200px;
   width: 100%;
   flex: 1;
+  margin: auto;
 }
 
 
