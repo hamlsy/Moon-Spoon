@@ -32,14 +32,14 @@
         </div>
       </section>
 
-      <section class="additional-features">
-        <h3 class="notice-icon">🏆 최근 활동</h3>
-        <ul>
-          <li v-for="activity in recentActivities" :key="activity.id" class="notice">
-            {{ activity.description }}
-          </li>
-        </ul>
-      </section>
+<!--      <section class="additional-features">-->
+<!--        <h3 class="notice-icon">🏆 최근 활동</h3>-->
+<!--        <ul>-->
+<!--          <li v-for="activity in recentActivities" :key="activity.id" class="notice">-->
+<!--            {{ activity.description }}-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </section>-->
     </main>
 
     <footer class="footer">

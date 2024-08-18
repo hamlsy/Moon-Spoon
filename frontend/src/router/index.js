@@ -18,6 +18,7 @@ import SharedWorkbookList from "@/components/sharedWorkbook/SharedWorkbookList.v
 import SharedWorkbookDetail from "@/components/sharedWorkbook/SharedWorkbookDetail.vue";
 import SharedProblemTest from "@/components/sharedTest/SharedProblemTest.vue";
 import SharedScoringTest from "@/components/sharedTest/SharedScoringTest.vue";
+import Profile from "@/components/Profile.vue";
 
 
 Vue.use(VueRouter);
@@ -101,6 +102,11 @@ const routes = [
         path: '/sharedScoringTest/:id',
         name: 'SharedScoringTest',
         component: SharedScoringTest
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
     },
     {
         path: '/test',
