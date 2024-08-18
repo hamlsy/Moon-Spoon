@@ -393,8 +393,8 @@ body, html {
   }
 
   .problem-info {
-    flex-direction: column;
-    gap: 0.25rem;
+    /** flex-direction: column; **/
+    gap: 0.35rem;
   }
 }
 
@@ -676,14 +676,26 @@ problem-main {
 }
 .problem-detail-content {
   text-align: left;
-  word-break: break-all;
 }
-.problem-detail-content p {
-  word-wrap: break-word;
-
+.problem-detail-content pre {
+  /** word-wrap: break-word; **/
   margin-bottom: 10px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  text-overflow: ellipsis;
 }
-
+.problem-detail-popup {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80vh;
+  /** overflow-x: auto; **/
+  padding: 40px 20px 20px; /* 상단 패딩 증가 */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow-y: auto;
+}
 .problem-list {
   display: grid; /* Grid 레이아웃을 활성화 */
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -708,7 +720,6 @@ problem-main {
   justify-content: space-between;
   height: 100%;
   padding: 1rem;
-
 
 }
 
@@ -738,7 +749,6 @@ problem-main {
 }
 .problem-text {
   flex-grow: 1;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -757,18 +767,7 @@ problem-main {
 }
 
 
-.problem-detail-popup {
-  position: relative;
-  width: 80%;
-  max-width: 600px;
-  max-height: 80vh;
-  overflow-x: auto;
-  padding: 40px 20px 20px; /* 상단 패딩 증가 */
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 
-}
 
 .edit-btn {
   left: -50px;
