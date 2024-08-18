@@ -15,8 +15,6 @@ import com.moonspoon.moonspoon.testAnswer.TestAnswer;
 import com.moonspoon.moonspoon.testAnswer.TestAnswerRepository;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
-import com.moonspoon.moonspoon.workbook.Workbook;
-import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,11 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,10 +43,6 @@ public class TestService {
         SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(sharedWorkbookId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제집입니다.")
         );
-        //사용자 예외
-        if(!sharedWorkbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
         return sharedWorkbook;
     }
 
