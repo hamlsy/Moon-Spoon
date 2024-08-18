@@ -133,12 +133,13 @@ body, html {
   color: #191f28;
   min-height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 
 .content {
   max-width: 1200px;
-  margin: 80px auto 0;
+  margin: 60px auto 0px;
   padding: 2rem;
   flex: 1;
 }
@@ -178,13 +179,6 @@ body, html {
   font-weight: bold;
 }
 
-.content {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
-
-  margin: 40px;
-}
 
 .page-title {
   text-align: center;
