@@ -25,8 +25,8 @@
           <div v-if="updateIndex !== workbook.id" @click="goWorkbookDetail(workbook.id)">
             <div class="workbook-content">
               <div class="workbook-main">
-                <h3>{{ workbook.title }}</h3>
-                <p>{{ workbook.content }}</p>
+                <h3>{{ truncateText(workbook.title) }}</h3>
+                <p>{{ truncateText(workbook.content) }}</p>
               </div>
               <div class="workbook-info">
                 <p>문제 수: {{ workbook.problemCount }}</p>
@@ -326,6 +326,10 @@ export default {
             })
       }
     },
+    truncateText(text, maxLength = 25) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
   },
 
 
@@ -335,9 +339,8 @@ export default {
 <style scoped>
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
 body, html {
-  margin: 0;
-  padding: 0;
   height: 100%;
+
   font-family: 'Noto Sans KR', sans-serif;
 }
 /** slide fade **/
@@ -360,6 +363,7 @@ body, html {
   color: #191f28;
   min-height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
 }
 
@@ -369,12 +373,12 @@ body, html {
   max-width: 1200px;
   margin: 80px auto 0px;
   padding: 10px;
+  display: flex;
 }
 
 .content {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
   flex: 1;
 }
 

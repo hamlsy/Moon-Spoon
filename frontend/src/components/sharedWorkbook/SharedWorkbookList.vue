@@ -19,7 +19,7 @@
       <section class="workbook-grid">
         <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card" @click="goToWorkbookDetail(workbook.id)" @mouseover="hoveredWorkbook = workbook.id" @mouseleave="hoveredWorkbook = null">
           <div class="workbook-info">
-            <h3>{{ workbook.title }}</h3>
+            <h3>{{ truncateText(workbook.title) }}</h3>
             <p>작성자: {{ workbook.author }}</p>
             <p>작성일: {{ formatDate(workbook.sharedDate) }}</p>
 <!--            <p>댓글: {{ workbook.commentCount }}</p>-->
@@ -77,6 +77,9 @@ export default {
     formatDate(dateString) {
       return dayjs(dateString).format('YY.MM.DD HH:mm');
     },
+    truncateText(text, maxLength = 30) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
   },
   created() {
     this.fetchSharedWorkbook();
@@ -106,14 +109,15 @@ export default {
   color: #191f28;
   min-height: 100vh;
   display: flex;
+  width: 100%;
   flex-direction: column;
   font-family: 'Noto Sans KR', sans-serif;
+
 }
 
 .content {
   max-width: 1200px;
-  width: 120vh;
-  margin: 80px auto 0;
+  margin: 80px auto 0px;
   padding: 2rem;
   flex: 1;
 }
@@ -165,6 +169,7 @@ export default {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
+  justify-content: center;
 }
 
 .workbook-card {
@@ -175,6 +180,7 @@ export default {
   cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  word-break: break-all;
 }
 
 .workbook-card:hover {

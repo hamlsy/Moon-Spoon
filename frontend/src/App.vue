@@ -1,17 +1,22 @@
 <template>
-  <main>
+  <main @click="handleGlobalClick">
     <nav class="navbar">
-      <div class="navbar-container">
-        <div class="navbar-brand">
+      <div class="navbar-container" >
+        <div class="navbar-brand" >
           <router-link to="/mainPage" class="logo"><a style="color: #FFD700">Moon</a>-Spoon🥄</router-link>
         </div>
-        <ul class="navbar-menu">
-          <li><router-link to="/mainPage" class="nav-link">홈</router-link></li>
-          <li><router-link to="/noticeList" class="nav-link">공지사항</router-link></li>
-          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link">로그인</router-link></li>
-          <li v-if="isLogin"><a @click="logout" class="nav-link">로그아웃</a></li>
-          <li><router-link to="/user/signup" class="nav-link">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link">프로필</a></li>
+        <button class="navbar-toggle" @click.stop="toggleMenu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <ul class="navbar-menu" :class="{ 'active': menuActive }" @click.stop>
+          <li><router-link to="/mainPage" class="nav-link" @click.native="closeMenu">홈</router-link></li>
+          <li><router-link to="/noticeList" class="nav-link" @click.native="closeMenu">공지사항</router-link></li>
+          <li v-if="!isLogin"><router-link to="/user/login" class="nav-link" @click.native="closeMenu">로그인</router-link></li>
+          <li v-if="isLogin"><a @click="logout" class="nav-link" @click.native="closeMenu">로그아웃</a></li>
+          <li><router-link to="/user/signup" class="nav-link" @click.native="closeMenu">회원가입</router-link></li>
+          <li><a @click="notValid" class="nav-link" @click.native="closeMenu">프로필</a></li>
         </ul>
       </div>
     </nav>
@@ -21,12 +26,15 @@
 
 <script>
 
+import axios from "axios";
+
 export default {
   name: 'App',
   data() {
     return {
       isLogin: false,
       token: localStorage.getItem('token'),
+      menuActive: false
     }
   },
   methods: {
@@ -41,11 +49,59 @@ export default {
       localStorage.removeItem("token");
       this.$router.go(0);
     },
+    toggleMenu() {
+      this.menuActive = !this.menuActive;
+    },
+    closeMenu() {
+      this.menuActive = false;
+    },
+    handleGlobalClick() {
+      if (this.menuActive) {
+        this.closeMenu();
+      }
+    },
+    checkTokenExpiration() {
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
+      const now = Date.now();
+
+      if (tokenExpiration && now > parseInt(tokenExpiration)) {
+        this.autoLogout();
+      }
+    },
+    autoLogout() {
+      // 토큰 및 만료 시간 제거
+      localStorage.removeItem('token');
+      localStorage.removeItem('tokenExpiration');
+      // 로그아웃 후 로그인 페이지로 리디렉션
+      this.$router.push('/mainPage');
+    }
+
+
+
+
   },
   created() {
     this.checkLogin();
+    this.checkTokenExpiration();
+    // 주기적인 토큰 만료 검사 (예: 1분마다)
+    setInterval(this.checkTokenExpiration, 60000);
 
+    // Axios 인터셉터 설정
+    axios.interceptors.request.use(request => {
+      const token = localStorage.getItem('token');
+      const tokenExpiration = localStorage.getItem('tokenExpiration');
+      const now = Date.now();
+
+      if (token && tokenExpiration && now > parseInt(tokenExpiration)) {
+        this.autoLogout();
+      }
+
+      return request;
+    }, error => {
+      return Promise.reject(error);
+    });
   },
+
   head() {
     return {
       title: "Moon-Spoon",

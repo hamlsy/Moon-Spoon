@@ -46,6 +46,11 @@ export default {
             alert("로그인 성공!");
             const token = JSON.stringify(res.headers.get('Authorization')).replaceAll(`"`, "");
             localStorage.setItem("token", token);
+
+            //토큰 만료시간 18h
+            const expirationTime = Date.now() + 18 * 60 * 60 * 1000;
+            localStorage.setItem('tokenExpiration', expirationTime);
+
             this.$router.push("/mainPage");
             console.log("로그인 성공", res);
           })

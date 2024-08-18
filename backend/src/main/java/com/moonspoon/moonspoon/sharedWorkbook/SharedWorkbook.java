@@ -24,7 +24,10 @@ public class SharedWorkbook {
     @Column(name = "sharedWorkbook_id")
     private Long id;
 
+    @Column(columnDefinition = "TEXT")
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     private int testCount;

@@ -2,10 +2,14 @@
   <div class="main-page">
 
     <main class="content">
+      <button @click="goBack" class="back-button">← 뒤로가기</button>
       <div class="notice-container">
-        <button @click="goBack" class="back-button">← 뒤로가기</button>
 
         <div class="notice-detail">
+          <div v-if="isAdmin" class="admin-actions">
+            <button v-if="isAdmin" @click="editNotice" class="edit-button">수정</button>
+            <button v-if="isAdmin" @click="deleteNotice" class="delete-button">삭제</button>
+          </div>
           <h1 class="notice-title">
             <span class="notice-tag">[공지]</span>
             {{ notice.title }}
@@ -15,10 +19,7 @@
             <span>작성시간: {{ formatDate(notice.createDate) }}</span>
             <span v-if="notice.updateDate">수정시간: {{ formatDate(notice.updateDate) }}</span>
           </div>
-          <div v-if="isAdmin" class="admin-actions">
-            <button v-if="isAdmin" @click="editNotice" class="edit-button">수정</button>
-            <button v-if="isAdmin" @click="deleteNotice" class="delete-button">삭제</button>
-          </div>
+
           <pre class="notice-content" v-html="notice.content"></pre>
         </div>
 
@@ -138,11 +139,12 @@ body, html {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
 .content {
   max-width: 1200px;
-  margin: 80px 20px 0;
+  margin: 80px auto 0;
   padding: 2rem;
   flex: 1;
 }
@@ -181,24 +183,18 @@ body, html {
   text-decoration: none;
   font-weight: bold;
 }
-.content {
-  display: flex;
-  justify-content: center;
-  padding: 1rem;
 
-}
 .notice-container {
   width: 100%;
   max-width: 1000px;
   background-color: white;
   border-radius: 12px;
-  padding: 2rem;
   position: relative;
+  margin: auto;
   min-height: calc(100vh - 200px); /* 대략적인 높이 조정 */
-
 }
 .back-button {
-  position: absolute;
+  position: relative;
   top: 1rem;
   left: 1rem;
   background: none;
@@ -213,6 +209,8 @@ body, html {
   padding: 2rem;
   margin-top: 3rem;
   border-top: 3px solid darkgray;
+  word-break: break-all;
+
 }
 
 .notice-title {
@@ -234,6 +232,9 @@ body, html {
 .notice-content {
   line-height: 1.6;
   height: 100%;
+  white-space: pre-wrap; /* 공백과 줄 바꿈을 유지하면서 줄 바꿈 */
+  word-wrap: break-word; /* 긴 단어가 넘치지 않도록 줄 바꿈 */
+
 }
 .notice-tag {
   color: red;
@@ -262,6 +263,15 @@ body, html {
   background-color: #f44336;
   color: white;
 }
+.edit-button, .delete-button{
+  position: relative;
+  top: -1rem;
+}
 
+@media (max-width: 500px){
+  .content {
+    padding: 0px;
+  }
 
+}
 </style>

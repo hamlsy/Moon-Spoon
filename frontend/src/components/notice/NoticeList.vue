@@ -9,7 +9,7 @@
           <div v-for="notice in paginatedNotices" :key="notice.id" class="notice-item" @click="goToDetail(notice.id)">
             <span class="notice-tag">[공지] </span>
             <pre> </pre>
-            <span class="notice-title"> {{ notice.title }}</span>
+            <span class="notice-title"> {{ truncateText(notice.title) }}</span>
             <span class="notice-info">
             <span>{{ notice.author }}</span>
             <span> {{ formatDate(notice.createDate) }}</span>
@@ -108,7 +108,10 @@ export default {
     },
     formatDate(dateString) {
       return dayjs(dateString).format('YY.MM.DD HH:mm');
-    }
+    },
+    truncateText(text, maxLength = 20) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
   },
   created() {
     this.checkAdmin();
@@ -276,5 +279,11 @@ body, html {
   background-color: #FFD700;
   color: white;
   border-color: #FFD700;
+}
+
+@media(max-width: 500px){
+  .notice-list{
+    overflow: auto;
+  }
 }
 </style>
