@@ -108,7 +108,7 @@
         <p>문제집: {{ workbookTitle }}</p>
         <p>맞힌 개수: {{ resultInfo.correctCount }}</p>
         <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
-        <p>점수: {{ resultInfo.score }}점</p>
+        <p>점수: {{ resultInfo.score.toFixed(2) }}점</p>
         <div class="popup-buttons">
           <button @click="finishGrading">확인</button>
         </div>

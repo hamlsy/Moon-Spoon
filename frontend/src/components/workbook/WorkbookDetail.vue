@@ -296,7 +296,7 @@ export default {
         query: {
           problemCount: this.testSettings.problemCount,
           random: this.testSettings.random,
-          sortOrder: this.testSettings.sortOrder,
+          sortOrder: this.testSettings.order,
           workbookId: this.workbookId,
           workbookTitle: this.workbookTitle
         }
@@ -676,9 +676,11 @@ problem-main {
 }
 .problem-detail-content {
   text-align: left;
+  word-break: break-all;
 }
 .problem-detail-content p {
   word-wrap: break-word;
+
   margin-bottom: 10px;
 }
 
@@ -760,11 +762,12 @@ problem-main {
   width: 80%;
   max-width: 600px;
   max-height: 80vh;
-  overflow-y: auto;
+  overflow-x: auto;
   padding: 40px 20px 20px; /* 상단 패딩 증가 */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+
 }
 
 .edit-btn {
