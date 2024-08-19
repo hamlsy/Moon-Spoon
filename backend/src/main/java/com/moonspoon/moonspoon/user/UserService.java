@@ -6,16 +6,17 @@ import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserAdminRoleResponse;
-import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserProfileResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -61,9 +62,9 @@ public class UserService {
         isDuplicatedName(dto.getName());
     }
 
-    public UserInfoResponse getUserInfo(){
-        User user = getCurrentUser();
-        UserInfoResponse response = UserInfoResponse.fromEntity(user);
+    public UserProfileResponse getUserProfile(){
+        User user = userRepository.findByUsernameWithWorkbookAndSharedWorkbook(getCurrentUsername());
+        UserProfileResponse response = UserProfileResponse.fromEntity(user);
         return response;
     }
 
@@ -80,11 +81,15 @@ public class UserService {
     }
 
     private User getCurrentUser(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         User user = userRepository.findByUsername(username);
         if(user == null){
             throw new NotUserException("존재하지 않는 유저입니다.");
         }
         return user;
+    }
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }

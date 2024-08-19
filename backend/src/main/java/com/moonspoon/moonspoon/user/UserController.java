@@ -4,18 +4,14 @@ import com.moonspoon.moonspoon.dto.request.user.CheckNameRequest;
 import com.moonspoon.moonspoon.dto.request.user.CheckUsernameRequest;
 import com.moonspoon.moonspoon.dto.request.user.UserSignupRequest;
 
-import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
-
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserAdminRoleResponse;
-import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserProfileResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
-import com.moonspoon.moonspoon.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -41,9 +37,9 @@ public class UserController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/getInfo")
-    public ResponseEntity<UserInfoResponse> getUserInfo(){
-        UserInfoResponse response = userService.getUserInfo();
+    @GetMapping("/getProfile")
+    public ResponseEntity<UserProfileResponse> getUserProfile(){
+        UserProfileResponse response = userService.getUserProfile();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
