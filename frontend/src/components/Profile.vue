@@ -3,7 +3,7 @@
     <main class="content">
       <section class="hero slide-in-fade">
         <h1 class="main-title">내 프로필</h1>
-        <p class="subtitle">{{ userData.nickname }}님의 Moon-Spoon 활동 정보</p>
+        <p class="subtitle">{{ userData.name }}님의 Moon-Spoon 활동 정보</p>
       </section>
 
       <section class="profile-info">
@@ -11,10 +11,10 @@
           <div class="card-icon">👤</div>
           <h2>기본 정보</h2>
           <ul>
-            <li><strong>이름(닉네임):</strong> {{ userData.nickname }}</li>
+            <li><strong>이름(닉네임):</strong> {{ userData.name }}</li>
             <li><strong>아이디:</strong> {{ userData.username }}</li>
-            <li><strong>가입날짜:</strong> {{ userData.joinDate }}</li>
-            <li><strong>회원 등급:</strong> {{ userData.membershipLevel }}</li>
+            <li><strong>가입날짜:</strong> {{ userData.signupDate }}</li>
+            <li><strong>회원 등급:</strong> {{ userData.role }}</li>
           </ul>
         </div>
 
@@ -22,12 +22,12 @@
           <div class="card-icon">📊</div>
           <h2>활동 통계</h2>
           <ul>
-            <li><strong>내 문제집 수:</strong> {{ userData.myWorkbooksCount }}</li>
-            <li><strong>공유한 문제집 수:</strong> {{ userData.sharedWorkbooksCount }}</li>
-            <li><strong>내 문제집 테스트 수:</strong> {{ userData.myWorkbookTestsCount }}</li>
-            <li><strong>공유 문제집 테스트 수:</strong> {{ userData.sharedWorkbookTestsCount }}</li>
-            <li><strong>내 댓글 수:</strong> {{ userData.commentsCount }}</li>
-            <li><strong>방문 수:</strong> {{ userData.visitCount }}</li>
+            <li><strong>내 문제집 수:</strong> {{ userData.workbookCount }}</li>
+            <li><strong>공유한 문제집 수:</strong> {{ userData.sharedWorkbookCount }}</li>
+            <li><strong>내 문제집 테스트 수:</strong> {{ userData.workbookTestCount }}</li>
+            <li><strong>공유 문제집 테스트 수:</strong> {{ userData.sharedWorkbookTestCount }}</li>
+<!--            <li><strong>내 댓글 수:</strong> {{ userData.commentsCount }}</li>-->
+<!--            <li><strong>방문 수:</strong> {{ userData.visitCount }}</li>-->
           </ul>
         </div>
       </section>
@@ -54,22 +54,30 @@ export default {
   data() {
     return {
       userData: {
-        nickname: '문스푼러',
-        username: 'moonspoon123',
-        joinDate: '2023-09-15',
-        membershipLevel: '골드',
-        myWorkbooksCount: 15,
-        sharedWorkbooksCount: 5,
-        myWorkbookTestsCount: 50,
-        sharedWorkbookTestsCount: 30,
-        commentsCount: 25,
-        visitCount: 100
+        name: '',
+        username: '',
+        signupDate: '',
+        role: '',
+        myWorkbooksCount: '',
+        sharedWorkbooksCount: '',
+        myWorkbookTestsCount: '',
+        sharedWorkbookTestsCount: '',
+        // commentsCount: '',
+        // visitCount: 100
       },
-      recentActivities: [
-        { id: 1, description: '새 문제집 "JavaScript 기초" 생성' },
-        { id: 2, description: '"Python 고급" 문제집 공유' },
-        { id: 3, description: '"데이터 구조" 문제집 테스트 완료' }
-      ]
+      // recentActivities: [
+      //   { id: 1, description: '새 문제집 "JavaScript 기초" 생성' },
+      //   { id: 2, description: '"Python 고급" 문제집 공유' },
+      //   { id: 3, description: '"데이터 구조" 문제집 테스트 완료' }
+      // ]
+    }
+  },
+  created() {
+    this.fetchProfile;
+  },
+  methods: {
+    getProfile(){
+
     }
   }
 }

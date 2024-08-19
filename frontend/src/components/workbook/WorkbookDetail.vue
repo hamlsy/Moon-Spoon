@@ -95,8 +95,12 @@
           <p>출제 순서:</p>
           <div class="radio-group">
             <label>
-              <input type="radio" v-model="testSettings.order" value="none" />
-              <span>기본 값</span>
+              <input type="radio" v-model="testSettings.order" value="asc" checked/>
+              <span>오름차순</span>
+            </label>
+            <label>
+              <input type="radio" v-model="testSettings.order" value="desc" />
+              <span>내림차순</span>
             </label>
             <label>
               <input type="radio" v-model="testSettings.order" value="correctRateAsc" />
@@ -105,14 +109,6 @@
             <label>
               <input type="radio" v-model="testSettings.order" value="correctRateDesc" />
               <span>정답률 높은 순</span>
-            </label>
-            <label>
-              <input type="radio" v-model="testSettings.order" value="asc" />
-              <span>오름차순</span>
-            </label>
-            <label>
-              <input type="radio" v-model="testSettings.order" value="desc" />
-              <span>내림차순</span>
             </label>
           </div>
         </div>
