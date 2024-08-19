@@ -20,15 +20,15 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "sharedWorkbook_id")
     private SharedWorkbook sharedWorkbook;
 
-    @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "test", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<TestAnswer> testAnswers = new ArrayList<>();
 
     private String name;

@@ -16,7 +16,7 @@
           <li v-if="!isLogin"><router-link to="/user/login" class="nav-link" @click.native="closeMenu">로그인</router-link></li>
           <li v-if="isLogin"><a @click="logout" class="nav-link" @click.native="closeMenu">로그아웃</a></li>
           <li><router-link to="/user/signup" class="nav-link" @click.native="closeMenu">회원가입</router-link></li>
-          <li><a @click="notValid" class="nav-link" @click.native="closeMenu">프로필</a></li>
+          <li><router-link to="/profile" class="nav-link" @click.native="closeMenu">프로필</router-link></li>
         </ul>
       </div>
     </nav>

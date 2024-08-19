@@ -35,14 +35,14 @@ public class Workbook {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "workbook", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
     private List<Problem> problems = new ArrayList<>();
 
-    @OneToOne(mappedBy = "workbook", cascade = CascadeType.REMOVE)
+    @OneToOne(mappedBy = "workbook", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private SharedWorkbook sharedWorkbook;
 
     @Builder

@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: 'ProfilePage',
   data() {
@@ -62,6 +64,7 @@ export default {
         sharedWorkbooksCount: '',
         myWorkbookTestsCount: '',
         sharedWorkbookTestsCount: '',
+        token: localStorage.getItem('token'),
         // commentsCount: '',
         // visitCount: 100
       },
@@ -73,11 +76,21 @@ export default {
     }
   },
   created() {
-    this.fetchProfile;
+    this.getProfile();
   },
   methods: {
     getProfile(){
-
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get('/api/user/getProfile',{headers})
+          .then((res) => {
+            this.userData = res.data;
+            console.log(res, "get profile data");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
     }
   }
 }
