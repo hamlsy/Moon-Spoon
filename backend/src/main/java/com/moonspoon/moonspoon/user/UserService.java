@@ -63,8 +63,13 @@ public class UserService {
     }
 
     public UserProfileResponse getUserProfile(){
-        User user = userRepository.findByUsernameWithWorkbookAndSharedWorkbook(getCurrentUsername());
+        User user = userRepository.findByUsernameWithWorkbookAndSharedWorkbookAndTest(getCurrentUsername());
         UserProfileResponse response = UserProfileResponse.fromEntity(user);
+        if(user.getRole().name().equals("member")){
+            response.setRole("일반 회원");
+        }else{
+            response.setRole("관리자");
+        }
         return response;
     }
 

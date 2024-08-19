@@ -1,5 +1,7 @@
 package com.moonspoon.moonspoon.problem;
 
+import com.moonspoon.moonspoon.user.User;
+import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
@@ -36,6 +38,7 @@ import java.util.stream.Collectors;
 public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
+    private final UserRepository userRepository;
     private Map<String, List<TestResultRequest>> storedLists = new ConcurrentHashMap<>();
 
     @Transactional
@@ -224,6 +227,10 @@ public class ProblemService {
                 correctCount++;
             }
         }
+        //내 문제집 테스트 횟수 증가
+        User user = getCurrentUser();
+        user.addWorkbookTestCount();
+
         TestResultSubmitResponse response = TestResultSubmitResponse.builder()
                 .correctCount(correctCount)
                 .incorrectCount(size-correctCount)
@@ -266,6 +273,12 @@ public class ProblemService {
         validateUserAndWorkbook(workbookId);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         this.storedLists.put(username, listDto);
+    }
+
+    private User getCurrentUser(){
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userRepository.findByUsername(username);
+        return user;
     }
 
 }

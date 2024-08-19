@@ -17,8 +17,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u " +
             "join fetch u.workbooks w " +
             "join fetch u.sharedWorkbooks s " +
+            "join fetch u.tests " +
             "where u.username = :username ")
-    User findByUsernameWithWorkbookAndSharedWorkbook(@Param("username") String username);
+    User findByUsernameWithWorkbookAndSharedWorkbookAndTest(@Param("username") String username);
 
 
 }

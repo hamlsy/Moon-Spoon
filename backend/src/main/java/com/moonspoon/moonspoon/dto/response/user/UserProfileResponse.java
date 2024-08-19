@@ -19,10 +19,14 @@ public class UserProfileResponse {
 
     private int workbookCount;
     private int sharedWorkbookCount;
-    private int testSharedWorkbookCount;
+    private int workbookTestCount;
+    private int sharedWorkbookTestCount;
 
     @Builder
-    public UserProfileResponse(String username, String name, LocalDateTime signupDate, String role, int visitCount, int workbookCount, int sharedWorkbookCount, int testSharedWorkbookCount) {
+    public UserProfileResponse(String username, String name, LocalDateTime signupDate,
+                               String role, int visitCount, int workbookCount,
+                               int sharedWorkbookCount, int workbookTestCount,
+                               int sharedWorkbookTestCount) {
         this.username = username;
         this.name = name;
         this.signupDate = signupDate;
@@ -30,13 +34,19 @@ public class UserProfileResponse {
         this.visitCount = visitCount;
         this.workbookCount = workbookCount;
         this.sharedWorkbookCount = sharedWorkbookCount;
-        this.testSharedWorkbookCount = testSharedWorkbookCount;
+        this.workbookTestCount = workbookTestCount;
+        this.sharedWorkbookTestCount = sharedWorkbookTestCount;
+
     }
 
     public static UserProfileResponse fromEntity(User user){
         return UserProfileResponse.builder()
                 .username(user.getUsername())
                 .signupDate(user.getSignupDate())
+                .workbookCount(user.getWorkbooks().size())
+                .sharedWorkbookCount(user.getSharedWorkbooks().size())
+                .workbookTestCount(user.getWorkbookTestCount())
+                .sharedWorkbookTestCount(user.getTests().size())
                 .name(user.getName())
                 .build();
     }

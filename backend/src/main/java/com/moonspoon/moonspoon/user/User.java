@@ -38,6 +38,8 @@ public class User {
 
     private LocalDateTime signupDate;
 
+    private int workbookTestCount;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
@@ -62,5 +64,7 @@ public class User {
         this.role = role;
     }
 
-
+    public void addWorkbookTestCount(){
+        this.workbookTestCount++;
+    }
 }
