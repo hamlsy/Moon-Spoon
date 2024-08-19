@@ -16,7 +16,7 @@
           <li v-if="!isLogin"><router-link to="/user/login" class="nav-link" @click.native="closeMenu">로그인</router-link></li>
           <li v-if="isLogin"><a @click="logout" class="nav-link" @click.native="closeMenu">로그아웃</a></li>
           <li><router-link to="/user/signup" class="nav-link" @click.native="closeMenu">회원가입</router-link></li>
-          <li><router-link to="/profile" class="nav-link" @click.native="closeMenu">프로필</router-link></li>
+          <li><a @click="goProfile" to="/profile" class="nav-link" @click.native="closeMenu">프로필</a></li>
         </ul>
       </div>
     </nav>
@@ -74,6 +74,13 @@ export default {
       localStorage.removeItem('tokenExpiration');
       // 로그아웃 후 로그인 페이지로 리디렉션
       this.$router.push('/mainPage');
+    },
+    goProfile(){
+      if(!this.token){
+        alert("로그인이 필요한 서비스입니다.");
+      }else{
+        this.$router.push("/profile");
+      }
     }
 
 

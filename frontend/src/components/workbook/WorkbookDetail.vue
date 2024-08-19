@@ -149,7 +149,7 @@ export default {
       testSettings: {
         problemCount: 1,
         random: false,
-        sortOrder: 'asc'
+        order: 'asc'
       },
       showDeletePopup: false,
       problemToDelete: null,

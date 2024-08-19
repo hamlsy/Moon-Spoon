@@ -119,14 +119,18 @@ export default {
           })
     },
     startTest() {
-      this.$router.push({
-        path: `/sharedProblemTest/${this.sharedWorkbookId}`,
-        query: {
-          sharedWorkbookId: this.sharedWorkbookId,
-          sharedWorkbookTitle: this.sharedWorkbook.title,
-          random: this.sharedWorkbook.random
-        }
-      })
+      if (!this.token) {
+        alert("로그인이 필요한 서비스입니다.");
+      }else{
+        this.$router.push({
+          path: `/sharedProblemTest/${this.sharedWorkbookId}`,
+          query: {
+            sharedWorkbookId: this.sharedWorkbookId,
+            sharedWorkbookTitle: this.sharedWorkbook.title,
+            random: this.sharedWorkbook.random
+          }
+        })
+      }
     },
     deleteWorkbook() {
       const headers = {

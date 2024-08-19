@@ -1,9 +1,10 @@
 <template>
   <div class="profile-page">
     <main class="content">
-      <section class="hero slide-in-fade">
-        <h1 class="main-title">내 프로필</h1>
-        <p class="subtitle">{{ userData.name }}님의 Moon-Spoon 활동 정보</p>
+      <section class="hero">
+        <h1 class="main-title slide-in-fade">내 프로필</h1>
+        <hr>
+        <p class="subtitle slide-in-fade">{{ userData.name }}님의 Moon-Spoon 활동 정보</p>
       </section>
 
       <section class="profile-info">
@@ -13,7 +14,7 @@
           <ul>
             <li><strong>이름(닉네임):</strong> {{ userData.name }}</li>
             <li><strong>아이디:</strong> {{ userData.username }}</li>
-            <li><strong>가입날짜:</strong> {{ userData.signupDate }}</li>
+            <li><strong>가입날짜:</strong> {{ formatDate(userData.signupDate) }}</li>
             <li><strong>회원 등급:</strong> {{ userData.role }}</li>
           </ul>
         </div>
@@ -50,6 +51,7 @@
 
 <script>
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default {
   name: 'ProfilePage',
@@ -80,6 +82,10 @@ export default {
   },
   methods: {
     getProfile(){
+      if (!this.token) {
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.go(-1);
+      }
       const headers = {
         'Authorization': this.token
       };
@@ -91,6 +97,9 @@ export default {
           .catch((err) => {
             console.log(err, "ERROR");
           })
+    },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
     }
   }
 }
@@ -111,23 +120,25 @@ export default {
 .content {
   max-width: 1100px;
   width: 85%;
-  margin: 80px auto 0;
-  padding: 2rem;
+  margin: 10px auto 0;
+  padding: 1rem;
   flex: 1;
 }
 
 .hero {
   text-align: center;
-  padding: 3rem 0;
+  padding: 2rem 0;
   background-color: white;
   border-radius: 12px;
-  margin-bottom: 3rem;
+  margin-bottom: 0rem;
+
 }
 
 .main-title {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: black;
+
 }
 
 .subtitle {
@@ -138,7 +149,7 @@ export default {
 .profile-info {
   display: flex;
   justify-content: space-between;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .profile-card {

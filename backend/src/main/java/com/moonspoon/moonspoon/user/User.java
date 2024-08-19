@@ -52,7 +52,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Test> tests = new ArrayList<>();
 
 
