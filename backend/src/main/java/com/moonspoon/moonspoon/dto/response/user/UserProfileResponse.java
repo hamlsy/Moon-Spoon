@@ -43,10 +43,6 @@ public class UserProfileResponse {
         return UserProfileResponse.builder()
                 .username(user.getUsername())
                 .signupDate(user.getSignupDate())
-                .workbookCount(user.getWorkbooks().size())
-                .sharedWorkbookCount(user.getSharedWorkbooks().size())
-                .workbookTestCount(user.getWorkbookTestCount())
-                .sharedWorkbookTestCount(user.getTests().size())
                 .name(user.getName())
                 .build();
     }

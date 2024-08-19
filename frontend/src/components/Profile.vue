@@ -64,10 +64,10 @@ export default {
         sharedWorkbooksCount: '',
         myWorkbookTestsCount: '',
         sharedWorkbookTestsCount: '',
-        token: localStorage.getItem('token'),
         // commentsCount: '',
         // visitCount: 100
       },
+      token: localStorage.getItem('token'),
       // recentActivities: [
       //   { id: 1, description: '새 문제집 "JavaScript 기초" 생성' },
       //   { id: 2, description: '"Python 고급" 문제집 공유' },

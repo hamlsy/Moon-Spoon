@@ -11,6 +11,10 @@ import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
 import com.moonspoon.moonspoon.exception.NotUserException;
+import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbookRepository;
+import com.moonspoon.moonspoon.test.TestRepository;
+import com.moonspoon.moonspoon.workbook.Workbook;
+import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
@@ -26,7 +31,9 @@ import java.time.LocalDateTime;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final WorkbookRepository workbookRepository;
+    private final SharedWorkbookRepository sharedWorkbookRepository;
+    private final TestRepository testRepository;
 
     public UserResponse signup(UserSignupRequest dto){
         isDuplicatedUsername(dto.getUsername());
@@ -63,9 +70,18 @@ public class UserService {
     }
 
     public UserProfileResponse getUserProfile(){
-        User user = userRepository.findByUsernameWithWorkbookAndSharedWorkbookAndTest(getCurrentUsername());
+        User user = getCurrentUser();
+        int workbookCount = workbookRepository.countByUsername(user.getUsername());
+        int sharedWorkbookCount = sharedWorkbookRepository.countByUsername(user.getUsername());
+        int sharedWorkbookTestCount = testRepository.countByUsername(user.getUsername());
+
         UserProfileResponse response = UserProfileResponse.fromEntity(user);
-        if(user.getRole().name().equals("member")){
+
+        response.setWorkbookCount(workbookCount);
+        response.setSharedWorkbookCount(sharedWorkbookCount);
+        response.setSharedWorkbookTestCount(sharedWorkbookTestCount);
+
+        if(user.getRole().getValue().equals("user")){
             response.setRole("일반 회원");
         }else{
             response.setRole("관리자");
