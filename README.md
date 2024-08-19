@@ -107,35 +107,7 @@ S3
 ### Spring
 Docker, Nginx, EC2
 
-### 배포
-Github Action, CodeDeploy
-
-### 도메인 연결
-Route53, 가비아
-
-### Https 인증
-
-
-## 문제 해결
-### 문제 1: [ n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
-- 개요: 
-- 원인: []
-- 해결과정:
-  1. Fetch join
-  2. Batch size
-- 학습 내용: Fetch join 개념, Fetch Lazy 원리, 프록시
-
-### 문제 2: [ 엔티티 다수 업데이트 성능 문제 ] [#38](https://github.com/hamlsy/Moon-Spoon/pull/38#issue-2387878580)
-- 개요: 각 문제들의 정답 횟수를 업데이트하는 과정에서 발생한 성능 문제
-- 원인: []
-- 해결과정:
-  1. 반복 Update 쿼리
-  2. 벌크연산
-- 학습 내용: 
- 
-### 문제 3: [ 회원가입 동시성 문제 ] [#45](https://github.com/hamlsy/Moon-Spoon/issues/45#issuecomment-2212428574)
-- 개요: 회원가입 버튼을 연속으로 클릭 시 동일한 정보의 회원이 여러번 등록되는 문제
-- 원인: [ 회원가입 동시성을 고려하지 않음 ]
+직 동시성을 고려하지 않음 ]
 - 해결과정:
   1. Synchronized
   2. Unique Key
