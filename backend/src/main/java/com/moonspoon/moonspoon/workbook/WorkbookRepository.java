@@ -18,4 +18,8 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
 
     @Query("select w from Workbook w join fetch w.user u where w.id = :id")
     Optional<Workbook> findByIdWithUser(@Param("id") Long id);
+
+    @Query("select count(w) from Workbook w where w.user.username = :username ")
+    int countByUsername(@Param("username") String username);
+
 }

@@ -34,11 +34,11 @@ public class Problem {
     private int correctCount;
     private int incorrectCount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @OneToMany(mappedBy = "problem", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "problem", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<TestAnswer> testAnswers = new ArrayList<>();
 
 

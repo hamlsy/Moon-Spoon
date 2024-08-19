@@ -51,7 +51,7 @@ export default {
             const expirationTime = Date.now() + 18 * 60 * 60 * 1000;
             localStorage.setItem('tokenExpiration', expirationTime);
 
-            this.$router.push("/mainPage");
+            window.location.href = "/mainPage";
             console.log("로그인 성공", res);
           })
           .catch((res) => {

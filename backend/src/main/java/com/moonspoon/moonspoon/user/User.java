@@ -38,19 +38,21 @@ public class User {
 
     private LocalDateTime signupDate;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    private int workbookTestCount;
+
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
     private List<SharedWorkbook> sharedWorkbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Notice> notices = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
     private List<Test> tests = new ArrayList<>();
 
 
@@ -62,5 +64,7 @@ public class User {
         this.role = role;
     }
 
-
+    public void addWorkbookTestCount(){
+        this.workbookTestCount++;
+    }
 }

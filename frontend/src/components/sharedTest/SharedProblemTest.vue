@@ -106,6 +106,10 @@ export default {
   },
   methods: {
     getProblems(){
+      if (!this.token) {
+        alert("로그인이 필요한 서비스입니다.");
+        this.$router.go(-1);
+      }
       const headers = {
         'Authorization': this.token
       };

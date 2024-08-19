@@ -6,18 +6,24 @@ import com.moonspoon.moonspoon.dto.request.user.UserValidateNameRequest;
 
 import com.moonspoon.moonspoon.dto.response.error.DuplicateErrorResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserAdminRoleResponse;
-import com.moonspoon.moonspoon.dto.response.user.UserInfoResponse;
+import com.moonspoon.moonspoon.dto.response.user.UserProfileResponse;
 import com.moonspoon.moonspoon.dto.response.user.UserResponse;
 
 import com.moonspoon.moonspoon.exception.DuplicateUserException;
 import com.moonspoon.moonspoon.exception.NotUserException;
+import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbookRepository;
+import com.moonspoon.moonspoon.test.TestRepository;
+import com.moonspoon.moonspoon.workbook.Workbook;
+import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Service
@@ -25,7 +31,9 @@ import java.time.LocalDateTime;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final WorkbookRepository workbookRepository;
+    private final SharedWorkbookRepository sharedWorkbookRepository;
+    private final TestRepository testRepository;
 
     public UserResponse signup(UserSignupRequest dto){
         isDuplicatedUsername(dto.getUsername());
@@ -61,9 +69,23 @@ public class UserService {
         isDuplicatedName(dto.getName());
     }
 
-    public UserInfoResponse getUserInfo(){
+    public UserProfileResponse getUserProfile(){
         User user = getCurrentUser();
-        UserInfoResponse response = UserInfoResponse.fromEntity(user);
+        int workbookCount = workbookRepository.countByUsername(user.getUsername());
+        int sharedWorkbookCount = sharedWorkbookRepository.countByUsername(user.getUsername());
+        int sharedWorkbookTestCount = testRepository.countByUsername(user.getUsername());
+
+        UserProfileResponse response = UserProfileResponse.fromEntity(user);
+
+        response.setWorkbookCount(workbookCount);
+        response.setSharedWorkbookCount(sharedWorkbookCount);
+        response.setSharedWorkbookTestCount(sharedWorkbookTestCount);
+
+        if(user.getRole().getValue().equals("user")){
+            response.setRole("일반 회원");
+        }else{
+            response.setRole("관리자");
+        }
         return response;
     }
 
@@ -80,11 +102,15 @@ public class UserService {
     }
 
     private User getCurrentUser(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         User user = userRepository.findByUsername(username);
         if(user == null){
             throw new NotUserException("존재하지 않는 유저입니다.");
         }
         return user;
+    }
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 }
