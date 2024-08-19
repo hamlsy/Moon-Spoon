@@ -74,8 +74,7 @@ https://www.moonspoon.site
 
 
 ## ERD 구성
-
-![image](https://github.com/hamlsy/Moon-Spoon/assets/70877744/7f577b28-2fa1-4143-a617-e992d9f56694)
+![problem_workspace](https://github.com/user-attachments/assets/c2c4b393-7e11-4b24-98a9-ea3243f55d3a)
 
 ## API 문서
 api 문서 링크 ..
