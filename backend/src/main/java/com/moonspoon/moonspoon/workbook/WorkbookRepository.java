@@ -1,6 +1,8 @@
 package com.moonspoon.moonspoon.workbook;
 
 import com.moonspoon.moonspoon.workbook.Workbook;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +16,7 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
     "JOIN fetch w.user u " +
     "LEFT JOIN FETCH w.problems p " +
     "WHERE u.username = :username")
-    List<Workbook> findWorkbookWithUserAndProblems(@Param("username") String username);
+    Page<Workbook> findAllWithUserAndProblems(Pageable pageable, @Param("username") String username);
 
     @Query("select w from Workbook w join fetch w.user u where w.id = :id")
     Optional<Workbook> findByIdWithUser(@Param("id") Long id);
