@@ -5,15 +5,15 @@ import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
+import com.moonspoon.moonspoon.dto.response.problem.ProblemAllResponse;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemCreateResponse;
-import com.moonspoon.moonspoon.dto.response.problem.ProblemFindAllResponse;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
-import com.moonspoon.moonspoon.problem.ProblemService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +35,10 @@ public class ProblemController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<ProblemFindAllResponse> findAllProblem(@PathVariable("workbookId") Long workbookId){
-        ProblemFindAllResponse response = problemService.findAllWithWorkbookTitle(workbookId);
+    public ResponseEntity<ProblemAllResponse> findAllProblem(@PathVariable("workbookId") Long workbookId,
+                                                             @RequestParam(name="page", defaultValue = "0") int page,
+                                                             @RequestParam(name="size", defaultValue = "16") int size){
+        ProblemAllResponse response = problemService.findAll(workbookId, page, size);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

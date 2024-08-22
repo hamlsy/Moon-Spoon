@@ -346,9 +346,10 @@ export default {
       axios.get(`/api/workbook/all?page=${page - 1}&size=${this.pageSize}`, {headers})
           .then((res) => {
             this.workbooks = res.data.content;
-            this.filterWorkbooks();
             this.currentPage = page;
             this.totalPages = res.data.totalPages;
+
+            this.filterWorkbooks();
             console.log(res)
           })
           .catch((err) => {

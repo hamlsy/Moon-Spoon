@@ -55,6 +55,7 @@
             </div>
           </div>
         </div>
+
       </section>
       <!-- 문제 상세 팝업 -->
       <div v-if="showDetailPopup" class="popup-overlay" @click="closeDetailPopup">
@@ -70,7 +71,13 @@
           </div>
         </div>
       </div>
-
+      <div class="pagination">
+        <button v-for="page in totalPages" :key="page"
+                :class="{ 'active': currentPage === page }"
+                @click="getProblems(page)">
+          {{ page }}
+        </button>
+      </div>
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
     </main>
 
@@ -142,7 +149,7 @@ export default {
   name: 'WorkbookDetailPage',
   data() {
     return {
-      workbookTitle: "",
+      workbookTitle: '',
       problems: [],
       newproblem: { question: '', solution: '' },
       showPopup: false,
@@ -164,27 +171,35 @@ export default {
       workbookId: this.$route.fullPath.split("/").pop(),
       showDetailPopup: false,
       selectedProblem: null,
-
+      // Pagination
+      totalPages: 0,
+      currentPage: 1,
+      pageSize: 16
     }
   },
   methods: {
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
     },
-    getProblems(){
+    getProblems(page){
       const headers = {
         'Authorization': this.token
       };
       this.workbookId = this.$route.fullPath.split("/").pop();
-      axios.get(`/api/workbook/${this.workbookId}/problem/all`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/all?page=${page-1}&size=${this.pageSize}`, {headers})
           .then((res) => {
-            this.problems = res.data.problems.map((problem, index) => ({
+            this.workbookTitle = res.data.workbookTitle;
+            this.currentPage = page;
+            this.problems = res.data.problems.content.map((problem, index) => ({
               ...problem, displayNumber: index + 1
             }));
-            this.workbookTitle = res.data.workbookTitle;
+
+            this.totalPages = res.data.problems.totalPages;
             this.filterproblems();
+            console.log(res, "Get Problems");
           })
           .catch((error) => {
+            console.log(error);
             if(error.response.data.message ===  "JWT token is expired"){
               console.log(error.response.data.message);
               alert("토큰이 만료되었습니다. 다시 로그인하세요.");
@@ -352,8 +367,8 @@ export default {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
     },
   },
-  mounted() {
-    this.getProblems();
+  created() {
+    this.getProblems(1);
   }
 }
 </script>
@@ -791,5 +806,39 @@ problem-main {
   color: black;
   word-break: break-word;
   padding: 0 1rem;
+}
+/** **/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: #FFD700;
+  border: none;
+  color: #191f28;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.pagination button.active {
+  background-color: #1B2A49;
+  color: #fff;
+  font-weight: bold;
 }
 </style>
