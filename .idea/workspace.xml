@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/Profile.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Profile.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/login/LoginForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/login/LoginForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +205,7 @@
       <workItem from="1723180618352" duration="7832000" />
       <workItem from="1723785596895" duration="15174000" />
       <workItem from="1723892612667" duration="8445000" />
-      <workItem from="1724047819867" duration="9207000" />
+      <workItem from="1724047819867" duration="11162000" />
     </task>
     <servers />
   </component>
