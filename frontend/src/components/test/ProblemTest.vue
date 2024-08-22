@@ -2,7 +2,7 @@
   <div class="test-page">
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
-      <h2 class="test-name">{{ workbookTitle }}</h2>
+      <h2 class="test-name">{{ truncateText(workbookTitle) }}</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list">
         <div
@@ -189,7 +189,10 @@ export default {
 
       console.log("Test submitted:", this.userAnswers);
 
-    }
+    },
+    truncateText(text, maxLength = 40) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
   }
 }
 </script>
@@ -201,6 +204,8 @@ body, html {
   height: 100%;
 }
 .test-page{
+  display: flex;
+  height: 100vh;
   background-color: #FFFAF0;
 }
 
@@ -416,9 +421,11 @@ a {
 
 .sidebar {
   min-width: 2rem;
+  margin-top: 60px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
+  word-break: break-all;
 }
 
 .exit-btn {
@@ -436,6 +443,7 @@ a {
   padding: 10px;
   margin-bottom: 5px;
   cursor: pointer;
+  max-height: 2rem;
 }
 
 .problem-item.unanswered {
@@ -458,6 +466,7 @@ a {
   display: flex;
   flex-direction: column;
   overflow-y: auto; /* 세로 스크롤 추가 */
+  width: 90%;
   max-height: 100vh; /* 뷰포트 높이를 최대로 설정 */
 }
 

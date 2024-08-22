@@ -2,6 +2,7 @@
   <div class="test-page" >
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
+      <h2 class="test-name">{{ truncateText(sharedWorkbookTitle) }}</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list" >
         <div
@@ -219,6 +220,9 @@ export default {
             alert("ERROR OCCURRED!");
             console.log("ERROR", error);
           })
+    },
+    truncateText(text, maxLength = 40) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
 
   }
@@ -505,9 +509,11 @@ a {
 
 .sidebar {
   min-width: 2rem;
+  margin-top: 60px;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
+  word-break: break-all;
 }
 
 .exit-btn {

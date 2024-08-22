@@ -151,7 +151,7 @@ export default {
       updateWorkbook: {title: '', content: ''},
       totalPages: 0,
       currentPage: 1,
-      pageSize: 3
+      pageSize: 5
     }
   },
   created(){

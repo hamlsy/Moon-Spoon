@@ -72,11 +72,11 @@ public class ProblemService {
         return workbook;
     }
 
-    public ProblemAllResponse findAll(Long workbookId, int page, int size){
+    public ProblemAllResponse findAll(Long workbookId, String keyword, int page, int size){
         Workbook workbook = validateUserAndWorkbook(workbookId);
 
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
-        Page<Problem> problems = problemRepository.findAllByWorkbookId(workbookId, pageable);
+        Page<Problem> problems = problemRepository.findAllByWorkbookIdAndKeyword(workbookId, keyword.trim(), pageable);
         Page<ProblemResponse> responses = problems.map(ProblemResponse::fromEntity);
 
         ProblemAllResponse response = new ProblemAllResponse();

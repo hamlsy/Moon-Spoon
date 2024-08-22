@@ -11,7 +11,9 @@
 
       <section class="features">
         <div class="search-sort-container">
-          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />
+<!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
+          <input v-model="searchQuery" placeholder="문제 검색" />
+          <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
           <div class="sort-dropdown">
             <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
             <div v-if="showSortDropdown" class="dropdown-content">
@@ -186,7 +188,7 @@ export default {
         'Authorization': this.token
       };
       this.workbookId = this.$route.fullPath.split("/").pop();
-      axios.get(`/api/workbook/${this.workbookId}/problem/all?page=${page-1}&size=${this.pageSize}`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/all?keyword=${this.searchQuery}&page=${page-1}&size=${this.pageSize}`, {headers})
           .then((res) => {
             this.workbookTitle = res.data.workbookTitle;
             this.currentPage = page;
@@ -577,7 +579,25 @@ a {
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+.search-btn{
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 10px;
+  /** padding: 10px 24px; **/
+  padding-right: 24px;
+  padding-left: 14px;
 
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
 .start-test-btn {
   position: fixed;
@@ -841,4 +861,7 @@ problem-main {
   color: #fff;
   font-weight: bold;
 }
+
+/****/
+
 </style>
