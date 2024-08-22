@@ -46,9 +46,9 @@ public class SharedWorkbookService {
     }
 
     //전체 조회
-    public Page<SharedWorkbookResponse> findAllSharedWorkbook(int page, int size){
+    public Page<SharedWorkbookResponse> findAllSharedWorkbook(String keyword, int page, int size){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
-        Page<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAll(pageable);
+        Page<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAllWithKeyword(keyword.trim(), pageable);
         Page<SharedWorkbookResponse> responses = sharedWorkbooks.map(SharedWorkbookResponse::fromEntity);
         return responses;
     }

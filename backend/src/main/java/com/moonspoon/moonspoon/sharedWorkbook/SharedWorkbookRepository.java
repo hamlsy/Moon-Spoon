@@ -24,5 +24,8 @@ public interface SharedWorkbookRepository extends JpaRepository<SharedWorkbook, 
     @Query("select count(s) from SharedWorkbook s where s.user.username = :username")
     int countByUsername(@Param("username") String username);
 
-    Page<SharedWorkbook> findAll(Pageable pageable);
+    @Query("select s from SharedWorkbook s " +
+            "where lower(s.title) like lower(concat('%',:keyword,'%')) or " +
+            "lower(s.content) like lower(concat('%', :keyword, '%'))")
+    Page<SharedWorkbook> findAllWithKeyword(@Param("keyword") String keyword, Pageable pageable);
 }

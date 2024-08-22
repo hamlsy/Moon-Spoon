@@ -15,9 +15,12 @@
 <!--          <button @click="setCategory('all')" :class="{ active: currentCategory === 'all' }">전체 문제집</button>-->
 <!--        </div>-->
       </section>
-
+      <div class="search-sort-container">
+        <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색"/>
+        <button class="search-btn" @click="getSharedWorkbook(1)">🔎 검색</button>
+      </div>
       <section class="workbook-grid">
-        <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-card" @click="goToWorkbookDetail(workbook.id)" @mouseover="hoveredWorkbook = workbook.id" @mouseleave="hoveredWorkbook = null">
+        <div v-for="workbook in sharedWorkbooks" :key="workbook.id" class="workbook-card" @click="goToWorkbookDetail(workbook.id)" @mouseover="hoveredWorkbook = workbook.id" @mouseleave="hoveredWorkbook = null">
           <div class="workbook-info">
             <h3>{{ truncateText(workbook.title) }}</h3>
             <p>작성자: {{ workbook.author }}</p>
@@ -35,7 +38,7 @@
       <div class="pagination">
         <button v-for="page in totalPages" :key="page"
                 :class="{ 'active': currentPage === page }"
-                @click="getPage(page)">
+                @click="getSharedWorkbook(page)">
           {{ page }}
         </button>
       </div>
@@ -54,16 +57,14 @@ export default {
       currentCategory: 'recent',
       hoveredWorkbook: null,
       sharedWorkbooks: [],
+      searchQuery: '',
       totalPages: '',
       currentPage: 1,
       pageSize: 12
     }
   },
   computed: {
-    filteredWorkbooks() {
-      // 실제로는 여기서 카테고리에 따라 필터링을 구현해야 합니다
-      return this.sharedWorkbooks;
-    }
+
   },
   methods: {
     setCategory(category) {
@@ -75,24 +76,8 @@ export default {
     likeWorkbook(id) {
       console.log(`문제집 ${id}에 좋아요`);
     },
-    fetchSharedWorkbook(){
-      axios.get("/api/sharedWorkbook/all")
-          .then((res) => {
-            this.sharedWorkbooks = res.data;
-            console.log(res, "fetch data");
-          })
-          .catch((err) => {
-            console.log(err, "ERROR!");
-          })
-    },
-    formatDate(dateString) {
-      return dayjs(dateString).format('YY.MM.DD HH:mm');
-    },
-    truncateText(text, maxLength = 30) {
-      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
-    },
-    getPage(page){
-      axios.get(`/api/sharedWorkbook/all?page=${page - 1}&size=${this.pageSize}`)
+    getSharedWorkbook(page){
+      axios.get(`/api/sharedWorkbook/all?keyword=${this.searchQuery}&page=${page - 1}&size=${this.pageSize}`)
           .then((res) => {
             this.sharedWorkbooks = res.data.content;
             this.currentPage = page;
@@ -103,10 +88,17 @@ export default {
             console.log(err, "ERROR");
           })
     },
+    formatDate(dateString) {
+      return dayjs(dateString).format('YY.MM.DD HH:mm');
+    },
+    truncateText(text, maxLength = 30) {
+      return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
+    },
+
   },
   created() {
-    // this.fetchSharedWorkbook();
-    this.getPage(1);
+    this.getSharedWorkbook(1);
+
   }
 }
 </script>
@@ -140,7 +132,7 @@ export default {
 }
 
 .content {
-  max-width: 1200px;
+  /** max-width: 1200px; **/
   /** margin: 80px auto 0px; **/
   margin-top: 80px;
   padding: 2rem;
@@ -266,4 +258,41 @@ export default {
   font-weight: bold;
 }
 
+.search-sort-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  gap: 20px;
+}
+
+.search-sort-container input {
+  flex-grow: 1;
+  min-width: 200px;
+  max-width: 500px; /* 최대 너비를 고정 */
+  box-sizing: border-box;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+
+}
+.search-btn{
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 10px;
+  /** padding: 10px 24px; **/
+  padding-right: 24px;
+  padding-left: 14px;
+
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 </style>

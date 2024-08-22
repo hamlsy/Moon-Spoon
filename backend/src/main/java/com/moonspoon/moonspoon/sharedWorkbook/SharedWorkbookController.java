@@ -29,9 +29,11 @@ public class SharedWorkbookController {
 
     //전체 조회
     @GetMapping("/all")
-    public ResponseEntity<Page<SharedWorkbookResponse>> findAllSharedWorkbook(@RequestParam(name="page", defaultValue = "0") int page,
-                                                                              @RequestParam(name="size", defaultValue = "12") int size){
-        Page<SharedWorkbookResponse> responses = sharedWorkbookService.findAllSharedWorkbook(page, size);
+    public ResponseEntity<Page<SharedWorkbookResponse>> findAllSharedWorkbook(
+            @RequestParam(name="keyword", defaultValue = "") String keyword,
+            @RequestParam(name="page", defaultValue = "0") int page,
+            @RequestParam(name="size", defaultValue = "12") int size){
+        Page<SharedWorkbookResponse> responses = sharedWorkbookService.findAllSharedWorkbook(keyword, page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
