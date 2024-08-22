@@ -642,12 +642,19 @@ a {
 
 .max-count-btn {
   margin-left: 10px;
-  padding: 2px 5px;
+  padding: 4px 20px;
   background-color: #FFD700;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.8em;
+  transition: all 0.3s ease;
+}
+
+.max-count-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .checkbox-group label, .radio-group label {

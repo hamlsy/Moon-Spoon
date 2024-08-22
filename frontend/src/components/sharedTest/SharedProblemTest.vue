@@ -482,12 +482,14 @@ a {
   justify-content: space-between;
 }
 
-.submit-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
 
+.submit-btn {
+  position: relative;
+  bottom: -2rem;
+  margin-bottom: 1rem;
+  width: 13rem;
+  margin-left: auto;
+}
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -520,7 +522,7 @@ a {
 }
 /** **/
 .exit-btn, .navigation-buttons button, .submit-btn {
-  padding: 10px 20px;
+  padding: 10px 25px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
