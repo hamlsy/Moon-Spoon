@@ -422,6 +422,7 @@ a {
 .sidebar {
   min-width: 2rem;
   margin-top: 60px;
+  max-width: 22rem;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -468,6 +469,7 @@ a {
   overflow-y: auto; /* 세로 스크롤 추가 */
   width: 90%;
   max-height: 100vh; /* 뷰포트 높이를 최대로 설정 */
+  min-width: 12rem;
 }
 
 .problem-content {

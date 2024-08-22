@@ -66,16 +66,13 @@ public class WorkbookService {
         return WorkbookResponse.fromEntity(workbook);
     }
 
-    public Page<WorkbookResponse> findAll(int page, int size){
+    public Page<WorkbookResponse> findAll(String keyword, int page, int size){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
 
         Pageable pageable = PageRequest.of(page, size,  Sort.by("createDate").descending());
 
-        Page<Workbook> workbooks = workbookRepository.findAllWithUserAndProblems(pageable, username);
-        if(workbooks.isEmpty()){
-            throw new NotFoundException("문제집이 존재하지 않습니다.");
-        }
+        Page<Workbook> workbooks = workbookRepository.findAllWithUserAndProblemsAndKeyword(keyword.trim(), pageable, username);
         Page<WorkbookResponse> responses = workbooks.map(WorkbookResponse::fromEntity);
         return responses;
     }

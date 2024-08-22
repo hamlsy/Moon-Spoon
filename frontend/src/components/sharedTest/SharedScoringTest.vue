@@ -510,6 +510,7 @@ a {
 .sidebar {
   min-width: 2rem;
   margin-top: 60px;
+  max-width: 22rem;
   background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
@@ -556,6 +557,7 @@ a {
   overflow-y: auto;
   width: 90%;
   max-height: 100vh;
+  min-width: 12rem;
 }
 
 

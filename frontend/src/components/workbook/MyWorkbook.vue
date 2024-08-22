@@ -8,7 +8,9 @@
     </div>
 
     <div class="search-sort-container">
-      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>
+<!--      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>-->
+      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색"/>
+      <button class="search-btn" @click="getWorkbook(1)">🔎 검색</button>
       <div class="sort-dropdown">
         <button @click="toggleSortDropdown">정렬 <i class="fas fa-caret-down"></i></button>
         <div v-if="showSortDropdown" class="dropdown-content">
@@ -21,7 +23,7 @@
     </div>
     <main class="content">
       <div class="workbook-list">
-        <div v-for="workbook in filteredWorkbooks" :key="workbook.id" class="workbook-item">
+        <div v-for="workbook in workbooks" :key="workbook.id" class="workbook-item">
           <div v-if="updateIndex !== workbook.id" @click="goWorkbookDetail(workbook.id)">
             <div class="workbook-content">
               <div class="workbook-main">
@@ -63,7 +65,7 @@
       <div class="pagination">
         <button v-for="page in totalPages" :key="page"
                 :class="{ 'active': currentPage === page }"
-                @click="getPage(page)">
+                @click="getWorkbook(page)">
           {{ page }}
         </button>
       </div>
@@ -155,8 +157,8 @@ export default {
     }
   },
   created(){
-    // this.getWorkbook();
-    this.getPage(1);
+    this.getWorkbook(1);
+    // this.getPage(1);
   },
   methods: {
     startUpdate(workbookId) {
@@ -197,13 +199,16 @@ export default {
     goWorkbookDetail(workbookId){
       this.$router.push(`/workbookDetail/${workbookId}`);
     },
-    getWorkbook(){
+    getWorkbook(page){
       const headers = {
         'Authorization': this.token
       }
-      axios.get("/api/workbook/all", {headers})
+      axios.get(`/api/workbook/all?keyword=${this.searchQuery}&page=${page - 1}&size=${this.pageSize}`, {headers})
           .then((res) => {
-            this.workbooks = res.data;
+            this.workbooks = res.data.content;
+            this.currentPage = page;
+            this.totalPages = res.data.totalPages;
+
             this.filterWorkbooks();
             console.log("workbook loaded", res);
           }).catch((error) => {
@@ -279,9 +284,9 @@ export default {
       this.workbookToDelete = null;
     },
     filterWorkbooks() {
-      this.filteredWorkbooks = this.workbooks.filter(w =>
-          w.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+      // this.filteredWorkbooks = this.workbooks.filter(w =>
+      //     w.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+      // );
       this.sortWorkbooks(this.sortOrder);
     },
     toggleSortDropdown() {
@@ -339,23 +344,6 @@ export default {
     truncateText(text, maxLength = 25) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
-    getPage(page){
-      const headers = {
-        'Authorization': this.token
-      }
-      axios.get(`/api/workbook/all?page=${page - 1}&size=${this.pageSize}`, {headers})
-          .then((res) => {
-            this.workbooks = res.data.content;
-            this.currentPage = page;
-            this.totalPages = res.data.totalPages;
-
-            this.filterWorkbooks();
-            console.log(res)
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-    }
 
   },
 
@@ -652,4 +640,26 @@ a{
   color: #fff;
   font-weight: bold;
 }
+
+.search-btn{
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 10px;
+  /** padding: 10px 24px; **/
+  padding-right: 24px;
+  padding-left: 14px;
+
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
 </style>

@@ -32,7 +32,7 @@
       </div>
 
         <div class="problem-list">
-          <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
+          <div v-for="(problem, index) in problems" :key="problem.id" class="problem-item">
             <div v-if="updateIndex !== index" @click="showProblemDetail(problem, $event)">
               <div class="problem-content">
                 <div class="problem-main">
@@ -197,7 +197,7 @@ export default {
             }));
 
             this.totalPages = res.data.problems.totalPages;
-            this.filterproblems();
+            // this.filterproblems();
             console.log(res, "Get Problems");
           })
           .catch((error) => {
@@ -237,7 +237,7 @@ export default {
               console.log("ERROR", error);
             })
         this.newproblem = { question: '', problem: '' };
-        this.filterproblems();
+        // this.filterproblems();
       }
     },
     startUpdate(index) {
@@ -316,10 +316,11 @@ export default {
       })
     },
     filterproblems() {
-      this.filteredproblems = this.problems.filter(q =>
-          q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          q.solution.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+      // this.filteredproblems = this.problems.filter(q =>
+      //     q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      //     q.solution.toLowerCase().includes(this.searchQuery.toLowerCase())
+      // );
+      this.filterproblems = this.problems;
       this.sortproblems(this.sortOrder);
     },
     toggleSortDropdown() {
@@ -579,6 +580,7 @@ a {
   padding: 0.5rem 1rem;
   cursor: pointer;
 }
+
 .search-btn{
   background-color: #FFD700;
   color: #191f28;

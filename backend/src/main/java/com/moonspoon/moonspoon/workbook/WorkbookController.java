@@ -32,9 +32,11 @@ public class WorkbookController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Page<WorkbookResponse>> findAllWorkbook(@RequestParam(name="page", defaultValue = "0") int page,
-                                                                  @RequestParam(name="size", defaultValue = "5") int size){
-        Page<WorkbookResponse> workbooks = workbookService.findAll(page, size);
+    public ResponseEntity<Page<WorkbookResponse>> findAllWorkbook(
+            @RequestParam(name="keyword", defaultValue = "") String keyword,
+            @RequestParam(name="page", defaultValue = "0") int page,
+            @RequestParam(name="size", defaultValue = "5") int size){
+        Page<WorkbookResponse> workbooks = workbookService.findAll(keyword, page, size);
         return new ResponseEntity<>(workbooks, HttpStatus.OK);
     }
 
