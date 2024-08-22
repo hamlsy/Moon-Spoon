@@ -9,9 +9,14 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -61,16 +66,15 @@ public class WorkbookService {
         return WorkbookResponse.fromEntity(workbook);
     }
 
-    public List<WorkbookResponse> findAll(){
+    public Page<WorkbookResponse> findAll(String keyword, int page, int size){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
-        List<Workbook> workbooks = workbookRepository.findWorkbookWithUserAndProblems(username);
-        if(workbooks.isEmpty()){
-            throw new NotFoundException("문제집이 존재하지 않습니다.");
-        }
-        return workbooks.stream()
-                .map(w -> WorkbookResponse.fromEntity(w))
-                .collect(Collectors.toList());
+
+        Pageable pageable = PageRequest.of(page, size,  Sort.by("createDate").descending());
+
+        Page<Workbook> workbooks = workbookRepository.findAllWithUserAndProblemsAndKeyword(keyword.trim(), pageable, username);
+        Page<WorkbookResponse> responses = workbooks.map(WorkbookResponse::fromEntity);
+        return responses;
     }
 
     //수정

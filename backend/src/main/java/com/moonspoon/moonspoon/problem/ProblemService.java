@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.problem;
 
+import com.moonspoon.moonspoon.dto.response.problem.ProblemAllResponse;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
@@ -9,7 +10,6 @@ import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemCreateResponse;
-import com.moonspoon.moonspoon.dto.response.problem.ProblemFindAllResponse;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
@@ -19,6 +19,10 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,20 +72,32 @@ public class ProblemService {
         return workbook;
     }
 
-    public List<ProblemResponse> findAll(Workbook workbook){
-        List<Problem> problems = problemRepository.findAllByWorkbookId(workbook.getId());
-        return problems.stream()
-                .map(p -> ProblemResponse.fromEntity(p))
-                .collect(Collectors.toList());
-    }
-
-    public ProblemFindAllResponse findAllWithWorkbookTitle(Long workbookId){
+    public ProblemAllResponse findAll(Long workbookId, String keyword, String order, int page, int size){
         Workbook workbook = validateUserAndWorkbook(workbookId);
-        ProblemFindAllResponse response = new ProblemFindAllResponse();
-        response.setProblems(findAll(workbook));
+        Sort sort = Sort.by("createDate").descending();
+
+        switch (order){
+            case "oldest":
+                sort = Sort.by("createDate").ascending();
+                break;
+            case "correctRateAsc":
+                sort = Sort.by("correctRate").ascending();
+                break;
+            case "correctRateDesc":
+                sort = Sort.by("correctRate").descending();
+                break;
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Problem> problems = problemRepository.findAllByWorkbookIdAndKeyword(workbookId, keyword.trim(), pageable);
+        Page<ProblemResponse> responses = problems.map(ProblemResponse::fromEntity);
+
+        ProblemAllResponse response = new ProblemAllResponse();
         response.setWorkbookTitle(workbook.getTitle());
+        response.setProblems(responses);
         return response;
     }
+
 
     @Transactional
     public ProblemResponse update(Long workbookId, Long problemId, ProblemUpdateRequest dto){

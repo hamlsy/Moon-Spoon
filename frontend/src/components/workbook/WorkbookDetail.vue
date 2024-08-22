@@ -11,7 +11,9 @@
 
       <section class="features">
         <div class="search-sort-container">
-          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />
+<!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
+          <input v-model="searchQuery" placeholder="문제 검색" />
+          <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
           <div class="sort-dropdown">
             <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
             <div v-if="showSortDropdown" class="dropdown-content">
@@ -30,7 +32,7 @@
       </div>
 
         <div class="problem-list">
-          <div v-for="(problem, index) in filteredproblems" :key="problem.id" class="problem-item">
+          <div v-for="(problem, index) in problems" :key="problem.id" class="problem-item">
             <div v-if="updateIndex !== index" @click="showProblemDetail(problem, $event)">
               <div class="problem-content">
                 <div class="problem-main">
@@ -55,6 +57,7 @@
             </div>
           </div>
         </div>
+
       </section>
       <!-- 문제 상세 팝업 -->
       <div v-if="showDetailPopup" class="popup-overlay" @click="closeDetailPopup">
@@ -70,7 +73,13 @@
           </div>
         </div>
       </div>
-
+      <div class="pagination">
+        <button v-for="page in totalPages" :key="page"
+                :class="{ 'active': currentPage === page }"
+                @click="getProblems(page)">
+          {{ page }}
+        </button>
+      </div>
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
     </main>
 
@@ -142,7 +151,7 @@ export default {
   name: 'WorkbookDetailPage',
   data() {
     return {
-      workbookTitle: "",
+      workbookTitle: '',
       problems: [],
       newproblem: { question: '', solution: '' },
       showPopup: false,
@@ -158,12 +167,18 @@ export default {
       searchQuery: '',
       filteredproblems: [],
       showSortDropdown: false,
+      //sort
       sortOrder: 'newest',
       sortValue: '최신순',
       token: localStorage.getItem('token'),
       workbookId: this.$route.fullPath.split("/").pop(),
       showDetailPopup: false,
       selectedProblem: null,
+      // Pagination
+      totalElements: '',
+      totalPages: 0,
+      currentPage: 1,
+      pageSize: 16,
 
     }
   },
@@ -171,20 +186,25 @@ export default {
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
     },
-    getProblems(){
+    getProblems(page, order){
       const headers = {
         'Authorization': this.token
       };
       this.workbookId = this.$route.fullPath.split("/").pop();
-      axios.get(`/api/workbook/${this.workbookId}/problem/all`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/all?keyword=${this.searchQuery}&order=${order}&page=${page-1}&size=${this.pageSize}`, {headers})
           .then((res) => {
-            this.problems = res.data.problems.map((problem, index) => ({
+            this.workbookTitle = res.data.workbookTitle;
+            this.currentPage = page;
+            this.problems = res.data.problems.content.map((problem, index) => ({
               ...problem, displayNumber: index + 1
             }));
-            this.workbookTitle = res.data.workbookTitle;
-            this.filterproblems();
+            this.totalElements = res.data.problems.totalElements;
+            this.totalPages = res.data.problems.totalPages;
+            // this.filterproblems();
+            console.log(res, "Get Problems");
           })
           .catch((error) => {
+            console.log(error);
             if(error.response.data.message ===  "JWT token is expired"){
               console.log(error.response.data.message);
               alert("토큰이 만료되었습니다. 다시 로그인하세요.");
@@ -220,7 +240,7 @@ export default {
               console.log("ERROR", error);
             })
         this.newproblem = { question: '', problem: '' };
-        this.filterproblems();
+        // this.filterproblems();
       }
     },
     startUpdate(index) {
@@ -299,10 +319,11 @@ export default {
       })
     },
     filterproblems() {
-      this.filteredproblems = this.problems.filter(q =>
-          q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-          q.solution.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
+      // this.filteredproblems = this.problems.filter(q =>
+      //     q.question.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
+      //     q.solution.toLowerCase().includes(this.searchQuery.toLowerCase())
+      // );
+      this.filterproblems = this.problems;
       this.sortproblems(this.sortOrder);
     },
     toggleSortDropdown() {
@@ -310,28 +331,11 @@ export default {
     },
     sortproblems(order) {
       this.sortOrder = order;
-      switch(order) {
-        case 'newest':
-          this.sortValue = "최신순";
-          this.filteredproblems.sort((a, b) => b.id - a.id);
-          break;
-        case 'oldest':
-          this.sortValue = "오래된순";
-          this.filteredproblems.sort((a, b) => a.id - b.id);
-          break;
-        case 'correctRateAsc':
-          this.sortValue = "정답률 낮은 순";
-          this.filteredproblems.sort((a, b) => a.correctRate - b.correctRate);
-          break;
-        case 'correctRateDesc':
-          this.sortValue = "정답률 높은 순";
-          this.filteredproblems.sort((a, b) => b.correctRate - a.correctRate);
-          break;
-      }
       this.showSortDropdown = false;
+      this.getProblems(1, order);
     },
     setMaxproblemCount() {
-      this.testSettings.problemCount = this.problems.length;
+      this.testSettings.problemCount = this.totalElements;
     },
     truncateText(text, maxLength = 15) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
@@ -352,8 +356,8 @@ export default {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
     },
   },
-  mounted() {
-    this.getProblems();
+  created() {
+    this.getProblems(1);
   }
 }
 </script>
@@ -563,6 +567,25 @@ a {
   cursor: pointer;
 }
 
+.search-btn{
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 10px;
+  /** padding: 10px 24px; **/
+  padding-right: 24px;
+  padding-left: 14px;
+
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
 
 .start-test-btn {
   position: fixed;
@@ -604,12 +627,19 @@ a {
 
 .max-count-btn {
   margin-left: 10px;
-  padding: 2px 5px;
+  padding: 4px 20px;
   background-color: #FFD700;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.8em;
+  transition: all 0.3s ease;
+}
+
+.max-count-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .checkbox-group label, .radio-group label {
@@ -792,4 +822,41 @@ problem-main {
   word-break: break-word;
   padding: 0 1rem;
 }
+/** **/
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: #FFD700;
+  border: none;
+  color: #191f28;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.pagination button.active {
+  background-color: #1B2A49;
+  color: #fff;
+  font-weight: bold;
+}
+
+/****/
+
 </style>

@@ -16,7 +16,7 @@
 <!--          <span>조회수: {{ sharedWorkbook.views }}</span>-->
           <span>문제 수: {{ sharedWorkbook.problemCount }}</span>
           <span>랜덤 여부: {{ sharedWorkbook.random ? 'O' : 'X' }}</span>
-          <span>작성일: {{ formatDate(sharedWorkbook.sharedDate) }}</span>
+          <span>작성일: {{ formatDate(sharedWorkbook.createDate) }}</span>
 
         </div>
         <div class="workbook-actions">
@@ -83,7 +83,7 @@ export default {
         id: '',
         title: "",
         author: "",
-        sharedDate: "",
+        createDate: "",
         random: "",
         content: "",
         problemCount: "",

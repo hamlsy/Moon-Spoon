@@ -14,9 +14,14 @@ import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -41,11 +46,10 @@ public class SharedWorkbookService {
     }
 
     //전체 조회
-    public List<SharedWorkbookResponse> findAllSharedWorkbook(){
-        List<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAll();
-        List<SharedWorkbookResponse> responses = sharedWorkbooks.stream()
-                .map(s -> SharedWorkbookResponse.fromEntity(s))
-                .collect(Collectors.toList());
+    public Page<SharedWorkbookResponse> findAllSharedWorkbook(String keyword, int page, int size){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
+        Page<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAllWithKeyword(keyword.trim(), pageable);
+        Page<SharedWorkbookResponse> responses = sharedWorkbooks.map(SharedWorkbookResponse::fromEntity);
         return responses;
     }
 
@@ -57,7 +61,7 @@ public class SharedWorkbookService {
         Workbook workbook = workbookRepository.findByIdWithUser(dto.getWorkbookId()).orElseThrow(
                         () -> new NotFoundException(notFoundWorkbookMessage)
                 );
-        sharedWorkbook.setSharedDate(LocalDateTime.now());
+        sharedWorkbook.setCreateDate(LocalDateTime.now());
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
         sharedWorkbook.setUser(workbook.getUser());

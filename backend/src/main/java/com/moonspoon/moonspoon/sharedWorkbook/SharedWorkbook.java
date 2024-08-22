@@ -32,7 +32,7 @@ public class SharedWorkbook {
 
     private int testCount;
     private String author;
-    private LocalDateTime sharedDate;
+    private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
     private boolean random;
@@ -71,11 +71,11 @@ public class SharedWorkbook {
 
     @Builder
     public SharedWorkbook(String title, String content, String author,
-                          boolean random, LocalDateTime sharedDate) {
+                          boolean random, LocalDateTime createDate) {
         this.title = title;
         this.content = content;
         this.author = author;
-        this.sharedDate = sharedDate;
+        this.createDate = createDate;
         this.random = random;
     }
 }
