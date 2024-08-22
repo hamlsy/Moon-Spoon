@@ -14,15 +14,15 @@
 <!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
           <input v-model="searchQuery" placeholder="문제 검색" />
           <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
-          <div class="sort-dropdown">
-            <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
-            <div v-if="showSortDropdown" class="dropdown-content">
-              <a href="#" @click="sortproblems('newest')">최신순</a>
-              <a href="#" @click="sortproblems('oldest')">오래된순</a>
-              <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>
-              <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>
-            </div>
-          </div>
+<!--          <div class="sort-dropdown">-->
+<!--            <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>-->
+<!--            <div v-if="showSortDropdown" class="dropdown-content">-->
+<!--              <a href="#" @click="sortproblems('newest')">최신순</a>-->
+<!--              <a href="#" @click="sortproblems('oldest')">오래된순</a>-->
+<!--              <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>-->
+<!--              <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
 
       <div class="add-problem-form">
@@ -174,6 +174,7 @@ export default {
       showDetailPopup: false,
       selectedProblem: null,
       // Pagination
+      totalElements: '',
       totalPages: 0,
       currentPage: 1,
       pageSize: 16
@@ -195,7 +196,7 @@ export default {
             this.problems = res.data.problems.content.map((problem, index) => ({
               ...problem, displayNumber: index + 1
             }));
-
+            this.totalElements = res.data.problems.totalElements;
             this.totalPages = res.data.problems.totalPages;
             // this.filterproblems();
             console.log(res, "Get Problems");
@@ -349,7 +350,7 @@ export default {
       this.showSortDropdown = false;
     },
     setMaxproblemCount() {
-      this.testSettings.problemCount = this.problems.length;
+      this.testSettings.problemCount = this.totalElements;
     },
     truncateText(text, maxLength = 15) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;

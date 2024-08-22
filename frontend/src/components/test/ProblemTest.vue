@@ -477,13 +477,9 @@ a {
   margin-top: 70px;
 }
 
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-}
 
 .submit-btn {
-  position: fixed;
+  position: absolute;
   bottom: 20px;
   right: 20px;
 }
@@ -516,11 +512,10 @@ a {
 .navigation-buttons {
   display: flex;
   justify-content: space-between;
-
 }
 /** **/
 .exit-btn, .navigation-buttons button, .submit-btn {
-  padding: 10px 20px;
+  padding: 10px 30px;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -579,10 +574,6 @@ textarea:focus {
   border-color: #2196F3;
   box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
 }
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-}
 .problem-item:hover {
   background-color: #e0e0e0;
 }
@@ -591,5 +582,6 @@ textarea:focus {
   text-align: center;
   color: #333;
 }
+
 
 </style>

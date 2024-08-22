@@ -703,6 +703,7 @@ textarea:focus {
 }
 .result-popup {
   width: 300px;
+  word-break: break-all;
 }
 
 .result-popup h3 {
