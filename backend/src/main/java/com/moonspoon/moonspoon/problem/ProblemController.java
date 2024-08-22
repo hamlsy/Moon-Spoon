@@ -35,11 +35,14 @@ public class ProblemController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<ProblemAllResponse> findAllProblem(@PathVariable("workbookId") Long workbookId,
-                                                             @RequestParam(name="keyword", defaultValue = "") String keyword,
-                                                             @RequestParam(name="page", defaultValue = "0") int page,
-                                                             @RequestParam(name="size", defaultValue = "16") int size){
-        ProblemAllResponse response = problemService.findAll(workbookId, keyword, page, size);
+    public ResponseEntity<ProblemAllResponse> findAllProblem(
+            @PathVariable("workbookId") Long workbookId,
+            @RequestParam(name="keyword", defaultValue = "") String keyword,
+            @RequestParam(name="order", defaultValue = "newest") String order,
+            @RequestParam(name="page", defaultValue = "0") int page,
+            @RequestParam(name="size", defaultValue = "16") int size
+            ){
+        ProblemAllResponse response = problemService.findAll(workbookId, keyword, order, page, size);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

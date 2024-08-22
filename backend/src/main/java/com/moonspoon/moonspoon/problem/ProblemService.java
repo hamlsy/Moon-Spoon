@@ -72,10 +72,23 @@ public class ProblemService {
         return workbook;
     }
 
-    public ProblemAllResponse findAll(Long workbookId, String keyword, int page, int size){
+    public ProblemAllResponse findAll(Long workbookId, String keyword, String order, int page, int size){
         Workbook workbook = validateUserAndWorkbook(workbookId);
+        Sort sort = Sort.by("createDate").descending();
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
+        switch (order){
+            case "oldest":
+                sort = Sort.by("createDate").ascending();
+                break;
+            case "correctRateAsc":
+                sort = Sort.by("correctRate").ascending();
+                break;
+            case "correctRateDesc":
+                sort = Sort.by("correctRate").descending();
+                break;
+        }
+
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Problem> problems = problemRepository.findAllByWorkbookIdAndKeyword(workbookId, keyword.trim(), pageable);
         Page<ProblemResponse> responses = problems.map(ProblemResponse::fromEntity);
 

@@ -14,15 +14,15 @@
 <!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
           <input v-model="searchQuery" placeholder="문제 검색" />
           <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
-<!--          <div class="sort-dropdown">-->
-<!--            <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>-->
-<!--            <div v-if="showSortDropdown" class="dropdown-content">-->
-<!--              <a href="#" @click="sortproblems('newest')">최신순</a>-->
-<!--              <a href="#" @click="sortproblems('oldest')">오래된순</a>-->
-<!--              <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>-->
-<!--              <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>-->
-<!--            </div>-->
-<!--          </div>-->
+          <div class="sort-dropdown">
+            <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
+            <div v-if="showSortDropdown" class="dropdown-content">
+              <a href="#" @click="sortproblems('newest')">최신순</a>
+              <a href="#" @click="sortproblems('oldest')">오래된순</a>
+              <a href="#" @click="sortproblems('correctRateAsc')">정답률 낮은순</a>
+              <a href="#" @click="sortproblems('correctRateDesc')">정답률 높은순</a>
+            </div>
+          </div>
         </div>
 
       <div class="add-problem-form">
@@ -167,6 +167,7 @@ export default {
       searchQuery: '',
       filteredproblems: [],
       showSortDropdown: false,
+      //sort
       sortOrder: 'newest',
       sortValue: '최신순',
       token: localStorage.getItem('token'),
@@ -177,19 +178,20 @@ export default {
       totalElements: '',
       totalPages: 0,
       currentPage: 1,
-      pageSize: 16
+      pageSize: 16,
+
     }
   },
   methods: {
     notValid(){
       alert("아직 구현되지 않은 기능입니다.");
     },
-    getProblems(page){
+    getProblems(page, order){
       const headers = {
         'Authorization': this.token
       };
       this.workbookId = this.$route.fullPath.split("/").pop();
-      axios.get(`/api/workbook/${this.workbookId}/problem/all?keyword=${this.searchQuery}&page=${page-1}&size=${this.pageSize}`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/problem/all?keyword=${this.searchQuery}&order=${order}&page=${page-1}&size=${this.pageSize}`, {headers})
           .then((res) => {
             this.workbookTitle = res.data.workbookTitle;
             this.currentPage = page;
@@ -329,25 +331,8 @@ export default {
     },
     sortproblems(order) {
       this.sortOrder = order;
-      switch(order) {
-        case 'newest':
-          this.sortValue = "최신순";
-          this.filteredproblems.sort((a, b) => b.id - a.id);
-          break;
-        case 'oldest':
-          this.sortValue = "오래된순";
-          this.filteredproblems.sort((a, b) => a.id - b.id);
-          break;
-        case 'correctRateAsc':
-          this.sortValue = "정답률 낮은 순";
-          this.filteredproblems.sort((a, b) => a.correctRate - b.correctRate);
-          break;
-        case 'correctRateDesc':
-          this.sortValue = "정답률 높은 순";
-          this.filteredproblems.sort((a, b) => b.correctRate - a.correctRate);
-          break;
-      }
       this.showSortDropdown = false;
+      this.getProblems(1, order);
     },
     setMaxproblemCount() {
       this.testSettings.problemCount = this.totalElements;
