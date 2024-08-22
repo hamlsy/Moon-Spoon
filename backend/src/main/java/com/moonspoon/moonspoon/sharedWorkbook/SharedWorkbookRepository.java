@@ -1,5 +1,7 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +23,6 @@ public interface SharedWorkbookRepository extends JpaRepository<SharedWorkbook, 
 
     @Query("select count(s) from SharedWorkbook s where s.user.username = :username")
     int countByUsername(@Param("username") String username);
+
+    Page<SharedWorkbook> findAll(Pageable pageable);
 }

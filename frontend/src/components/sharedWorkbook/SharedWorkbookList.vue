@@ -21,7 +21,7 @@
           <div class="workbook-info">
             <h3>{{ truncateText(workbook.title) }}</h3>
             <p>작성자: {{ workbook.author }}</p>
-            <p>작성일: {{ formatDate(workbook.sharedDate) }}</p>
+            <p>작성일: {{ formatDate(workbook.createDate) }}</p>
 <!--            <p>댓글: {{ workbook.commentCount }}</p>-->
           </div>
           <div class="workbook-actions">
@@ -30,7 +30,15 @@
 <!--            </button>-->
           </div>
         </div>
+
       </section>
+      <div class="pagination">
+        <button v-for="page in totalPages" :key="page"
+                :class="{ 'active': currentPage === page }"
+                @click="getPage(page)">
+          {{ page }}
+        </button>
+      </div>
     </main>
   </div>
 </template>
@@ -45,7 +53,10 @@ export default {
     return {
       currentCategory: 'recent',
       hoveredWorkbook: null,
-      sharedWorkbooks: []
+      sharedWorkbooks: [],
+      totalPages: '',
+      currentPage: 1,
+      pageSize: 12
     }
   },
   computed: {
@@ -80,9 +91,22 @@ export default {
     truncateText(text, maxLength = 30) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getPage(page){
+      axios.get(`/api/sharedWorkbook/all?page=${page - 1}&size=${this.pageSize}`)
+          .then((res) => {
+            this.sharedWorkbooks = res.data.content;
+            this.currentPage = page;
+            this.totalPages = res.data.totalPages;
+            console.log(res,"fetch page");
+          })
+          .catch((err) => {
+            console.log(err, "ERROR");
+          })
+    },
   },
   created() {
-    this.fetchSharedWorkbook();
+    // this.fetchSharedWorkbook();
+    this.getPage(1);
   }
 }
 </script>
@@ -117,7 +141,8 @@ export default {
 
 .content {
   max-width: 1200px;
-  margin: 80px auto 0px;
+  /** margin: 80px auto 0px; **/
+  margin-top: 80px;
   padding: 2rem;
   flex: 1;
 }
@@ -206,6 +231,39 @@ export default {
   border: none;
   cursor: pointer;
   font-size: 1.2rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  background-color: #FFD700;
+  border: none;
+  color: #191f28;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.pagination button.active {
+  background-color: #1B2A49;
+  color: #fff;
+  font-weight: bold;
 }
 
 </style>

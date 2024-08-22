@@ -60,6 +60,13 @@
           <span>새 문제집 추가</span>
         </button>
       </div>
+      <div class="pagination">
+        <button v-for="page in totalPages" :key="page"
+                :class="{ 'active': currentPage === page }"
+                @click="getPage(page)">
+          {{ page }}
+        </button>
+      </div>
     </main>
 
     <!-- 새 문제집 추가 팝업 -->
@@ -141,12 +148,15 @@ export default {
       sortOrder: 'newest',
       token: localStorage.getItem('token'),
       updateIndex: null,
-      updateWorkbook: {title: '', content: ''}
+      updateWorkbook: {title: '', content: ''},
+      totalPages: 0,
+      currentPage: 1,
+      pageSize: 3
     }
   },
   created(){
-    this.getWorkbook();
-    this.checkLogin();
+    // this.getWorkbook();
+    this.getPage(1);
   },
   methods: {
     startUpdate(workbookId) {
@@ -329,6 +339,22 @@ export default {
     truncateText(text, maxLength = 25) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getPage(page){
+      const headers = {
+        'Authorization': this.token
+      }
+      axios.get(`/api/workbook/all?page=${page - 1}&size=${this.pageSize}`, {headers})
+          .then((res) => {
+            this.workbooks = res.data.content;
+            this.filterWorkbooks();
+            this.currentPage = page;
+            this.totalPages = res.data.totalPages;
+            console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+    }
 
   },
 
@@ -593,5 +619,36 @@ a{
   width: 20px;
   height: 20px;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
 
+.pagination button {
+  background-color: #FFD700;
+  border: none;
+  color: #191f28;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem;
+  margin: 0 0.25rem;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.pagination button.active {
+  background-color: #1B2A49;
+  color: #fff;
+  font-weight: bold;
+}
 </style>

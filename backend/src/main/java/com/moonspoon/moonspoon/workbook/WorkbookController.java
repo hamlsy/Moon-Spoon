@@ -6,6 +6,7 @@ import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import com.moonspoon.moonspoon.workbook.WorkbookService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +32,9 @@ public class WorkbookController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<WorkbookResponse>> findAllWorkbook(){
-        List<WorkbookResponse> workbooks = workbookService.findAll();
+    public ResponseEntity<Page<WorkbookResponse>> findAllWorkbook(@RequestParam(name="page", defaultValue = "0") int page,
+                                                                  @RequestParam(name="size", defaultValue = "5") int size){
+        Page<WorkbookResponse> workbooks = workbookService.findAll(page, size);
         return new ResponseEntity<>(workbooks, HttpStatus.OK);
     }
 

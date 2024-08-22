@@ -6,6 +6,7 @@ import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUser
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +29,9 @@ public class SharedWorkbookController {
 
     //전체 조회
     @GetMapping("/all")
-    public ResponseEntity<List<SharedWorkbookResponse>> findAllSharedWorkbook(){
-        List<SharedWorkbookResponse> responses = sharedWorkbookService.findAllSharedWorkbook();
+    public ResponseEntity<Page<SharedWorkbookResponse>> findAllSharedWorkbook(@RequestParam(name="page", defaultValue = "0") int page,
+                                                                              @RequestParam(name="size", defaultValue = "12") int size){
+        Page<SharedWorkbookResponse> responses = sharedWorkbookService.findAllSharedWorkbook(page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
