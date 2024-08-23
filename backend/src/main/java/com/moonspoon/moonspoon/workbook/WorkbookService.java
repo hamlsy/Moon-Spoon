@@ -66,16 +66,20 @@ public class WorkbookService {
         return WorkbookResponse.fromEntity(workbook);
     }
 
-    public Page<WorkbookResponse> findAll(String keyword, int page, int size){
+    public Page<WorkbookResponse> findAll(String keyword, String order, int page, int size){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
-
-        Pageable pageable = PageRequest.of(page, size,  Sort.by("createDate").descending());
+        Sort sort = Sort.by("createDate").descending();
+        if (order.equals("oldest")){
+            sort = Sort.by("createDate").ascending();
+        }
+        Pageable pageable = PageRequest.of(page, size,  sort);
 
         Page<Workbook> workbooks = workbookRepository.findAllWithUserAndProblemsAndKeyword(keyword.trim(), pageable, username);
         Page<WorkbookResponse> responses = workbooks.map(WorkbookResponse::fromEntity);
         return responses;
     }
+
 
     //수정
     @Transactional
