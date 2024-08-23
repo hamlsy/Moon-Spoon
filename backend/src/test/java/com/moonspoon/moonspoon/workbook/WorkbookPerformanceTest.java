@@ -22,14 +22,17 @@ public class WorkbookPerformanceTest {
     private WorkbookService workbookService;
 
     @Autowired
+    private WorkbookPerformanceService service;
+
+    @Autowired
     private EntityManager entityManager;
 
     private User user;
     @BeforeEach
     public void setUp(){
         User user = new User();
-        user.setUsername("test Username");
-        user.setName("test Name");
+        user.setUsername("test1");
+        user.setName("test1");
 
         this.user = user;
     }
@@ -42,6 +45,7 @@ public class WorkbookPerformanceTest {
         for(int i = 0; i < 100000; i++){
             Workbook workbook = new Workbook();
             workbook.setTitle("test Title " + i);
+            workbook.setUser(this.user);
         }
 
         // start time
@@ -49,13 +53,13 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        workbookService.findAll("","newest", 1, 10000);
+        service.findAll("", 1, 12, "test1");
 
         // end time
         //then
         long endTime = System.currentTimeMillis();
 
-        System.out.println("조회시간 " + (endTime-startTime));
+        System.out.println("조회시간 " + (endTime-startTime) + "ms");
     }
 
 }

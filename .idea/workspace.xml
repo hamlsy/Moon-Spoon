@@ -5,9 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +98,7 @@
       <recent name="C:\springWorkspace\moonspoon\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MoonspoonApplication">
+  <component name="RunManager" selected="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance">
     <configuration name="NoticeServiceTest.createAdmin" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -138,6 +139,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WorkbookPerformanceTest.testFindAllWorkbookPerformance" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+      <option name="METHOD_NAME" value="testFindAllWorkbookPerformance" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:5173">
       <method v="2" />
     </configuration>
@@ -166,11 +183,13 @@
     <list>
       <item itemvalue="Gradle.NoticeServiceTest.createAdmin" />
       <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
       <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
       <item itemvalue="Spring Boot.MoonspoonApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
         <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
         <item itemvalue="Gradle.NoticeServiceTest.createAdmin" />
       </list>
@@ -210,7 +229,8 @@
       <workItem from="1724047819867" duration="11162000" />
       <workItem from="1724333412210" duration="5521000" />
       <workItem from="1724390591461" duration="3233000" />
-      <workItem from="1724395171467" duration="4704000" />
+      <workItem from="1724395171467" duration="5343000" />
+      <workItem from="1724423227718" duration="2256000" />
     </task>
     <servers />
   </component>
