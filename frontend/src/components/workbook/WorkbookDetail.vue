@@ -13,7 +13,7 @@
         <div class="search-sort-container">
           <!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
           <input v-model="searchQuery" placeholder="문제 검색" />
-          <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
+          <button class="search-btn" @click="getProblems(1, sortOrder)">🔎 검색</button>
           <div class="sort-dropdown">
             <button @click="toggleSortDropdown">{{ sortValue }}<i class="fas fa-caret-down"></i></button>
             <div v-if="showSortDropdown" class="dropdown-content">
@@ -76,7 +76,7 @@
       <div class="pagination">
         <button v-for="page in totalPages" :key="page"
                 :class="{ 'active': currentPage === page }"
-                @click="getProblems(page)">
+                @click="getProblems(page, sortOrder)">
           {{ page }}
         </button>
       </div>
@@ -195,8 +195,11 @@ export default {
           .then((res) => {
             this.workbookTitle = res.data.workbookTitle;
             this.currentPage = page;
+
+            const totalElements = res.data.problems.totalElements;
             this.problems = res.data.problems.content.map((problem, index) => ({
-              ...problem, displayNumber: index + 1
+              ...problem,
+              displayNumber: totalElements - (page - 1) * this.pageSize - index
             }));
             this.totalElements = res.data.problems.totalElements;
             this.totalPages = res.data.problems.totalPages;
@@ -332,6 +335,20 @@ export default {
     sortproblems(order) {
       this.sortOrder = order;
       this.showSortDropdown = false;
+      switch (order){
+        case "newest":
+          this.sortValue = "최신순";
+          break;
+        case "oldest":
+          this.sortValue = "오래된순";
+          break;
+        case "correctRateAsc":
+          this.sortValue = "정답률 낮은순";
+          break;
+        case "correctRateDesc":
+          this.sortValue = "정답률 높은순";
+          break;
+      }
       this.getProblems(1, order);
     },
     setMaxproblemCount() {

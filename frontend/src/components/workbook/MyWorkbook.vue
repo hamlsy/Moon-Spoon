@@ -10,9 +10,9 @@
     <div class="search-sort-container">
       <!--      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>-->
       <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색"/>
-      <button class="search-btn" @click="getWorkbook(1)">🔎 검색</button>
+      <button class="search-btn" @click="getWorkbook(1, sortOrder)">🔎 검색</button>
       <div class="sort-dropdown">
-        <button @click="toggleSortDropdown">정렬 <i class="fas fa-caret-down"></i></button>
+        <button @click="toggleSortDropdown">{{ sortValue }} <i class="fas fa-caret-down"></i></button>
         <div v-if="showSortDropdown" class="dropdown-content">
           <a href="#" @click="sortWorkbooks('newest')">최신순</a>
           <a href="#" @click="sortWorkbooks('oldest')">오래된순</a>
@@ -64,7 +64,7 @@
       <div class="pagination">
         <button v-for="page in totalPages" :key="page"
                 :class="{ 'active': currentPage === page }"
-                @click="getWorkbook(page)">
+                @click="getWorkbook(page, sortOrder)">
           {{ page }}
         </button>
       </div>
@@ -147,6 +147,7 @@ export default {
       filteredWorkbooks: [],
       showSortDropdown: false,
       sortOrder: 'newest',
+      sortValue: '최신순',
       token: localStorage.getItem('token'),
       updateIndex: null,
       updateWorkbook: {title: '', content: ''},
@@ -285,6 +286,14 @@ export default {
       this.sortOrder = order;
       this.getWorkbook(1, order);
       this.showSortDropdown = false;
+      switch (order){
+        case "newest":
+          this.sortValue = "최신순";
+          break;
+        case "oldest":
+          this.sortValue = "오래된순";
+          break;
+      }
     },
     formatDate(dateString) {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
