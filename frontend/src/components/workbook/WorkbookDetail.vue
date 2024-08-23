@@ -11,7 +11,7 @@
 
       <section class="features">
         <div class="search-sort-container">
-<!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
+          <!--          <input v-model="searchQuery" placeholder="문제 검색" @input="filterproblems" />-->
           <input v-model="searchQuery" placeholder="문제 검색" />
           <button class="search-btn" @click="getProblems(1)">🔎 검색</button>
           <div class="sort-dropdown">
@@ -25,11 +25,11 @@
           </div>
         </div>
 
-      <div class="add-problem-form">
-        <textarea v-model="newproblem.question" placeholder="문제를 입력하세요"></textarea>
-        <textarea v-model="newproblem.solution" placeholder="답을 입력하세요"></textarea>
-        <button @click="addproblem" class="add-btn">+</button>
-      </div>
+        <div class="add-problem-form">
+          <textarea v-model="newproblem.question" placeholder="문제를 입력하세요"></textarea>
+          <textarea v-model="newproblem.solution" placeholder="답을 입력하세요"></textarea>
+          <button @click="addproblem" class="add-btn">+</button>
+        </div>
 
         <div class="problem-list">
           <div v-for="(problem, index) in problems" :key="problem.id" class="problem-item">
@@ -432,7 +432,7 @@ body, html {
 
 .content {
   max-width: 1800px;
-/**  margin: 0 auto; **/
+  /**  margin: 0 auto; **/
   padding: 2rem;
   flex: 1;
 }
@@ -472,20 +472,22 @@ h1::after, h2::after, h3::after {
 
 .search-sort-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 1rem;
+  width: 100%;
+  gap: 20px;
 }
 
 .search-sort-container input {
   flex-grow: 1;
-  min-width: 200px;
-  max-width: 500px;
+  min-width: 100px;
+  max-width: 500px; /* 최대 너비를 고정 */
   box-sizing: border-box;
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
+  margin-left: 0;
 }
-
 .sort-dropdown {
   position: relative;
   flex-shrink: 0;

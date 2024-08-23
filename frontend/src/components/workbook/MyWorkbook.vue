@@ -8,7 +8,7 @@
     </div>
 
     <div class="search-sort-container">
-<!--      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>-->
+      <!--      <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색" @input="filterWorkbooks($event)"/>-->
       <input class="search-input-box" v-model="searchQuery" placeholder="문제집 검색"/>
       <button class="search-btn" @click="getWorkbook(1)">🔎 검색</button>
       <div class="sort-dropdown">
@@ -16,7 +16,6 @@
         <div v-if="showSortDropdown" class="dropdown-content">
           <a href="#" @click="sortWorkbooks('newest')">최신순</a>
           <a href="#" @click="sortWorkbooks('oldest')">오래된순</a>
-          <a href="#" @click="sortWorkbooks('alphabetical')">가나다순</a>
         </div>
       </div>
 
@@ -199,17 +198,15 @@ export default {
     goWorkbookDetail(workbookId){
       this.$router.push(`/workbookDetail/${workbookId}`);
     },
-    getWorkbook(page){
+    getWorkbook(page, order){
       const headers = {
         'Authorization': this.token
       }
-      axios.get(`/api/workbook/all?keyword=${this.searchQuery}&page=${page - 1}&size=${this.pageSize}`, {headers})
+      axios.get(`/api/workbook/all?keyword=${this.searchQuery}&order=${order}&page=${page - 1}&size=${this.pageSize}`, {headers})
           .then((res) => {
             this.workbooks = res.data.content;
             this.currentPage = page;
             this.totalPages = res.data.totalPages;
-
-            this.filterWorkbooks();
             console.log("workbook loaded", res);
           }).catch((error) => {
         if(error.response.data.message ===  "JWT token is expired"){
@@ -251,7 +248,6 @@ export default {
           })
       this.showAddPopup = false;
       this.newWorkbook = { title: '', content: '' };
-      this.filterWorkbooks();
     },
     cancelAddWorkbook() {
       this.showAddPopup = false;
@@ -277,34 +273,17 @@ export default {
           })
       this.showDeletePopup = false;
       this.workbookToDelete = null;
-      this.filterWorkbooks();
     },
     cancelDelete() {
       this.showDeletePopup = false;
       this.workbookToDelete = null;
-    },
-    filterWorkbooks() {
-      // this.filteredWorkbooks = this.workbooks.filter(w =>
-      //     w.title.toLowerCase().includes(this.searchQuery.toLowerCase())
-      // );
-      this.sortWorkbooks(this.sortOrder);
     },
     toggleSortDropdown() {
       this.showSortDropdown = !this.showSortDropdown;
     },
     sortWorkbooks(order) {
       this.sortOrder = order;
-      switch(order) {
-        case 'newest':
-          this.filteredWorkbooks.sort((a, b) => new Date(b.createDate) - new Date(a.createDate));
-          break;
-        case 'oldest':
-          this.filteredWorkbooks.sort((a, b) => new Date(a.createDate) - new Date(b.createDate));
-          break;
-        case 'alphabetical':
-          this.filteredWorkbooks.sort((a, b) => a.title.localeCompare(b.title));
-          break;
-      }
+      this.getWorkbook(1, order);
       this.showSortDropdown = false;
     },
     formatDate(dateString) {
@@ -518,33 +497,21 @@ h1::after, h2::after, h3::after {
   display: flex;
   justify-content: center;
   margin-bottom: 1rem;
+  width: 100%;
   gap: 20px;
 }
 
 .search-sort-container input {
   flex-grow: 1;
-  min-width: 200px;
+  min-width: 100px;
   max-width: 500px; /* 최대 너비를 고정 */
   box-sizing: border-box;
   padding: 0.5rem;
   border-radius: 4px;
   border: 1px solid #ccc;
-
+  margin-left: 0;
 }
 
-.sort-dropdown {
-  position: relative;
-  flex-shrink: 0;
-
-}
-
-.sort-dropdown button {
-  padding: 0.5rem 1rem;
-  background-color: #FFD700;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
 .dropdown-content {
   position: absolute;
@@ -641,6 +608,20 @@ a{
   font-weight: bold;
 }
 
+.sort-dropdown {
+  position: relative;
+  flex-shrink: 0;
+  top: 0.2rem;
+}
+
+.sort-dropdown button {
+  padding: 0.5rem 1rem;
+  background-color: #FFD700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 .search-btn{
   background-color: #FFD700;
   color: #191f28;
@@ -649,11 +630,13 @@ a{
   /** padding: 10px 24px; **/
   padding-right: 24px;
   padding-left: 14px;
-
+  margin-top: 0.25rem;
+  margin-bottom: 0.3rem;
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   transition: all 0.3s ease;
 }
+
 
 .search-btn:hover{
   background-color: #FFC000;
