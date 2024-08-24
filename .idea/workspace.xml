@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +227,8 @@
       <workItem from="1724333412210" duration="5521000" />
       <workItem from="1724390591461" duration="3233000" />
       <workItem from="1724395171467" duration="5343000" />
-      <workItem from="1724423227718" duration="2256000" />
+      <workItem from="1724423227718" duration="2541000" />
+      <workItem from="1724506533986" duration="309000" />
     </task>
     <servers />
   </component>
