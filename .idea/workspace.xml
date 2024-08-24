@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
@@ -135,22 +128,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="NoticeServiceTest.createAdmin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="moonspoon.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.notice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.notice" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.notice.NoticeServiceTest" />
-      <option name="METHOD_NAME" value="createAdmin" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="UserServiceTest.concurrentSignupTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
@@ -162,6 +139,22 @@
       <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
       <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserServiceTest" />
       <option name="METHOD_NAME" value="concurrentSignupTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorkbookPerformanceTest.findAllTestVer1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+      <option name="METHOD_NAME" value="findAllTestVer1" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -202,19 +195,6 @@
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:5173">
       <method v="2" />
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="frontend" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="frontend" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="MoonspoonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
@@ -227,19 +207,19 @@
     <list>
       <item itemvalue="Gradle.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
       <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
       <item itemvalue="JUnit.UserServiceTest.concurrentSignupTest" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
-      <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
       <item itemvalue="Spring Boot.MoonspoonApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
         <item itemvalue="Gradle.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
         <item itemvalue="JUnit.UserServiceTest.concurrentSignupTest" />
-        <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
       </list>
     </recent_temporary>
   </component>
@@ -277,7 +257,8 @@
       <workItem from="1724047819867" duration="9207000" />
       <workItem from="1724476560797" duration="1601000" />
       <workItem from="1724482648167" duration="1232000" />
-      <workItem from="1724483904977" duration="2380000" />
+      <workItem from="1724483904977" duration="3647000" />
+      <workItem from="1724508414296" duration="1083000" />
     </task>
     <servers />
   </component>

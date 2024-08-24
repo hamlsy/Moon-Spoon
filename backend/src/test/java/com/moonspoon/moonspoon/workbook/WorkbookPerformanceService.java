@@ -23,6 +23,7 @@ public class WorkbookPerformanceService {
 
     public Page<Workbook> findAllVer2(String keyword, int page, int size, String username){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
-        return workbookRepositoryTest.findAllVer1(keyword, pageable, username);
+
+        return workbookRepositoryTest.findAllVer2(keyword, pageable, username);
     }
 }
