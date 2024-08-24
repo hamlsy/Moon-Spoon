@@ -16,8 +16,13 @@ public class WorkbookPerformanceService {
     private WorkbookRepositoryTest workbookRepositoryTest;
 
 
-    public Page<Workbook> findAll(String keyword, int page, int size, String username){
+    public Page<Workbook> findAllVer1(String keyword, int page, int size, String username){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
-        return workbookRepositoryTest.findAllWithUserAndProblemsAndKeyword(keyword, pageable, username);
+        return workbookRepositoryTest.findAllVer1(keyword, pageable, username);
+    }
+
+    public Page<Workbook> findAllVer2(String keyword, int page, int size, String username){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
+        return workbookRepositoryTest.findAllVer1(keyword, pageable, username);
     }
 }
