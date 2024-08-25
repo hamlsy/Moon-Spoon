@@ -36,4 +36,12 @@ public interface WorkbookRepositoryTest extends JpaRepository<Workbook, Long> {
             nativeQuery = true)
     Page<Workbook> findAllVer3(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
 
+
+    @Query("SELECT w FROM Workbook w " +
+            "JOIN fetch w.user u " +
+            "WHERE u.username = :username and " +
+            "(lower(w.title) like lower(concat('%',:keyword,'%')) or " +
+            "lower(w.content) like lower(concat('%',:keyword,'%')))")
+    Page<Workbook> findAllVer4(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
+
 }

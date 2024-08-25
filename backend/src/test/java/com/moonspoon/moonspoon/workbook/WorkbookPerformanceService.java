@@ -22,7 +22,6 @@ public class WorkbookPerformanceService {
     public Page<Workbook> findAllVer2(String keyword, int page, int size, String username){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
         Page<Workbook> workbooks = workbookRepositoryTest.findAllVer2(keyword, pageable, username);
-
         Page<Workbook> responses = workbooks.map(w -> Workbook.builder()
                 .problemCount(workbookRepositoryTest.countProblemsByWorkbookId(w.getId()))
                 .build());
@@ -36,6 +35,17 @@ public class WorkbookPerformanceService {
         Page<Workbook> responses = workbooks.map(w -> Workbook.builder()
                 .problemCount(workbookRepositoryTest.countProblemsByWorkbookId(w.getId()))
                 .build());
+
+        return responses;
+    }
+
+    public Page<Workbook> findAllVer4(String keyword, int page, int size, String username){
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
+        Page<Workbook> workbooks = workbookRepositoryTest.findAllVer4(keyword, pageable, username);
+        Page<Workbook> responses = workbooks.map(w -> Workbook.builder()
+                .problemCount(workbookRepositoryTest.countProblemsByWorkbookId(w.getId()))
+                .build());
+
         return responses;
     }
 
