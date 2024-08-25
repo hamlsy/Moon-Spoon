@@ -27,11 +27,13 @@ public interface WorkbookRepositoryTest extends JpaRepository<Workbook, Long> {
     @Query("select count(p) from Problem p where p.workbook.id = :workbookId")
     int countProblemsByWorkbookId(@Param("workbookId") Long workbookId);
 
-    @Query(value = "SELECT w.workbook_id, w.title, w.content, w.author, w.create_date, w.update_date, w.problem_count, w.user_id AS workbook_user_id, " +
-            "u.* FROM Workbook w " +
-            "JOIN users u on w.user_id = u.user_id " +
-            "WHERE u.username = :username and " +
-            "MATCH(w.title, w.content) AGAINST(:keyword IN BOOLEAN MODE)", nativeQuery = true)
+    @Query(value = "SELECT w.* FROM Workbook w " +
+            "WHERE w.user_id IN (SELECT user_id FROM users WHERE username = :username) " +
+            "AND MATCH(w.title, w.content) AGAINST(:keyword IN NATURAL LANGUAGE MODE)",
+            countQuery = "SELECT COUNT(*) FROM Workbook w " +
+                    "WHERE w.user_id IN (SELECT user_id FROM users WHERE username = :username) " +
+                    "AND MATCH(w.title, w.content) AGAINST(:keyword IN NATURAL LANGUAGE MODE)",
+            nativeQuery = true)
     Page<Workbook> findAllVer3(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
 
 }

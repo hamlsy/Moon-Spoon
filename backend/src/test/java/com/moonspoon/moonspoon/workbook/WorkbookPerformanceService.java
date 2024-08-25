@@ -27,7 +27,7 @@ public class WorkbookPerformanceService {
                 .problemCount(workbookRepositoryTest.countProblemsByWorkbookId(w.getId()))
                 .build());
 
-        return workbooks;
+        return responses;
     }
 
     public Page<Workbook> findAllVer3(String keyword, int page, int size, String username){
@@ -36,7 +36,7 @@ public class WorkbookPerformanceService {
         Page<Workbook> responses = workbooks.map(w -> Workbook.builder()
                 .problemCount(workbookRepositoryTest.countProblemsByWorkbookId(w.getId()))
                 .build());
-        return workbooks;
+        return responses;
     }
 
 }

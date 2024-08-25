@@ -87,7 +87,7 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        service.findAllVer1("test Title 2", 1, 12, "test15");
+        service.findAllVer1("test Title 25", 1, 12, "test15");
 
         // end time
         //then
@@ -107,7 +107,7 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        service.findAllVer2("test Title 2", 1, 12, "test15");
+        service.findAllVer2("test Title 25", 1, 12, "test15");
 
         // end time
         //then
@@ -129,7 +129,7 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        service.findAllVer3("test Title 2", 1, 12, "test15");
+        service.findAllVer3("test Title 25", 1, 12, "test15");
 
         // end time
         //then

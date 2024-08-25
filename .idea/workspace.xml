@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bccfe506-f498-4ebb-b56b-a5f500f6ac9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
@@ -153,8 +153,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
-        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       </list>
     </recent_temporary>
   </component>
@@ -170,7 +170,7 @@
       <workItem from="1724564895324" duration="96000" />
       <workItem from="1724564999912" duration="213000" />
       <workItem from="1724565222680" duration="80000" />
-      <workItem from="1724565311646" duration="7738000" />
+      <workItem from="1724565311646" duration="8926000" />
     </task>
     <servers />
   </component>
