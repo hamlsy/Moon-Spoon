@@ -1,0 +1,145 @@
+.navbar {
+    background-color: white;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+
+.navbar-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+.navbar-menu {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-link {
+    color: #191f28;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-link:hover {
+    /*background-color: #FFD700;*/
+    background-color: #FFD700;
+    transform: translateY(-3px);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+}
+
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: #191f28;
+    transition: all 0.3s ease-in-out;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+}
+
+.footer {
+    background-color: #f2f4f6;
+    color: #191f28;
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+}
+
+.footer a {
+    color: black;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-toggle {
+        display: block;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+    }
+
+    .navbar-menu {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 1rem;
+        background-color: white;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+        animation: slideDown 0.5s ease-in-out;
+    }
+
+    .navbar-menu li {
+        width: 100%;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .navbar-menu li:last-child {
+        border-bottom: none;
+    }
+    .nav-link {
+        width: 92%;
+        text-align: center;
+        display: block;
+        padding: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .nav-link:hover {
+        background-color: #FFD700;
+        padding-left: 1.5rem;
+    }
+
+
+    .navbar-menu.active {
+        display: flex;
+        animation: slideDown 0.5s ease-in-out;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
