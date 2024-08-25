@@ -5,7 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/jsconfig.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/package.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/public/favicon.ico" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/App.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/assets/base.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/assets/logo.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/assets/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/HelloWorld.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/TheWelcome.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/WelcomeItem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/icons/IconCommunity.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/icons/IconDocumentation.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/icons/IconEcosystem.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/icons/IconSupport.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/components/icons/IconTooling.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/src/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/frontend/vite.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +57,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/backend">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -77,11 +111,11 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\이승영\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\82104\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -95,8 +129,8 @@
       <recent name="C:\springWorkspace\moonspoon\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance">
-    <configuration name="NoticeServiceTest.createAdmin" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="JUnit.WorkbookPerformanceTest.findAllTestVer2">
+    <configuration name="WorkbookPerformanceTest.findAllTestVer2" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
@@ -109,7 +143,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;com.moonspoon.moonspoon.notice.NoticeServiceTest.createAdmin&quot;" />
+            <option value="&quot;com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest.findAllTestVer2&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -120,17 +154,57 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="NoticeServiceTest.createAdmin" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="WorkbookPerformanceTest.testFindAllWorkbookPerformance" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$/backend" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest.testFindAllWorkbookPerformance&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UserServiceTest.concurrentSignupTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.notice.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.user.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.notice" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.notice.NoticeServiceTest" />
-      <option name="METHOD_NAME" value="createAdmin" />
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserServiceTest" />
+      <option name="METHOD_NAME" value="concurrentSignupTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorkbookPerformanceTest.findAllTestVer2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+      <option name="METHOD_NAME" value="findAllTestVer2" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -178,17 +252,21 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Gradle.NoticeServiceTest.createAdmin" />
+      <item itemvalue="Gradle.WorkbookPerformanceTest.findAllTestVer2" />
+      <item itemvalue="Gradle.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
       <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
+      <item itemvalue="JUnit.UserServiceTest.concurrentSignupTest" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
-      <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
       <item itemvalue="Spring Boot.MoonspoonApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
+        <item itemvalue="Gradle.WorkbookPerformanceTest.findAllTestVer2" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
-        <item itemvalue="JUnit.NoticeServiceTest.createAdmin" />
-        <item itemvalue="Gradle.NoticeServiceTest.createAdmin" />
+        <item itemvalue="Gradle.WorkbookPerformanceTest.testFindAllWorkbookPerformance" />
+        <item itemvalue="JUnit.UserServiceTest.concurrentSignupTest" />
       </list>
     </recent_temporary>
   </component>
@@ -229,14 +307,15 @@
       <workItem from="1724395171467" duration="5343000" />
       <workItem from="1724423227718" duration="2541000" />
       <workItem from="1724506533986" duration="309000" />
+      <workItem from="1724047819867" duration="9207000" />
+      <workItem from="1724476560797" duration="1601000" />
+      <workItem from="1724482648167" duration="1232000" />
+      <workItem from="1724483904977" duration="2380000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="VcsManagerConfiguration">
-    <option name="LAST_COMMIT_MESSAGE" value="" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
