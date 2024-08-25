@@ -19,7 +19,6 @@ public interface WorkbookRepositoryTest extends JpaRepository<Workbook, Long> {
 
     @Query("SELECT w FROM Workbook w " +
             "JOIN fetch w.user u " +
-            "" +
             "WHERE u.username = :username and " +
             "(lower(w.title) like lower(concat('%',:keyword,'%')) or " +
             "lower(w.content) like lower(concat('%',:keyword,'%')))")
@@ -27,4 +26,14 @@ public interface WorkbookRepositoryTest extends JpaRepository<Workbook, Long> {
 
     @Query("select count(p) from Problem p where p.workbook.id = :workbookId")
     int countProblemsByWorkbookId(@Param("workbookId") Long workbookId);
+
+    @Query(value = "SELECT w.* FROM Workbook w " +
+            "WHERE w.user_id IN (SELECT user_id FROM users WHERE username = :username) " +
+            "AND MATCH(w.title, w.content) AGAINST(:keyword IN NATURAL LANGUAGE MODE)",
+            countQuery = "SELECT COUNT(*) FROM Workbook w " +
+                    "WHERE w.user_id IN (SELECT user_id FROM users WHERE username = :username) " +
+                    "AND MATCH(w.title, w.content) AGAINST(:keyword IN NATURAL LANGUAGE MODE)",
+            nativeQuery = true)
+    Page<Workbook> findAllVer3(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
+
 }
