@@ -46,12 +46,13 @@ public class Workbook {
     private SharedWorkbook sharedWorkbook;
 
     @Builder
-    public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate) {
+    public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate, int problemCount) {
         this.title = title;
         this.content = content;
         this.author = author;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.problemCount = problemCount;
     }
 
     public void update(String title, String content, LocalDateTime updateDate){

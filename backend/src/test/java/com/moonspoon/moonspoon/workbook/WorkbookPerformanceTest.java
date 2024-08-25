@@ -102,7 +102,7 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        service.findAllVer1("", 1, 12, "test1");
+        service.findAllVer2("", 1, 12, "test1");
 
         // end time
         //then
