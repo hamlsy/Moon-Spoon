@@ -145,7 +145,12 @@ Route53, 가비아
 - 원인: [ 과도한 fetch join ]
 - 해결과정:
   1. 
-- 학습 내용: 
+- 학습 내용:
+  끌어오는 데이터의 수가 적을 경우 fetch join 대신 따로 쿼리 사용
+  FULL TEXT가 Like에 비해 항상 우세한 건 아님
+  FULL TEXT는 JPQL에서 해결 X Native Query로 해결해야함
+  TEXT 데이터 타입은 인덱스 설정 안됨
+  
 
 ## 고민 사항
 ### 고민 1: [ DTO의 변환 위치 ]
