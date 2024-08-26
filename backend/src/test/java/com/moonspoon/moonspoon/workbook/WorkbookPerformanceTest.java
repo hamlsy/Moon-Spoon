@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,8 @@ public class WorkbookPerformanceTest {
 //                em.clear();
 //            }
 //        }
+        // 캐시를 초기화하기 위한 데이터 미리 로드
+        service.findAllVer4("test Title 24", 0, 12, "testUser");
 
     }
 

@@ -2,6 +2,7 @@ package com.moonspoon.moonspoon.workbook;
 
 import com.moonspoon.moonspoon.dto.response.WorkbookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
