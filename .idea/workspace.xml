@@ -4,10 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bccfe506-f498-4ebb-b56b-a5f500f6ac9c" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/init/InitDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/init/InitDB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/MoonspoonApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/MoonspoonApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/frontend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/frontend.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,13 +27,22 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
     <projectState path="$PROJECT_DIR$/backend">
+      <ProjectState />
+    </projectState>
+    <projectState path="$PROJECT_DIR$/frontend">
       <ProjectState />
     </projectState>
   </component>
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/backend">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -31,6 +52,15 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="Vue Composition API Component" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -38,39 +68,53 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 7
-}</component>
-  <component name="ProjectId" id="2l8bMsVU68IimPJnjxqNDzKPCMw" />
+    &quot;customColor&quot;: &quot;&quot;,
+    &quot;associatedIndex&quot;: 0
+    }</component>
+  <component name="ProjectId" id="2jlpN1p8e44shsE5pdyOHMOxmCi" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/springProjectWorkspace/Moon-Spoon/frontend&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15136719&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "jdk.selected.JAVA_MODULE": "19",
+    "last_opened_file_path": "C:/springProjectWorkspace/Moon-Spoon/frontend",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_interpreter_path": "node",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "ts.external.directory.path": "C:\\Users\\82104\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "vue.recent.templates": [
+      "Vue Composition API Component"
+    ]
   }
-}</component>
-  <component name="RunManager" selected="JUnit.WorkbookPerformanceTest.findAllTestVer3">
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\springWorkspace\moonspoon\frontend\public" />
+    </key>
+  </component>
+  <component name="RunManager" selected="JUnit.WorkbookPerformanceTest.findAllTestVer4">
     <configuration name="WorkbookPerformanceTest.findAllTestVer1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="com.moonspoon.moonspoon.test" />
+      <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
@@ -86,7 +130,7 @@
       </method>
     </configuration>
     <configuration name="WorkbookPerformanceTest.findAllTestVer2" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="com.moonspoon.moonspoon.test" />
+      <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
@@ -102,7 +146,7 @@
       </method>
     </configuration>
     <configuration name="WorkbookPerformanceTest.findAllTestVer3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="com.moonspoon.moonspoon.test" />
+      <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
@@ -117,17 +161,47 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="WorkbookPerformanceTest.findAllTestVer4 (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="com.moonspoon.moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+      <option name="METHOD_NAME" value="findAllTestVer4" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WorkbookPerformanceTest.findAllTestVer4" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+      <option name="METHOD_NAME" value="findAllTestVer4" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Debug Application" type="JavascriptDebugType" uri="http://localhost:5173">
       <method v="2" />
     </configuration>
     <configuration default="true" type="JetRunConfigurationType">
-      <module name="untitled" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="untitled" />
       <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -136,7 +210,7 @@
     <configuration name="MoonspoonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="ACTIVE_PROFILES" value="local" />
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="com.moonspoon.moonspoon.main" />
+      <module name="moonspoon.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.moonspoon.moonspoon.MoonspoonApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -144,37 +218,114 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4 (1)" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
+      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
-      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
       <item itemvalue="Spring Boot.MoonspoonApplication" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
+        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4 (1)" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="bccfe506-f498-4ebb-b56b-a5f500f6ac9c" name="Changes" comment="" />
-      <created>1724564607223</created>
+      <changelist id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="" />
+      <created>1721971479722</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1724564607223</updated>
-      <workItem from="1724564610040" duration="261000" />
-      <workItem from="1724564895324" duration="96000" />
-      <workItem from="1724564999912" duration="213000" />
-      <workItem from="1724565222680" duration="80000" />
-      <workItem from="1724565311646" duration="9270000" />
-      <workItem from="1724651340927" duration="65000" />
+      <updated>1721971479722</updated>
+      <workItem from="1721971483226" duration="104000" />
+      <workItem from="1721972450420" duration="199000" />
+      <workItem from="1721972675182" duration="2830000" />
+      <workItem from="1721980169586" duration="19800000" />
+      <workItem from="1722168452033" duration="1331000" />
+      <workItem from="1722216634323" duration="31129000" />
+      <workItem from="1722262302997" duration="4610000" />
+      <workItem from="1722343049773" duration="1235000" />
+      <workItem from="1722348954977" duration="2428000" />
+      <workItem from="1722436786701" duration="1112000" />
+      <workItem from="1722510009723" duration="15415000" />
+      <workItem from="1722571983134" duration="27837000" />
+      <workItem from="1722748137027" duration="1222000" />
+      <workItem from="1722774049366" duration="2725000" />
+      <workItem from="1722848786817" duration="1633000" />
+      <workItem from="1723011226646" duration="23000" />
+      <workItem from="1723179695148" duration="13000" />
+      <workItem from="1722848786817" duration="2500000" />
+      <workItem from="1723126278458" duration="308000" />
+      <workItem from="1723130519554" duration="3298000" />
+      <workItem from="1723180618352" duration="7832000" />
+      <workItem from="1723785596895" duration="15174000" />
+      <workItem from="1723892612667" duration="8445000" />
+      <workItem from="1724047819867" duration="9207000" />
+      <workItem from="1724476560797" duration="1601000" />
+      <workItem from="1724482648167" duration="1232000" />
+      <workItem from="1724483904977" duration="3647000" />
+      <workItem from="1724508414296" duration="4902000" />
+      <workItem from="1724588241470" duration="401000" />
+      <workItem from="1724588708856" duration="117000" />
+      <workItem from="1724588851927" duration="8737000" />
+      <workItem from="1724652068055" duration="4655000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/service/ProblemService.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/service/ProblemService.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/service/ProblemService.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/service/ProblemService.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/controller/ProblemController.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/controller/ProblemController.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/service/ProblemService.java</url>
+          <line>188</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="com.moonspoon.moonspoon.workbook.Workbook" memberName="problemCount" />
+        <PinnedItemInfo parentTag="org.springframework.data.domain.PageImpl" memberName="content" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
