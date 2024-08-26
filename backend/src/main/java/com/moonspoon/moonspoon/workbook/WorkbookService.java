@@ -75,8 +75,13 @@ public class WorkbookService {
         }
         Pageable pageable = PageRequest.of(page, size,  sort);
 
-        Page<Workbook> workbooks = workbookRepository.findAllWithUserAndProblemsAndKeyword(keyword.trim(), pageable, username);
-        Page<WorkbookResponse> responses = workbooks.map(WorkbookResponse::fromEntity);
+        Page<Workbook> workbooks = workbookRepository.findAllWithUserAndKeyword(keyword.trim(), pageable, username);
+        Page<WorkbookResponse> responses = workbooks.map(w -> {
+            WorkbookResponse response =  WorkbookResponse.fromEntity(w);
+            response.setProblemCount(workbookRepository.countProblemsByWorkbookId(w.getId()));
+            return response;
+        });
+
         return responses;
     }
 

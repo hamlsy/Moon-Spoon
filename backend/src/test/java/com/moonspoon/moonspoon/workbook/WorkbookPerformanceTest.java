@@ -21,7 +21,8 @@ import java.util.List;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles("local")
-public class WorkbookPerformanceTest {
+public class
+WorkbookPerformanceTest {
 
     @Autowired
     private WorkbookService workbookService;
@@ -71,7 +72,7 @@ public class WorkbookPerformanceTest {
 //            }
 //        }
         // 캐시를 초기화하기 위한 데이터 미리 로드
-        service.findAllVer4("test Title 24", 0, 12, "testUser");
+//        service.findAllVer4("test Title 24", 0, 12, "testUser");
 
     }
 
@@ -104,13 +105,13 @@ public class WorkbookPerformanceTest {
 
         //when
         // 조회
-        Page<Workbook> workbooks = service.findAllVer2("test Title 24", 0, 12, username);
+        Page<Workbook> workbooks = service.findAllVer2("test Title 2", 0, 12, username);
 
         //then
         long endTime = System.currentTimeMillis();
         System.out.println("조회시간 " + (endTime-startTime) + "ms");
 
-        Assertions.assertEquals(1, workbooks.getTotalElements());
+        Assertions.assertEquals(11, workbooks.getTotalElements());
         Assertions.assertEquals(1000, workbooks.getContent().get(0).getProblemCount());
     }
 
