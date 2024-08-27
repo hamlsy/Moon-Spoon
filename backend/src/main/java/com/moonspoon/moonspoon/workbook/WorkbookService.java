@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.workbook;
 
+import com.moonspoon.moonspoon.dto.response.WorkbookProblemCountDto;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookCreateRequest;
 import com.moonspoon.moonspoon.dto.request.workbook.WorkbookUpdateRequest;
@@ -9,6 +10,7 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,6 +69,8 @@ public class WorkbookService {
         return WorkbookResponse.fromEntity(workbook);
     }
 
+
+    @Cacheable(value = "workbooks", key="customKeyGenerator")
     public Page<WorkbookResponse> findAll(String keyword, String order, int page, int size){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
@@ -76,9 +81,17 @@ public class WorkbookService {
         Pageable pageable = PageRequest.of(page, size,  sort);
 
         Page<Workbook> workbooks = workbookRepository.findAllWithUserAndKeyword(keyword.trim(), pageable, username);
+
+        List<Long> workbookIds = workbooks.stream()
+                .map(Workbook::getId).collect(Collectors.toList());
+        List<WorkbookProblemCountDto> problemCounts = workbookRepository.countProblemsByWorkbookId(workbookIds);
+        Map<Long, Long> problemCountMap = problemCounts.stream().collect(Collectors.toMap(
+                WorkbookProblemCountDto::getWorkbookId, WorkbookProblemCountDto::getProblemCount
+                ));
+
         Page<WorkbookResponse> responses = workbooks.map(w -> {
             WorkbookResponse response =  WorkbookResponse.fromEntity(w);
-            response.setProblemCount(workbookRepository.countProblemsByWorkbookId(w.getId()));
+            response.setProblemCount(problemCountMap.get(w.getId()).intValue());
             return response;
         });
 

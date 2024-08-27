@@ -85,13 +85,13 @@ WorkbookPerformanceTest {
 
         //when
         // 조회
-        Page<Workbook> workbooks = service.findAllVer1("test Title 24", 0, 12, username);
+        Page<Workbook> workbooks = service.findAllVer1("test Title 2", 0, 12, username);
 
         //then
         long endTime = System.currentTimeMillis();
         System.out.println("조회시간 " + (endTime-startTime) + "ms");
 
-        Assertions.assertEquals(1, workbooks.getTotalElements());
+        Assertions.assertEquals(11, workbooks.getTotalElements());
         Assertions.assertEquals(1000, workbooks.getContent().get(0).getProblemCount());
     }
 
@@ -127,14 +127,14 @@ WorkbookPerformanceTest {
 
         //when
         // 조회
-        Page<Workbook> workbooks = service.findAllVer3("\"test Title 24\"", 0, 12, username);
+        Page<Workbook> workbooks = service.findAllVer3("\"test Title 2\"", 0, 12, username);
 
         //then
         long endTime = System.currentTimeMillis();
         System.out.println("---------조회시간 " + (endTime-startTime) + "ms--------");
         em.createNativeQuery("alter table Workbook drop index idx_fulltext").executeUpdate();
 
-        Assertions.assertEquals(1, workbooks.getTotalElements());
+        Assertions.assertEquals(11, workbooks.getTotalElements());
         Assertions.assertEquals(1000, workbooks.getContent().get(0).getProblemCount());
     }
 
@@ -147,13 +147,13 @@ WorkbookPerformanceTest {
 
         //when
         // 조회
-        Page<Workbook> workbooks = service.findAllVer4("test Title 24", 0, 12, username);
+        Page<Workbook> workbooks = service.findAllVer4("test Title 2", 0, 12, username);
 
         //then
         long endTime = System.currentTimeMillis();
         System.out.println("Ver4 ---------조회시간 " + (endTime-startTime) + "ms--------");
 
-        Assertions.assertEquals(1, workbooks.getTotalElements());
+        Assertions.assertEquals(11, workbooks.getTotalElements());
         Assertions.assertEquals(1000, workbooks.getContent().get(0).getProblemCount());
 
     }

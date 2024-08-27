@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.workbook;
 
+import com.moonspoon.moonspoon.dto.response.WorkbookProblemCountDto;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,8 +26,12 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
             "lower(w.content) like lower(concat('%',:keyword,'%')))")
     Page<Workbook> findAllWithUserAndKeyword(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
 
-    @Query("select count(p) from Problem p where p.workbook.id = :workbookId")
-    int countProblemsByWorkbookId(@Param("workbookId") Long workbookId);
+
+
+    @Query("select new com.moonspoon.moonspoon.dto.response.WorkbookProblemCountDto(p.workbook.id, COUNT(p)) " +
+            "from Problem p where p.workbook.id in :workbookIds " +
+            "group by p.workbook.id")
+    List<WorkbookProblemCountDto> countProblemsByWorkbookId(@Param("workbookIds") List<Long> workbookIds);
 
     @Query("select w from Workbook w join fetch w.user u where w.id = :id")
     Optional<Workbook> findByIdWithUser(@Param("id") Long id);
