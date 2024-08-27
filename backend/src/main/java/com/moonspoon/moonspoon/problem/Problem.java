@@ -38,7 +38,7 @@ public class Problem {
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @OneToMany(mappedBy = "problem", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.REMOVE)
     private List<TestAnswer> testAnswers = new ArrayList<>();
 
 

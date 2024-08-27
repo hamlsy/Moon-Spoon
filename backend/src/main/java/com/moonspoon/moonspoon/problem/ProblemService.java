@@ -205,11 +205,15 @@ public class ProblemService {
         validateUserAndWorkbook(workbookId);
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         List<TestResultRequest> dto = storedLists.get(username);
+        List<Long> problemIds = dto.stream().map(TestResultRequest::getId).collect(Collectors.toList());
+
+        List<Problem> problems = problemRepository.findByIdList(problemIds);
+        Map<Long, Problem> problemMap = problems.stream()
+                .collect(Collectors.toMap(Problem::getId, problem -> problem));
+
         List<TestResultResponse> responses =  dto.stream()
                 .map(d -> {
-                    Problem problem = problemRepository.findById(d.getId()).orElseThrow(
-                            () -> new NotFoundException("존재하지 않는 문제입니다.")
-                    );
+                    Problem problem = problemMap.get(d.getId());
                     TestResultResponse res = TestResultResponse.fromEntity(problem);
                     res.setInput(d.getInput());
                     res.setResult(compareStrings(d.getInput(), problem.getSolution()));

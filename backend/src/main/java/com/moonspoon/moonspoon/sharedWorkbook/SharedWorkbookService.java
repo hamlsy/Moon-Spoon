@@ -3,6 +3,7 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookListResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
@@ -46,10 +47,10 @@ public class SharedWorkbookService {
     }
 
     //전체 조회
-    public Page<SharedWorkbookResponse> findAllSharedWorkbook(String keyword, int page, int size){
+    public Page<SharedWorkbookListResponse> findAllSharedWorkbook(String keyword, int page, int size){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
         Page<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAllWithKeyword(keyword.trim(), pageable);
-        Page<SharedWorkbookResponse> responses = sharedWorkbooks.map(SharedWorkbookResponse::fromEntity);
+        Page<SharedWorkbookListResponse> responses = sharedWorkbooks.map(SharedWorkbookListResponse::fromEntity);
         return responses;
     }
 

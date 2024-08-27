@@ -37,7 +37,7 @@ public class SharedWorkbook {
 
     private boolean random;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 

@@ -3,6 +3,7 @@ package com.moonspoon.moonspoon.sharedWorkbook;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookListResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
 import lombok.RequiredArgsConstructor;
@@ -29,11 +30,11 @@ public class SharedWorkbookController {
 
     //전체 조회
     @GetMapping("/all")
-    public ResponseEntity<Page<SharedWorkbookResponse>> findAllSharedWorkbook(
+    public ResponseEntity<Page<SharedWorkbookListResponse>> findAllSharedWorkbook(
             @RequestParam(name="keyword", defaultValue = "") String keyword,
             @RequestParam(name="page", defaultValue = "0") int page,
             @RequestParam(name="size", defaultValue = "12") int size){
-        Page<SharedWorkbookResponse> responses = sharedWorkbookService.findAllSharedWorkbook(keyword, page, size);
+        Page<SharedWorkbookListResponse> responses = sharedWorkbookService.findAllSharedWorkbook(keyword, page, size);
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
 
