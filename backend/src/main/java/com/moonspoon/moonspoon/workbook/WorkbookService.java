@@ -10,6 +10,7 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,7 +33,9 @@ public class WorkbookService {
     private final WorkbookRepository workbookRepository;
     private final UserRepository userRepository;
 
+    //등록
     @Transactional
+    @CacheEvict(value = "workbooks", allEntries = true)
     public WorkbookResponse createWorkbook(WorkbookCreateRequest dto) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -70,7 +73,7 @@ public class WorkbookService {
     }
 
 
-    @Cacheable(value = "workbooks", key="customKeyGenerator")
+    @Cacheable(value = "workbooks", keyGenerator="customKeyGenerator")
     public Page<WorkbookResponse> findAll(String keyword, String order, int page, int size){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
@@ -91,7 +94,9 @@ public class WorkbookService {
 
         Page<WorkbookResponse> responses = workbooks.map(w -> {
             WorkbookResponse response =  WorkbookResponse.fromEntity(w);
-            response.setProblemCount(problemCountMap.get(w.getId()).intValue());
+            Long problemCount = problemCountMap.get(w.getId());
+            int returnProblemCount = (problemCount != null) ? problemCount.intValue() : 0;
+            response.setProblemCount(returnProblemCount);
             return response;
         });
 
@@ -101,6 +106,7 @@ public class WorkbookService {
 
     //수정
     @Transactional
+    @CacheEvict(value = "workbooks", allEntries = true)
     public WorkbookResponse updateWorkbook(Long id, WorkbookUpdateRequest dto){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
@@ -113,6 +119,7 @@ public class WorkbookService {
 
     //삭제
     @Transactional
+    @CacheEvict(value = "workbooks", allEntries = true)
     public void deleteWorkbook(Long id){
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         validateUser(username);
@@ -120,10 +127,7 @@ public class WorkbookService {
         if(!workbookRepository.existsById(id)){
             new NotFoundException("문제집이 존재하지 않습니다.");
         }
-
         workbookRepository.deleteById(id);
     }
-
-
 
 }

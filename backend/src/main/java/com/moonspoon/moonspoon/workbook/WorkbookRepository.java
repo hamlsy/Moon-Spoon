@@ -13,11 +13,6 @@ import java.util.Optional;
 
 
 public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
-    @Query("SELECT DISTINCT w FROM Workbook w " +
-    "JOIN fetch w.user u " +
-    "LEFT JOIN FETCH w.problems p " +
-    "WHERE u.username = :username")
-    Page<Workbook> findAllWithUserAndProblems(Pageable pageable, @Param("username") String username);
 
     @Query("SELECT w FROM Workbook w " +
             "JOIN fetch w.user u " +
@@ -25,8 +20,6 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
             "(lower(w.title) like lower(concat('%',:keyword,'%')) or " +
             "lower(w.content) like lower(concat('%',:keyword,'%')))")
     Page<Workbook> findAllWithUserAndKeyword(@Param("keyword") String keyword, Pageable pageable, @Param("username") String username);
-
-
 
     @Query("select new com.moonspoon.moonspoon.dto.response.WorkbookProblemCountDto(p.workbook.id, COUNT(p)) " +
             "from Problem p where p.workbook.id in :workbookIds " +
