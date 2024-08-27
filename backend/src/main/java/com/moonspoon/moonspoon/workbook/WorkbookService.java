@@ -89,7 +89,7 @@ public class WorkbookService {
 
         List<Long> workbookIds = workbooks.stream()
                 .map(Workbook::getId).collect(Collectors.toList());
-        List<WorkbookProblemCountDto> problemCounts = workbookRepository.countProblemsByWorkbookId(workbookIds);
+        List<WorkbookProblemCountDto> problemCounts = workbookRepository.countProblemsByWorkbookIds(workbookIds);
         Map<Long, Long> problemCountMap = problemCounts.stream().collect(Collectors.toMap(
                 WorkbookProblemCountDto::getWorkbookId, WorkbookProblemCountDto::getProblemCount
                 ));

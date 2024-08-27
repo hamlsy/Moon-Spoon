@@ -42,7 +42,6 @@ public class SharedWorkbookResponse {
                 .content(sharedWorkbook.getContent())
                 .author(sharedWorkbook.getAuthor())
                 .isRandom(sharedWorkbook.isRandom())
-                .problemCount(sharedWorkbook.getWorkbook().getProblems().size())
                 .createDate(sharedWorkbook.getCreateDate())
                 .updateDate(sharedWorkbook.getUpdateDate())
                 .build();

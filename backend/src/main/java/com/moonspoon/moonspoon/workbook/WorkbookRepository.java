@@ -24,7 +24,10 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
     @Query("select new com.moonspoon.moonspoon.dto.response.WorkbookProblemCountDto(p.workbook.id, COUNT(p)) " +
             "from Problem p where p.workbook.id in :workbookIds " +
             "group by p.workbook.id")
-    List<WorkbookProblemCountDto> countProblemsByWorkbookId(@Param("workbookIds") List<Long> workbookIds);
+    List<WorkbookProblemCountDto> countProblemsByWorkbookIds(@Param("workbookIds") List<Long> workbookIds);
+
+    @Query("select count(p) from Problem p where p.workbook.id = :id")
+    Long countProblemsById(@Param("id") Long id);
 
     @Query("select w from Workbook w join fetch w.user u where w.id = :id")
     Optional<Workbook> findByIdWithUser(@Param("id") Long id);
