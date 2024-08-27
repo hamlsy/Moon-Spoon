@@ -18,7 +18,7 @@ public class CustomKeyGenerator implements KeyGenerator {
         if(username == null){
             keyBuilder.append("null").append("_");
         }else{
-            keyBuilder.append(username).append(":");
+            keyBuilder.append(username).append("_");
         }
         //Class, Method name
         keyBuilder.append(target.getClass().getSimpleName()).append("_")

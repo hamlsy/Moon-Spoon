@@ -10,8 +10,10 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +37,7 @@ public class NoticeService {
                 .collect(Collectors.toList());
         return responses;
     }
+
 
     public NoticeResponse findNotice(Long id){
         Notice notice = noticeRepository.findByIdWithUser(id).orElseThrow(
