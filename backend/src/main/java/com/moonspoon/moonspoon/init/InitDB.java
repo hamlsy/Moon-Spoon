@@ -22,6 +22,7 @@ public class InitDB {
     public void init(){
 //        initService.dbInit1();
 //        initService.dbInit2();
+//        initService.dbInitLargeTestData();
     }
 
     @Component
@@ -81,6 +82,41 @@ public class InitDB {
             p.setWorkbook(w);
             em.persist(p);
 
+
+        }
+
+        public void dbInitLargeTestData(){
+            User user  = new User();
+            user.setUsername("testUser");
+            user.setName("testUser");
+            user.setRole(UserRole.USER);
+
+            em.persist(user);
+
+            int batchSize = 1000;
+            int totalWorkbooks = 100;
+            int totalProblems = 1000;
+            for (int i = 0; i < totalWorkbooks; i++) {
+                Workbook workbook = new Workbook();
+                workbook.setTitle("test Title " + i);
+                workbook.setContent("test Content " + i);
+                workbook.setUser(user);
+                workbook.setCreateDate(LocalDateTime.now());
+
+                em.persist(workbook);
+
+                for (int j = 0; j < totalProblems; j++) {
+                    Problem problem = new Problem();
+                    problem.setQuestion("test Question " + j);
+                    problem.setWorkbook(workbook);
+                    em.persist(problem);
+                }
+
+                if (i % batchSize == 0) {
+                    em.flush();
+                    em.clear();
+                }
+            }
 
         }
     }

@@ -42,8 +42,8 @@ public class Workbook {
     @OneToMany(mappedBy = "workbook", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
     private List<Problem> problems = new ArrayList<>();
 
-    @OneToOne(mappedBy = "workbook", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private SharedWorkbook sharedWorkbook;
+    @OneToMany(mappedBy = "workbook",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<SharedWorkbook> sharedWorkbook;
 
     @Builder
     public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate, int problemCount) {

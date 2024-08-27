@@ -37,7 +37,7 @@ public class SharedWorkbook {
 
     private boolean random;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
@@ -58,7 +58,7 @@ public class SharedWorkbook {
 
     public void setWorkbook(Workbook workbook){
         this.workbook = workbook;
-        workbook.setSharedWorkbook(this);
+        workbook.getSharedWorkbook().add(this);
     }
 
 

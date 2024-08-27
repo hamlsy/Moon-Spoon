@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon;
+package com.moonspoon;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
