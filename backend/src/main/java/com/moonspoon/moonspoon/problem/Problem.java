@@ -34,7 +34,7 @@ public class Problem {
     private int correctCount;
     private int incorrectCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 

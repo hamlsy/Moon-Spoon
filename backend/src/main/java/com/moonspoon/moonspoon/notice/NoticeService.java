@@ -10,6 +10,8 @@ import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +48,7 @@ public class NoticeService {
     }
 
     @Transactional
+    @CacheEvict(value = "notices", allEntries = true)
     public NoticeResponse createNotice(NoticeCreateRequest request){
         User user = validAdmin();
         Notice notice = NoticeCreateRequest.toEntity(request);
@@ -58,12 +61,14 @@ public class NoticeService {
     }
 
     @Transactional
+    @CacheEvict(value = "notices", allEntries = true)
     public void deleteNotice(Long id){
         validAdmin();
         noticeRepository.deleteById(id);
     }
 
     @Transactional
+    @CacheEvict(value = "notices", allEntries = true)
     public NoticeResponse updateNotice(Long id, NoticeUpdateRequest request){
         validAdmin();
         Notice notice = noticeRepository.findByIdWithUser(id).orElseThrow(
@@ -87,6 +92,7 @@ public class NoticeService {
         return user;
     }
 
+    @Cacheable(value = "notices", keyGenerator = "customKeyGenerator")
     public List<NoticeListResponse> getRecentNotices(){
         Pageable pageable = PageRequest.of(0, 3);
         List<Notice> notices = noticeRepository.findRecentNotices(pageable);

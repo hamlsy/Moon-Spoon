@@ -41,14 +41,14 @@ public class SharedWorkbook {
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "sharedWorkbook", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sharedWorkbook", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "sharedWorkbook", cascade = CascadeType.REMOVE)
     private List<Test> tests = new ArrayList<>();
 
     public void setUser(User user){
