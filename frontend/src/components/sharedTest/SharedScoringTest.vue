@@ -180,7 +180,7 @@ export default {
     },
     exitGrading() {
       // 채점 종료 로직
-      this.$router.push(`/sharedWorkBook/${this.workbookId}`);
+      this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`);
     },
     submitResults() {
       // 채점 결과 제출 로직

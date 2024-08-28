@@ -71,21 +71,22 @@ public class UserService {
 
     public UserProfileResponse getUserProfile(){
         User user = getCurrentUser();
-        int workbookCount = workbookRepository.countByUsername(user.getUsername());
-        int sharedWorkbookCount = sharedWorkbookRepository.countByUsername(user.getUsername());
-        int sharedWorkbookTestCount = testRepository.countByUsername(user.getUsername());
-
-        UserProfileResponse response = UserProfileResponse.fromEntity(user);
-
-        response.setWorkbookCount(workbookCount);
-        response.setSharedWorkbookCount(sharedWorkbookCount);
-        response.setSharedWorkbookTestCount(sharedWorkbookTestCount);
+        UserProfileResponse countResponse = userRepository.userProfileCountById(user.getId());
+        UserProfileResponse response = setUserProfile(user, countResponse);
 
         if(user.getRole().getValue().equals("user")){
             response.setRole("일반 회원");
         }else{
             response.setRole("관리자");
         }
+        return response;
+    }
+
+    private UserProfileResponse setUserProfile(User user, UserProfileResponse response){
+        response.setName(user.getName());
+        response.setWorkbookTestCount(user.getWorkbookTestCount());
+        response.setUsername(user.getUsername());
+        response.setSignupDate(user.getSignupDate());
         return response;
     }
 
