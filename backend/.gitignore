@@ -49,9 +49,5 @@ vue-cli/node_modules
 src/main/resources/application.yml
 src/main/resources/application.properties
 src/main/resources/application-local.yml
-<<<<<<< HEAD
-
-=======
->>>>>>> 88c6c97984b24c670c1dd0e1982819b2c4400475
-backend/private_repo
 .env
+
