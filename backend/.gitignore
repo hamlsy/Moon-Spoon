@@ -49,7 +49,7 @@ vue-cli/node_modules
 src/main/resources/application.yml
 src/main/resources/application.properties
 src/main/resources/application-local.yml
-backend/private_repo
 .env
-
+backend/private_repo
 .idea
+

@@ -21,7 +21,7 @@ public class SharedWorkbookController {
     private final SharedWorkbookService sharedWorkbookService;
     //todo url 규칙 Restful하게 변경
 
-    //단일 조회
+    //단일 조회 + 댓글 조회 + 사용자 검증
     @GetMapping("/{id}")
     public ResponseEntity<SharedWorkbookResponse> findSharedWorkbook(@PathVariable("id") Long id){
         SharedWorkbookResponse response = sharedWorkbookService.findSharedWorkbook(id);
@@ -59,12 +59,5 @@ public class SharedWorkbookController {
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-
-    //사용자 검증
-    @GetMapping("/{id}/getUser")
-    public ResponseEntity<SharedWorkbookGetUserResponse> getUser(@PathVariable("id") Long id){
-        SharedWorkbookGetUserResponse response = sharedWorkbookService.getUser(id);
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
 
 }
