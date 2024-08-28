@@ -112,44 +112,34 @@ Github Action, CodeDeploy
 ### 도메인 연결
 Route53, 가비아
 
-### Https 인증
+### Https 적용
 
 
 ## 문제 해결
-### 문제 1: [ n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
-- 개요: 
-- 원인: []
-- 해결과정:
-  1. Fetch join
-  2. Batch size
-- 학습 내용: Fetch join 개념, Fetch Lazy 원리, 프록시
+### 문제 1: [ 단순 n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
+- 개요: 페이지 조회시 n+1 쿼리 문제 발생 후 해결
+  
 
 ### 문제 2: [ 엔티티 다수 업데이트 성능 문제 ] [#38](https://github.com/hamlsy/Moon-Spoon/pull/38#issue-2387878580)
 - 개요: 각 문제들의 정답 횟수를 업데이트하는 과정에서 발생한 성능 문제
-- 원인: []
-- 해결과정:
-  1. 반복 Update 쿼리
-  2. 벌크연산
-- 학습 내용: 
+
 
 ### 문제 3: [ 동시 계정 회원가입 문제 ] [#45](https://github.com/hamlsy/Moon-Spoon/issues/45#issuecomment-2212428574)
 - 개요: 회원가입 버튼을 연속으로 클릭 시 동일한 정보의 회원이 여러번 등록되는 문제
-- 원인: [ 회원가입 동시성을 고려하지 않음 ]
-- 해결과정:
-  1. Synchronized
-  2. Unique Key
-- 학습 내용: 
 
-### 문제 4: [조회 성능 문제]
-- 개요:
-- 원인: []
-- 해결과정:
-  1. 
-- 학습 내용:
+
+### 문제 4: [조회 성능 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
+- 개요: 과도한 fetch join 으로 리스트 페이지 조회 시 성능 저하 발생
+
+
+### 문제 5: [ OneToOne 관계의 n+1 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
+- 개요: OneToOne 관계의 Lazy Loading 미적용으로 인한 n+1 문제
+
+
 
 ## 고민 사항
 ### 고민 1: [ DTO의 변환 위치 ]
-- 개요:
+- 개요: 
 - 방법:
   1. Service 계층에서 변환
   2. Controller 계층에서 변환
@@ -184,7 +174,23 @@ Route53, 가비아
   2. 
   
 - 결론:
-- 
+
+### 고민 3: [ 캐싱 전략 선택 ] (#67) (https://github.com/hamlsy/Moon-Spoon/issues/67#issuecomment-2308669925)
+- 개요: 캐싱 종류 선택과 전략 고민
+- 방법:
+- 캐싱 종류:
+  1. 로컬 캐시
+  2. 분산 캐시
+  3. 웹 캐시
+- 캐싱 전략:
+  1. 읽기 중심 캐시 전략 - 삽입, 업데이트 시 캐시 초기화, 전체 조회시 Cacheable 하는 
+  2. 세밀한 캐시 관리 전략 - 삽입, 업데이트 시 개별 캐시 Put, 전체 조회를 별도 엔티티의 캐시 키로 관리
+     
+- 결론:
+  단일 인스턴스 환경이므로 로컬 캐시를 사용합니다. 하지만 분산 환경 대비를 위해 Redis 사용도 추후 구현해보도록 하겠습니다.
+  캐싱 전략은 읽기 중심 전략을 선택했습니다. 개별 항목 별로 캐시를 만들지 않아 메모리 관리에 용이하고, 대량의 데이터 관리에 효과적이기 때문에 읽기 중심 전략을 사용합니다.
+  
+
 ## 향후 계획
 
 

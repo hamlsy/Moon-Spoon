@@ -33,7 +33,6 @@ public class WorkbookResponse {
                 .id(workbook.getId())
                 .title(workbook.getTitle())
                 .content(workbook.getContent())
-                .problemCount(workbook.getProblems().size())
                 .updateDate(workbook.getUpdateDate())
                 .createDate(workbook.getCreateDate())
                 .build();

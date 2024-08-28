@@ -157,7 +157,7 @@ export default {
     }
   },
   created(){
-    this.getWorkbook(1);
+    this.getWorkbook(1, this.sortOrder);
     // this.getPage(1);
   },
   methods: {

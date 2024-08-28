@@ -14,5 +14,14 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
             "where p.workbook.id = :workbookId and (lower(p.question) like lower(concat('%', :keyword, '%')) " +
             "or lower(p.solution) like lower(concat('%', :keyword, '%'))) ")
     Page<Problem> findAllByWorkbookIdAndKeyword(@Param("workbookId") Long workbookId, @Param("keyword") String keyword, Pageable pageable);
+
+    @Query("select p from Problem p " +
+            "where p.id in :ids")
+    List<Problem> findByIdList(@Param("ids") List<Long> ids);
+
+    @Query("select p from Problem p " +
+            "where p.workbook.id = :id ")
+    List<Problem> findAllByWorkbookId(@Param("id") Long workbookId);
+
 }
 
