@@ -77,7 +77,6 @@ jobs:
           pwd
           ls -la
           cd backend
-#          ./gradlew build test
           cd ..
 
       - name: Build frontend
