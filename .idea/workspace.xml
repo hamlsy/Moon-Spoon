@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/problem/ProblemPerformanceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,6 +105,38 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.MoonspoonApplication">
+    <configuration name="ProblemPerformanceTest.bulkInsertTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+      <option name="METHOD_NAME" value="bulkInsertTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ProblemPerformanceTest.saveAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="moonspoon.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+      <option name="METHOD_NAME" value="saveAllTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="WorkbookPerformanceTest.findAllTestVer1" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
@@ -132,38 +164,6 @@
       <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
       <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
       <option name="METHOD_NAME" value="findAllTestVer2" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WorkbookPerformanceTest.findAllTestVer3" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="moonspoon.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
-      <option name="METHOD_NAME" value="findAllTestVer3" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="WorkbookPerformanceTest.findAllTestVer4 (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="com.moonspoon.moonspoon.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.workbook" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
-      <option name="METHOD_NAME" value="findAllTestVer4" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -210,20 +210,20 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4 (1)" />
+      <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
+      <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
-      <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
       <item itemvalue="Spring Boot.MoonspoonApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
+        <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
-        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer3" />
-        <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4 (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -269,12 +269,23 @@
       <workItem from="1724652068055" duration="8962000" />
       <workItem from="1724679208307" duration="9457000" />
       <workItem from="1724824714113" duration="290000" />
-      <workItem from="1724825078606" duration="4493000" />
+      <workItem from="1724825078606" duration="10979000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -337,6 +348,10 @@
           </properties>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.io.NotSerializableException" package="java.io" />
+          <option name="timeStamp" value="30" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
