@@ -40,7 +40,7 @@
                   <span class="problem-text"><strong>문제:</strong> {{ truncateText(problem.question) }}</span>
                 </div>
                 <div class="problem-info">
-                  <span><strong>정답률:</strong> {{ problem.correctRate }}%</span>
+                  <span><strong>정답률:</strong> {{ (problem.correctRate*100).toFixed(2) }}%</span>
                   <span><strong>생성일:</strong> {{ formatDate(problem.createDate) }}</span>
                 </div>
               </div>
@@ -68,7 +68,7 @@
           <div class="problem-detail-content">
             <pre><strong>문제:</strong> {{ selectedProblem.question }}</pre>
             <pre><strong>답:</strong> {{ selectedProblem.solution }}</pre>
-            <p><strong>정답률:</strong> {{ selectedProblem.correctRate }}%</p>
+            <p><strong>정답률:</strong> {{ (selectedProblem.correctRate*100).toFixed(2) }}%</p>
             <p><strong>생성일:</strong> {{ formatDate(selectedProblem.createdAt) }}</p>
           </div>
         </div>
