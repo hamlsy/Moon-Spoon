@@ -126,7 +126,7 @@ Route53, 가비아
 
 ### 문제 3: [ 동시 계정 회원가입 문제 ] [#45](https://github.com/hamlsy/Moon-Spoon/issues/45#issuecomment-2212428574)
 - 개요: 회원가입 버튼을 연속으로 클릭 시 동일한 정보의 회원이 여러번 등록되는 문제
-- 
+
 
 ### 문제 4: [조회 성능 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
 - 개요: 과도한 fetch join 으로 리스트 페이지 조회 시 성능 저하 발생
