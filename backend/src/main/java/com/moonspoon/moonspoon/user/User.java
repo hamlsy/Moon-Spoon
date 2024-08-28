@@ -40,19 +40,19 @@ public class User {
 
     private int workbookTestCount;
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Workbook> workbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<SharedWorkbook> sharedWorkbooks = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Notice> notices = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch=FetchType.LAZY)
+    @OneToMany(mappedBy = "user")
     private List<Test> tests = new ArrayList<>();
 
 

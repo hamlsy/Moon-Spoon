@@ -20,7 +20,7 @@ public interface WorkbookRepositoryTest extends JpaRepository<Workbook, Long> {
 
 
     @Query("SELECT w FROM Workbook w " +
-            "JOIN w.user u " +
+            "JOIN fetch w.user u " +
             "where u.username = :username and " +
             "(lower(w.title) like lower(concat('%',:keyword,'%')) or " +
             "lower(w.content) like lower(concat('%',:keyword,'%')))")

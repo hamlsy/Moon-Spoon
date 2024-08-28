@@ -7,6 +7,7 @@ import com.moonspoon.moonspoon.dto.response.notice.NoticeResponse;
 import com.moonspoon.moonspoon.notice.NoticeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,6 +40,7 @@ public class NoticeController {
         List<NoticeListResponse> responses = noticeService.findAllNotice();
         return new ResponseEntity<>(responses, HttpStatus.OK);
     }
+
 
     @PostMapping("/update/{id}")
     public ResponseEntity<NoticeResponse> updateNotice(

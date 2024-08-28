@@ -1,5 +1,7 @@
 package com.moonspoon.moonspoon.notice;
 
+import com.moonspoon.moonspoon.dto.response.notice.NoticeListResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,7 @@ public interface NoticeRepository extends JpaRepository<Notice, Long> {
     @Query("select n from Notice n " +
             "join fetch n.user u where n.id = :noticeId")
     Optional<Notice> findByIdWithUser(@Param("noticeId") Long noticeId);
+
 
     @Query("select distinct n from Notice n " +
             "join fetch n.user order by n.createDate desc")

@@ -374,7 +374,7 @@ export default {
     },
   },
   created() {
-    this.getProblems(1);
+    this.getProblems(1, "newest");
   }
 }
 </script>

@@ -6,7 +6,7 @@
     <main class="content">
 
       <section class="workbook-info">
-        <div v-if="isUser" class="author-actions">
+        <div v-if="sharedWorkbook.isUser" class="author-actions">
           <button @click="showEditForm" class="edit-button">수정</button>
           <button @click="deleteWorkbook" class="delete-button">삭제</button>
         </div>
@@ -14,9 +14,9 @@
         <div class="workbook-meta">
           <span>작성자: {{ sharedWorkbook.author }}</span>
 <!--          <span>조회수: {{ sharedWorkbook.views }}</span>-->
-          <span>문제 수: {{ sharedWorkbook.problemCount }}</span>
-          <span>랜덤 여부: {{ sharedWorkbook.random ? 'O' : 'X' }}</span>
-          <span>작성일: {{ formatDate(sharedWorkbook.createDate) }}</span>
+          <span>문제 수: {{ sharedWorkbook.problemCount }} </span>
+          <span>랜덤 여부: {{ sharedWorkbook.random ? 'O' : 'X' }} </span>
+          <span>작성일: {{ formatDate(sharedWorkbook.createDate) }} </span>
 
         </div>
         <div class="workbook-actions">
@@ -32,13 +32,13 @@
         <span>테스트 시작</span>
       </button>
       <section class="comments-section">
-        <h2>댓글 ({{ comments.length }})</h2>
+        <h2>댓글 ({{ sharedWorkbook.comments.length }})</h2>
         <div class="comment-form">
           <textarea v-model="commentContent" placeholder="댓글을 입력하세요"></textarea>
           <button @click="addComment" class="comment-submit-button">댓글 작성</button>
         </div>
         <div class="comments-list">
-          <div v-for="comment in comments" :key="comment.id" class="comment">
+          <div v-for="comment in sharedWorkbook.comments" :key="comment.id" class="comment">
             <div class="comment-header">
               <span class="comment-author">{{ comment.author }}</span>
               <span class="comment-date">{{ formatDate(comment.createDate) }}</span>
@@ -88,12 +88,12 @@ export default {
         content: "",
         problemCount: "",
         hasSolution: "",
+        isUser: false,
+        comments: []
       },
-      comments: [],
       commentContent: "",
       sharedWorkbookId: this.$route.fullPath.split("/").pop(),
       token: localStorage.getItem("token"),
-      isUser: false,
       showEditPopup: false,
       editForm: {
         title: "",
@@ -169,30 +169,6 @@ export default {
             console.log(err, "ERROR")
           })
     },
-    getComments(){
-      axios.get(`/api/comment/${this.sharedWorkbookId}/all`)
-          .then((res) => {
-            this.comments = res.data;
-            console.log(res, "Get Comments");
-          })
-          .catch((err) => {
-            console.log(err, "ERROR");
-          })
-    },
-    getUser(){
-      const headers = {
-        'Authorization': this.token
-      };
-      axios.get(`/api/sharedWorkbook/${this.sharedWorkbookId}/getUser`, {headers})
-          .then((res) => {
-            this.isUser = res.data.user;
-            console.log(res, "");
-
-          })
-          .catch((err) => {
-            console.log(err, "ERROR");
-          })
-    },
     showEditForm() {
       this.editForm = {
         title: this.sharedWorkbook.title,
@@ -225,8 +201,6 @@ export default {
   },
   created() {
     this.getSharedWorkbook();
-    this.getUser();
-    this.getComments();
   }
 }
 </script>

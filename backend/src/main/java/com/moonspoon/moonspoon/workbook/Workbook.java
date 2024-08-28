@@ -39,11 +39,11 @@ public class Workbook {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "workbook", fetch=FetchType.LAZY ,cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
     private List<Problem> problems = new ArrayList<>();
 
-    @OneToOne(mappedBy = "workbook",fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private SharedWorkbook sharedWorkbook;
+    @OneToMany(mappedBy = "workbook", cascade = CascadeType.REMOVE)
+    private List<SharedWorkbook> sharedWorkbook;
 
     @Builder
     public Workbook(String title, String content, String author, LocalDateTime createDate, LocalDateTime updateDate, int problemCount) {
