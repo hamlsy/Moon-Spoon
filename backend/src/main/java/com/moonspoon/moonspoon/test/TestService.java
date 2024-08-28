@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,17 +41,13 @@ public class TestService {
             throw new NotUserException("권한이 없습니다.");
         }
         //문제집 예외
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(sharedWorkbookId).orElseThrow(
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findById(sharedWorkbookId).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 문제집입니다.")
         );
         return sharedWorkbook;
     }
 
-    //Test logic
-    //create Test , Get Test Problem 분리
-    //todo create Test
-    @Transactional
-    public Long createSharedTest(Long id){
+    private Test createSharedTest(Long id){
         String username = getCurrentUsername();
         User user = userRepository.findByUsername(username);
         SharedWorkbook sharedWorkbook = validateUserAndSharedWorkbook(id);
@@ -61,17 +58,16 @@ public class TestService {
         test.setSharedWorkbook(sharedWorkbook);
         Test saveTest = testRepository.save(test);
 
-        return saveTest.getId();
+        return saveTest;
     }
 
-    //todo get Test Problems
+    // CreateTest 하면서 Get Test Problem
     //todo refactor
-    public TestSharedResponse getSharedTest(Long testId, TestSharedWorkbookRequest dto){
-        Test test = testRepository.findByIdWithSharedWorkbookAndWorkbookAndProblems(testId)
-                .orElseThrow(
-                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
-                );
-        List<Problem> problems = test.getSharedWorkbook().getWorkbook().getProblems();
+    @Transactional
+    public TestSharedResponse getSharedTest(Long sharedWorkbookId , TestSharedWorkbookRequest dto){
+        Test test = createSharedTest(sharedWorkbookId);
+        Long workbookId = test.getSharedWorkbook().getWorkbook().getId();
+        List<Problem> problems = problemRepository.findAllByWorkbookId(workbookId);
         if(dto.isRandom()){
             Collections.shuffle(problems);
         }
@@ -81,7 +77,7 @@ public class TestService {
 
         TestSharedResponse response = TestSharedResponse.builder()
                 .testSharedProblems(testSharedProblems)
-                .testId(testId)
+                .testId(test.getId())
                 .build();
         return response;
     }
@@ -92,22 +88,24 @@ public class TestService {
         Test test = testRepository.findById(id).orElseThrow(
                 () -> new NotFoundException("존재하지 않는 테스트입니다.")
         );
+
+        List<Long> problemIds = listDto.stream().map(TestResultRequest::getId).collect(Collectors.toList());
+        List<Problem> problems = problemRepository.findAllById(problemIds);
+        Map<Long, Problem> problemMap = problems.stream()
+                .collect(Collectors.toMap(Problem::getId, problem -> problem));
+
         List<TestAnswer> answers =  listDto.stream()
                 .map(d -> {
                     TestAnswer testAnswer = TestAnswer.builder()
                             .userAnswer(d.getInput())
                             .name(getCurrentUsername())
                             .build();
-
-                    Problem problem = problemRepository.findById(d.getId())
-                            .orElseThrow(
-                                    () -> new NotFoundException("존재하지 않는 문제입니다.")
-                            );
+                    Problem problem = problemMap.get(d.getId());
                     testAnswer.setTest(test);
                     testAnswer.setProblem(problem);
-                    testAnswerRepository.save(testAnswer);
                     return testAnswer;
                 }).collect(Collectors.toList());
+        testAnswerRepository.saveAll(answers);
     }
 
 

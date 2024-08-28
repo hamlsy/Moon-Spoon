@@ -5,49 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/CustomKeyGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookProblemCountDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookListResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules/moonspoon.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/CacheConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/CacheConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/Notice.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/Notice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/testAnswer/TestAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/testAnswer/TestAnswer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookProblemCountTestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookProblemCountTestDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +55,9 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;customColor&quot;: &quot;&quot;,
@@ -305,7 +269,7 @@
       <workItem from="1724652068055" duration="8962000" />
       <workItem from="1724679208307" duration="9457000" />
       <workItem from="1724824714113" duration="290000" />
-      <workItem from="1724825078606" duration="2690000" />
+      <workItem from="1724825078606" duration="4493000" />
     </task>
     <servers />
   </component>

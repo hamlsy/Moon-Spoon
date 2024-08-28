@@ -21,11 +21,10 @@ import java.util.List;
 public class TestController {
     private final TestService testService;
 
-    //테스트 시작
+    //테스트 시작 + 조회
     @PostMapping("/{id}/getSharedTest")
     public ResponseEntity<TestSharedResponse> getSharedTestProblem(@PathVariable("id") Long sharedWorkbookId, @RequestBody TestSharedWorkbookRequest dto){
-        Long testId = testService.createSharedTest(sharedWorkbookId);
-        TestSharedResponse response = testService.getSharedTest(testId, dto);
+        TestSharedResponse response = testService.getSharedTest(sharedWorkbookId, dto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

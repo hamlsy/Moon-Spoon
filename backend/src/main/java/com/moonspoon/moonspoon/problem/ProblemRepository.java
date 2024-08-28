@@ -19,5 +19,9 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
             "where p.id in :ids")
     List<Problem> findByIdList(@Param("ids") List<Long> ids);
 
+    @Query("select p from Problem p " +
+            "where p.workbook.id = :id ")
+    List<Problem> findAllByWorkbookId(@Param("id") Long workbookId);
+
 }
 
