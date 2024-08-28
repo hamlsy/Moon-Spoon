@@ -112,11 +112,11 @@ Github Action, CodeDeploy
 ### 도메인 연결
 Route53, 가비아
 
-### Https 인증
+### Https 적용
 
 
 ## 문제 해결
-### 문제 1: [ n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
+### 문제 1: [ 단순 n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
 - 개요: 
 - 원인: []
 - 해결과정:
@@ -142,15 +142,22 @@ Route53, 가비아
 
 ### 문제 4: [조회 성능 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
 - 개요: 리스트 페이지 조회 시 성능 저하 발생
-- 원인: [ 과도한 fetch join ]
+- 원인: 과도한 fetch join 으로 불필요한 데이터까지 로드하여 조회 성능이 저하됐습니다.
 - 해결과정:
   1. 
 - 학습 내용:
-  - 끌어오는 데이터의 수가 적을 경우 fetch join 대신 따로 쿼리 사용
+  - join 데이터 중 불필요한 필드가 많으면 fetch join 대신 개별 쿼리로 필요한 데이터만 조회
   - FULL TEXT가 Like에 비해 항상 우세한 건 아님
-  - FULL TEXT는 JPQL에서 해결 X Native Query로 해결해야함
+  - FULL TEXT는 JPQL에서 해결 X, Native Query로 해결해야함
   - TEXT 데이터 타입은 인덱스 설정 안됨
-  
+
+### 문제 5: [ OneToOne 관계의 n+1 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
+- 개요: OneToOne 관계의 Lazy Loading 미적용으로 인한 n+1 문제
+- 원인: 
+- 해결과정:
+  1. 
+- 학습 내용:
+
 
 ## 고민 사항
 ### 고민 1: [ DTO의 변환 위치 ]
@@ -203,7 +210,7 @@ Route53, 가비아
      
 - 결론:
   단일 인스턴스 환경이므로 로컬 캐시를 사용합니다. 하지만 분산 환경 대비를 위해 Redis 사용도 추후 구현해보도록 하겠습니다.
-  캐싱 전략은 읽기 중심 전략을 선택했습니다. 개별 항목 별로 캐시를 만들지 않아 메모리 관리에 용이하고 대량의 데이터 관리에 효과적이라고 판단하여 읽기 중심 전략을 사용합니다.
+  캐싱 전략은 읽기 중심 전략을 선택했습니다. 개별 항목 별로 캐시를 만들지 않아 메모리 관리에 용이하고, 대량의 데이터 관리에 효과적이기 때문에 읽기 중심 전략을 사용합니다.
   
 
 ## 향후 계획
