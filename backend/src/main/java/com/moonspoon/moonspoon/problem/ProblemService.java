@@ -18,6 +18,7 @@ import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,10 +29,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -43,6 +41,7 @@ public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
     private final UserRepository userRepository;
+    private final EntityManager em;
     private Map<String, List<TestResultRequest>> storedLists = new ConcurrentHashMap<>();
 
     @Transactional
@@ -265,27 +264,28 @@ public class ProblemService {
     }
 
     private void updateCorrectRate(List<TestResultSubmitRequest> dto){
-        List<Long> problemIds = dto.stream()
-                .map(TestResultSubmitRequest::getId)
-                .collect(Collectors.toList());
+        List<Long> correctProblemIds = new ArrayList<>();
+        List<Long> incorrectProblemIds = new ArrayList<>();
 
-        //전체 관련 problem 로드
-        List<Problem> problems = problemRepository.findAllById(problemIds);
-
-        Map<Long, Problem> problemMap = problems.stream()
-                .collect(Collectors.toMap(Problem::getId, Function.identity()));
-
-        for(TestResultSubmitRequest result : dto){
-            Problem problem = problemMap.get(result.getId());
-            if(problem != null){
-                if(result.getResult().equals("correct")){
-                    problem.addCorrectCount();
-                }else{
-                    problem.addIncorrectCount();
-                }
+        for (TestResultSubmitRequest result : dto) {
+            if ("correct".equals(result.getResult())) {
+                correctProblemIds.add(result.getId());
+            } else {
+                incorrectProblemIds.add(result.getId());
             }
         }
-        problemRepository.saveAll(problems);
+        if (!correctProblemIds.isEmpty()) {
+            em.createQuery("UPDATE Problem p SET p.correctCount = p.correctCount + 1 WHERE p.id IN :ids")
+                    .setParameter("ids", correctProblemIds)
+                    .executeUpdate();
+        }
+
+        if (!incorrectProblemIds.isEmpty()) {
+            em.createQuery("UPDATE Problem p SET p.incorrectCount = p.incorrectCount + 1 WHERE p.id IN :ids")
+                    .setParameter("ids", incorrectProblemIds)
+                    .executeUpdate();
+        }
+
     }
 
     public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
