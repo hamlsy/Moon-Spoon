@@ -1,9 +1,7 @@
 package com.moonspoon.moonspoon.dto.response.user;
 
 import com.moonspoon.moonspoon.user.User;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -22,29 +20,16 @@ public class UserProfileResponse {
     private int workbookTestCount;
     private int sharedWorkbookTestCount;
 
-    @Builder
-    public UserProfileResponse(String username, String name, LocalDateTime signupDate,
-                               String role, int visitCount, int workbookCount,
-                               int sharedWorkbookCount, int workbookTestCount,
-                               int sharedWorkbookTestCount) {
-        this.username = username;
-        this.name = name;
-        this.signupDate = signupDate;
-        this.role = role;
-        this.visitCount = visitCount;
-        this.workbookCount = workbookCount;
-        this.sharedWorkbookCount = sharedWorkbookCount;
-        this.workbookTestCount = workbookTestCount;
-        this.sharedWorkbookTestCount = sharedWorkbookTestCount;
+    public UserProfileResponse(Long workbookCount,
+                               Long sharedWorkbookCount,
+                               Long sharedWorkbookTestCount) {
+        this.workbookCount = longToInt(workbookCount);
+        this.sharedWorkbookCount = longToInt(sharedWorkbookCount);
+        this.sharedWorkbookTestCount = longToInt(sharedWorkbookTestCount);
 
     }
 
-    public static UserProfileResponse fromEntity(User user){
-        return UserProfileResponse.builder()
-                .username(user.getUsername())
-                .signupDate(user.getSignupDate())
-                .workbookTestCount(user.getWorkbookTestCount())
-                .name(user.getName())
-                .build();
+    private int longToInt(Long num){
+        return (num != null) ? num.intValue() : 0;
     }
 }
