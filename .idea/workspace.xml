@@ -99,7 +99,7 @@
       <recent name="C:\springWorkspace\moonspoon\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MoonspoonApplication">
+  <component name="RunManager" selected="JUnit.UserCountTest.countEach">
     <configuration name="UserCountTest.countEach" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
