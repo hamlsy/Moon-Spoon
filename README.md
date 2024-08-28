@@ -117,46 +117,24 @@ Route53, 가비아
 
 ## 문제 해결
 ### 문제 1: [ 단순 n+1 문제 ] [#36](https://github.com/hamlsy/Moon-Spoon/pull/36#issue-2384029208)
-- 개요: 
-- 원인: []
-- 해결과정:
-  1. Fetch join
-  2. Batch size
-- 학습 내용: Fetch join 개념, Fetch Lazy 원리, 프록시
+- 개요: 페이지 조회시 n+1 쿼리 문제 발생 후 해결
+  
 
 ### 문제 2: [ 엔티티 다수 업데이트 성능 문제 ] [#38](https://github.com/hamlsy/Moon-Spoon/pull/38#issue-2387878580)
 - 개요: 각 문제들의 정답 횟수를 업데이트하는 과정에서 발생한 성능 문제
-- 원인: [ 반복된 Update 쿼리 ]
-- 해결과정:
-  1. 반복 Update 쿼리
-  2. 벌크연산
-- 학습 내용: 
+
 
 ### 문제 3: [ 동시 계정 회원가입 문제 ] [#45](https://github.com/hamlsy/Moon-Spoon/issues/45#issuecomment-2212428574)
 - 개요: 회원가입 버튼을 연속으로 클릭 시 동일한 정보의 회원이 여러번 등록되는 문제
-- 원인: [ 회원가입 동시성을 고려하지 않음 ]
-- 해결과정:
-  1. Synchronized
-  2. Unique Key
-- 학습 내용: 
+- 
 
 ### 문제 4: [조회 성능 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
-- 개요: 리스트 페이지 조회 시 성능 저하 발생
-- 원인: 과도한 fetch join 으로 불필요한 데이터까지 로드하여 조회 성능이 저하됐습니다.
-- 해결과정:
-  1. 
-- 학습 내용:
-  - join 데이터 중 불필요한 필드가 많으면 fetch join 대신 개별 쿼리로 필요한 데이터만 조회
-  - FULL TEXT가 Like에 비해 항상 우세한 건 아님
-  - FULL TEXT는 JPQL에서 해결 X, Native Query로 해결해야함
-  - TEXT 데이터 타입은 인덱스 설정 안됨
+- 개요: 과도한 fetch join 으로 리스트 페이지 조회 시 성능 저하 발생
+
 
 ### 문제 5: [ OneToOne 관계의 n+1 문제] [#67] (https://github.com/hamlsy/Moon-Spoon/issues/67#issue-2482470774)
 - 개요: OneToOne 관계의 Lazy Loading 미적용으로 인한 n+1 문제
-- 원인: 
-- 해결과정:
-  1. 
-- 학습 내용:
+
 
 
 ## 고민 사항
