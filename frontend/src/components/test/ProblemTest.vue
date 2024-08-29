@@ -197,6 +197,9 @@ export default {
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getCorrectRate(correctRate){
+      return (correctRate*100).toFixed(2);
+    }
   }
 }
 </script>

@@ -80,6 +80,7 @@
           {{ page }}
         </button>
       </div>
+      <button @click="showTestPopup" class="start-practice-btn">연습 모드</button>
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
     </main>
 
@@ -631,6 +632,29 @@ a {
   box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
+
+.start-practice-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 60px;
+  background-color: #FFD700;
+  color: #191f28;
+  border: none;
+  border-radius: 24px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+.start-practice-btn:hover{
+  background-color: #FFC000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -862,10 +886,11 @@ problem-main {
   text-decoration: none;
   display: inline-block;
   font-size: 1rem;
-  margin: 0 0.25rem;
+  /** margin: 0 0.25rem; **/
   cursor: pointer;
   border-radius: 4px;
   transition: all 0.3s ease;
+  margin-bottom: 3rem;
 }
 
 .pagination button:hover {

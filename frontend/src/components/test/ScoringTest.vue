@@ -31,7 +31,7 @@
       <div class="problem-header">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
         <span class="correct-rate" v-if="currentproblem.correctRate !== undefined">
-          정답률: {{ currentproblem.correctRate }}%
+          정답률: {{ getCorrectRate(currentproblem.correctRate) }}%
         </span>
       </div>
       <p>{{ currentproblem.problem }}</p>
@@ -135,7 +135,7 @@ export default {
   data() {
     return {
       problems: [],
-      showResultPopup: true,
+      showResultPopup: false,
       resultInfo:{
         correctCount: 0,
         incorrectCount: 0,
@@ -265,6 +265,9 @@ export default {
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getCorrectRate(correctRate){
+      return (correctRate*100).toFixed(2);
+    }
   }
 }
 </script>
