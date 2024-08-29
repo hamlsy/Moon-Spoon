@@ -93,7 +93,8 @@ export default {
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
       workbookId: this.$route.query.workbookId,
-      workbookTitle: this.$route.query.workbookTitle
+      workbookTitle: this.$route.query.workbookTitle,
+      incorrectProblemIds: this.$route.query.incId
     }
   },
   computed: {
@@ -110,12 +111,9 @@ export default {
         'Authorization': this.token
       };
       const data = {
-        problemCount: this.$route.query.problemCount,
-        random: this.$route.query.random,
-        sortOrder: this.$route.query.sortOrder,
-        shared: false
+        incorrectProblemIds: this.incorrectProblemIds
       }
-      axios.post(`/api/workbook/${this.workbookId}/localTest/getTest`,
+      axios.post(`/api/workbook/${this.workbookId}/localTest/getIncorrectTest`,
           data, {headers})
           .then((res) => {
             this.problems = res.data;
@@ -171,7 +169,7 @@ export default {
       };
       // 테스트 제출 로직
       axios.post(`/api/workbook/${this.workbookId}/localTest/storeTest`,
-        this.userAnswers, {headers}
+          this.userAnswers, {headers}
       )
           .then((res) => {
             console.log("STORED", res);

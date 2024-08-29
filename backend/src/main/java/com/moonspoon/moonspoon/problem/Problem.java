@@ -76,6 +76,9 @@ public class Problem {
     }
 
     public double getCorrectRate(){
+        if(this.correctCount+this.incorrectCount == 0){
+            return 0;
+        }
         double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
         this.correctRate = Math.round(correctRate*10000)/100.0;
         return correctRate;

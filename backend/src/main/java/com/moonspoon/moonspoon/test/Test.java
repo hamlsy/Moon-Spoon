@@ -28,6 +28,7 @@ public class Test {
     @JoinColumn(name = "sharedWorkbook_id")
     private SharedWorkbook sharedWorkbook;
 
+
     @OneToMany(mappedBy = "test", cascade = CascadeType.REMOVE)
     private List<TestAnswer> testAnswers = new ArrayList<>();
 

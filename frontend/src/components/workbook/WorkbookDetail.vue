@@ -104,7 +104,11 @@
           <p>출제 순서:</p>
           <div class="radio-group">
             <label>
-              <input type="radio" v-model="testSettings.order" value="asc" checked/>
+              <input type="radio" v-model="testSettings.order" value="none" checked/>
+              <span>기본 값</span>
+            </label>
+            <label>
+              <input type="radio" v-model="testSettings.order" value="asc" />
               <span>오름차순</span>
             </label>
             <label>
@@ -158,7 +162,7 @@ export default {
       testSettings: {
         problemCount: 1,
         random: false,
-        order: 'asc'
+        order: 'none'
       },
       showDeletePopup: false,
       problemToDelete: null,
