@@ -5,7 +5,9 @@ import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
 
-import com.moonspoon.moonspoon.dto.response.test.*;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResponse;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResultResponse;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResultSubmitResponse;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.HttpStatus;

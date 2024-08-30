@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.response.test;
+package com.moonspoon.moonspoon.dto.response.test.sharedTest;
 
 import lombok.Builder;
 import lombok.Getter;

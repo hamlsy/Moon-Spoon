@@ -1,10 +1,12 @@
 package com.moonspoon.moonspoon.test;
 
-import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
-import com.moonspoon.moonspoon.dto.response.test.*;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResponse;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResultResponse;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.TestSharedResultSubmitResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.problem.Problem;

@@ -80,7 +80,7 @@
           {{ page }}
         </button>
       </div>
-      <button @click="showTestPopup" class="start-practice-btn">연습 모드</button>
+      <button @click="showPracticePopup" class="start-practice-btn">연습 모드</button>
       <button @click="showTestPopup" class="start-test-btn">테스트 시작</button>
     </main>
 
@@ -132,6 +132,31 @@
         </div>
       </div>
     </div>
+
+    <!-- 연습모드 시작 팝업 -->
+    <div v-if="showPracticePopup" class="popup-overlay" @click.self="cancelPracticeTest">
+      <div class="popup">
+        <h2>연습모드 설정</h2>
+        <div class="form-group">
+          <p>출제 순서:</p>
+          <div class="radio-group">
+            <label>
+              <input type="radio" v-model="practiceSetting" value="none" checked/>
+              <span>기본 값</span>
+            </label>
+            <label>
+              <input type="radio" v-model="practiceSetting" value="hide"/>
+              <span>정답 가리기</span>
+            </label>
+          </div>
+        </div>
+        <div class="popup-buttons">
+          <button @click="cancelPracticeTest">취소</button>
+          <button @click="startPracticeTest">연습 시작</button>
+        </div>
+      </div>
+    </div>
+
     <!-- 삭제 확인 팝업 -->
     <div v-if="showDeletePopup" class="popup-overlay" @click.self="cancelDelete">
       <div class="popup">
@@ -165,7 +190,9 @@ export default {
         random: false,
         order: 'none'
       },
+      practiceSetting: 'none',
       showDeletePopup: false,
+      showPracticePopup: false,
       problemToDelete: null,
       updateIndex: null,
       updateProblem: { question: '', solution: '' },
@@ -377,6 +404,22 @@ export default {
     formatDate(dateString) {
       return dayjs(dateString).format('YYYY년 MM월 DD일 HH:mm');
     },
+    startPracticeTest(){
+      console.log('Start Practice with settings:', this.practiceSetting);
+      this.showPracticePopup = false;
+      this.$router.push({
+        path: '/practiceMode',
+        query: {
+          workbookId: this.workbookId,
+          workbookTitle: this.workbookTitle,
+          practiceSetting: this.practiceSetting
+        }
+      })
+    },
+    canclePracticeTest(){
+      this.showPracticePopup = false;
+    }
+
   },
   created() {
     this.getProblems(1, "newest");

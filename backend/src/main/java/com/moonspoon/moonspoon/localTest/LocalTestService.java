@@ -4,9 +4,10 @@ import com.moonspoon.moonspoon.dto.request.test.TestIncorrectProblemRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
-import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestResultResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestResultSubmitResponse;
+import com.moonspoon.moonspoon.dto.response.test.localTest.TestPracticeResponse;
+import com.moonspoon.moonspoon.dto.response.test.localTest.TestProblemResponse;
+import com.moonspoon.moonspoon.dto.response.test.localTest.TestResultResponse;
+import com.moonspoon.moonspoon.dto.response.test.localTest.TestResultSubmitResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.problem.Problem;
@@ -116,7 +117,7 @@ public class LocalTestService {
     public List<TestResultResponse> getTestResultProblem(Long workbookId){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         List<TestResultRequest> dto = storedLists.get(username);
         List<Long> problemIds = dto.stream().map(TestResultRequest::getId).collect(Collectors.toList());
 
@@ -205,19 +206,19 @@ public class LocalTestService {
     public void storeInputData(Long workbookId ,List<TestResultRequest> listDto){
         //검증 로직
         validateUserAndWorkbook(workbookId);
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         this.storedLists.put(username, listDto);
     }
 
 
     private User getCurrentUser(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         User user = userRepository.findByUsername(username);
         return user;
     }
 
     private Workbook validateUserAndWorkbook(Long workbookId) {
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        String username = getCurrentUsername();
         if(username == null || username.equals("anonymousUser")){
             throw new NotUserException("권한이 없습니다.");
         }
@@ -230,5 +231,17 @@ public class LocalTestService {
             throw new NotUserException("권한이 없습니다.");
         }
         return workbook;
+    }
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    public List<TestPracticeResponse> getPracticeProblems(Long workbookId){
+        List<Problem> problems = problemRepository.findAllByWorkbookId(workbookId);
+        List<TestPracticeResponse> responses = problems.stream()
+                .map(TestPracticeResponse::fromEntity)
+                .collect(Collectors.toList());
+        return responses;
     }
 }
