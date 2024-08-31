@@ -33,7 +33,14 @@
       </div>
       <div class="problem-content">
         <p><strong>문제:</strong> {{ currentproblem.question }}</p>
-        <p><strong>정답:</strong> {{ currentproblem.solution }}</p>
+        <div v-if="hide">
+          <p @click="toggleSolution" class="hidden-solution">
+            <strong>정답:</strong> (클릭하여 정답 보기)
+          </p>
+        </div>
+        <div v-else>
+          <p><strong>정답:</strong> {{ currentproblem.solution }}</p>
+        </div>
       </div>
       <textarea
           v-model="userAnswers[currentproblemIndex].input"
@@ -83,7 +90,9 @@ export default {
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
       workbookId: this.$route.query.workbookId,
-      workbookTitle: this.$route.query.workbookTitle
+      workbookTitle: this.$route.query.workbookTitle,
+      hide: false,
+      hideSolution: this.$route.query.hideSolution
     }
   },
   computed: {
@@ -99,17 +108,16 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      const data = {
-        problemCount: this.$route.query.problemCount,
-        random: this.$route.query.random,
-        sortOrder: this.$route.query.sortOrder,
-        shared: false
-      }
-      axios.post(`/api/workbook/${this.workbookId}/localTest/getPractice`,
-          data, {headers})
+
+      axios.get(`/api/workbook/${this.workbookId}/localTest/getLocalPractice`,
+          {headers})
           .then((res) => {
             this.problems = res.data;
             this.initializeUserAnswers();
+            if(this.hideSolution == "false"){
+              this.hideSolution = false
+            }
+            this.hide = this.hideSolution
             console.log("FETCH PROBLEMS", res);
           })
           .catch((error) => {
@@ -127,28 +135,34 @@ export default {
     getProblemPreview(index) {
       const problem = this.problems[index].question;
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+      this.hide = this.hideSolution
     },
     getAnswerPreview(index) {
       const answer = this.userAnswers[index].input;
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
+      this.hide = this.hideSolution
     },
     getproblemPreview(index){
       const problem = this.problems[index].question;
       if (!problem) return '';
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+      this.hide = this.hideSolution
     },
     goToproblem(index) {
       this.currentproblemIndex = index;
+      this.hide = this.hideSolution
     },
     goToPreviousproblem() {
       if (this.currentproblemIndex > 0) {
         this.currentproblemIndex--;
+        this.hide = this.hideSolution
       }
     },
     goToNextproblem() {
       if (this.currentproblemIndex < this.problems.length - 1) {
         this.currentproblemIndex++;
+        this.hide = this.hideSolution
       }
     },
     exitTest() {
@@ -160,6 +174,9 @@ export default {
     },
     getCorrectRate(correctRate){
       return (correctRate*100).toFixed(2);
+    },
+    toggleSolution() {
+      this.hide = !this.hide
     }
   }
 }
@@ -565,5 +582,10 @@ textarea:focus {
   background-color: #f0f0f0;
   padding: 5px 10px;
   border-radius: 15px;
+}
+.hidden-solution {
+  cursor: pointer;
+  color: gray;
+  text-decoration: underline;
 }
 </style>
