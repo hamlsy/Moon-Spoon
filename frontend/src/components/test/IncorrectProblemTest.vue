@@ -2,7 +2,7 @@
   <div class="test-page">
     <!-- 왼쪽 사이드바 -->
     <div class="sidebar">
-      <h2 class="test-name">{{ truncateText(sharedWorkbookTitle) }}</h2>
+      <h2 class="test-name">{{ truncateText(workbookTitle) }}</h2>
       <button class="exit-btn" @click="showExitPopup = true">나가기</button>
       <div class="problem-list">
         <div
@@ -85,7 +85,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      testId: '',
       problems: [
       ],
       userAnswers: [],
@@ -93,8 +92,9 @@ export default {
       showExitPopup: false,
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
-      sharedWorkbookId: this.$route.query.sharedWorkbookId,
-      sharedWorkbookTitle: this.$route.query.sharedWorkbookTitle,
+      workbookId: this.$route.query.workbookId,
+      workbookTitle: this.$route.query.workbookTitle,
+      incorrectProblemIds: this.$route.query.incId
     }
   },
   computed: {
@@ -107,24 +107,22 @@ export default {
   },
   methods: {
     getProblems(){
-      if (!this.token) {
-        alert("로그인이 필요한 서비스입니다.");
-        this.$router.go(-1);
-      }
       const headers = {
         'Authorization': this.token
       };
-      axios.get(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
-          {headers})
+      const data = {
+        incorrectProblemIds: this.incorrectProblemIds.split(',')
+      }
+      axios.post(`/api/workbook/${this.workbookId}/localTest/getIncorrectTest`,
+          data, {headers})
           .then((res) => {
-            this.problems = res.data.testSharedProblems;
-            this.testId = res.data.testId;
+            this.problems = res.data;
             this.initializeUserAnswers();
             console.log("FETCH PROBLEMS", res);
           })
           .catch((error) => {
             alert(error.data.response.message);
-            this.$router.push(`/sharedWorkbook/${this.sharedWorkbookId}`);
+            this.$router.push(`/workbookDetail/${this.workbookId}`);
             console.log("ERROR!", error);
           })
     },
@@ -163,24 +161,26 @@ export default {
     },
     exitTest() {
       // 테스트 종료 로직
-      this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`); // 적절한 라우트로 변경
+      this.$router.push(`/workBookDetail/${this.workbookId}`); // 적절한 라우트로 변경
     },
     submitTest() {
       const headers = {
         'Authorization': this.token
       };
       // 테스트 제출 로직
-      axios.post(`/api/test/${this.testId}/submitSharedTest`,
-        this.userAnswers, {headers}
+      axios.post(`/api/workbook/${this.workbookId}/localTest/storeTest`,
+          this.userAnswers, {headers}
       )
           .then((res) => {
             console.log("STORED", res);
             this.$router.push({
-              path: `/sharedScoringTest/${this.testId}`,
+              path: '/scoringTest',
               query: {
-                testId: this.testId,
-                sharedWorkbookId: this.sharedWorkbookId,
-                sharedWorkbookTitle: this.sharedWorkbookTitle
+                workbookId: this.workbookId,
+                workbookTitle: this.workbookTitle,
+                problemCount: this.$route.query.problemCount,
+                random: this.$route.query.random,
+                sortOrder: this.$route.query.sortOrder,
               }
             })
           })

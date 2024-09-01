@@ -6,7 +6,7 @@
     <main class="content">
 
       <section class="workbook-info">
-        <div v-if="sharedWorkbook.isUser" class="author-actions">
+        <div v-if="sharedWorkbook.user" class="author-actions">
           <button @click="showEditForm" class="edit-button">수정</button>
           <button @click="deleteWorkbook" class="delete-button">삭제</button>
         </div>
@@ -28,9 +28,15 @@
       <section class="workbook-content">
         <pre>{{ sharedWorkbook.content }}</pre>
       </section>
-      <button @click="startTest" class="button button--ujarak button--border-thin button--text-thick">
-        <span>테스트 시작</span>
-      </button>
+      <div class="start-btn">
+        <button @click="startPractice" class="practice-btn button button--ujarak button--border-thin button--text-thick">
+          <span>연습 모드</span>
+        </button>
+        <button @click="startTest" class="test-btn button button--ujarak button--border-thin button--text-thick">
+          <span>테스트 시작</span>
+        </button>
+      </div>
+
       <section class="comments-section">
         <h2>댓글 ({{ sharedWorkbook.comments.length }})</h2>
         <div class="comment-form">
@@ -88,7 +94,7 @@ export default {
         content: "",
         problemCount: "",
         hasSolution: "",
-        isUser: false,
+        user: false,
         comments: []
       },
       commentContent: "",
@@ -109,7 +115,10 @@ export default {
     // },
 
     getSharedWorkbook(){
-      axios.get(`/api/sharedWorkbook/${this.sharedWorkbookId}`)
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get(`/api/sharedWorkbook/${this.sharedWorkbookId}`, {headers})
           .then((res) => {
             this.sharedWorkbook = res.data
             console.log(res, "fetch data");
@@ -122,14 +131,18 @@ export default {
       if (!this.token) {
         alert("로그인이 필요한 서비스입니다.");
       }else{
-        this.$router.push({
-          path: `/sharedProblemTest/${this.sharedWorkbookId}`,
-          query: {
-            sharedWorkbookId: this.sharedWorkbookId,
-            sharedWorkbookTitle: this.sharedWorkbook.title,
-            random: this.sharedWorkbook.random
-          }
-        })
+        if(this.sharedWorkbook.problemCount <= 0){
+          alert("문제가 아직 없습니다!")
+        }else{
+          this.$router.push({
+            path: `/sharedProblemTest/${this.sharedWorkbookId}`,
+            query: {
+              sharedWorkbookId: this.sharedWorkbookId,
+              sharedWorkbookTitle: this.sharedWorkbook.title,
+            }
+          })
+        }
+
       }
     },
     deleteWorkbook() {
@@ -196,6 +209,21 @@ export default {
             alert("ERROR!")
             console.log(err, "ERROR");
           })
+
+    },
+    startPractice(){
+      if(this.sharedWorkbook.problemCount > 0){
+        this.$router.push({
+          path: '/sharedWorkbookPracticeTest',
+          query: {
+            sharedWorkbookId: this.sharedWorkbookId,
+            hideSolution: 'false',
+            sharedWorkbookTitle: this.sharedWorkbook.title
+          }
+        })
+      }else{
+        alert("문제가 아직 없습니다!");
+      }
 
     }
   },
@@ -268,25 +296,6 @@ export default {
   background-color: #FFD700;
 }
 
-.start-test-button {
-  display: block;
-  margin: 2rem auto;
-  font-size: 1.2rem;
-  position: relative;
-  overflow: hidden;
-
-  background-color: #f39c12; /* 짙은 노란색 */
-  color: white;
-  border: none;
-  padding: 15px 30px;
-  font-size: 18px;
-
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 4px #e67e22; /* 좀 더 짙은 노란색 */
-  transition: all 0.2s ease-in-out;
-
-}
 
 .start-test-button span {
   position: relative;
@@ -481,12 +490,16 @@ export default {
   position: relative;
   background: none;
   font-size: 1rem;
-  margin: 2rem auto;
+  margin: 3rem auto;
   z-index: 0;
   -webkit-backface-visibility: hidden;
   -moz-osx-font-smoothing: grayscale;
   border: 1px solid;
   font-weight: 600;
+
+  left: 3rem;
+
+  display: inline-block;
 }
 
 .button--ujarak {
@@ -551,6 +564,9 @@ pre{
   white-space: pre-wrap;
 }
 
+.start-btn{
+  width: 100%;
+}
 
 @media (max-width: 600px){
   .workbook-title{

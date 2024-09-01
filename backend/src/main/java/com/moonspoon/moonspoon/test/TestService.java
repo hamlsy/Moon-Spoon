@@ -1,10 +1,9 @@
 package com.moonspoon.moonspoon.test;
 
-import com.moonspoon.moonspoon.dto.request.test.TestRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
-import com.moonspoon.moonspoon.dto.response.test.*;
+import com.moonspoon.moonspoon.dto.response.test.sharedTest.*;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.problem.Problem;
@@ -15,6 +14,8 @@ import com.moonspoon.moonspoon.testAnswer.TestAnswer;
 import com.moonspoon.moonspoon.testAnswer.TestAnswerRepository;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
+import com.moonspoon.moonspoon.workbook.Workbook;
+import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +39,7 @@ public class TestService {
     private final TestRepository testRepository;
     private final TestAnswerRepository testAnswerRepository;
     private final JdbcTemplate jdbcTemplate;
+
 
     private SharedWorkbook validateUserAndSharedWorkbook(Long sharedWorkbookId) {
         String username = getCurrentUsername();
@@ -68,11 +70,11 @@ public class TestService {
     // CreateTest 하면서 Get Test Problem
     //todo refactor
     @Transactional
-    public TestSharedResponse getSharedTest(Long sharedWorkbookId , TestSharedWorkbookRequest dto){
+    public TestSharedResponse getSharedTest(Long sharedWorkbookId){
         Test test = createSharedTest(sharedWorkbookId);
-        Long workbookId = test.getSharedWorkbook().getWorkbook().getId();
-        List<Problem> problems = problemRepository.findAllByWorkbookId(workbookId);
-        if(dto.isRandom()){
+        SharedWorkbook sharedWorkbook = test.getSharedWorkbook();
+        List<Problem> problems = problemRepository.findAllBySharedWorkbookId(sharedWorkbookId);
+        if(sharedWorkbook.isRandom()){
             Collections.shuffle(problems);
         }
         List<TestSharedProblemResponse> testSharedProblems = problems.stream()
@@ -175,6 +177,8 @@ public class TestService {
         return response;
     }
 
+
+
     private String compareStrings(String input, String sol){
         String inputData = input.replaceAll("\\s", "").toLowerCase();
         String solution = sol.replaceAll("\\s", "").toLowerCase();
@@ -184,9 +188,16 @@ public class TestService {
             return "incorrect";
         }
     }
-
-
     private String getCurrentUsername(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
     }
+
+    public List<TestSharedPracticeResponse> getPracticeProblems(Long sharedWorkbookId){
+        List<Problem> problems = problemRepository.findAllBySharedWorkbookId(sharedWorkbookId);
+        List<TestSharedPracticeResponse> responses = problems.stream().map(
+                TestSharedPracticeResponse::fromEntity
+        ).collect(Collectors.toList());
+        return responses;
+    }
+
 }

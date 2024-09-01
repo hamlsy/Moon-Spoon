@@ -1,19 +1,13 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
-import com.moonspoon.moonspoon.comment.Comment;
 import com.moonspoon.moonspoon.comment.CommentRepository;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
 import com.moonspoon.moonspoon.dto.response.comment.CommentResponse;
-import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookListResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
-import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
-import com.moonspoon.moonspoon.problem.Problem;
-import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -77,6 +71,7 @@ public class SharedWorkbookService {
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
         sharedWorkbook.setUser(workbook.getUser());
+        sharedWorkbook.setRandom(dto.isRandom());
 
         sharedWorkbookRepository.save(sharedWorkbook);
 
@@ -130,5 +125,6 @@ public class SharedWorkbookService {
             return false;
         }
     }
+
 
 }

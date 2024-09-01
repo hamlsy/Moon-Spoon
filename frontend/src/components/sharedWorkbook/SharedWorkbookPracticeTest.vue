@@ -25,13 +25,26 @@
 
     <!-- 메인 콘텐츠 -->
     <div class="main-content">
-      <div class="problem-content">
+      <div class="problem-header">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
-        <p class="answer-section">{{ currentproblem.question }}</p>
+<!--        <span class="correct-rate" v-if="currentproblem.correctRate !== undefined">-->
+<!--          정답률: {{ getCorrectRate(currentproblem.correctRate) }}%-->
+<!--        </span>-->
+      </div>
+      <div class="problem-content">
+        <p><strong>문제:</strong> {{ currentproblem.question }}</p>
+        <div v-if="hide">
+          <p @click="toggleSolution" class="hidden-solution">
+            <strong>정답:</strong> (클릭하여 정답 보기)
+          </p>
+        </div>
+        <div v-else>
+          <p><strong>정답:</strong> {{ currentproblem.solution }}</p>
+        </div>
       </div>
       <textarea
           v-model="userAnswers[currentproblemIndex].input"
-          placeholder="답변을 입력하세요"
+          placeholder="연습용 텍스트 박스"
       ></textarea>
       <div class="navigation-buttons">
         <button
@@ -47,17 +60,12 @@
           다음
         </button>
       </div>
-      <!-- 제출 버튼 -->
-      <button class="submit-btn" @click="showSubmitPopup = true">제출</button>
     </div>
-
-
 
     <!-- 나가기 확인 팝업 -->
     <div v-if="showExitPopup" class="popup-overlay">
       <div class="popup">
-        <h3>테스트를 종료하시겠습니까?</h3>
-        <p>저장되지 않은 답변은 사라집니다.</p>
+        <h3>연습 모드를 종료하시겠습니까?</h3>
         <div class="popup-buttons">
           <button @click="showExitPopup = false">취소</button>
           <button @click="exitTest">확인</button>
@@ -65,17 +73,6 @@
       </div>
     </div>
 
-    <!-- 제출 확인 팝업 -->
-    <div v-if="showSubmitPopup" class="popup-overlay">
-      <div class="popup">
-        <h3>테스트를 제출하시겠습니까?</h3>
-        <p>제출 후에는 답변을 수정할 수 없습니다.</p>
-        <div class="popup-buttons">
-          <button @click="showSubmitPopup = false">취소</button>
-          <button @click="submitTest">확인</button>
-        </div>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -85,7 +82,6 @@ import axios from "axios";
 export default {
   data() {
     return {
-      testId: '',
       problems: [
       ],
       userAnswers: [],
@@ -95,6 +91,8 @@ export default {
       token: localStorage.getItem('token'),
       sharedWorkbookId: this.$route.query.sharedWorkbookId,
       sharedWorkbookTitle: this.$route.query.sharedWorkbookTitle,
+      hide: true,
+      hideSolution: this.$route.query.hideSolution
     }
   },
   computed: {
@@ -103,28 +101,28 @@ export default {
     }
   },
   created(){
-    this.getProblems();
+    this.getPracticeProblems();
   },
   methods: {
-    getProblems(){
-      if (!this.token) {
-        alert("로그인이 필요한 서비스입니다.");
-        this.$router.go(-1);
-      }
+    getPracticeProblems(){
       const headers = {
         'Authorization': this.token
       };
-      axios.get(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
+
+      axios.get(`/api/test/${this.sharedWorkbookId}/getPractice`,
           {headers})
           .then((res) => {
-            this.problems = res.data.testSharedProblems;
-            this.testId = res.data.testId;
+            this.problems = res.data;
             this.initializeUserAnswers();
+            if(this.hideSolution == "false"){
+              this.hideSolution = false
+            }
+            this.hide = this.hideSolution
             console.log("FETCH PROBLEMS", res);
           })
           .catch((error) => {
             alert(error.data.response.message);
-            this.$router.push(`/sharedWorkbook/${this.sharedWorkbookId}`);
+            this.$router.push(`/workbookDetail/${this.workbookId}`);
             console.log("ERROR!", error);
           })
     },
@@ -137,64 +135,49 @@ export default {
     getProblemPreview(index) {
       const problem = this.problems[index].question;
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+      // this.hide = this.hideSolution
     },
     getAnswerPreview(index) {
       const answer = this.userAnswers[index].input;
       if (!answer) return '';
       return answer.length > 13 ? answer.substring(0, 13) + '...' : answer;
+      // this.hide = this.hideSolution
     },
     getproblemPreview(index){
       const problem = this.problems[index].question;
       if (!problem) return '';
       return problem.length > 13 ? problem.substring(0, 13) + '...' : problem;
+      // this.hide = this.hideSolution
     },
     goToproblem(index) {
       this.currentproblemIndex = index;
+      this.hide = this.hideSolution
     },
     goToPreviousproblem() {
       if (this.currentproblemIndex > 0) {
         this.currentproblemIndex--;
+        this.hide = this.hideSolution
       }
     },
     goToNextproblem() {
       if (this.currentproblemIndex < this.problems.length - 1) {
         this.currentproblemIndex++;
+        this.hide = this.hideSolution
       }
     },
     exitTest() {
       // 테스트 종료 로직
       this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`); // 적절한 라우트로 변경
     },
-    submitTest() {
-      const headers = {
-        'Authorization': this.token
-      };
-      // 테스트 제출 로직
-      axios.post(`/api/test/${this.testId}/submitSharedTest`,
-        this.userAnswers, {headers}
-      )
-          .then((res) => {
-            console.log("STORED", res);
-            this.$router.push({
-              path: `/sharedScoringTest/${this.testId}`,
-              query: {
-                testId: this.testId,
-                sharedWorkbookId: this.sharedWorkbookId,
-                sharedWorkbookTitle: this.sharedWorkbookTitle
-              }
-            })
-          })
-          .catch((error) => {
-            alert("ERROR OCCURRED!!");
-            console.log("ERROR", error);
-          })
-
-      console.log("Test submitted:", this.userAnswers);
-
-    },
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getCorrectRate(correctRate){
+      return (correctRate*100).toFixed(2);
+    },
+    toggleSolution() {
+      this.hide = !this.hide
+    }
   }
 }
 </script>
@@ -586,6 +569,23 @@ textarea:focus {
   text-align: center;
   color: #333;
 }
-
-
+.problem-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  margin-top: 70px;
+}
+.correct-rate {
+  font-size: 0.9em;
+  color: #666;
+  background-color: #f0f0f0;
+  padding: 5px 10px;
+  border-radius: 15px;
+}
+.hidden-solution {
+  cursor: pointer;
+  color: gray;
+  text-decoration: underline;
+}
 </style>
