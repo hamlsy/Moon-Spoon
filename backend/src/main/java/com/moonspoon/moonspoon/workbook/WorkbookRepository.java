@@ -26,6 +26,7 @@ public interface WorkbookRepository extends JpaRepository<Workbook, Long> {
             "group by p.workbook.id")
     List<WorkbookProblemCountDto> countProblemsByWorkbookIds(@Param("workbookIds") List<Long> workbookIds);
 
+
     @Query("select count(p) from Problem p where p.workbook.id = :id")
     Long countProblemsById(@Param("id") Long id);
 

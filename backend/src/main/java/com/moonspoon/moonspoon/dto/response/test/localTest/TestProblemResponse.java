@@ -1,4 +1,4 @@
-package com.moonspoon.moonspoon.dto.response.test;
+package com.moonspoon.moonspoon.dto.response.test.localTest;
 
 import com.moonspoon.moonspoon.problem.Problem;
 import lombok.Builder;

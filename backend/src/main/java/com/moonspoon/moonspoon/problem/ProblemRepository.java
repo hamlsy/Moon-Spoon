@@ -23,5 +23,11 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
             "where p.workbook.id = :id ")
     List<Problem> findAllByWorkbookId(@Param("id") Long workbookId);
 
+    @Query("SELECT p FROM Problem p " +
+            "JOIN p.workbook w " +
+            "JOIN SharedWorkbook sw ON sw.workbook = w " +
+            "WHERE sw.id = :id")
+    List<Problem> findAllBySharedWorkbookId(@Param("id") Long sharedWorkbookId);
+
 }
 

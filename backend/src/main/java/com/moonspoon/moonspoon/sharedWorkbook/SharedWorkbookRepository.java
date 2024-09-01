@@ -1,5 +1,6 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
+import com.moonspoon.moonspoon.workbook.Workbook;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -27,4 +28,5 @@ public interface SharedWorkbookRepository extends JpaRepository<SharedWorkbook, 
             "where lower(s.title) like lower(concat('%',:keyword,'%')) or " +
             "lower(s.content) like lower(concat('%', :keyword, '%'))")
     Page<SharedWorkbook> findAllWithKeyword(@Param("keyword") String keyword, Pageable pageable);
+
 }
