@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +45,7 @@
       <list>
         <option value="CSS File" />
         <option value="Vue Composition API Component" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -53,9 +55,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;customColor&quot;: &quot;&quot;,
@@ -76,7 +75,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/springProjectWorkspace/Moon-Spoon/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/springWorkspace/moonspoon/frontend&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -87,8 +86,8 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\이승영\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\82104\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -103,33 +102,33 @@
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.MoonspoonApplication">
-    <configuration name="ProblemPerformanceTest.bulkInsertTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserCountTest.countEach" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.user.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
-      <option name="METHOD_NAME" value="bulkInsertTest" />
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserCountTest" />
+      <option name="METHOD_NAME" value="countEach" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProblemPerformanceTest.saveAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserCountTest.countOnce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.user.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
-      <option name="METHOD_NAME" value="saveAllTest" />
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserCountTest" />
+      <option name="METHOD_NAME" value="countOnce" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -139,7 +138,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -155,7 +154,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -171,7 +170,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -208,8 +207,8 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
-      <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
+      <item itemvalue="JUnit.UserCountTest.countEach" />
+      <item itemvalue="JUnit.UserCountTest.countOnce" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
@@ -217,8 +216,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
-        <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
+        <item itemvalue="JUnit.UserCountTest.countEach" />
+        <item itemvalue="JUnit.UserCountTest.countOnce" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
@@ -265,10 +264,15 @@
       <workItem from="1724588708856" duration="117000" />
       <workItem from="1724588851927" duration="8737000" />
       <workItem from="1724652068055" duration="8962000" />
-      <workItem from="1724679208307" duration="9457000" />
-      <workItem from="1724824714113" duration="290000" />
-      <workItem from="1724825078606" duration="11819000" />
-      <workItem from="1724912084055" duration="9334000" />
+      <workItem from="1724679208307" duration="9290000" />
+      <workItem from="1724733367118" duration="15474000" />
+      <workItem from="1724755515049" duration="3339000" />
+      <workItem from="1724850516790" duration="955000" />
+      <workItem from="1724851502857" duration="6227000" />
+      <workItem from="1724858054923" duration="3579000" />
+      <workItem from="1724935743160" duration="881000" />
+      <workItem from="1724940326108" duration="2227000" />
+      <workItem from="1725169747235" duration="1314000" />
     </task>
     <servers />
   </component>
@@ -324,39 +328,13 @@
           <line>188</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>43</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.io.NotSerializableException" package="java.io" />
-          <option name="timeStamp" value="30" />
-        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.moonspoon.moonspoon.workbook.Workbook" memberName="problemCount" />
         <PinnedItemInfo parentTag="org.springframework.data.domain.PageImpl" memberName="content" />
+        <PinnedItemInfo parentTag="org.springframework.cache.caffeine.CaffeineCache" memberName="cache" />
       </pinned-members>
     </pin-to-top-manager>
   </component>
