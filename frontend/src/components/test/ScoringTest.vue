@@ -244,7 +244,7 @@ export default {
           sortOrder: this.sortOrder,
           workbookId: this.workbookId,
           workbookTitle: this.workbookTitle,
-          incId: incorrectProblemIds,
+          incId: incorrectProblemIds.join(","),
         }
       })
     },

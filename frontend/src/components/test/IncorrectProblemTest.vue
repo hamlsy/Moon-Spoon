@@ -111,7 +111,7 @@ export default {
         'Authorization': this.token
       };
       const data = {
-        incorrectProblemIds: this.incorrectProblemIds
+        incorrectProblemIds: this.incorrectProblemIds.split(',')
       }
       axios.post(`/api/workbook/${this.workbookId}/localTest/getIncorrectTest`,
           data, {headers})
