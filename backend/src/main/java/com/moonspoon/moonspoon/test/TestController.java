@@ -26,9 +26,9 @@ public class TestController {
     private final TestService testService;
 
     //테스트 시작 + 조회
-    @PostMapping("/getSharedTest")
-    public ResponseEntity<TestSharedResponse> getSharedTestProblem(@PathVariable("id") Long sharedWorkbookId, @RequestBody TestSharedWorkbookRequest dto){
-        TestSharedResponse response = testService.getSharedTest(sharedWorkbookId, dto);
+    @GetMapping("/getSharedTest")
+    public ResponseEntity<TestSharedResponse> getSharedTestProblem(@PathVariable("id") Long sharedWorkbookId){
+        TestSharedResponse response = testService.getSharedTest(sharedWorkbookId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

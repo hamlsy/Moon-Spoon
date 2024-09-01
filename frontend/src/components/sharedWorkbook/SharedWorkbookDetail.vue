@@ -6,7 +6,7 @@
     <main class="content">
 
       <section class="workbook-info">
-        <div v-if="sharedWorkbook.isUser" class="author-actions">
+        <div v-if="sharedWorkbook.user" class="author-actions">
           <button @click="showEditForm" class="edit-button">수정</button>
           <button @click="deleteWorkbook" class="delete-button">삭제</button>
         </div>
@@ -94,7 +94,7 @@ export default {
         content: "",
         problemCount: "",
         hasSolution: "",
-        isUser: false,
+        user: false,
         comments: []
       },
       commentContent: "",
@@ -115,7 +115,10 @@ export default {
     // },
 
     getSharedWorkbook(){
-      axios.get(`/api/sharedWorkbook/${this.sharedWorkbookId}`)
+      const headers = {
+        'Authorization': this.token
+      };
+      axios.get(`/api/sharedWorkbook/${this.sharedWorkbookId}`, {headers})
           .then((res) => {
             this.sharedWorkbook = res.data
             console.log(res, "fetch data");
@@ -136,7 +139,6 @@ export default {
             query: {
               sharedWorkbookId: this.sharedWorkbookId,
               sharedWorkbookTitle: this.sharedWorkbook.title,
-              random: this.sharedWorkbook.random
             }
           })
         }

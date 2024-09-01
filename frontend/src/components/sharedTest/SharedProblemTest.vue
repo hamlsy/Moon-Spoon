@@ -114,11 +114,8 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      const data = {
-        random: this.$route.query.random
-      }
-      axios.post(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
-          data, {headers})
+      axios.get(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
+          {headers})
           .then((res) => {
             this.problems = res.data.testSharedProblems;
             this.testId = res.data.testId;

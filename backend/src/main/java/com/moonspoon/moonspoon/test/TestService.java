@@ -70,11 +70,11 @@ public class TestService {
     // CreateTest 하면서 Get Test Problem
     //todo refactor
     @Transactional
-    public TestSharedResponse getSharedTest(Long sharedWorkbookId , TestSharedWorkbookRequest dto){
+    public TestSharedResponse getSharedTest(Long sharedWorkbookId){
         Test test = createSharedTest(sharedWorkbookId);
-        Long workbookId = test.getSharedWorkbook().getWorkbook().getId();
-        List<Problem> problems = problemRepository.findAllByWorkbookId(workbookId);
-        if(dto.isRandom()){
+        SharedWorkbook sharedWorkbook = test.getSharedWorkbook();
+        List<Problem> problems = problemRepository.findAllBySharedWorkbookId(sharedWorkbookId);
+        if(sharedWorkbook.isRandom()){
             Collections.shuffle(problems);
         }
         List<TestSharedProblemResponse> testSharedProblems = problems.stream()

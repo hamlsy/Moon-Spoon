@@ -71,6 +71,7 @@ public class SharedWorkbookService {
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
         sharedWorkbook.setUser(workbook.getUser());
+        sharedWorkbook.setRandom(dto.isRandom());
 
         sharedWorkbookRepository.save(sharedWorkbook);
 

@@ -120,7 +120,7 @@
         <div class="popup-buttons">
           <button @click="retryAllTest" class="retry-btn">전체 재시험</button>
           <button @click="retryIncorrectTest" class="retry-btn">틀린 문제 재시험</button>
-          <button @click="finishGrading">나가기</button>
+          <button @click="finishGrading" class="finish-exit-btn">나가기</button>
         </div>
       </div>
     </div>
@@ -671,6 +671,7 @@ textarea {
   background-color: #d32f2f;
 }
 
+
 .navigation-buttons button {
   background-color: #2196F3;
   color: white;
@@ -765,6 +766,14 @@ textarea:focus {
 
 }
 
+/** .finish-exit-btn{
+  background-color: #f44336;
+  color: white;
+}
+.finish-exit-btn:hover {
+  background-color: #d32f2f;
+
+} **/
 @media (max-width: 400px) {
   .popup button {
     padding: 0.5rem 1rem;
