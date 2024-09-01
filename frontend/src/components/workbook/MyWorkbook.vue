@@ -362,7 +362,7 @@ body, html {
   animation: slideInFade 0.9s cubic-bezier(0.5, 0.01, 0.115, 0.5);
 }
 .main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
+  /** background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23)); **/
   color: #191f28;
   min-height: 100vh;
   display: flex;

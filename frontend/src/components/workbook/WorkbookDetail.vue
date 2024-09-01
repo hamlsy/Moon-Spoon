@@ -80,7 +80,7 @@
           {{ page }}
         </button>
       </div>
-      <div class="floating-action-button" >
+      <div class="floating-action-button" v-if="problems.length > 0">
         <button @click="toggleMenu" class="main-button" :class="{ 'active': isOpen }">
           <i class="fas fa-vial"></i>
         </button>
@@ -508,7 +508,7 @@ body, html {
 
 .main-page {
   /** background: linear-gradient(rgba(255,244,255,0.05) 40%, rgba(232,221,0,0.53)); **/
-  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
+  /** background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23)); **/
   /** background: white; **/
   color: #191f28;
   min-height: 100vh;
