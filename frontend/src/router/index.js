@@ -21,6 +21,7 @@ import SharedScoringTest from "@/components/sharedTest/SharedScoringTest.vue";
 import Profile from "@/components/Profile.vue";
 import IncorrectProblemTest from "@/components/test/IncorrectProblemTest.vue";
 import PracticeTest from "@/components/test/PracticeTest.vue";
+import SharedWorkbookPracticeTest from "@/components/sharedWorkbook/SharedWorkbookPracticeTest.vue";
 
 
 Vue.use(VueRouter);
@@ -119,6 +120,11 @@ const routes = [
         path: '/practiceTest',
         name: 'PracticeTest',
         component: PracticeTest
+    },
+    {
+        path: '/sharedWorkbookPracticeTest',
+        name: 'SharedWorkbookPracticeTest',
+        component: SharedWorkbookPracticeTest
     },
     {
         path: '/test',
