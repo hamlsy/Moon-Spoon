@@ -87,6 +87,9 @@ public class UserServiceTest {
         assertEquals(1, repository.count());
 
     }
+
+
+
     @AfterEach
     void tearDown() {
         repository.deleteAll();

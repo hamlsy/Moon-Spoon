@@ -115,7 +115,7 @@ export default {
         sortOrder: this.$route.query.sortOrder,
         shared: false
       }
-      axios.post(`/api/workbook/${this.workbookId}/problem/getTest`,
+      axios.post(`/api/workbook/${this.workbookId}/localTest/getTest`,
           data, {headers})
           .then((res) => {
             this.problems = res.data;
@@ -170,7 +170,7 @@ export default {
         'Authorization': this.token
       };
       // 테스트 제출 로직
-      axios.post(`/api/workbook/${this.workbookId}/problem/storeTest`,
+      axios.post(`/api/workbook/${this.workbookId}/localTest/storeTest`,
         this.userAnswers, {headers}
       )
           .then((res) => {
@@ -179,7 +179,10 @@ export default {
               path: '/scoringTest',
               query: {
                 workbookId: this.workbookId,
-                workbookTitle: this.workbookTitle
+                workbookTitle: this.workbookTitle,
+                problemCount: this.$route.query.problemCount,
+                random: this.$route.query.random,
+                sortOrder: this.$route.query.sortOrder,
               }
             })
           })
@@ -194,6 +197,9 @@ export default {
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getCorrectRate(correctRate){
+      return (correctRate*100).toFixed(2);
+    }
   }
 }
 </script>

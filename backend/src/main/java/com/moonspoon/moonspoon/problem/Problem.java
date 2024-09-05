@@ -34,11 +34,11 @@ public class Problem {
     private int correctCount;
     private int incorrectCount;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "workbook_id")
     private Workbook workbook;
 
-    @OneToMany(mappedBy = "problem", fetch=FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "problem", cascade = CascadeType.REMOVE)
     private List<TestAnswer> testAnswers = new ArrayList<>();
 
 
@@ -69,13 +69,18 @@ public class Problem {
     //비즈니스 로직
     public void addCorrectCount(){
         this.correctCount++;
-        double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
-        this.correctRate = Math.round(correctRate*10000)/100.0;
     }
 
     public void addIncorrectCount(){
         this.incorrectCount++;
+    }
+
+    public double getCorrectRate(){
+        if(this.correctCount+this.incorrectCount == 0){
+            return 0;
+        }
         double correctRate = (double)(this.correctCount)/(this.correctCount + this.incorrectCount);
         this.correctRate = Math.round(correctRate*10000)/100.0;
+        return correctRate;
     }
 }

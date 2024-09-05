@@ -28,11 +28,11 @@ public class Comment {
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sharedWorkbook_id")
     private SharedWorkbook sharedWorkbook;
 

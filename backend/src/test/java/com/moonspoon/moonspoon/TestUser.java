@@ -15,6 +15,8 @@ public class TestUser {
     @Column(unique = true)
     private String name;
 
+
+
     public String getSynName() {
         return synName;
     }

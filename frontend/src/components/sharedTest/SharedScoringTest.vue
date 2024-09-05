@@ -111,6 +111,7 @@
         <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
         <p>점수: {{ resultInfo.score.toFixed(2) }}점</p>
         <div class="popup-buttons">
+          <button @click="retryAllTest" class="retry-btn">전체 재시험</button>
           <button @click="finishGrading">확인</button>
         </div>
       </div>
@@ -180,7 +181,7 @@ export default {
     },
     exitGrading() {
       // 채점 종료 로직
-      this.$router.push(`/sharedWorkBook/${this.workbookId}`);
+      this.$router.push(`/sharedWorkBook/${this.sharedWorkbookId}`);
     },
     submitResults() {
       // 채점 결과 제출 로직
@@ -224,6 +225,15 @@ export default {
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    retryAllTest(){
+      this.$router.push({
+        path: `/sharedProblemTest/${this.sharedWorkbookId}`,
+        query: {
+          sharedWorkbookId: this.sharedWorkbookId,
+          sharedWorkbookTitle: this.sharedWorkbookTitle
+        }
+      })
+    }
 
   }
 }

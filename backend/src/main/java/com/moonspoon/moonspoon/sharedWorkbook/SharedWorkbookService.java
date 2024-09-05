@@ -1,15 +1,13 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
+import com.moonspoon.moonspoon.comment.CommentRepository;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookUpdateRequest;
-import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookGetUserResponse;
+import com.moonspoon.moonspoon.dto.response.comment.CommentResponse;
+import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookListResponse;
 import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
-import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookTestResponse;
-import com.moonspoon.moonspoon.dto.response.test.TestProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
-import com.moonspoon.moonspoon.problem.Problem;
-import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
 import lombok.RequiredArgsConstructor;
@@ -33,23 +31,31 @@ import java.util.stream.Collectors;
 public class SharedWorkbookService {
     private final SharedWorkbookRepository sharedWorkbookRepository;
     private final WorkbookRepository workbookRepository;
+    private final CommentRepository commentRepository;
     private final String notFoundWorkbookMessage = "존재하지 않는 문제집입니다.";
 
 
-    //단일 조회
+    //단일 조회 + 댓글 조회
     public SharedWorkbookResponse findSharedWorkbook(Long id){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbookAndProblems(id).orElseThrow(
+        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithWorkbook(id).orElseThrow(
                 () -> new NotFoundException(notFoundWorkbookMessage)
         );
+        int problemCount = workbookRepository.countProblemsById(sharedWorkbook.getWorkbook().getId()).intValue();
         SharedWorkbookResponse response = SharedWorkbookResponse.fromEntity(sharedWorkbook);
+        response.setProblemCount(problemCount);
+        response.setUser(getUser(sharedWorkbook));
+        List<CommentResponse> comments = commentRepository.findAllBySharedWorkbookId(id).stream()
+                        .map(c -> CommentResponse.fromEntity(c))
+                                .collect(Collectors.toList());
+        response.setComments(comments);
         return response;
     }
 
     //전체 조회
-    public Page<SharedWorkbookResponse> findAllSharedWorkbook(String keyword, int page, int size){
+    public Page<SharedWorkbookListResponse> findAllSharedWorkbook(String keyword, int page, int size){
         Pageable pageable = PageRequest.of(page, size, Sort.by("createDate").descending());
         Page<SharedWorkbook> sharedWorkbooks = sharedWorkbookRepository.findAllWithKeyword(keyword.trim(), pageable);
-        Page<SharedWorkbookResponse> responses = sharedWorkbooks.map(SharedWorkbookResponse::fromEntity);
+        Page<SharedWorkbookListResponse> responses = sharedWorkbooks.map(SharedWorkbookListResponse::fromEntity);
         return responses;
     }
 
@@ -65,6 +71,7 @@ public class SharedWorkbookService {
         sharedWorkbook.setWorkbook(workbook);
         sharedWorkbook.setAuthor(workbook.getAuthor());
         sharedWorkbook.setUser(workbook.getUser());
+        sharedWorkbook.setRandom(dto.isRandom());
 
         sharedWorkbookRepository.save(sharedWorkbook);
 
@@ -110,20 +117,14 @@ public class SharedWorkbookService {
 
 
     //유저 검증
-    public SharedWorkbookGetUserResponse getUser(Long id){
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findByIdWithUser(id).orElseThrow(
-                () -> new NotFoundException(notFoundWorkbookMessage)
-        );
+    private boolean getUser(SharedWorkbook sharedWorkbook){
         String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        SharedWorkbookGetUserResponse response = new SharedWorkbookGetUserResponse();
-
         if(currentUser.equals(sharedWorkbook.getUser().getUsername())){
-            response.setUser(true);
+            return true;
         }else{
-            response.setUser(false);
+            return false;
         }
-        return response;
     }
+
 
 }

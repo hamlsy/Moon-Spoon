@@ -1,11 +1,13 @@
 package com.moonspoon.moonspoon.dto.response.sharedWorkbook;
 
+import com.moonspoon.moonspoon.dto.response.comment.CommentResponse;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -17,9 +19,12 @@ public class SharedWorkbookResponse {
     private int problemCount;
     private boolean isRandom;
 
+    private boolean isUser;
+
     private LocalDateTime createDate;
     private LocalDateTime updateDate;
 
+    private List<CommentResponse> comments;
     @Builder
     public SharedWorkbookResponse(Long id, String title, String content, String author,
                                   int problemCount,
@@ -42,7 +47,6 @@ public class SharedWorkbookResponse {
                 .content(sharedWorkbook.getContent())
                 .author(sharedWorkbook.getAuthor())
                 .isRandom(sharedWorkbook.isRandom())
-                .problemCount(sharedWorkbook.getWorkbook().getProblems().size())
                 .createDate(sharedWorkbook.getCreateDate())
                 .updateDate(sharedWorkbook.getUpdateDate())
                 .build();

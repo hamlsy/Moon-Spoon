@@ -47,10 +47,11 @@
           다음
         </button>
       </div>
+      <!-- 제출 버튼 -->
+      <button class="submit-btn" @click="showSubmitPopup = true">제출</button>
     </div>
 
-    <!-- 제출 버튼 -->
-    <button class="submit-btn" @click="showSubmitPopup = true">제출</button>
+
 
     <!-- 나가기 확인 팝업 -->
     <div v-if="showExitPopup" class="popup-overlay">
@@ -113,11 +114,8 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      const data = {
-        random: this.$route.query.random
-      }
-      axios.post(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
-          data, {headers})
+      axios.get(`/api/test/${this.sharedWorkbookId}/getSharedTest`,
+          {headers})
           .then((res) => {
             this.problems = res.data.testSharedProblems;
             this.testId = res.data.testId;
@@ -208,6 +206,8 @@ body, html {
   height: 100%;
 }
 .test-page{
+  display: flex;
+  height: 100vh;
   background-color: #FFFAF0;
 }
 
@@ -423,9 +423,9 @@ a {
 
 .sidebar {
   min-width: 2rem;
-  background-color: #f0f0f0;
-  max-width: 22rem;
   margin-top: 60px;
+  max-width: 22rem;
+  background-color: #f0f0f0;
   padding: 20px;
   overflow-y: auto;
   word-break: break-all;
@@ -446,6 +446,7 @@ a {
   padding: 10px;
   margin-bottom: 5px;
   cursor: pointer;
+  max-height: 2rem;
 }
 
 .problem-item.unanswered {
@@ -468,6 +469,7 @@ a {
   display: flex;
   flex-direction: column;
   overflow-y: auto; /* 세로 스크롤 추가 */
+  width: 90%;
   max-height: 100vh; /* 뷰포트 높이를 최대로 설정 */
   min-width: 12rem;
 }
@@ -475,11 +477,6 @@ a {
 .problem-content {
   margin-bottom: 20px;
   margin-top: 70px;
-}
-
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
 }
 
 
@@ -490,6 +487,7 @@ a {
   width: 13rem;
   margin-left: auto;
 }
+
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -518,7 +516,6 @@ a {
 .navigation-buttons {
   display: flex;
   justify-content: space-between;
-
 }
 /** **/
 .exit-btn, .navigation-buttons button, .submit-btn {
@@ -581,10 +578,6 @@ textarea:focus {
   border-color: #2196F3;
   box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
 }
-.navigation-buttons {
-  display: flex;
-  justify-content: space-between;
-}
 .problem-item:hover {
   background-color: #e0e0e0;
 }
@@ -593,5 +586,6 @@ textarea:focus {
   text-align: center;
   color: #333;
 }
+
 
 </style>

@@ -42,7 +42,6 @@ public class CommentService {
 
         comment.setUser(user);
         comment.setAuthor(user.getName());
-        comment.setSharedWorkbook(sharedWorkbook);
 
         commentRepository.save(comment);
         CommentResponse response = CommentResponse.fromEntity(comment);

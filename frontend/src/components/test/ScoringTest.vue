@@ -31,7 +31,7 @@
       <div class="problem-header">
         <h2>문제 {{ currentproblemIndex + 1 }}</h2>
         <span class="correct-rate" v-if="currentproblem.correctRate !== undefined">
-          정답률: {{ currentproblem.correctRate }}%
+          정답률: {{ getCorrectRate(currentproblem.correctRate) }}%
         </span>
       </div>
       <p>{{ currentproblem.problem }}</p>
@@ -110,8 +110,17 @@
         <p>맞힌 개수: {{ resultInfo.correctCount }}</p>
         <p>틀린 개수: {{ resultInfo.incorrectCount }}</p>
         <p>점수: {{ resultInfo.score.toFixed(2) }}점</p>
+
         <div class="popup-buttons">
-          <button @click="finishGrading">확인</button>
+          <label class="retry-ex">전체 재시험: 동일 조건으로 문제가 다시 생성됩니다.</label>
+        </div>
+        <div class="popup-buttons">
+          <label class="retry-ex">틀린 문제 재시험: 틀린 문제만 다시 생성됩니다.</label>
+        </div>
+        <div class="popup-buttons">
+          <button @click="retryAllTest" class="retry-btn">전체 재시험</button>
+          <button @click="retryIncorrectTest" class="retry-btn">틀린 문제 재시험</button>
+          <button @click="finishGrading" class="finish-exit-btn">나가기</button>
         </div>
       </div>
     </div>
@@ -137,7 +146,12 @@ export default {
       showSubmitPopup: false,
       token: localStorage.getItem('token'),
       workbookId : this.$route.query.workbookId,
-      workbookTitle : this.$route.query.workbookTitle
+      workbookTitle : this.$route.query.workbookTitle,
+
+      //query param
+      problemCount: this.$route.query.problemCount,
+      random: this.$route.query.random,
+      sortOrder: this.$route.query.sortOrder,
     }
   },
   computed: {
@@ -186,7 +200,7 @@ export default {
       const headers = {
         'Authorization': this.token
       };
-      axios.post(`/api/workbook/${this.workbookId}/problem/submitTestResult`,
+      axios.post(`/api/workbook/${this.workbookId}/localTest/submitTestResult`,
           this.problems,
           {headers})
           .then((res) => {
@@ -206,11 +220,39 @@ export default {
       console.log("Correct answer rate:", this.correctAnswerRate);
       this.$router.push(`/workBookDetail/${this.workbookId}`);
     },
+    retryAllTest(){
+      this.$router.push({
+        path: '/problemTest',
+        query: {
+          problemCount: this.problemCount,
+          random: this.random,
+          sortOrder: this.sortOrder,
+          workbookId: this.workbookId,
+          workbookTitle: this.workbookTitle
+        }
+      })
+    },
+    retryIncorrectTest(){
+      const incorrectProblemIds = this.problems
+          .filter(item => item.result === 'incorrect')
+          .map(item => item.id);
+      this.$router.push({
+        path:'/incorrectProblemTest',
+        query:{
+          problemCount: this.problemCount,
+          random: this.random,
+          sortOrder: this.sortOrder,
+          workbookId: this.workbookId,
+          workbookTitle: this.workbookTitle,
+          incId: incorrectProblemIds.join(","),
+        }
+      })
+    },
     async fetchResults() {
       const headers = {
         'Authorization': this.token
       };
-      axios.get(`/api/workbook/${this.workbookId}/problem/getTestResult`, {headers})
+      axios.get(`/api/workbook/${this.workbookId}/localTest/getTestResult`, {headers})
           .then((res) => {
             this.problems = res.data;
             console.log("FETCH DATA", res);
@@ -223,6 +265,9 @@ export default {
     truncateText(text, maxLength = 40) {
       return text.length > maxLength ? text.slice(0, maxLength) + '...' : text;
     },
+    getCorrectRate(correctRate){
+      return (correctRate*100).toFixed(2);
+    }
   }
 }
 </script>
@@ -412,6 +457,7 @@ h1::after, h2::after, h3::after {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .popup button:hover {
@@ -601,7 +647,6 @@ textarea {
   display: flex;
   justify-content: space-around;
   margin-top: 20px;
-
 }
 .navigation-buttons {
   display: flex;
@@ -625,6 +670,7 @@ textarea {
 .exit-btn:hover {
   background-color: #d32f2f;
 }
+
 
 .navigation-buttons button {
   background-color: #2196F3;
@@ -702,7 +748,7 @@ textarea:focus {
   border-radius: 15px;
 }
 .result-popup {
-  width: 300px;
+  width: 400px;
   word-break: break-all;
 }
 
@@ -714,4 +760,30 @@ textarea:focus {
   text-align: left;
   margin-bottom: 10px;
 }
+
+.retry-ex{
+  font-size: 0.8rem;
+
+}
+
+/** .finish-exit-btn{
+  background-color: #f44336;
+  color: white;
+}
+.finish-exit-btn:hover {
+  background-color: #d32f2f;
+
+} **/
+@media (max-width: 400px) {
+  .popup button {
+    padding: 0.5rem 1rem;
+    background-color: #FFD700;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+
+}
+
 </style>

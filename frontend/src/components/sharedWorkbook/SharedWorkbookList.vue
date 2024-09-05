@@ -121,7 +121,7 @@ export default {
 }
 
 .main-page {
-  background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23));
+  /** background: linear-gradient(rgba(255,244,255,0.05) 60%, rgba(232,221,0,0.23)); **/
   color: #191f28;
   min-height: 100vh;
   display: flex;
@@ -192,11 +192,11 @@ export default {
 .workbook-card {
   background-color: white;
   border-radius: 12px;
-  border-left: 1.5px solid yellow;
+  border-left:3.5px solid #FFD700;;
   padding: 1rem;
   cursor: pointer;
   transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
   word-break: break-all;
 }
 
