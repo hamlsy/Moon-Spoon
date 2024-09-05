@@ -5,91 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/CacheConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/CustomKeyGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/request/test/TestIncorrectProblemRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookProblemCountDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookListResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/localTest/TestPracticeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/sharedTest/TestSharedPracticeResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/localTest/LocalTestController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/localTest/LocalTestService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/CacheConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/problem/ProblemPerformanceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/problem/ProblemRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/user/UserCountTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/user/UserInfoDtoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/user/UserRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookProblemCountTestDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookPracticeTest.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/test/IncorrectProblemTest.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/test/PracticeTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.github/workflows/cicd.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/cicd.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backend/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/Comment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/comment/CommentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/WorkbookResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/sharedWorkbook/SharedWorkbookResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestProblemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/localTest/TestProblemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestResultResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/localTest/TestResultResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestResultSubmitResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/localTest/TestResultSubmitResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestSharedProblemResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/sharedTest/TestSharedProblemResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestSharedResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/sharedTest/TestSharedResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestSharedResultResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/sharedTest/TestSharedResultResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/TestSharedResultSubmitResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/test/sharedTest/TestSharedResultSubmitResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/init/InitDB.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/init/InitDB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/Notice.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/Notice.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/notice/NoticeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/Problem.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/sharedWorkbook/SharedWorkbookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/Test.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/test/TestService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/testAnswer/TestAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/testAnswer/TestAnswer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/Workbook.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/MoonspoonApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/MoonspoonApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/TestUser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/user/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/user/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/TestPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedProblemTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedTest/SharedScoringTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/sharedWorkbook/SharedWorkbookList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/test/ProblemTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/test/ProblemTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/test/ScoringTest.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/MyWorkbook.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/workbook/WorkbookDetail.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -128,6 +46,7 @@
       <list>
         <option value="CSS File" />
         <option value="Vue Composition API Component" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -137,9 +56,6 @@
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;customColor&quot;: &quot;&quot;,
@@ -160,7 +76,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;19&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/springProjectWorkspace/Moon-Spoon/backend&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/springWorkspace/moonspoon/frontend&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -171,8 +87,8 @@
     &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\이승영\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\82104\\AppData\\Local\\Programs\\IntelliJ IDEA Ultimate\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
   &quot;keyToStringList&quot;: {
@@ -186,34 +102,34 @@
       <recent name="C:\springWorkspace\moonspoon\frontend\public" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MoonspoonApplication">
-    <configuration name="ProblemPerformanceTest.bulkInsertTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.UserCountTest.countEach">
+    <configuration name="UserCountTest.countEach" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.user.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
-      <option name="METHOD_NAME" value="bulkInsertTest" />
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserCountTest" />
+      <option name="METHOD_NAME" value="countEach" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="ProblemPerformanceTest.saveAllTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="UserCountTest.countOnce" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.user.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.problem" />
-      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
-      <option name="METHOD_NAME" value="saveAllTest" />
+      <option name="PACKAGE_NAME" value="com.moonspoon.moonspoon.user" />
+      <option name="MAIN_CLASS_NAME" value="com.moonspoon.moonspoon.user.UserCountTest" />
+      <option name="METHOD_NAME" value="countOnce" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -223,7 +139,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -239,7 +155,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -255,7 +171,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -292,8 +208,8 @@
     </configuration>
     <list>
       <item itemvalue="JavaScript Debug.Debug Application" />
-      <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
-      <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
+      <item itemvalue="JUnit.UserCountTest.countEach" />
+      <item itemvalue="JUnit.UserCountTest.countOnce" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
       <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
@@ -301,8 +217,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.ProblemPerformanceTest.bulkInsertTest" />
-        <item itemvalue="JUnit.ProblemPerformanceTest.saveAllTest" />
+        <item itemvalue="JUnit.UserCountTest.countEach" />
+        <item itemvalue="JUnit.UserCountTest.countOnce" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer2" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer1" />
         <item itemvalue="JUnit.WorkbookPerformanceTest.findAllTestVer4" />
@@ -349,13 +265,14 @@
       <workItem from="1724588708856" duration="117000" />
       <workItem from="1724588851927" duration="8737000" />
       <workItem from="1724652068055" duration="8962000" />
-      <workItem from="1724679208307" duration="9457000" />
-      <workItem from="1724824714113" duration="290000" />
-      <workItem from="1724825078606" duration="11819000" />
-      <workItem from="1724912084055" duration="9969000" />
-      <workItem from="1725019829018" duration="3875000" />
-      <workItem from="1725075633207" duration="7339000" />
-      <workItem from="1725501915334" duration="1085000" />
+      <workItem from="1724679208307" duration="9290000" />
+      <workItem from="1724733367118" duration="15474000" />
+      <workItem from="1724755515049" duration="3339000" />
+      <workItem from="1724850516790" duration="955000" />
+      <workItem from="1724851502857" duration="6227000" />
+      <workItem from="1724858054923" duration="3579000" />
+      <workItem from="1724935743160" duration="607000" />
+      <workItem from="1725538941891" duration="3855000" />
     </task>
     <servers />
   </component>
@@ -411,39 +328,13 @@
           <line>188</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="16" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>40</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/backend/src/test/java/com/moonspoon/moonspoon/workbook/WorkbookPerformanceService.java</url>
-          <line>43</line>
-          <properties>
-            <option name="lambda-ordinal" value="-1" />
-          </properties>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <breakpoint enabled="true" type="java-exception">
-          <properties class="java.io.NotSerializableException" package="java.io" />
-          <option name="timeStamp" value="30" />
-        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="com.moonspoon.moonspoon.workbook.Workbook" memberName="problemCount" />
         <PinnedItemInfo parentTag="org.springframework.data.domain.PageImpl" memberName="content" />
+        <PinnedItemInfo parentTag="org.springframework.cache.caffeine.CaffeineCache" memberName="cache" />
       </pinned-members>
     </pin-to-top-manager>
   </component>

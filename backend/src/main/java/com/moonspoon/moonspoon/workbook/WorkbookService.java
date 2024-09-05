@@ -32,6 +32,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 //@Transactional(readOnly = true)
 public class WorkbookService {
+    private static final String DEFAULT_SORT_FIELD = "createDate";
+    private static final String OLDEST_ORDER = "oldest";
+    private static final String UNAUTHORIZED_MESSAGE = "권한이 없습니다.";
+    private static final String WORKBOOK_NOT_FOUND_MESSAGE = "존재하지 않는 문제집입니다.";
+
     private final WorkbookRepository workbookRepository;
     private final UserRepository userRepository;
 
@@ -39,97 +44,122 @@ public class WorkbookService {
     @Transactional
     @CacheEvict(value = "workbooks", allEntries = true)
     public WorkbookResponse createWorkbook(WorkbookCreateRequest dto) {
+        User user = getAuthenticatedUser();
+        Workbook workbook = createWorkbookEntity(dto, user);
+        return WorkbookResponse.fromEntity(workbookRepository.save(workbook));
+    }
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        User user = userRepository.findByUsername(username);
-
+    private Workbook createWorkbookEntity(WorkbookCreateRequest dto, User user){
         Workbook workbook = WorkbookCreateRequest.toEntity(dto);
         workbook.setAuthor(user.getName());
         workbook.setCreateDate(LocalDateTime.now());
         workbook.setUser(user);
-
-        workbookRepository.save(workbook);
-        return WorkbookResponse.fromEntity(workbook);
+        return workbook;
     }
 
-    private void validateUser(String username) {
-        if(username == null || username.equals("anonymousUser")){
-            throw new NotUserException("권한이 없습니다.");
-        }
-    }
 
     //단일 조회
     public WorkbookResponse findOneById(Long id){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-
-        Workbook workbook = workbookRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("문제집이 존재하지 않습니다.")
-        );
-        if(!workbook.getUser().getUsername().equals(username)){
-            throw new NotUserException("권한이 없습니다.");
-        }
-
+        String username = getAuthenticatedUsername();
+        Workbook workbook = findWorkbookById(id);
+        validateWorkbookOwnership(workbook, username);
         return WorkbookResponse.fromEntity(workbook);
     }
 
+    private void validateWorkbookOwnership(Workbook workbook, String username){
+        if(!workbook.getUser().getUsername().equals(username)){
+            throw new NotUserException(UNAUTHORIZED_MESSAGE);
+        }
+    }
 
     @Cacheable(value = "workbooks", keyGenerator="customKeyGenerator")
     public Page<WorkbookResponse> findAll(String keyword, String order, int page, int size){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-        Sort sort = Sort.by("createDate").descending();
-        if (order.equals("oldest")){
-            sort = Sort.by("createDate").ascending();
-        }
-        Pageable pageable = PageRequest.of(page, size,  sort);
+        String username = getAuthenticatedUsername();
+        Pageable pageable = createPageable(order, page, size);
 
         Page<Workbook> workbooks = workbookRepository.findAllWithUserAndKeyword(keyword.trim(), pageable, username);
+        Map<Long, Long> problemCountMap = getProblemCountMap(workbooks);
 
-        List<Long> workbookIds = workbooks.stream()
-                .map(Workbook::getId).collect(Collectors.toList());
-        List<WorkbookProblemCountDto> problemCounts = workbookRepository.countProblemsByWorkbookIds(workbookIds);
-        Map<Long, Long> problemCountMap = problemCounts.stream().collect(Collectors.toMap(
-                WorkbookProblemCountDto::getWorkbookId, WorkbookProblemCountDto::getProblemCount
-                ));
-
-        Page<WorkbookResponse> responses = workbooks.map(w -> {
-            WorkbookResponse response =  WorkbookResponse.fromEntity(w);
-            Long problemCount = problemCountMap.get(w.getId());
-            int returnProblemCount = (problemCount != null) ? problemCount.intValue() : 0;
-            response.setProblemCount(returnProblemCount);
-            return response;
-        });
+        Page<WorkbookResponse> responses = workbooks.map(w -> createWorkbookResponse(w, problemCountMap));
 
         return responses;
     }
 
+    private Pageable createPageable(String order, int page, int size){
+        Sort sort = OLDEST_ORDER.equals(order) ?
+                Sort.by(DEFAULT_SORT_FIELD).ascending() :
+                Sort.by(DEFAULT_SORT_FIELD).descending();
+        return PageRequest.of(page, size, sort);
+    }
+
+
+    private Map<Long, Long> getProblemCountMap(Page<Workbook> workbooks){
+        List<Long> workbooksIds = getWorkbookIds(workbooks);
+        List<WorkbookProblemCountDto> problemCounts = workbookRepository.countProblemsByWorkbookIds(workbooksIds);
+        return problemCounts.stream()
+                .collect(Collectors.toMap(
+                        WorkbookProblemCountDto::getWorkbookId,
+                        WorkbookProblemCountDto::getProblemCount
+                ));
+    }
+
+    private List<Long> getWorkbookIds(Page<Workbook> workbooks){
+        return workbooks.stream()
+                .map(Workbook::getId).collect(Collectors.toList());
+    }
+
+    private WorkbookResponse createWorkbookResponse(Workbook workbook, Map<Long, Long> problemCountMap){
+        WorkbookResponse response =  WorkbookResponse.fromEntity(workbook);
+        Long problemCount = problemCountMap.get(workbook.getId());
+        int returnProblemCount = (problemCount != null) ? problemCount.intValue() : 0;
+        response.setProblemCount(returnProblemCount);
+        return response;
+    }
 
     //수정
     @Transactional
     @CacheEvict(value = "workbooks", allEntries = true)
     public WorkbookResponse updateWorkbook(Long id, WorkbookUpdateRequest dto){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-
-        Workbook workbook = workbookRepository.findById(id).orElseThrow();
-        LocalDateTime currentTime = LocalDateTime.now();
-        workbook.update(dto.getTitle(), dto.getContent(), currentTime);
+        Workbook workbook = findWorkbookById(id);
+        validateWorkbookOwnership(workbook, getAuthenticatedUsername());
+        workbook.update(dto.getTitle(), dto.getContent(), LocalDateTime.now());
         return WorkbookResponse.fromEntity(workbook);
     }
+
 
     //삭제
     @Transactional
     @CacheEvict(value = "workbooks", allEntries = true)
     public void deleteWorkbook(Long id){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        validateUser(username);
-
-        if(!workbookRepository.existsById(id)){
-            new NotFoundException("문제집이 존재하지 않습니다.");
-        }
-        workbookRepository.deleteById(id);
+        Workbook workbook = findWorkbookById(id);
+        validateWorkbookOwnership(workbook, getAuthenticatedUsername());
+        workbookRepository.delete(workbook);
     }
+
+    private Workbook findWorkbookById(Long id){
+        return workbookRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(WORKBOOK_NOT_FOUND_MESSAGE));
+    }
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    private String getAuthenticatedUsername(){
+        String username = getCurrentUsername();
+        if(username == null || username.equals("anonymousUser")){
+            throw new NotUserException(UNAUTHORIZED_MESSAGE);
+        }
+        return username;
+    }
+
+    private User getAuthenticatedUser(){
+        String username = getAuthenticatedUsername();
+        return userRepository.findByUsername(username)
+                .orElseThrow(
+                        () -> new NotUserException(UNAUTHORIZED_MESSAGE)
+                );
+    }
+
 
 }
