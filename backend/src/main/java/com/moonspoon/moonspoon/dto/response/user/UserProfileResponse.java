@@ -32,4 +32,6 @@ public class UserProfileResponse {
     private int longToInt(Long num){
         return (num != null) ? num.intValue() : 0;
     }
+
+
 }

@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/dto/response/user/UserProfileResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/user/UserService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/workbook/WorkbookService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
     </list>
@@ -272,7 +273,7 @@
       <workItem from="1724851502857" duration="6227000" />
       <workItem from="1724858054923" duration="3579000" />
       <workItem from="1724935743160" duration="607000" />
-      <workItem from="1725538941891" duration="3855000" />
+      <workItem from="1725538941891" duration="5773000" />
     </task>
     <servers />
   </component>
