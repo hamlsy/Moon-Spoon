@@ -11,12 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private static final String USER_NOT_FOUND_MESSAGE = "존재하지 않는 유저입니다.";
     private static final String DUPLICATED_USERNAME_MESSAGE = "중복된 아이디가 존재합니다.";
@@ -29,6 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Transactional
     public UserResponse signup(UserSignupRequest dto){
         isDuplicatedUsername(dto.getUsername());
         isDuplicatedName(dto.getName());
