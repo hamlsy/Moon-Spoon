@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,7 +54,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="QODANA_PROBLEMS_VIEW_TAB" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;customColor&quot;: &quot;&quot;,
@@ -108,7 +106,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -124,7 +122,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.problem.ProblemPerformanceTest" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -140,7 +138,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -156,7 +154,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -172,7 +170,7 @@
       <module name="moonspoon.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.*" />
+          <option name="PATTERN" value="com.moonspoon.moonspoon.workbook.WorkbookPerformanceTest" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -269,7 +267,10 @@
       <workItem from="1724679208307" duration="9457000" />
       <workItem from="1724824714113" duration="290000" />
       <workItem from="1724825078606" duration="11819000" />
-      <workItem from="1724912084055" duration="665000" />
+      <workItem from="1724912084055" duration="9969000" />
+      <workItem from="1725019829018" duration="3875000" />
+      <workItem from="1725075633207" duration="7339000" />
+      <workItem from="1725501915334" duration="926000" />
     </task>
     <servers />
   </component>
