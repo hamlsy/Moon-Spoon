@@ -29,7 +29,7 @@ public class SharedWorkbookResponse {
     public SharedWorkbookResponse(Long id, String title, String content, String author,
                                   int problemCount,
                                   boolean isRandom,
-                                  LocalDateTime createDate, LocalDateTime updateDate) {
+                                  LocalDateTime createDate, LocalDateTime updateDate, boolean isUser) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -38,6 +38,7 @@ public class SharedWorkbookResponse {
         this.isRandom = isRandom;
         this.createDate = createDate;
         this.updateDate = updateDate;
+        this.isUser = isUser;
     }
 
     public static SharedWorkbookResponse fromEntity(SharedWorkbook sharedWorkbook){

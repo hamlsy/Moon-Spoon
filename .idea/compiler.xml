@@ -11,10 +11,6 @@
         <module name="moonspoon.main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="moonspoon" target="17" />
-      <module name="moonspoon.main" target="17" />
-      <module name="moonspoon.test" target="17" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="17" />
   </component>
 </project>
