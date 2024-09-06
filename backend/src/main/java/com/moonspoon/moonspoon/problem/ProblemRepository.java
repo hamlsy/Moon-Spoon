@@ -29,5 +29,7 @@ public interface ProblemRepository extends JpaRepository<Problem, Long> {
             "WHERE sw.id = :id")
     List<Problem> findAllBySharedWorkbookId(@Param("id") Long sharedWorkbookId);
 
+    int countByIdAndWorkbookId(Long id, Long workbookId);
+
 }
 
