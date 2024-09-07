@@ -74,11 +74,11 @@ public class ProblemService {
 
         Pageable pageable = createPageable(page, size, order);
         Page<Problem> problems = problemRepository.findAllByWorkbookIdAndKeyword(workbookId, keyword.trim(), pageable);
-        Page<ProblemResponse> responses = problems.map(ProblemResponse::fromEntity);
+        Page<ProblemResponse> problemResponses = problems.map(ProblemResponse::fromEntity);
 
         ProblemAllResponse response = new ProblemAllResponse();
         response.setWorkbookTitle(workbook.getTitle());
-        response.setProblems(responses);
+        response.setProblems(problemResponses);
         return response;
     }
 

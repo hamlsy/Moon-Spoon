@@ -8,8 +8,12 @@ RUN mkdir -p /usr/share/GeoIP \
     && gunzip maxmind4.dat.gz \
     && mv maxmind4.dat /usr/share/GeoIP/GeoIP.dat
 
+RUN apt-get update
+
 # Nginx 모듈 설치 (GeoIP 모듈 포함)
-RUN apt-get install -y libnginx-mod-http-geoip
+RUN apt-get install -y geoip-database
+
+COPY GeoIP.dat /usr/share/GeoIP/
 
 # Nginx 설정 파일 복사
 COPY nginx.conf /etc/nginx/nginx.conf
