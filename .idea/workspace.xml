@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1ec2a0d5-0898-4303-92c8-04718a131ccc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile-nginx" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-nginx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/moonspoon/moonspoon/problem/ProblemService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/private_repo" beforeDir="false" afterPath="$PROJECT_DIR$/private_repo" afterDir="false" />
     </list>
@@ -276,6 +275,8 @@
       <workItem from="1725589757970" duration="6690000" />
       <workItem from="1725616019014" duration="5256000" />
       <workItem from="1725631622647" duration="2462000" />
+      <workItem from="1725683138924" duration="372000" />
+      <workItem from="1726063959305" duration="542000" />
     </task>
     <servers />
   </component>
