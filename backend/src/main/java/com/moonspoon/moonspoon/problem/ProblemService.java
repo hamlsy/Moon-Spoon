@@ -1,19 +1,15 @@
 package com.moonspoon.moonspoon.problem;
 
 import com.moonspoon.moonspoon.dto.response.problem.ProblemAllResponse;
-import com.moonspoon.moonspoon.user.User;
-import com.moonspoon.moonspoon.user.UserRepository;
 import com.moonspoon.moonspoon.workbook.Workbook;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemCreateRequest;
 import com.moonspoon.moonspoon.dto.request.problem.ProblemUpdateRequest;
-import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemCreateResponse;
 import com.moonspoon.moonspoon.dto.response.problem.ProblemResponse;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
 import com.moonspoon.moonspoon.exception.ProblemNotInWorkbook;
 import com.moonspoon.moonspoon.workbook.WorkbookRepository;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +28,10 @@ public class ProblemService {
     private final ProblemRepository problemRepository;
     private final WorkbookRepository workbookRepository;
 
+    private static final String ANONYMOUS_NAME = "anonymousUser";
+
     private static final String UNAUTHORIZED_MESSAGE = "권한이 없습니다.";
+    private static final String WORKBOOK_NOT_FOUND_MESSAGE = "존재하지 않는 문제집입니다.";
     private static final String PROBLEM_NOT_FOUND_MESSAGE = "존재하지 않는 문제입니다.";
     private static final String PROBLEM_NOT_IN_WORKBOOK_MESSAGE = "문제집에 존재하지 않는 문제입니다.";
 
@@ -54,12 +51,12 @@ public class ProblemService {
     }
     private Workbook validateUserAndWorkbook(Long workbookId) {
         String username = getCurrentUsername();
-        if(username == null || username.equals("anonymousUser")){
+        if(username == null || username.equals(ANONYMOUS_NAME)){
             throw new NotUserException(UNAUTHORIZED_MESSAGE);
         }
         //문제집 예외
-        Workbook workbook = workbookRepository.findById(workbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+        Workbook workbook = workbookRepository.findByIdWithUser(workbookId).orElseThrow(
+                () -> new NotFoundException(WORKBOOK_NOT_FOUND_MESSAGE)
         );
         //사용자 예외
         if(!workbook.getUser().getUsername().equals(username)){

@@ -32,25 +32,28 @@ public class NoticeService {
     private final NoticeRepository noticeRepository;
     private final UserRepository userRepository;
 
+    private static final String ADMIN_ROLE = "admin";
+
+    private static final String NOTICE_NOT_FOUND_MESSAGE = "존재하지 않는 글입니다.";
+    private static final String USER_NOT_FOUND_MESSAGE = "존재하지 않는 유저입니다.";
+    private static final String UNAUTHORIZED_MESSAGE = "권한이 없습니다.";
+
     public List<NoticeListResponse> findAllNotice(){
         List<Notice> notices = noticeRepository.findAllWithUserDesc();
-        List<NoticeListResponse> responses = notices.stream()
-                .map(n -> NoticeListResponse.fromEntity(n))
+        return notices.stream().map(NoticeListResponse::fromEntity)
                 .collect(Collectors.toList());
-        return responses;
     }
 
 
     public NoticeResponse findNotice(Long id){
-        Notice notice = noticeRepository.findByIdWithUser(id).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 글입니다."));
+        Notice notice = findByIdWithUser(id);
         return NoticeResponse.fromEntity(notice);
     }
 
     @Transactional
     @CacheEvict(value = "notices", allEntries = true)
     public NoticeResponse createNotice(NoticeCreateRequest request){
-        User user = validAdmin();
+        User user = validateAdmin();
         Notice notice = NoticeCreateRequest.toEntity(request);
         notice.setCreateDate(LocalDateTime.now());
         notice.setAuthor(user.getName());
@@ -63,31 +66,27 @@ public class NoticeService {
     @Transactional
     @CacheEvict(value = "notices", allEntries = true)
     public void deleteNotice(Long id){
-        validAdmin();
+        validateAdmin();
         noticeRepository.deleteById(id);
     }
 
     @Transactional
     @CacheEvict(value = "notices", allEntries = true)
     public NoticeResponse updateNotice(Long id, NoticeUpdateRequest request){
-        validAdmin();
-        Notice notice = noticeRepository.findByIdWithUser(id).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 글입니다."));
+        validateAdmin();
+        Notice notice = findByIdWithUser(id);
         notice.update(request.getTitle(), request.getContent());
         notice.setUpdateDate(LocalDateTime.now());
         return NoticeResponse.fromEntity(notice);
     }
 
-    private User validAdmin(){
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        User user = userRepository.findByUsername(username);
-
-        if(user == null){
-            throw new NotUserException("로그인이 필요한 서비스입니다.");
-        }
-
-        if(!user.getRole().getValue().equals("admin")){
-            throw new AccessDeniedException("권한이 부족합니다.");
+    private User validateAdmin(){
+        String username = getCurrentUsername();
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NotFoundException(USER_NOT_FOUND_MESSAGE)
+        );
+        if(user == null || !user.getRole().getValue().equals(ADMIN_ROLE)){
+            throw new AccessDeniedException(UNAUTHORIZED_MESSAGE);
         }
         return user;
     }
@@ -96,10 +95,17 @@ public class NoticeService {
     public List<NoticeListResponse> getRecentNotices(){
         Pageable pageable = PageRequest.of(0, 3);
         List<Notice> notices = noticeRepository.findRecentNotices(pageable);
-        List<NoticeListResponse> responses = notices.stream().map(
-                n -> NoticeListResponse.fromEntity(n)
-        ).collect(Collectors.toList());
-        return responses;
+        return notices.stream().map(NoticeListResponse::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    private Notice findByIdWithUser(Long id){
+        return noticeRepository.findByIdWithUser(id).orElseThrow(
+                () -> new NotFoundException(NOTICE_NOT_FOUND_MESSAGE));
+    }
+
+    private String getCurrentUsername(){
+        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }

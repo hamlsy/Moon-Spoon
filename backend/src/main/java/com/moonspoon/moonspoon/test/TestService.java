@@ -2,7 +2,6 @@ package com.moonspoon.moonspoon.test;
 
 import com.moonspoon.moonspoon.dto.request.test.TestResultRequest;
 import com.moonspoon.moonspoon.dto.request.test.TestResultSubmitRequest;
-import com.moonspoon.moonspoon.dto.request.test.TestSharedWorkbookRequest;
 import com.moonspoon.moonspoon.dto.response.test.sharedTest.*;
 import com.moonspoon.moonspoon.exception.NotFoundException;
 import com.moonspoon.moonspoon.exception.NotUserException;
@@ -11,11 +10,9 @@ import com.moonspoon.moonspoon.problem.ProblemRepository;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbook;
 import com.moonspoon.moonspoon.sharedWorkbook.SharedWorkbookRepository;
 import com.moonspoon.moonspoon.testAnswer.TestAnswer;
-import com.moonspoon.moonspoon.testAnswer.TestAnswerRepository;
 import com.moonspoon.moonspoon.user.User;
 import com.moonspoon.moonspoon.user.UserRepository;
-import com.moonspoon.moonspoon.workbook.Workbook;
-import com.moonspoon.moonspoon.workbook.WorkbookRepository;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -37,34 +34,37 @@ public class TestService {
     private final SharedWorkbookRepository sharedWorkbookRepository;
     private final UserRepository userRepository;
     private final TestRepository testRepository;
-    private final TestAnswerRepository testAnswerRepository;
     private final JdbcTemplate jdbcTemplate;
 
+    private static final String SHARED_WORKBOOK_NOT_FOUND_MESSAGE = "존재하지 않는 문제집입니다.";
+    private static final String TEST_NOT_FOUND_MESSAGE = "존재하지 않는 테스트입니다.";
+    private static final String UNAUTHORIZED_MESSAGE = "권한이 없습니다.";
 
     private SharedWorkbook validateUserAndSharedWorkbook(Long sharedWorkbookId) {
         String username = getCurrentUsername();
         if(username == null || username.equals("anonymousUser")){
-            throw new NotUserException("권한이 없습니다.");
+            throw new NotUserException(UNAUTHORIZED_MESSAGE);
         }
         //문제집 예외
         SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findById(sharedWorkbookId).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 문제집입니다.")
+                () -> new NotFoundException(SHARED_WORKBOOK_NOT_FOUND_MESSAGE)
         );
         return sharedWorkbook;
     }
 
     private Test createSharedTest(Long id){
         String username = getCurrentUsername();
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByUsername(username).orElseThrow(
+                () -> new NotFoundException(UNAUTHORIZED_MESSAGE)
+        );
         SharedWorkbook sharedWorkbook = validateUserAndSharedWorkbook(id);
         Test test = new Test();
         test.setTestDate(LocalDateTime.now());
         test.setUser(user);
         test.setName(user.getName());
         test.setSharedWorkbook(sharedWorkbook);
-        Test saveTest = testRepository.save(test);
 
-        return saveTest;
+        return testRepository.save(test);
     }
 
     // CreateTest 하면서 Get Test Problem
@@ -92,7 +92,7 @@ public class TestService {
     @Transactional
     public void submitSharedTest(Long id, List<TestResultRequest> listDto){
         Test test = testRepository.findById(id).orElseThrow(
-                () -> new NotFoundException("존재하지 않는 테스트입니다.")
+                () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE)
         );
 
         List<Long> problemIds = listDto.stream().map(TestResultRequest::getId).collect(Collectors.toList());
@@ -131,7 +131,7 @@ public class TestService {
     public List<TestSharedResultResponse> getSharedTestResult(Long id){
         Test test = testRepository.findByIdWithTestAnswersAndProblem(id)
                 .orElseThrow(
-                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
+                        () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE)
                 );
 
         List<TestAnswer> testAnswers = test.getTestAnswers();
@@ -152,7 +152,7 @@ public class TestService {
     public TestSharedResultSubmitResponse submitSharedTestResult(Long testId, List<TestResultSubmitRequest> listDto){
         Test test = testRepository.findByIdWithTestAnswersAndProblem(testId)
                 .orElseThrow(
-                        () -> new NotFoundException("존재하지 않는 테스트입니다.")
+                        () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE)
                 );
         double correctCount = 0;
         double incorrectCount = 0;
