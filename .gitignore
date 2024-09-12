@@ -1,7 +1,6 @@
 ## yml
 ./backend/src/resource/application-local.yml
-<<<<<<< HEAD
-=======
+
 ./.idea/workspace.xml
->>>>>>> baef59421d6bce6f68116c96ae594d4970743042
+
 .idea
