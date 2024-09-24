@@ -31,9 +31,11 @@ public class TestAnswer {
     private String name;
 
     @Builder
-    public TestAnswer(String userAnswer, String name) {
+    public TestAnswer(String userAnswer, String name, Test test, Problem problem) {
         this.userAnswer = userAnswer;
         this.name = name;
+        setTest(test);
+        setProblem(problem);
     }
 
     public void setProblem(Problem problem){

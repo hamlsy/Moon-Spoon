@@ -4,7 +4,8 @@ import com.moonspoon.moonspoon.api.test.dto.request.TestResultRequest;
 import com.moonspoon.moonspoon.api.test.dto.request.TestResultSubmitRequest;
 import com.moonspoon.moonspoon.api.test.dto.response.*;
 import com.moonspoon.moonspoon.common.exception.custom.NotFoundException;
-import com.moonspoon.moonspoon.common.exception.custom.NotUserException;
+import com.moonspoon.moonspoon.common.utils.Utils;
+import com.moonspoon.moonspoon.common.validation.UserValidator;
 import com.moonspoon.moonspoon.core.problem.Problem;
 import com.moonspoon.moonspoon.core.problem.ProblemRepository;
 import com.moonspoon.moonspoon.core.sharedWorkbook.SharedWorkbook;
@@ -15,7 +16,6 @@ import com.moonspoon.moonspoon.core.user.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,40 +35,38 @@ public class TestService {
     private final UserRepository userRepository;
     private final TestRepository testRepository;
     private final JdbcTemplate jdbcTemplate;
+    private final UserValidator validator;
 
+    private static final String CORRECT_RESULT_STRING = "correct";
+    private static final String INCORRECT_RESULT_STRING = "incorrect";
     private static final String SHARED_WORKBOOK_NOT_FOUND_MESSAGE = "존재하지 않는 문제집입니다.";
     private static final String TEST_NOT_FOUND_MESSAGE = "존재하지 않는 테스트입니다.";
     private static final String UNAUTHORIZED_MESSAGE = "권한이 없습니다.";
 
     private SharedWorkbook validateUserAndSharedWorkbook(Long sharedWorkbookId) {
-        String username = getCurrentUsername();
-        if(username == null || username.equals("anonymousUser")){
-            throw new NotUserException(UNAUTHORIZED_MESSAGE);
-        }
+        validator.validateCurrentUser();
         //문제집 예외
-        SharedWorkbook sharedWorkbook = sharedWorkbookRepository.findById(sharedWorkbookId).orElseThrow(
-                () -> new NotFoundException(SHARED_WORKBOOK_NOT_FOUND_MESSAGE)
-        );
-        return sharedWorkbook;
+        return sharedWorkbookRepository.findById(sharedWorkbookId).orElseThrow(
+                () -> new NotFoundException(SHARED_WORKBOOK_NOT_FOUND_MESSAGE));
     }
 
     private Test createSharedTest(Long id){
-        String username = getCurrentUsername();
+        String username = Utils.getCurrentUsername();
         User user = userRepository.findByUsername(username).orElseThrow(
                 () -> new NotFoundException(UNAUTHORIZED_MESSAGE)
         );
         SharedWorkbook sharedWorkbook = validateUserAndSharedWorkbook(id);
-        Test test = new Test();
-        test.setTestDate(LocalDateTime.now());
-        test.setUser(user);
-        test.setName(user.getName());
-        test.setSharedWorkbook(sharedWorkbook);
+        Test test = Test.builder()
+                .user(user)
+                .sharedWorkbook(sharedWorkbook)
+                .name(user.getName())
+                .testDate(LocalDateTime.now())
+                .build();
 
         return testRepository.save(test);
     }
 
     // CreateTest 하면서 Get Test Problem
-    //todo refactor
     @Transactional
     public TestSharedResponse getSharedTest(Long sharedWorkbookId){
         Test test = createSharedTest(sharedWorkbookId);
@@ -81,38 +79,41 @@ public class TestService {
                 .map(p -> TestSharedProblemResponse.fromEntity(p))
                 .collect(Collectors.toList());
 
-        TestSharedResponse response = TestSharedResponse.builder()
+        return TestSharedResponse.builder()
                 .testSharedProblems(testSharedProblems)
                 .testId(test.getId())
                 .build();
-        return response;
     }
 
     //답변 저장
     @Transactional
     public void submitSharedTest(Long id, List<TestResultRequest> listDto){
-        Test test = testRepository.findById(id).orElseThrow(
-                () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE)
-        );
-
+        Test test = findTestById(id);
         List<Long> problemIds = listDto.stream().map(TestResultRequest::getId).collect(Collectors.toList());
         List<Problem> problems = problemRepository.findAllById(problemIds);
         Map<Long, Problem> problemMap = problems.stream()
                 .collect(Collectors.toMap(Problem::getId, problem -> problem));
-        String currentUser = getCurrentUsername();
-        List<TestAnswer> answers =  listDto.stream()
-                .map(d -> {
-                    TestAnswer testAnswer = TestAnswer.builder()
-                            .userAnswer(d.getInput())
-                            .name(currentUser)
-                            .build();
-                    Problem problem = problemMap.get(d.getId());
-                    testAnswer.setTest(test);
-                    testAnswer.setProblem(problem);
-                    return testAnswer;
-                }).collect(Collectors.toList());
-        bulkInsert(answers);
+
+        bulkInsert(createTestAnswers(problemMap, test, listDto));
     }
+
+    private  List<TestAnswer> createTestAnswers(Map<Long, Problem> problemMap, Test test, List<TestResultRequest> listDto){
+        String currentUser = Utils.getCurrentUsername();
+        return listDto.stream()
+                .map(d -> TestAnswer.builder()
+                        .userAnswer(d.getInput())
+                        .name(currentUser)
+                        .problem(problemMap.get(d.getId()))
+                        .test(test)
+                        .build()).collect(Collectors.toList());
+    }
+
+    private Test findTestById(Long id){
+        return testRepository.findById(id).orElseThrow(
+                () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE));
+    }
+
+
 
     private void bulkInsert(List<TestAnswer> answers){
         String sql = "INSERT INTO test_answer (name, user_answer, test_id, problem_id) VALUE (?, ?, ?, ?)";
@@ -150,14 +151,14 @@ public class TestService {
     //자동채점 결과 제출 및 score 기록
     @Transactional
     public TestSharedResultSubmitResponse submitSharedTestResult(Long testId, List<TestResultSubmitRequest> listDto){
-        Test test = testRepository.findByIdWithTestAnswersAndProblem(testId)
+        Test test = testRepository.findById(testId)
                 .orElseThrow(
                         () -> new NotFoundException(TEST_NOT_FOUND_MESSAGE)
                 );
         double correctCount = 0;
         double incorrectCount = 0;
         for(TestResultSubmitRequest dto : listDto){
-            if(dto.getResult().equals("correct")){
+            if(dto.getResult().equals(CORRECT_RESULT_STRING)){
                 correctCount += 1;
             }else{
                 incorrectCount += 1;
@@ -177,27 +178,17 @@ public class TestService {
         return response;
     }
 
-
-
     private String compareStrings(String input, String sol){
         String inputData = input.replaceAll("\\s", "").toLowerCase();
         String solution = sol.replaceAll("\\s", "").toLowerCase();
-        if(inputData.equals(solution)){
-            return "correct";
-        }else{
-            return "incorrect";
-        }
-    }
-    private String getCurrentUsername(){
-        return SecurityContextHolder.getContext().getAuthentication().getName();
+        return inputData.equals(solution) ? CORRECT_RESULT_STRING : INCORRECT_RESULT_STRING;
     }
 
     public List<TestSharedPracticeResponse> getPracticeProblems(Long sharedWorkbookId){
         List<Problem> problems = problemRepository.findAllBySharedWorkbookId(sharedWorkbookId);
-        List<TestSharedPracticeResponse> responses = problems.stream().map(
-                TestSharedPracticeResponse::fromEntity
-        ).collect(Collectors.toList());
-        return responses;
+
+        return problems.stream().map(TestSharedPracticeResponse::fromEntity)
+                .collect(Collectors.toList());
     }
 
 }
