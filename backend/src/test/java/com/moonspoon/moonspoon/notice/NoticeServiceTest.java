@@ -1,10 +1,11 @@
 package com.moonspoon.moonspoon.notice;
 
 
-import com.moonspoon.moonspoon.user.User;
-import com.moonspoon.moonspoon.user.UserRepository;
-import com.moonspoon.moonspoon.user.UserRole;
-import com.moonspoon.moonspoon.user.UserService;
+import com.moonspoon.moonspoon.core.notice.NoticeRepository;
+import com.moonspoon.moonspoon.core.user.User;
+import com.moonspoon.moonspoon.core.user.UserRepository;
+import com.moonspoon.moonspoon.core.user.UserRole;
+import com.moonspoon.moonspoon.core.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

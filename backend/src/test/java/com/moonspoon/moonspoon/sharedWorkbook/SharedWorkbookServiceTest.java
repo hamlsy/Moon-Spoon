@@ -1,10 +1,13 @@
 package com.moonspoon.moonspoon.sharedWorkbook;
 
-import com.moonspoon.moonspoon.dto.request.sharedWorkbook.SharedWorkbookRequest;
-import com.moonspoon.moonspoon.dto.response.sharedWorkbook.SharedWorkbookResponse;
-import com.moonspoon.moonspoon.exception.NotFoundException;
-import com.moonspoon.moonspoon.workbook.Workbook;
-import com.moonspoon.moonspoon.workbook.WorkbookRepository;
+import com.moonspoon.moonspoon.api.sharedWorkbook.dto.request.SharedWorkbookRequest;
+import com.moonspoon.moonspoon.api.sharedWorkbook.dto.response.SharedWorkbookResponse;
+import com.moonspoon.moonspoon.core.sharedWorkbook.SharedWorkbook;
+import com.moonspoon.moonspoon.core.sharedWorkbook.SharedWorkbookRepository;
+import com.moonspoon.moonspoon.core.sharedWorkbook.SharedWorkbookService;
+import com.moonspoon.moonspoon.common.exception.custom.NotFoundException;
+import com.moonspoon.moonspoon.core.workbook.Workbook;
+import com.moonspoon.moonspoon.core.workbook.WorkbookRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
